@@ -73,13 +73,14 @@ nav a:hover {
 
 .card {
   background: rgba(255,255,255,0.04);
-  padding: 20px;
+  padding: 25px;
   border-radius: 12px;
   backdrop-filter: blur(12px);
   transition: 0.4s;
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  text-align: center;
 }
 
 .card:hover {
@@ -102,11 +103,14 @@ nav a:hover {
   font-size: 14px;
 }
 
-.card a {
-  display: inline-block;
-  margin-top: 10px;
-  color: gold;
-  text-decoration: none;
+.card button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: gold;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
 }
 
 /* UPSELL */
@@ -127,16 +131,7 @@ nav a:hover {
   margin-bottom: 20px;
 }
 
-.upsell button {
-  padding: 12px 25px;
-  background: gold;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  border-radius: 5px;
-}
-
-/* ABOUT TEXT (🔥 NOVO) */
+/* ABOUT TEXT */
 
 section p {
   margin-bottom: 20px;
@@ -147,6 +142,47 @@ section p {
 
 section strong {
   color: #fff;
+}
+
+/* 🔥 FORM (PREMIUM LOOK) */
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: rgba(255,255,255,0.03);
+  padding: 30px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+form input {
+  padding: 14px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: #0f0f0f;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+form input:focus {
+  outline: none;
+  border-color: gold;
+}
+
+form button {
+  padding: 16px;
+  background: gold;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+form button:hover {
+  transform: scale(1.03);
 }
 
 /* CUSTOM CURSOR */
@@ -160,11 +196,4 @@ section strong {
   pointer-events: none;
   transform: translate(-50%, -50%);
   transition: transform 0.1s ease;
-}
-
-/* BONUS HOVER EFEKAT ZA KURSOR */
-
-a:hover ~ .cursor,
-button:hover ~ .cursor {
-  transform: scale(1.5);
 }
