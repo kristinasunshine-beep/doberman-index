@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "name": "Dante",
+    "type": "Stud",
+    "location": "Serbia",
+    "image": "assets/dante.jpg",
+    "price": "€500",
+    "pedigree": "Champion bloodline",
+    "description": "Strong male with elite structure and temperament.",
+    "contact": "https://instagram.com/yourprofile"
+  },
+  {
+    "id": 2,
+    "name": "Rex",
+    "type": "Stud",
+    "location": "Germany",
+    "image": "assets/rex.jpg",
+    "price": "€800",
+    "pedigree": "Multi Champion",
+    "description": "Proven stud with top lineage.",
+    "contact": "https://instagram.com/yourprofile"
+  }
+]
