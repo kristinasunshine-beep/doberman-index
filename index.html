@@ -3,48 +3,167 @@
 <head>
 <meta charset="UTF-8">
 <title>Doberman Index</title>
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;600&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter', sans-serif;
+}
+
+body{
+  background:#0a0a0a;
+  color:#fff;
+}
+
+/* HEADER */
+
+header{
+  display:flex;
+  justify-content:space-between;
+  padding:20px 40px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+nav a{
+  margin-left:25px;
+  text-decoration:none;
+  color:#aaa;
+  font-size:14px;
+}
+
+nav a:hover{
+  color:#fff;
+}
+
+/* HERO */
+
+.hero{
+  height:80vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.hero h1{
+  font-size:42px;
+  margin-bottom:10px;
+}
+
+.hero p{
+  color:#777;
+}
+
+/* TICKER */
+
+.ticker-wrapper{
+  position:relative;
+  width:100%;
+  overflow:hidden;
+  margin-top:60px;
+  border-top:1px solid rgba(255,255,255,0.08);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.ticker{
+  display:flex;
+  white-space:nowrap;
+  animation:scroll 25s linear infinite;
+}
+
+.ticker div{
+  margin:0 40px;
+  font-size:18px;
+  color:#ccc;
+}
+
+@keyframes scroll{
+  from{transform:translateX(0);}
+  to{transform:translateX(-100%);}
+}
+
+/* OBJECT GRID */
+
+.objects{
+  padding:60px 40px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.card{
+  border:1px solid rgba(255,255,255,0.08);
+  padding:30px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.card:hover{
+  background:rgba(255,255,255,0.03);
+}
+
+.card h3{
+  margin-bottom:10px;
+}
+
+.card p{
+  color:#777;
+  font-size:14px;
+}
+</style>
 </head>
 
 <body>
 
-<div class="cursor"></div>
-
 <header>
-  <h1>Doberman Index</h1>
+  <h2>Doberman Index</h2>
   <nav>
-    <a href="#">Stud Dogs</a>
-    <a href="#">Females</a>
-    <a href="#">Kennels</a>
-    <a href="#">Services</a>
-    <a href="about.html">About Us</a>
-    <a class="cta" href="list-your-dog.html">List Your Dog</a>
+    <a href="studs.html">Stud Dogs</a>
+    <a href="females.html">Females</a>
+    <a href="kennels.html">Kennels</a>
   </nav>
 </header>
 
-<!-- HERO -->
-
 <section class="hero">
-  <h2>The Index of Elite Doberman Stud Dogs</h2>
-  <p>If your dog isn’t here, it doesn’t exist.</p>
+  <h1>Doberman Data System</h1>
+  <p>Not a kennel. An infrastructure.</p>
+
+  <div class="ticker-wrapper">
+    <div class="ticker">
+      <div>DM: Clear</div>
+      <div>DCM1: Carrier</div>
+      <div>HD: A</div>
+      <div>12 Champions Produced</div>
+      <div>Avg Litter: 7.2</div>
+      <div>vWD: Clear</div>
+      <div>Longevity Line: 11.3y</div>
+    </div>
+  </div>
 </section>
 
-<!-- DOG LIST -->
+<section class="objects">
 
-<section class="dogs" id="dogsContainer"></section>
+  <div class="card" onclick="location.href='studs.html'">
+    <h3>Stud Dogs</h3>
+    <p>Genetics, performance and reproduction data.</p>
+  </div>
 
-<!-- UPSELL -->
+  <div class="card" onclick="location.href='females.html'">
+    <h3>Females</h3>
+    <p>Maternal lines and reproductive profiles.</p>
+  </div>
 
-<section class="upsell">
-  <h2>Make Your Dog Look Elite</h2>
-  <p>Upgrade your listing with Lionsign premium design.</p>
-  <button onclick="window.location.href='list-your-dog.html'">
-    Upgrade Now
-  </button>
+  <div class="card" onclick="location.href='kennels.html'">
+    <h3>Kennels</h3>
+    <p>Bloodlines, production and reputation.</p>
+  </div>
+
 </section>
-
-<script src="script.js"></script>
 
 </body>
 </html>
