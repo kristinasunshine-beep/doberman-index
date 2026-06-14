@@ -1,9 +1,9 @@
 body{
   margin:0;
   font-family:'Barlow Condensed', sans-serif;
-  background-color:#fff;
-  background-image: radial-gradient(#e6e6e6 1px, transparent 1px);
-  background-size:20px 20px;
+  background:#ffffff;
+  background-image: radial-gradient(#000 1px, transparent 1px);
+  background-size:15px 15px;
   color:#000;
 }
 
@@ -13,39 +13,29 @@ header{
   display:flex;
   justify-content:space-between;
   padding:30px 60px;
-  align-items:center;
+  border-bottom:3px solid black;
 }
 
 nav a{
-  margin-left:20px;
+  margin-left:15px;
   text-decoration:none;
   color:black;
-  font-size:16px;
-  opacity:0.7;
+  font-weight:600;
 }
 
-nav a:hover{
-  opacity:1;
-}
-
-/* HERO */
+/* HERO TEST BLOCK */
 
 .hero{
-  padding:100px 60px 40px;
+  padding:100px 60px;
+  background:yellow;
 }
 
 .hero h1{
-  font-size:80px;
-  letter-spacing:2px;
+  font-size:70px;
   margin:0;
 }
 
-.hero p{
-  font-size:18px;
-  opacity:0.6;
-}
-
-/* SEARCH */
+/* SEARCH TEST */
 
 .search-wrap{
   padding:40px 60px;
@@ -53,43 +43,22 @@ nav a:hover{
 
 .search-wrap input{
   width:100%;
-  padding:18px;
-  font-size:20px;
-  border:none;
-  border-bottom:2px solid black;
-  outline:none;
-  background:transparent;
+  padding:20px;
+  font-size:22px;
+  border:5px solid black;
 }
 
 /* SECTIONS */
 
 .section{
-  padding:80px 60px;
-}
-
-.section h2{
-  font-size:40px;
-  margin-bottom:20px;
-}
-
-/* CARDS */
-
-.card-list{
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
+  padding:60px;
+  border-top:5px solid black;
 }
 
 .card{
-  padding:20px 30px;
-  border:1px solid #ddd;
+  display:inline-block;
+  padding:20px;
+  margin:10px;
+  border:3px solid black;
   background:white;
-  font-size:20px;
-  cursor:pointer;
-  transition:0.2s;
-}
-
-.card:hover{
-  transform:translateY(-5px);
-  border-color:#b89b00;
 }
