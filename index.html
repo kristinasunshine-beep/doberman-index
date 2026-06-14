@@ -2,10 +2,214 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Lionsign Doberman Index</title>
+<title>Doberman Index</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+
+<style>
+
+/* RESET */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+/* BODY */
+
+body{
+  font-family:'Barlow Condensed', sans-serif;
+  background:white;
+  color:black;
+  overflow-x:hidden;
+}
+
+/* DOT GRID */
+
+body::before{
+  content:"";
+  position:fixed;
+  width:100%;
+  height:100%;
+  background-image:radial-gradient(#dcdcdc 1px, transparent 1px);
+  background-size:20px 20px;
+  z-index:-1;
+}
+
+/* CURSOR */
+
+.cursor{
+  width:18px;
+  height:18px;
+  border:2px solid #d6b600;
+  border-radius:50%;
+  position:fixed;
+  pointer-events:none;
+  transform:translate(-50%, -50%);
+  transition:0.08s ease;
+}
+
+/* HEADER */
+
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 50px;
+}
+
+header h2{
+  font-weight:800;
+  letter-spacing:1px;
+}
+
+nav a{
+  margin-left:28px;
+  text-decoration:none;
+  color:black;
+  font-size:15px;
+}
+
+nav a:hover{
+  color:#d6b600;
+}
+
+/* HERO */
+
+.hero{
+  text-align:center;
+  margin-top:120px;
+}
+
+.hero h1{
+  font-size:130px;
+  font-weight:800;
+  letter-spacing:3px;
+  line-height:0.9;
+}
+
+.hero p{
+  margin-top:15px;
+  font-size:22px;
+}
+
+/* SEARCH */
+
+.search-hero{
+  margin-top:40px;
+  display:flex;
+  justify-content:center;
+}
+
+.search-hero input{
+  width:500px;
+  max-width:80%;
+  padding:16px;
+  font-size:18px;
+  border:none;
+  border-bottom:2px solid black;
+  background:transparent;
+  outline:none;
+  text-align:center;
+}
+
+/* TICKER */
+
+.ticker-wrap{
+  margin-top:60px;
+  width:100%;
+  overflow:hidden;
+  border-top:1px solid #ccc;
+  border-bottom:1px solid #ccc;
+}
+
+.ticker{
+  display:flex;
+  width:max-content;
+  animation:scroll 25s linear infinite;
+}
+
+.ticker span{
+  padding:20px 40px;
+  font-size:18px;
+}
+
+@keyframes scroll{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
+}
+
+/* OBJECTS */
+
+.objects{
+  margin:120px 60px;
+}
+
+.card{
+  border-top:1px solid #ccc;
+  padding:50px 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.card:last-child{
+  border-bottom:1px solid #ccc;
+}
+
+.card:hover{
+  color:#d6b600;
+  transform:translateX(10px);
+}
+
+.card h2{
+  font-size:70px;
+}
+
+.card span{
+  font-size:16px;
+  opacity:0.6;
+}
+
+/* FAQ */
+
+.faq{
+  margin:120px 60px;
+}
+
+.faq h2{
+  font-size:60px;
+  margin-bottom:40px;
+}
+
+.faq-item{
+  margin-bottom:30px;
+  border-bottom:1px solid #ccc;
+  padding-bottom:20px;
+}
+
+.faq-item h3{
+  font-size:28px;
+}
+
+.faq-item p{
+  margin-top:10px;
+  font-size:18px;
+  opacity:0.7;
+}
+
+/* FOOTER */
+
+.footer{
+  margin:100px 60px 40px;
+  font-size:14px;
+  opacity:0.6;
+}
+
+</style>
 </head>
 
 <body>
@@ -13,104 +217,123 @@
 <div class="cursor"></div>
 
 <header>
-  <h2>LIONSIGN INDEX</h2>
+  <h2>Doberman Index</h2>
 
   <nav>
-    <a href="#stud">Stud Dogs</a>
-    <a href="#female">Females</a>
-    <a href="#kennel">Kennels</a>
-    <a href="#puppies">Available Puppies</a>
-    <a href="#services">Services</a>
-    <a href="#about">About</a>
+    <a href="studs.html">Males</a>
+    <a href="females.html">Females</a>
+    <a href="kennels.html">Kennels</a>
+    <a href="puppies.html">Puppies</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="about.html">About</a>
+    <a href="https://linkedin.com" target="_blank">Contact</a>
   </nav>
 </header>
 
-<!-- HERO -->
-
 <section class="hero">
-  <h1>BREEDING INTELLIGENCE SYSTEM</h1>
-  <p>Genetics • Lineage • Production • Structured Data Layer</p>
+  <h1>DOBERMAN INDEX</h1>
+  <p>If your Doberman isn’t here, it doesn’t exist.</p>
+
+  <div class="search-hero">
+    <input type="text" placeholder="Search lineage, dogs, litters...">
+  </div>
+
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span>12,947 DOGS INDEXED</span>
+      <span>842 ACTIVE STUDS</span>
+      <span>4,113 FEMALES</span>
+      <span>512 KENNELS</span>
+      <span>18,244 AI REPORTS GENERATED</span>
+
+      <span>12,947 DOGS INDEXED</span>
+      <span>842 ACTIVE STUDS</span>
+      <span>4,113 FEMALES</span>
+      <span>512 KENNELS</span>
+      <span>18,244 AI REPORTS GENERATED</span>
+    </div>
+  </div>
 </section>
 
-<!-- SEARCH -->
+<section class="objects">
 
-<div class="search-wrap">
-  <input type="text" id="search" placeholder="Search dogs, kennels, litters...">
+  <div class="card" onclick="location.href='studs.html'">
+    <h2>MALES</h2>
+    <span>Stud + Young Prospects</span>
+  </div>
+
+  <div class="card" onclick="location.href='females.html'">
+    <h2>FEMALES</h2>
+    <span>Maternal Lines / Reproduction</span>
+  </div>
+
+  <div class="card" onclick="location.href='kennels.html'">
+    <h2>KENNELS</h2>
+    <span>Bloodlines / Production</span>
+  </div>
+
+  <div class="card" onclick="location.href='puppies.html'">
+    <h2>PUPPIES</h2>
+    <span>Available / Planned Litters</span>
+  </div>
+
+  <div class="card" onclick="location.href='tools.html'">
+    <h2>TOOLS</h2>
+    <span>AI Reports / PDF / Promotion</span>
+  </div>
+
+</section>
+
+<section class="faq">
+
+  <h2>FAQ</h2>
+
+  <div class="faq-item">
+    <h3>What is Doberman Index?</h3>
+    <p>A structured database of elite Doberman genetics, kennels, and production systems.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>How do I list my dog?</h3>
+    <p>Through premium listing packages that include branding and AI reports.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>What are AI reports?</h3>
+    <p>Automated pedigree analysis and breeding intelligence documents.</p>
+  </div>
+
+</section>
+
+<div class="footer">
+  Lionsign Studio — Structured Breeding Systems
 </div>
 
-<div id="searchResults"></div>
+<script>
 
-<!-- STUD -->
+/* CURSOR */
 
-<section id="stud" class="section">
-  <h2>STUD DOGS</h2>
-  <div class="card-list">
-    <div class="card">Dion Dante</div>
-  </div>
-</section>
+const cursor = document.querySelector(".cursor");
 
-<!-- FEMALE -->
+document.addEventListener("mousemove", e => {
+  cursor.style.top = e.clientY + "px";
+  cursor.style.left = e.clientX + "px";
+});
 
-<section id="female" class="section">
-  <h2>FEMALES</h2>
-  <div class="card-list">
-    <div class="card">Athena Black Line</div>
-  </div>
-</section>
+/* HOVER EFFECT */
 
-<!-- KENNEL -->
+const links = document.querySelectorAll("a, .card");
 
-<section id="kennel" class="section">
-  <h2>KENNELS</h2>
-  <div class="card-list">
-    <div class="card">Lionsign Kennel</div>
-  </div>
-</section>
+links.forEach(el=>{
+  el.addEventListener("mouseenter", ()=>{
+    cursor.style.transform = "translate(-50%, -50%) scale(2)";
+  });
+  el.addEventListener("mouseleave", ()=>{
+    cursor.style.transform = "translate(-50%, -50%) scale(1)";
+  });
+});
 
-<!-- PUPPIES MODULE -->
-
-<section id="puppies" class="section">
-  <h2>AVAILABLE PUPPIES</h2>
-
-  <div class="puppy-grid">
-
-    <div class="puppy-card">
-      <h3>Litter A01</h3>
-      <p>Stud: Dion Dante</p>
-      <p>Female: Athena Black Line</p>
-      <p>Available: 3 males / 2 females</p>
-    </div>
-
-    <div class="puppy-card">
-      <h3>Litter B02</h3>
-      <p>Stud: Imported Line</p>
-      <p>Status: Reserved</p>
-      <p>Available: 1 female</p>
-    </div>
-
-  </div>
-</section>
-
-<!-- SERVICES -->
-
-<section id="services" class="section">
-  <h2>SERVICES</h2>
-
-  <div class="card-list">
-    <div class="card">AI Pedigree Report</div>
-    <div class="card">Stud Promotion Kit</div>
-    <div class="card">Kennel Branding System</div>
-  </div>
-</section>
-
-<!-- ABOUT -->
-
-<section id="about" class="section">
-  <h2>ABOUT</h2>
-  <p>High-end structured Doberman breeding intelligence platform designed for professional kennels and breeders.</p>
-</section>
-
-<script src="script.js"></script>
+</script>
 
 </body>
 </html>
