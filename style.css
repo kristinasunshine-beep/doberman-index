@@ -1,7 +1,7 @@
 body{
   margin:0;
   font-family:'Barlow Condensed', sans-serif;
-  background:#ffffff;
+  background:#fff;
   color:#000;
 }
 
@@ -10,20 +10,14 @@ body{
 header{
   display:flex;
   justify-content:space-between;
-  padding:30px 60px;
-  align-items:center;
-}
-
-header h2{
-  letter-spacing:2px;
-  font-weight:800;
+  padding:30px 50px;
+  border-bottom:1px solid #eee;
 }
 
 nav a{
-  margin-left:20px;
+  margin-left:15px;
   text-decoration:none;
-  color:black;
-  font-size:16px;
+  color:#000;
   opacity:0.7;
 }
 
@@ -31,82 +25,84 @@ nav a:hover{
   opacity:1;
 }
 
-/* HERO */
+/* LAYOUT */
 
-.hero{
-  padding:100px 60px 40px;
+.layout{
+  display:grid;
+  grid-template-columns:1.2fr 0.8fr;
+  height:calc(100vh - 90px);
 }
 
-.hero h1{
-  font-size:72px;
-  line-height:1;
-  letter-spacing:2px;
-  margin:0;
-}
+/* LEFT */
 
-.hero p{
-  margin-top:20px;
-  font-size:20px;
-  opacity:0.6;
-}
-
-/* SEARCH */
-
-.search-wrap{
-  padding:40px 60px;
+.left{
+  padding:40px;
+  border-right:1px solid #eee;
 }
 
 .search-wrap input{
   width:100%;
-  padding:20px;
-  font-size:22px;
+  padding:18px;
+  font-size:20px;
   border:none;
-  border-bottom:2px solid black;
+  border-bottom:2px solid #000;
   outline:none;
 }
 
-/* RESULTS */
-
-#searchResults{
-  padding:0 60px;
-}
-
 .card{
-  padding:20px 0;
+  padding:18px 0;
   border-bottom:1px solid #eee;
-  font-size:22px;
+  font-size:20px;
   cursor:pointer;
   transition:0.2s;
 }
 
 .card:hover{
   color:#b89b00;
-  transform:translateX(10px);
+  transform:translateX(8px);
 }
 
-/* SIGNAL BAR */
+/* RIGHT PREVIEW */
 
-.signal-bar{
-  margin-top:80px;
-  overflow:hidden;
-  border-top:1px solid #eee;
-  border-bottom:1px solid #eee;
+.right{
+  padding:40px;
 }
 
-.signal-track{
-  display:flex;
-  width:max-content;
-  animation:scroll 20s linear infinite;
+#preview{
+  position:sticky;
+  top:40px;
+  border:1px solid #eee;
+  padding:20px;
+  min-height:450px;
 }
 
-.signal-track span{
-  padding:20px 40px;
-  font-size:16px;
-  letter-spacing:1px;
-  opacity:0.7;
+.preview-empty{
+  opacity:0.4;
 }
 
-@keyframes scroll{
-  0%{transform:translateX(0);}
-  100%{transform:translateX(-50%);}
+.preview-img{
+  width:100%;
+  height:260px;
+  background-size:cover;
+  background-position:center;
+  margin-bottom:15px;
+}
+
+.preview-title{
+  font-size:30px;
+  font-weight:800;
+  margin-bottom:5px;
+}
+
+.preview-type{
+  opacity:0.6;
+  margin-bottom:10px;
+}
+
+.chips span{
+  display:inline-block;
+  border:1px solid black;
+  padding:4px 8px;
+  margin:3px;
+  font-size:13px;
 }
