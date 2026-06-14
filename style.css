@@ -1,7 +1,9 @@
 body{
   margin:0;
   font-family:'Barlow Condensed', sans-serif;
-  background:#fff;
+  background-color:#fff;
+  background-image: radial-gradient(#e6e6e6 1px, transparent 1px);
+  background-size:20px 20px;
   color:#000;
 }
 
@@ -10,14 +12,15 @@ body{
 header{
   display:flex;
   justify-content:space-between;
-  padding:30px 50px;
-  border-bottom:1px solid #eee;
+  padding:30px 60px;
+  align-items:center;
 }
 
 nav a{
-  margin-left:15px;
+  margin-left:20px;
   text-decoration:none;
-  color:#000;
+  color:black;
+  font-size:16px;
   opacity:0.7;
 }
 
@@ -25,19 +28,27 @@ nav a:hover{
   opacity:1;
 }
 
-/* LAYOUT */
+/* HERO */
 
-.layout{
-  display:grid;
-  grid-template-columns:1.2fr 0.8fr;
-  height:calc(100vh - 90px);
+.hero{
+  padding:100px 60px 40px;
 }
 
-/* LEFT */
+.hero h1{
+  font-size:80px;
+  letter-spacing:2px;
+  margin:0;
+}
 
-.left{
-  padding:40px;
-  border-right:1px solid #eee;
+.hero p{
+  font-size:18px;
+  opacity:0.6;
+}
+
+/* SEARCH */
+
+.search-wrap{
+  padding:40px 60px;
 }
 
 .search-wrap input{
@@ -45,64 +56,40 @@ nav a:hover{
   padding:18px;
   font-size:20px;
   border:none;
-  border-bottom:2px solid #000;
+  border-bottom:2px solid black;
   outline:none;
+  background:transparent;
+}
+
+/* SECTIONS */
+
+.section{
+  padding:80px 60px;
+}
+
+.section h2{
+  font-size:40px;
+  margin-bottom:20px;
+}
+
+/* CARDS */
+
+.card-list{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
 }
 
 .card{
-  padding:18px 0;
-  border-bottom:1px solid #eee;
+  padding:20px 30px;
+  border:1px solid #ddd;
+  background:white;
   font-size:20px;
   cursor:pointer;
   transition:0.2s;
 }
 
 .card:hover{
-  color:#b89b00;
-  transform:translateX(8px);
-}
-
-/* RIGHT PREVIEW */
-
-.right{
-  padding:40px;
-}
-
-#preview{
-  position:sticky;
-  top:40px;
-  border:1px solid #eee;
-  padding:20px;
-  min-height:450px;
-}
-
-.preview-empty{
-  opacity:0.4;
-}
-
-.preview-img{
-  width:100%;
-  height:260px;
-  background-size:cover;
-  background-position:center;
-  margin-bottom:15px;
-}
-
-.preview-title{
-  font-size:30px;
-  font-weight:800;
-  margin-bottom:5px;
-}
-
-.preview-type{
-  opacity:0.6;
-  margin-bottom:10px;
-}
-
-.chips span{
-  display:inline-block;
-  border:1px solid black;
-  padding:4px 8px;
-  margin:3px;
-  font-size:13px;
+  transform:translateY(-5px);
+  border-color:#b89b00;
 }
