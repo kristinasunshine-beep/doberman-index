@@ -14,44 +14,39 @@
   <h2>DOBERMAN INDEX</h2>
 
   <nav>
-    <a href="stud.html">Stud Dogs</a>
-    <a href="female.html">Females</a>
-    <a href="kennel.html">Kennels</a>
+    <a href="stud.html">Stud</a>
+    <a href="female.html">Female</a>
+    <a href="kennel.html">Kennel</a>
     <a href="puppies.html">Puppies</a>
     <a href="tools.html">Tools</a>
     <a href="pricing.html">Pricing</a>
     <a href="faq.html">FAQ</a>
+    <a href="about.html">About</a>
   </nav>
 </header>
 
-<!-- HERO PANEL -->
+<div class="layout">
 
-<section class="hero">
-  <h1>STRUCTURED BREEDING INTELLIGENCE</h1>
-  <p>Genetics • Lineage • Production • Performance</p>
-</section>
+  <div class="left">
 
-<!-- SEARCH -->
+    <div class="search-wrap">
+      <input type="text" placeholder="Search dogs, genetics, lineage...">
+    </div>
 
-<div class="search-wrap">
-  <input type="text" placeholder="Search lineage, stud, female, kennel...">
-</div>
+    <div id="searchResults"></div>
 
-<div id="searchResults"></div>
-
-<!-- SIGNAL BAR -->
-
-<div class="signal-bar">
-  <div class="signal-track">
-    <span>GENETICS DATABASE</span>
-    <span>BREEDING INTELLIGENCE SYSTEM</span>
-    <span>LINEAGE MAPPING</span>
-    <span>PRODUCTION TRACKING</span>
-    <span>AI PEDIGREE TOOLS</span>
-
-    <span>GENETICS DATABASE</span>
-    <span>BREEDING INTELLIGENCE SYSTEM</span>
   </div>
+
+  <div class="right">
+
+    <div id="preview">
+      <div class="preview-empty">
+        Hover a dog to preview
+      </div>
+    </div>
+
+  </div>
+
 </div>
 
 <script src="script.js"></script>
