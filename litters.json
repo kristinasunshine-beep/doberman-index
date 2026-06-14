@@ -1,0 +1,18 @@
+[
+  {
+    "id": "l1",
+    "father": "dante",
+    "mother": "athena",
+    "kennel": "lionsign",
+    "puppies": 8,
+    "status": "active"
+  },
+  {
+    "id": "l2",
+    "father": "dante",
+    "mother": "athena",
+    "kennel": "lionsign",
+    "puppies": 0,
+    "status": "planned"
+  }
+]
