@@ -21,6 +21,7 @@
     "name": "Lionsign Kennel",
     "type": "kennel",
     "image": "kennel.jpg",
-    "description": "Elite breeding system"
+    "description": "Elite structured breeding system",
+    "litters": 5
   }
 ]
