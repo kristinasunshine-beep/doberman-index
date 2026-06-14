@@ -1,0 +1,26 @@
+[
+  {
+    "id": "dante",
+    "name": "Dion Dante",
+    "type": "stud",
+    "image": "dante.jpg",
+    "genetics": ["DM Clear", "DCM1 Carrier"],
+    "titles": "IPO1, CAC, CACIB",
+    "litters": 12
+  },
+  {
+    "id": "athena",
+    "name": "Athena Black Line",
+    "type": "female",
+    "image": "athena.jpg",
+    "genetics": ["DM Clear"],
+    "litters": 3
+  },
+  {
+    "id": "lionsign",
+    "name": "Lionsign Kennel",
+    "type": "kennel",
+    "image": "kennel.jpg",
+    "description": "Elite breeding system"
+  }
+]
