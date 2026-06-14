@@ -1,71 +1,112 @@
 body{
-  font-family:'Barlow Condensed', sans-serif;
-  background:white;
-  color:black;
   margin:0;
+  font-family:'Barlow Condensed', sans-serif;
+  background:#ffffff;
+  color:#000;
 }
+
+/* HEADER */
 
 header{
   display:flex;
   justify-content:space-between;
-  padding:20px 40px;
+  padding:30px 60px;
+  align-items:center;
+}
+
+header h2{
+  letter-spacing:2px;
+  font-weight:800;
 }
 
 nav a{
-  margin-left:15px;
+  margin-left:20px;
   text-decoration:none;
   color:black;
+  font-size:16px;
+  opacity:0.7;
 }
 
-.search-bar{
-  text-align:center;
-  margin:30px;
+nav a:hover{
+  opacity:1;
 }
 
-.search-bar input{
-  width:60%;
-  padding:15px;
-  font-size:18px;
+/* HERO */
+
+.hero{
+  padding:100px 60px 40px;
+}
+
+.hero h1{
+  font-size:72px;
+  line-height:1;
+  letter-spacing:2px;
+  margin:0;
+}
+
+.hero p{
+  margin-top:20px;
+  font-size:20px;
+  opacity:0.6;
+}
+
+/* SEARCH */
+
+.search-wrap{
+  padding:40px 60px;
+}
+
+.search-wrap input{
+  width:100%;
+  padding:20px;
+  font-size:22px;
   border:none;
   border-bottom:2px solid black;
   outline:none;
 }
 
-.hero{
-  text-align:center;
-  margin-top:80px;
-}
+/* RESULTS */
 
-.hero h1{
-  font-size:90px;
+#searchResults{
+  padding:0 60px;
 }
 
 .card{
-  border-top:1px solid #ddd;
-  padding:20px;
+  padding:20px 0;
+  border-bottom:1px solid #eee;
+  font-size:22px;
   cursor:pointer;
+  transition:0.2s;
 }
 
-.hero-image{
-  height:60vh;
-  background-size:cover;
+.card:hover{
+  color:#b89b00;
+  transform:translateX(10px);
+}
+
+/* SIGNAL BAR */
+
+.signal-bar{
+  margin-top:80px;
+  overflow:hidden;
+  border-top:1px solid #eee;
+  border-bottom:1px solid #eee;
+}
+
+.signal-track{
   display:flex;
-  align-items:flex-end;
-  padding:40px;
-  color:white;
-  font-size:40px;
+  width:max-content;
+  animation:scroll 20s linear infinite;
 }
 
-.container{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:40px;
-  padding:40px;
+.signal-track span{
+  padding:20px 40px;
+  font-size:16px;
+  letter-spacing:1px;
+  opacity:0.7;
 }
 
-span{
-  border:1px solid black;
-  padding:4px 8px;
-  margin:3px;
-  display:inline-block;
+@keyframes scroll{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
 }
