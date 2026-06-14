@@ -62,10 +62,11 @@ header{
 header h2{
   font-weight:800;
   letter-spacing:1px;
+  font-size:20px;
 }
 
 nav a{
-  margin-left:28px;
+  margin-left:26px;
   text-decoration:none;
   color:black;
   font-size:15px;
@@ -83,14 +84,13 @@ nav a:hover{
 }
 
 .hero h1{
-  font-size:130px;
+  font-size:110px;
   font-weight:800;
-  letter-spacing:3px;
-  line-height:0.9;
+  letter-spacing:2px;
 }
 
 .hero p{
-  margin-top:15px;
+  margin-top:10px;
   font-size:22px;
 }
 
@@ -103,9 +103,9 @@ nav a:hover{
 }
 
 .search-hero input{
-  width:500px;
+  width:480px;
   max-width:80%;
-  padding:16px;
+  padding:14px;
   font-size:18px;
   border:none;
   border-bottom:2px solid black;
@@ -120,8 +120,8 @@ nav a:hover{
   margin-top:60px;
   width:100%;
   overflow:hidden;
-  border-top:1px solid #ccc;
-  border-bottom:1px solid #ccc;
+  border-top:1.5px solid #bbb;
+  border-bottom:1.5px solid #bbb;
 }
 
 .ticker{
@@ -147,8 +147,8 @@ nav a:hover{
 }
 
 .card{
-  border-top:1px solid #ccc;
-  padding:50px 0;
+  border-top:2px solid #bbb;
+  padding:55px 0;
   display:flex;
   justify-content:space-between;
   align-items:flex-end;
@@ -157,16 +157,17 @@ nav a:hover{
 }
 
 .card:last-child{
-  border-bottom:1px solid #ccc;
+  border-bottom:2px solid #bbb;
 }
 
 .card:hover{
   color:#d6b600;
-  transform:translateX(10px);
+  transform:translateX(12px);
 }
 
 .card h2{
-  font-size:70px;
+  font-size:72px;
+  font-weight:800;
 }
 
 .card span{
@@ -220,11 +221,12 @@ nav a:hover{
   <h2>Doberman Index</h2>
 
   <nav>
-    <a href="studs.html">Males</a>
-    <a href="females.html">Females</a>
-    <a href="kennels.html">Kennels</a>
-    <a href="puppies.html">Puppies</a>
-    <a href="pricing.html">Pricing</a>
+    <a href="#males">Males</a>
+    <a href="#females">Females</a>
+    <a href="#kennels">Kennels</a>
+    <a href="#puppies">Puppies</a>
+    <a href="#tools">Tools</a>
+    <a href="#faq">Pricing</a>
     <a href="about.html">About</a>
     <a href="https://linkedin.com" target="_blank">Contact</a>
   </nav>
@@ -257,50 +259,45 @@ nav a:hover{
 
 <section class="objects">
 
-  <div class="card" onclick="location.href='studs.html'">
+  <div id="males" class="card">
     <h2>MALES</h2>
     <span>Stud + Young Prospects</span>
   </div>
 
-  <div class="card" onclick="location.href='females.html'">
+  <div id="females" class="card">
     <h2>FEMALES</h2>
     <span>Maternal Lines / Reproduction</span>
   </div>
 
-  <div class="card" onclick="location.href='kennels.html'">
+  <div id="kennels" class="card">
     <h2>KENNELS</h2>
     <span>Bloodlines / Production</span>
   </div>
 
-  <div class="card" onclick="location.href='puppies.html'">
+  <div id="puppies" class="card">
     <h2>PUPPIES</h2>
     <span>Available / Planned Litters</span>
   </div>
 
-  <div class="card" onclick="location.href='tools.html'">
+  <div id="tools" class="card">
     <h2>TOOLS</h2>
     <span>AI Reports / PDF / Promotion</span>
   </div>
 
 </section>
 
-<section class="faq">
+<section id="faq" class="faq">
 
-  <h2>FAQ</h2>
+  <h2>FAQ / PRICING</h2>
 
   <div class="faq-item">
     <h3>What is Doberman Index?</h3>
-    <p>A structured database of elite Doberman genetics, kennels, and production systems.</p>
+    <p>A structured database of elite Doberman genetics.</p>
   </div>
 
   <div class="faq-item">
     <h3>How do I list my dog?</h3>
-    <p>Through premium listing packages that include branding and AI reports.</p>
-  </div>
-
-  <div class="faq-item">
-    <h3>What are AI reports?</h3>
-    <p>Automated pedigree analysis and breeding intelligence documents.</p>
+    <p>Through premium listing packages and branding services.</p>
   </div>
 
 </section>
@@ -320,11 +317,9 @@ document.addEventListener("mousemove", e => {
   cursor.style.left = e.clientX + "px";
 });
 
-/* HOVER EFFECT */
+/* HOVER */
 
-const links = document.querySelectorAll("a, .card");
-
-links.forEach(el=>{
+document.querySelectorAll("a, .card").forEach(el=>{
   el.addEventListener("mouseenter", ()=>{
     cursor.style.transform = "translate(-50%, -50%) scale(2)";
   });
