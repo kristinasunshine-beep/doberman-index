@@ -1,0 +1,71 @@
+body{
+  font-family:'Barlow Condensed', sans-serif;
+  background:white;
+  color:black;
+  margin:0;
+}
+
+header{
+  display:flex;
+  justify-content:space-between;
+  padding:20px 40px;
+}
+
+nav a{
+  margin-left:15px;
+  text-decoration:none;
+  color:black;
+}
+
+.search-bar{
+  text-align:center;
+  margin:30px;
+}
+
+.search-bar input{
+  width:60%;
+  padding:15px;
+  font-size:18px;
+  border:none;
+  border-bottom:2px solid black;
+  outline:none;
+}
+
+.hero{
+  text-align:center;
+  margin-top:80px;
+}
+
+.hero h1{
+  font-size:90px;
+}
+
+.card{
+  border-top:1px solid #ddd;
+  padding:20px;
+  cursor:pointer;
+}
+
+.hero-image{
+  height:60vh;
+  background-size:cover;
+  display:flex;
+  align-items:flex-end;
+  padding:40px;
+  color:white;
+  font-size:40px;
+}
+
+.container{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  padding:40px;
+}
+
+span{
+  border:1px solid black;
+  padding:4px 8px;
+  margin:3px;
+  display:inline-block;
+}
