@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="hero-image"><h1 id="name"></h1></div>
+
+<div class="container">
+
+<div>
+<h2>Overview</h2>
+<p id="desc"></p>
+</div>
+
+<div>
+<h2>Litters</h2>
+<div id="litters"></div>
+</div>
+
+</div>
+
+<script>
+
+const id = new URLSearchParams(location.search).get("id");
+
+Promise.all([
+fetch("dogs.json").then(r=>r.json()),
+fetch("litters.json").then(r=>r.json())
+]).then(([dogs, litters])=>{
+
+const dog = dogs.find(d=>d.id===id);
+
+document.getElementById("name").innerText = dog.name;
+document.querySelector(".hero-image").style.backgroundImage = `url(${dog.image})`;
+
+document.getElementById("desc").innerText = dog.description;
+
+litters.filter(l=>l.kennel===id).forEach(l=>{
+  let d = document.createElement("div");
+  d.className="card";
+  d.innerText = `${l.status} litter | Puppies: ${l.puppies}`;
+  document.getElementById("litters").appendChild(d);
+});
+
+});
+
+</script>
+
+</body>
+</html>
