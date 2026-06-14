@@ -10,6 +10,8 @@
 
 <body>
 
+<div class="cursor"></div>
+
 <header>
   <h2>LIONSIGN INDEX</h2>
 
@@ -17,21 +19,28 @@
     <a href="#stud">Stud Dogs</a>
     <a href="#female">Females</a>
     <a href="#kennel">Kennels</a>
+    <a href="#puppies">Available Puppies</a>
     <a href="#services">Services</a>
     <a href="#about">About</a>
   </nav>
 </header>
 
+<!-- HERO -->
+
 <section class="hero">
   <h1>BREEDING INTELLIGENCE SYSTEM</h1>
-  <p>Structured Genetics • Lineage Mapping • Production Layer</p>
+  <p>Genetics • Lineage • Production • Structured Data Layer</p>
 </section>
 
+<!-- SEARCH -->
+
 <div class="search-wrap">
-  <input type="text" id="search" placeholder="Search dogs, genetics, kennels...">
+  <input type="text" id="search" placeholder="Search dogs, kennels, litters...">
 </div>
 
 <div id="searchResults"></div>
+
+<!-- STUD -->
 
 <section id="stud" class="section">
   <h2>STUD DOGS</h2>
@@ -40,12 +49,16 @@
   </div>
 </section>
 
+<!-- FEMALE -->
+
 <section id="female" class="section">
   <h2>FEMALES</h2>
   <div class="card-list">
     <div class="card">Athena Black Line</div>
   </div>
 </section>
+
+<!-- KENNEL -->
 
 <section id="kennel" class="section">
   <h2>KENNELS</h2>
@@ -54,8 +67,35 @@
   </div>
 </section>
 
+<!-- PUPPIES MODULE -->
+
+<section id="puppies" class="section">
+  <h2>AVAILABLE PUPPIES</h2>
+
+  <div class="puppy-grid">
+
+    <div class="puppy-card">
+      <h3>Litter A01</h3>
+      <p>Stud: Dion Dante</p>
+      <p>Female: Athena Black Line</p>
+      <p>Available: 3 males / 2 females</p>
+    </div>
+
+    <div class="puppy-card">
+      <h3>Litter B02</h3>
+      <p>Stud: Imported Line</p>
+      <p>Status: Reserved</p>
+      <p>Available: 1 female</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- SERVICES -->
+
 <section id="services" class="section">
   <h2>SERVICES</h2>
+
   <div class="card-list">
     <div class="card">AI Pedigree Report</div>
     <div class="card">Stud Promotion Kit</div>
@@ -63,9 +103,11 @@
   </div>
 </section>
 
+<!-- ABOUT -->
+
 <section id="about" class="section">
   <h2>ABOUT</h2>
-  <p>High-end structured Doberman breeding intelligence platform.</p>
+  <p>High-end structured Doberman breeding intelligence platform designed for professional kennels and breeders.</p>
 </section>
 
 <script src="script.js"></script>
