@@ -1,9 +1,12 @@
 body{
   margin:0;
   font-family:'Barlow Condensed', sans-serif;
-  background:#ffffff;
-  background-image: radial-gradient(#000 1px, transparent 1px);
-  background-size:15px 15px;
+
+  /* DOT SKIN */
+  background-color:#fff;
+  background-image: radial-gradient(#e6e6e6 1px, transparent 1px);
+  background-size:20px 20px;
+
   color:#000;
 }
 
@@ -13,29 +16,39 @@ header{
   display:flex;
   justify-content:space-between;
   padding:30px 60px;
-  border-bottom:3px solid black;
+  align-items:center;
 }
 
 nav a{
-  margin-left:15px;
+  margin-left:20px;
   text-decoration:none;
   color:black;
-  font-weight:600;
+  font-size:16px;
+  opacity:0.7;
 }
 
-/* HERO TEST BLOCK */
+nav a:hover{
+  opacity:1;
+}
+
+/* HERO */
 
 .hero{
-  padding:100px 60px;
-  background:yellow;
+  padding:100px 60px 40px;
 }
 
 .hero h1{
-  font-size:70px;
+  font-size:80px;
+  letter-spacing:2px;
   margin:0;
 }
 
-/* SEARCH TEST */
+.hero p{
+  font-size:18px;
+  opacity:0.6;
+}
+
+/* SEARCH */
 
 .search-wrap{
   padding:40px 60px;
@@ -43,22 +56,46 @@ nav a{
 
 .search-wrap input{
   width:100%;
-  padding:20px;
-  font-size:22px;
-  border:5px solid black;
+  padding:18px;
+  font-size:20px;
+  border:none;
+  border-bottom:2px solid black;
+  outline:none;
+  background:transparent;
+}
+
+/* SEARCH RESULTS */
+
+#searchResults{
+  padding:0 60px;
+}
+
+.card{
+  padding:15px 0;
+  border-bottom:1px solid #ddd;
+  font-size:20px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.card:hover{
+  transform:translateX(8px);
+  color:#b89b00;
 }
 
 /* SECTIONS */
 
 .section{
-  padding:60px;
-  border-top:5px solid black;
+  padding:80px 60px;
 }
 
-.card{
-  display:inline-block;
-  padding:20px;
-  margin:10px;
-  border:3px solid black;
-  background:white;
+.section h2{
+  font-size:42px;
+  margin-bottom:20px;
+}
+
+.card-list{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
 }
