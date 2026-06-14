@@ -1,9 +1,19 @@
+const cursor = document.createElement("div");
+cursor.className = "cursor";
+document.body.appendChild(cursor);
+
+document.addEventListener("mousemove", (e) => {
+  cursor.style.left = e.clientX + "px";
+  cursor.style.top = e.clientY + "px";
+});
+
 const input = document.getElementById("search");
 
 const data = [
   { name: "Dion Dante", target: "#stud" },
   { name: "Athena Black Line", target: "#female" },
   { name: "Lionsign Kennel", target: "#kennel" },
+  { name: "Litter A01", target: "#puppies" },
   { name: "AI Pedigree Report", target: "#services" }
 ];
 
