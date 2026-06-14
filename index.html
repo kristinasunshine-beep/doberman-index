@@ -4,19 +4,50 @@
 <meta charset="UTF-8">
 <title>Doberman Index</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;600;800&display=swap" rel="stylesheet">
 
 <style>
+
+/* RESET */
+
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:'Inter', sans-serif;
 }
 
+/* BODY */
+
 body{
-  background:#0a0a0a;
-  color:#fff;
+  font-family:'Barlow Condensed', sans-serif;
+  background:white;
+  color:black;
+  overflow-x:hidden;
+}
+
+/* DOT GRID */
+
+body::before{
+  content:"";
+  position:fixed;
+  width:100%;
+  height:100%;
+  background-image:radial-gradient(#dcdcdc 1px, transparent 1px);
+  background-size:20px 20px;
+  z-index:-1;
+}
+
+/* CURSOR */
+
+.cursor{
+  width:18px;
+  height:18px;
+  border:2px solid #d6b600;
+  border-radius:50%;
+  position:fixed;
+  pointer-events:none;
+  transform:translate(-50%, -50%);
+  transition:transform 0.08s ease;
 }
 
 /* HEADER */
@@ -24,101 +55,119 @@ body{
 header{
   display:flex;
   justify-content:space-between;
-  padding:20px 40px;
-  border-bottom:1px solid rgba(255,255,255,0.08);
+  align-items:center;
+  padding:20px 50px;
+}
+
+header h2{
+  font-weight:800;
+  letter-spacing:1px;
 }
 
 nav a{
-  margin-left:25px;
+  margin-left:30px;
   text-decoration:none;
-  color:#aaa;
-  font-size:14px;
+  color:black;
+  font-size:16px;
+  position:relative;
 }
 
 nav a:hover{
-  color:#fff;
+  color:#d6b600;
 }
 
 /* HERO */
 
 .hero{
-  height:80vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
   text-align:center;
+  margin-top:120px;
 }
 
 .hero h1{
-  font-size:42px;
-  margin-bottom:10px;
+  font-size:110px;
+  font-weight:800;
+  letter-spacing:2px;
 }
 
 .hero p{
-  color:#777;
+  margin-top:10px;
+  font-size:22px;
 }
 
 /* TICKER */
 
-.ticker-wrapper{
-  position:relative;
+.ticker-wrap{
+  margin-top:60px;
   width:100%;
   overflow:hidden;
-  margin-top:60px;
-  border-top:1px solid rgba(255,255,255,0.08);
-  border-bottom:1px solid rgba(255,255,255,0.08);
+  border-top:1px solid #ccc;
+  border-bottom:1px solid #ccc;
 }
 
 .ticker{
   display:flex;
-  white-space:nowrap;
+  width:max-content;
   animation:scroll 25s linear infinite;
 }
 
-.ticker div{
-  margin:0 40px;
+.ticker span{
+  padding:20px 40px;
   font-size:18px;
-  color:#ccc;
 }
 
 @keyframes scroll{
-  from{transform:translateX(0);}
-  to{transform:translateX(-100%);}
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
 }
 
-/* OBJECT GRID */
+/* OBJECTS */
 
 .objects{
-  padding:60px 40px;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:20px;
+  margin:120px 60px;
 }
 
 .card{
-  border:1px solid rgba(255,255,255,0.08);
-  padding:30px;
+  border-top:1px solid #ccc;
+  padding:50px 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
   cursor:pointer;
   transition:0.3s;
 }
 
+.card:last-child{
+  border-bottom:1px solid #ccc;
+}
+
 .card:hover{
-  background:rgba(255,255,255,0.03);
+  color:#d6b600;
+  transform:translateX(10px);
 }
 
-.card h3{
-  margin-bottom:10px;
+.card h2{
+  font-size:70px;
 }
 
-.card p{
-  color:#777;
+.card span{
+  font-size:16px;
+  opacity:0.6;
+}
+
+/* FOOTER MINI */
+
+.footer{
+  margin:100px 60px 40px;
   font-size:14px;
+  opacity:0.6;
 }
+
 </style>
 </head>
 
 <body>
+
+<div class="cursor"></div>
 
 <header>
   <h2>Doberman Index</h2>
@@ -126,22 +175,29 @@ nav a:hover{
     <a href="studs.html">Stud Dogs</a>
     <a href="females.html">Females</a>
     <a href="kennels.html">Kennels</a>
+    <a href="tools.html">Tools</a>
+    <a href="about.html">About</a>
   </nav>
 </header>
 
 <section class="hero">
-  <h1>Doberman Data System</h1>
-  <p>Not a kennel. An infrastructure.</p>
+  <h1>DOBERMAN INDEX</h1>
+  <p>If your dog isn’t here, it doesn’t exist.</p>
 
-  <div class="ticker-wrapper">
+  <div class="ticker-wrap">
     <div class="ticker">
-      <div>DM: Clear</div>
-      <div>DCM1: Carrier</div>
-      <div>HD: A</div>
-      <div>12 Champions Produced</div>
-      <div>Avg Litter: 7.2</div>
-      <div>vWD: Clear</div>
-      <div>Longevity Line: 11.3y</div>
+      <span>12,947 DOGS INDEXED</span>
+      <span>842 ACTIVE STUDS</span>
+      <span>4,113 FEMALES</span>
+      <span>512 KENNELS</span>
+      <span>18,244 AI REPORTS GENERATED</span>
+
+      <!-- DUPLIKAT ZA BESKONAČNI LOOP -->
+      <span>12,947 DOGS INDEXED</span>
+      <span>842 ACTIVE STUDS</span>
+      <span>4,113 FEMALES</span>
+      <span>512 KENNELS</span>
+      <span>18,244 AI REPORTS GENERATED</span>
     </div>
   </div>
 </section>
@@ -149,21 +205,56 @@ nav a:hover{
 <section class="objects">
 
   <div class="card" onclick="location.href='studs.html'">
-    <h3>Stud Dogs</h3>
-    <p>Genetics, performance and reproduction data.</p>
+    <h2>STUD DOGS</h2>
+    <span>Genetics / Performance / Reproduction</span>
   </div>
 
   <div class="card" onclick="location.href='females.html'">
-    <h3>Females</h3>
-    <p>Maternal lines and reproductive profiles.</p>
+    <h2>FEMALES</h2>
+    <span>Maternal Lines / Reproduction</span>
   </div>
 
   <div class="card" onclick="location.href='kennels.html'">
-    <h3>Kennels</h3>
-    <p>Bloodlines, production and reputation.</p>
+    <h2>KENNELS</h2>
+    <span>Bloodlines / Production</span>
+  </div>
+
+  <div class="card" onclick="location.href='tools.html'">
+    <h2>TOOLS</h2>
+    <span>AI Reports / PDF / Promotion</span>
   </div>
 
 </section>
+
+<div class="footer">
+  Lionsign Studio — Structured Breeding Systems
+</div>
+
+<script>
+
+/* CUSTOM CURSOR */
+
+const cursor = document.querySelector(".cursor");
+
+document.addEventListener("mousemove", e => {
+  cursor.style.top = e.clientY + "px";
+  cursor.style.left = e.clientX + "px";
+});
+
+/* HOVER SCALE */
+
+const links = document.querySelectorAll("a, .card");
+
+links.forEach(el=>{
+  el.addEventListener("mouseenter", ()=>{
+    cursor.style.transform = "translate(-50%, -50%) scale(2)";
+  });
+  el.addEventListener("mouseleave", ()=>{
+    cursor.style.transform = "translate(-50%, -50%) scale(1)";
+  });
+});
+
+</script>
 
 </body>
 </html>
