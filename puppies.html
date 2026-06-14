@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1>Available Puppies</h1>
+
+<div id="list"></div>
+
+<script>
+
+Promise.all([
+fetch("litters.json").then(r=>r.json()),
+fetch("dogs.json").then(r=>r.json())
+]).then(([litters, dogs])=>{
+
+litters.filter(l=>l.status==="active").forEach(l=>{
+
+const f = dogs.find(d=>d.id===l.father);
+const m = dogs.find(d=>d.id===l.mother);
+
+let div = document.createElement("div");
+div.className="card";
+
+div.innerText =
+`${f.name} × ${m.name} | Puppies: ${l.puppies}`;
+
+document.getElementById("list").appendChild(div);
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
