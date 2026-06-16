@@ -56,20 +56,20 @@ header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:20px 50px;
+  padding:20px 60px;
 }
 
-header h2{
-  font-weight:800;
-  letter-spacing:1px;
-  font-size:20px;
+.tagline{
+  font-size:12px;
+  letter-spacing:1.5px;
+  opacity:0.6;
 }
 
 nav a{
-  margin-left:26px;
+  margin-left:28px;
   text-decoration:none;
   color:black;
-  font-size:15px;
+  font-size:14px;
 }
 
 nav a:hover{
@@ -79,60 +79,55 @@ nav a:hover{
 /* HERO */
 
 .hero{
-  text-align:center;
-  margin-top:120px;
+  margin-top:140px;
+  padding:0 60px;
 }
 
 .hero h1{
-  font-size:110px;
+  font-size:120px;
   font-weight:800;
-  letter-spacing:2px;
+  line-height:0.95;
 }
 
 .hero p{
-  margin-top:10px;
+  margin-top:20px;
   font-size:22px;
+  max-width:700px;
 }
 
 /* SEARCH */
 
-.search-hero{
+.search{
   margin-top:40px;
-  display:flex;
-  justify-content:center;
 }
 
-.search-hero input{
-  width:480px;
-  max-width:80%;
-  padding:14px;
-  font-size:18px;
+.search input{
+  width:420px;
+  padding:10px 0;
+  font-size:16px;
   border:none;
   border-bottom:2px solid black;
   background:transparent;
   outline:none;
-  text-align:center;
 }
 
 /* TICKER */
 
 .ticker-wrap{
   margin-top:60px;
-  width:100%;
+  border-top:1px solid #ccc;
+  border-bottom:1px solid #ccc;
   overflow:hidden;
-  border-top:1.5px solid #bbb;
-  border-bottom:1.5px solid #bbb;
 }
 
 .ticker{
   display:flex;
-  width:max-content;
   animation:scroll 25s linear infinite;
 }
 
 .ticker span{
-  padding:20px 40px;
-  font-size:18px;
+  padding:18px 40px;
+  font-size:16px;
 }
 
 @keyframes scroll{
@@ -143,12 +138,12 @@ nav a:hover{
 /* OBJECTS */
 
 .objects{
-  margin:120px 60px;
+  margin:140px 60px;
 }
 
 .card{
-  border-top:2px solid #bbb;
-  padding:55px 0;
+  border-top:1.5px solid #bbb;
+  padding:50px 0;
   display:flex;
   justify-content:space-between;
   align-items:flex-end;
@@ -157,57 +152,136 @@ nav a:hover{
 }
 
 .card:last-child{
-  border-bottom:2px solid #bbb;
+  border-bottom:1.5px solid #bbb;
 }
 
 .card:hover{
+  transform:translateX(8px);
   color:#d6b600;
-  transform:translateX(12px);
 }
 
 .card h2{
-  font-size:72px;
-  font-weight:800;
+  font-size:70px;
 }
 
 .card span{
-  font-size:16px;
+  font-size:14px;
   opacity:0.6;
 }
 
-/* FAQ */
+/* WHY */
 
-.faq{
-  margin:120px 60px;
+.section{
+  margin:140px 60px;
 }
 
-.faq h2{
+.section h2{
+  font-size:70px;
+  margin-bottom:40px;
+}
+
+.section p{
+  font-size:22px;
+  line-height:1.6;
+  max-width:700px;
+}
+
+/* TIERS */
+
+.tier{
+  margin-bottom:30px;
+}
+
+.tier span{
+  display:inline-block;
+  width:40px;
+  font-weight:800;
+}
+
+.tier h3{
+  display:inline-block;
+  font-size:26px;
+}
+
+.tier p{
+  margin-top:5px;
+  font-size:18px;
+  opacity:0.7;
+}
+
+/* ACCORDION */
+
+.accordion-item{
+  border-bottom:1px solid #ccc;
+  padding:20px 0;
+  cursor:pointer;
+}
+
+.accordion-title{
+  font-size:22px;
+  display:flex;
+  justify-content:space-between;
+}
+
+.accordion-content{
+  max-height:0;
+  overflow:hidden;
+  transition:0.3s;
+  font-size:18px;
+  opacity:0.7;
+}
+
+.accordion-item.active .accordion-content{
+  max-height:200px;
+  margin-top:10px;
+}
+
+/* FORM */
+
+.form{
+  margin:140px 60px;
+}
+
+.form h2{
   font-size:60px;
   margin-bottom:40px;
 }
 
-.faq-item{
-  margin-bottom:30px;
-  border-bottom:1px solid #ccc;
-  padding-bottom:20px;
+.form input,
+.form select{
+  display:block;
+  margin-bottom:20px;
+  padding:10px 0;
+  width:300px;
+  border:none;
+  border-bottom:2px solid black;
+  background:transparent;
 }
 
-.faq-item h3{
-  font-size:28px;
+.form button{
+  padding:12px 25px;
+  border:none;
+  background:black;
+  color:white;
+  cursor:pointer;
 }
 
-.faq-item p{
-  margin-top:10px;
-  font-size:18px;
-  opacity:0.7;
+.form button:hover{
+  background:#d6b600;
+  color:black;
 }
 
 /* FOOTER */
 
 .footer{
-  margin:100px 60px 40px;
+  margin:140px 60px 40px;
   font-size:14px;
   opacity:0.6;
+}
+
+.footer strong{
+  display:block;
+  margin-bottom:10px;
 }
 
 </style>
@@ -218,92 +292,144 @@ nav a:hover{
 <div class="cursor"></div>
 
 <header>
-  <h2>Doberman Index</h2>
 
-  <nav>
-    <a href="#males">Males</a>
-    <a href="#females">Females</a>
-    <a href="#kennels">Kennels</a>
-    <a href="#puppies">Puppies</a>
-    <a href="#tools">Tools</a>
-    <a href="#faq">Pricing</a>
-    <a href="about.html">About</a>
-    <a href="https://linkedin.com" target="_blank">Contact</a>
-  </nav>
+<div class="tagline">
+The most structured Doberman lineage system in the world
+</div>
+
+<nav>
+<a href="about.html">About</a>
+<a href="#objections">Objections</a>
+<a href="#tiers">Access Tiers</a>
+<a href="https://linkedin.com" target="_blank">Contact</a>
+</nav>
+
 </header>
 
 <section class="hero">
-  <h1>DOBERMAN INDEX</h1>
-  <p>If your Doberman isn’t here, it doesn’t exist.</p>
 
-  <div class="search-hero">
-    <input type="text" placeholder="Search lineage, dogs, litters...">
-  </div>
+<h1>Doberman Index</h1>
 
-  <div class="ticker-wrap">
-    <div class="ticker">
-      <span>12,947 DOGS INDEXED</span>
-      <span>842 ACTIVE STUDS</span>
-      <span>4,113 FEMALES</span>
-      <span>512 KENNELS</span>
-      <span>18,244 AI REPORTS GENERATED</span>
+<p>
+If your dog is not in a structured registry,
+it does not exist in the breeding economy.
+</p>
 
-      <span>12,947 DOGS INDEXED</span>
-      <span>842 ACTIVE STUDS</span>
-      <span>4,113 FEMALES</span>
-      <span>512 KENNELS</span>
-      <span>18,244 AI REPORTS GENERATED</span>
-    </div>
-  </div>
+<div class="search">
+<input type="text" placeholder="Search database">
+</div>
+
+<div class="ticker-wrap">
+<div class="ticker">
+<span>12,947 dogs indexed</span>
+<span>842 active studs</span>
+<span>4,113 females</span>
+<span>512 kennels</span>
+
+<span>12,947 dogs indexed</span>
+<span>842 active studs</span>
+<span>4,113 females</span>
+<span>512 kennels</span>
+</div>
+</div>
+
 </section>
 
 <section class="objects">
 
-  <div id="males" class="card">
-    <h2>MALES</h2>
-    <span>Stud + Young Prospects</span>
-  </div>
-
-  <div id="females" class="card">
-    <h2>FEMALES</h2>
-    <span>Maternal Lines / Reproduction</span>
-  </div>
-
-  <div id="kennels" class="card">
-    <h2>KENNELS</h2>
-    <span>Bloodlines / Production</span>
-  </div>
-
-  <div id="puppies" class="card">
-    <h2>PUPPIES</h2>
-    <span>Available / Planned Litters</span>
-  </div>
-
-  <div id="tools" class="card">
-    <h2>TOOLS</h2>
-    <span>AI Reports / PDF / Promotion</span>
-  </div>
+<div class="card"><h2>Males</h2><span>Stud + prospects</span></div>
+<div class="card"><h2>Females</h2><span>Maternal lines</span></div>
+<div class="card"><h2>Kennels</h2><span>Production systems</span></div>
+<div class="card"><h2>Puppies</h2><span>Available / planned</span></div>
+<div class="card"><h2>Tools</h2><span>AI reports</span></div>
 
 </section>
 
-<section id="faq" class="faq">
+<section class="section">
 
-  <h2>FAQ / PRICING</h2>
+<h2>WHY IT WORKS</h2>
 
-  <div class="faq-item">
-    <h3>What is Doberman Index?</h3>
-    <p>A structured database of elite Doberman genetics.</p>
-  </div>
+<p>
+Not a database. A market layer.<br><br>
+We don’t store dogs.<br>
+We structure breeding value into searchable data.
+</p>
 
-  <div class="faq-item">
-    <h3>How do I list my dog?</h3>
-    <p>Through premium listing packages and branding services.</p>
-  </div>
+</section>
+
+<section id="tiers" class="section">
+
+<h2>ACCESS TIERS</h2>
+
+<div class="tier">
+<span>01</span><h3>Basic Listing</h3>
+<p>Dog profile + searchable presence</p>
+</div>
+
+<div class="tier">
+<span>02</span><h3>Pro Kennel</h3>
+<p>Lineage tracking + AI reports + visibility boost</p>
+</div>
+
+<div class="tier">
+<span>03</span><h3>Elite Genetics</h3>
+<p>Full database access + priority ranking</p>
+</div>
+
+</section>
+
+<section id="objections" class="section">
+
+<h2>OBJECTIONS</h2>
+
+<div class="accordion-item">
+<div class="accordion-title">What is this? <span>+</span></div>
+<div class="accordion-content">
+A structured Doberman lineage infrastructure system.
+</div>
+</div>
+
+<div class="accordion-item">
+<div class="accordion-title">Is my kennel data public? <span>+</span></div>
+<div class="accordion-content">
+Only what you choose to list is visible.
+</div>
+</div>
+
+<div class="accordion-item">
+<div class="accordion-title">Why does this matter? <span>+</span></div>
+<div class="accordion-content">
+Because visibility defines breeding value in modern markets.
+</div>
+</div>
+
+</section>
+
+<section class="form">
+
+<h2>VISIBILITY IS VALUE</h2>
+
+<input type="email" placeholder="Your email address">
+
+<select>
+<option>Basic Listing</option>
+<option>Pro Kennel</option>
+<option>Elite Genetics</option>
+</select>
+
+<button>List your dog / kennel</button>
 
 </section>
 
 <div class="footer">
-  Lionsign Studio — Structured Breeding Systems
+
+<strong>
+In modern breeding, if you are not structured — you are not competitive
+</strong>
+
+Platform architecture by Lionsign Identity Studio.<br>
+2019–2026. All rights reserved.
+
 </div>
 
 <script>
@@ -312,20 +438,28 @@ nav a:hover{
 
 const cursor = document.querySelector(".cursor");
 
-document.addEventListener("mousemove", e => {
-  cursor.style.top = e.clientY + "px";
-  cursor.style.left = e.clientX + "px";
+document.addEventListener("mousemove", e=>{
+cursor.style.top = e.clientY + "px";
+cursor.style.left = e.clientX + "px";
 });
 
 /* HOVER */
 
-document.querySelectorAll("a, .card").forEach(el=>{
-  el.addEventListener("mouseenter", ()=>{
-    cursor.style.transform = "translate(-50%, -50%) scale(2)";
-  });
-  el.addEventListener("mouseleave", ()=>{
-    cursor.style.transform = "translate(-50%, -50%) scale(1)";
-  });
+document.querySelectorAll("a, .card, button").forEach(el=>{
+el.addEventListener("mouseenter", ()=>{
+cursor.style.transform="translate(-50%,-50%) scale(2)";
+});
+el.addEventListener("mouseleave", ()=>{
+cursor.style.transform="translate(-50%,-50%) scale(1)";
+});
+});
+
+/* ACCORDION */
+
+document.querySelectorAll(".accordion-item").forEach(item=>{
+item.addEventListener("click", ()=>{
+item.classList.toggle("active");
+});
 });
 
 </script>
