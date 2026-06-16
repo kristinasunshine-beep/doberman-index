@@ -2,467 +2,722 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Doberman Index</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;600;800&display=swap" rel="stylesheet">
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 
-/* RESET */
+:root { --gold: #e2c200; }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── WHITE BASE + DOT GRID ── */
+body {
+  font-family: 'Space Grotesk', Arial, sans-serif;
+  font-weight: 500;
+  background: #ffffff;
+  color: black;
+  overflow-x: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.045em;
+  cursor: none;
 }
 
-/* BODY */
-
-body{
-  font-family:'Barlow Condensed', sans-serif;
-  background:white;
-  color:black;
-  overflow-x:hidden;
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: radial-gradient(#dcdcdc 1px, transparent 1px);
+  background-size: 20px 20px;
+  z-index: 0;
+  pointer-events: none;
 }
 
-/* DOT GRID */
+/* ══════════════════════════════════════════════════
+   DEPTH SYSTEM — elevacija kroz senke
+   Svaki element ima sopstvenu "visinu" iznad podloge.
+   Dot grid je pod, kartice lebde na +4px, sekcije +2px.
+   Nema efekata, samo precizne višeslojevite senke.
+   ══════════════════════════════════════════════════ */
 
-body::before{
-  content:"";
-  position:fixed;
-  width:100%;
-  height:100%;
-  background-image:radial-gradient(#dcdcdc 1px, transparent 1px);
-  background-size:20px 20px;
-  z-index:-1;
+/* All content above dot grid */
+header, section, footer, .cursor { position: relative; z-index: 2; }
+
+/* ── CURSOR ── */
+.cursor {
+  width: 10px; height: 10px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: fixed; pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width .2s, height .2s, background .2s, border-radius .2s, opacity .2s;
+}
+.cursor.big {
+  width: 38px; height: 38px; border-radius: 6px;
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(90,90,90,0.5) 0px, rgba(90,90,90,0.5) 2px,
+    rgba(160,160,160,0.15) 2px, rgba(160,160,160,0.15) 7px
+  );
+  opacity: 0.42;
 }
 
-/* CURSOR */
-
-.cursor{
-  width:18px;
-  height:18px;
-  border:2px solid #d6b600;
-  border-radius:50%;
-  position:fixed;
-  pointer-events:none;
-  transform:translate(-50%, -50%);
-  transition:0.08s ease;
+/* ── HEADER ── */
+header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 48px;
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(255,255,255,0.92);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
 }
 
-/* HEADER */
+.tagline { font-size: 11px; letter-spacing: 3px; color: rgba(0,0,0,0.42); font-weight: 700; }
 
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 60px;
+nav a {
+  margin-left: 18px; text-decoration: none;
+  color: rgba(0,0,0,0.42); font-size: 11px;
+  letter-spacing: 3px; font-weight: 700;
+  padding: 8px 12px; border: 1px solid transparent;
+  transition: color .2s, border-color .2s, background .2s;
+}
+nav a:hover { color: black; border-color: rgba(0,0,0,0.18); }
+nav a.nav-cta { color: black; border-color: rgba(0,0,0,0.32); }
+nav a.nav-cta:hover { background: black; color: white; border-color: black; }
+
+/* ── HERO ── */
+.hero { padding: 130px 48px 90px; }
+
+.hero-eyebrow {
+  font-size: 11px; letter-spacing: 6px; color: var(--gold);
+  margin-bottom: 32px; display: flex; align-items: center; gap: 16px; font-weight: 700;
+}
+.hero-eyebrow::before { content: ''; width: 46px; height: 2px; background: black; display: block; }
+
+.hero h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(72px, 11vw, 160px); font-weight: 900;
+  line-height: 0.88; white-space: nowrap;
+  letter-spacing: 0.012em; text-transform: uppercase; color: black;
+}
+.hero h1 .accent { color: var(--gold); }
+
+.hero-sub {
+  margin-top: 40px; font-size: 15px; line-height: 1.65;
+  color: rgba(0,0,0,0.5); font-weight: 500;
+  letter-spacing: 0.075em; white-space: nowrap;
 }
 
-.tagline{
-  font-size:12px;
-  letter-spacing:1.5px;
-  opacity:0.6;
+.hero-search { margin-top: 48px; }
+.hero-search input {
+  width: 420px; max-width: 100%; padding: 14px 0;
+  font-size: 14px; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; border: none;
+  border-bottom: 2px solid black; background: transparent;
+  outline: none; color: black; transition: border-color .2s;
+}
+.hero-search input:focus { border-color: var(--gold); }
+.hero-search input::placeholder { color: rgba(0,0,0,0.3); }
+
+/* ── TICKER ── */
+.ticker-wrap {
+  margin-top: 64px; overflow: hidden;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.ticker-track { display: flex; width: max-content; animation: ticker 25s linear infinite; }
+.ticker-track span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px; font-weight: 700; letter-spacing: 5px;
+  color: rgba(0,0,0,0.4); white-space: nowrap; padding: 18px 32px;
+}
+.ticker-track span.dot { color: var(--gold); font-size: 12px; padding: 18px 8px; align-self: center; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ── SECTIONS ── */
+section { padding: 100px 48px; }
+
+.section-label {
+  font-size: 11px; letter-spacing: 6px;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 20px; font-weight: 800;
+}
+.section-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(50px, 7vw, 92px); font-weight: 900;
+  line-height: 0.88; letter-spacing: 0.01em;
+  text-transform: uppercase; color: black; white-space: nowrap;
+}
+.section-title .g { color: var(--gold); }
+
+/* ══════════════════════════════════════════════════
+   CARDS — clean, with very faint grey tint
+   Just enough to feel like a surface sitting on the
+   glass, not floating in the air
+   ══════════════════════════════════════════════════ */
+.objects {
+  padding-top: 0;
+  padding-bottom: 100px;
+  position: relative;
 }
 
-nav a{
-  margin-left:28px;
-  text-decoration:none;
-  color:black;
-  font-size:14px;
+.card {
+  border-top: 1px solid rgba(0,0,0,0.07);
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: stretch;
+  cursor: none; position: relative; overflow: hidden;
+  min-height: 96px;
+  background: #ffffff;
+  /* Elevacija — kartica lebdi 4px iznad dot grida */
+  box-shadow:
+    0 2px 0 rgba(0,0,0,0.04),
+    0 4px 12px rgba(0,0,0,0.06),
+    0 8px 24px rgba(0,0,0,0.04);
+  transition: box-shadow .3s, transform .3s;
+  z-index: 1;
+  margin-bottom: 2px;
+}
+.card:last-child { border-bottom: 1px solid rgba(0,0,0,0.07); margin-bottom: 0; }
+.card:hover {
+  box-shadow:
+    0 4px 0 rgba(0,0,0,0.05),
+    0 8px 24px rgba(0,0,0,0.10),
+    0 16px 40px rgba(0,0,0,0.06);
+  transform: translateY(-2px);
+}
+.card:hover .card-arrow { transform: translateX(10px); color: var(--gold); }
+.card:hover .card-num   { background: var(--gold); color: black; }
+
+/* card-fill removed */
+
+.card-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 4px;
+  color: rgba(0,0,0,0.22);
+  display: flex; align-items: center; justify-content: center;
+  border-right: 1px solid rgba(0,0,0,0.07);
+  transition: background .3s, color .2s;
+}
+.card-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(38px, 5vw, 62px); font-weight: 900;
+  line-height: 1; letter-spacing: 0.01em;
+  text-transform: uppercase; color: black;
+  display: flex; align-items: center; padding: 26px 40px;
+}
+.card-right {
+  display: flex; align-items: center; gap: 20px;
+  padding: 26px 44px 26px 20px; flex-shrink: 0;
+}
+.card-meta { font-size: 10px; letter-spacing: 3px; color: rgba(0,0,0,0.28); font-weight: 700; text-align: right; text-transform: uppercase; }
+.card-arrow { font-size: 20px; color: rgba(0,0,0,0.14); transition: transform .3s, color .3s; line-height: 1; flex-shrink: 0; }
+
+/* ── WHY ── */
+.why-section { border-top: 1px solid rgba(0,0,0,0.08); }
+.why-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 64px; }
+.why-item {
+  padding: 48px 36px; background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 6px 20px rgba(0,0,0,0.04);
+  transition: box-shadow .3s, transform .3s;
+}
+.why-item:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10), 0 12px 32px rgba(0,0,0,0.07);
+  transform: translateY(-3px);
+}
+.why-num { font-family: 'Barlow Condensed', sans-serif; font-size: 100px; font-weight: 900; line-height: 0.75; color: rgba(0,0,0,0.07); margin-bottom: 24px; letter-spacing: 0.02em; }
+.why-item h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 34px; font-weight: 800; letter-spacing: 0.04em; line-height: 0.9; margin-bottom: 16px; color: black; }
+.why-item p { font-size: 13px; line-height: 1.65; color: rgba(0,0,0,0.5); font-weight: 500; letter-spacing: 0.02em; }
+
+/* ── TIERS ── */
+.tiers-section { border-top: 1px solid rgba(0,0,0,0.08); }
+.tiers-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 64px; }
+.tier-card {
+  padding: 48px 36px; position: relative; overflow: hidden; cursor: none;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 6px 20px rgba(0,0,0,0.04);
+  transition: box-shadow .3s, transform .3s;
+}
+.tier-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10), 0 12px 36px rgba(0,0,0,0.08);
+  transform: translateY(-4px);
+}
+.tier-card::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 2px; height: 100%; background: var(--gold);
+  opacity: 0; transition: opacity .3s;
+}
+.tier-card:hover::before { opacity: 1; }
+.tier-num { font-family: 'Barlow Condensed', sans-serif; font-size: 110px; font-weight: 900; line-height: 0.7; color: rgba(226,194,0,0.1); position: absolute; top: 18px; right: 10px; letter-spacing: 0.02em; user-select: none; }
+.tier-title { font-family: 'Barlow Condensed', sans-serif; font-size: 40px; font-weight: 800; margin-bottom: 14px; letter-spacing: 0.035em; line-height: 0.9; color: black; }
+.tier-desc { font-size: 13px; line-height: 1.65; color: rgba(0,0,0,0.5); font-weight: 500; letter-spacing: 0.02em; }
+.tier-tag { display: inline-block; margin-top: 20px; font-size: 10px; letter-spacing: 3px; font-weight: 800; color: var(--gold); border: 1px solid rgba(226,194,0,0.32); padding: 4px 10px; }
+
+/* ── FAQ ── */
+.faq-section { border-top: 1px solid rgba(0,0,0,0.08); }
+.faq { max-width: 760px; margin-top: 64px; }
+.faq-item { border-bottom: 1px solid rgba(0,0,0,0.1); }
+.faq-q {
+  padding: 24px 0; display: flex; justify-content: space-between; align-items: center;
+  cursor: none; font-family: 'Barlow Condensed', sans-serif;
+  font-size: 32px; font-weight: 800; letter-spacing: 0.04em; line-height: 0.95;
+  transition: color .2s; color: black; gap: 24px;
+}
+.faq-q:hover { color: var(--gold); }
+.faq-icon {
+  width: 34px; height: 34px; min-width: 34px;
+  border: 1.5px solid rgba(0,0,0,0.28);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; line-height: 1; color: black; padding: 2px;
+  transition: transform .3s, background .3s, color .3s, border-color .3s;
+}
+.faq-item.open .faq-icon { transform: rotate(45deg); background: var(--gold); border-color: var(--gold); color: white; }
+.faq-a {
+  max-height: 0; overflow: hidden;
+  transition: max-height .35s ease, padding .35s;
+  font-size: 14px; line-height: 1.7; color: rgba(0,0,0,0.52);
+  font-weight: 500; letter-spacing: 0.02em;
+}
+.faq-item.open .faq-a { max-height: 300px; padding-bottom: 24px; }
+
+/* ── FORM ── */
+.form-section {
+  border-top: 1px solid rgba(0,0,0,0.08);
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+}
+.form-section .section-label,
+.form-section .section-title { text-align: center; }
+.form-wrap {
+  width: 100%; max-width: 520px; margin-top: 60px; padding: 40px;
+  background: white;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08), 0 16px 48px rgba(0,0,0,0.07);
+}
+.form-wrap input[type="email"] {
+  width: 100%; padding: 16px 0; background: transparent;
+  border: none; border-bottom: 2px solid rgba(0,0,0,0.18);
+  color: black; font-size: 13px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 24px; outline: none; display: block;
+  transition: border-color .2s;
+}
+.form-wrap input[type="email"]::placeholder { color: rgba(0,0,0,0.28); }
+.form-wrap input[type="email"]:focus { border-color: var(--gold); }
+
+.pkg-select { position: relative; margin-bottom: 24px; }
+.pkg-select-trigger {
+  width: 100%; padding: 16px 0; background: transparent;
+  border: none; border-bottom: 2px solid rgba(0,0,0,0.18);
+  color: rgba(0,0,0,0.38); font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  text-align: left; cursor: none;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: border-color .2s, color .2s;
+}
+.pkg-select-trigger::after { content: '+'; color: black; font-size: 24px; font-family: 'Space Grotesk', sans-serif; font-weight: 400; transition: transform .25s; }
+.pkg-select.open .pkg-select-trigger { border-color: var(--gold); color: black; }
+.pkg-select.open .pkg-select-trigger::after { transform: rotate(45deg); }
+.pkg-select-options {
+  display: none; position: absolute; top: 100%; left: 0; right: 0;
+  background: white; border: 1px solid rgba(0,0,0,0.1); border-top: none;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.08); z-index: 20;
+}
+.pkg-select.open .pkg-select-options { display: block; }
+.pkg-option {
+  width: 100%; display: block; padding: 15px 18px;
+  border: 0; border-bottom: 1px solid rgba(0,0,0,0.07); background: transparent; color: black;
+  font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 700;
+  letter-spacing: 3px; text-align: left; text-transform: uppercase; cursor: none;
+  transition: background .2s, color .2s;
+}
+.pkg-option:last-child { border-bottom: 0; }
+.pkg-option:hover { background: rgba(226,194,0,0.07); color: var(--gold); }
+.form-submit {
+  width: 100%; min-height: 56px; padding: 0 18px;
+  background: black; color: white; border: 1px solid black;
+  font-weight: 800; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; cursor: none;
+  transition: background .2s, color .2s, border-color .2s, transform .15s;
+}
+.form-submit:hover { background: var(--gold); border-color: var(--gold); color: black; transform: translateY(-2px); }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid rgba(0,0,0,0.08); padding: 36px 48px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-logo { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 800; letter-spacing: 5px; color: rgba(0,0,0,0.3); }
+.footer-copy { font-size: 11px; letter-spacing: 2px; color: rgba(0,0,0,0.28); font-weight: 700; }
+
+/* ══════════════════════════════════════════════════
+   ANIMACIJE — Webflow stil
+   1. Naslovi: clip-path wipe odozdo nagore
+   2. Tekst blokovi: fade + translateY sa stagger
+   3. Kartice: slide-in sa blago drugačijim timing-om
+   ══════════════════════════════════════════════════ */
+
+/* Keyframes */
+@keyframes wipe-up {
+  from { clip-path: inset(100% 0 0 0); opacity: 0; }
+  to   { clip-path: inset(0% 0 0 0);   opacity: 1; }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slide-right {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
-nav a:hover{
-  color:#d6b600;
+/* Base reveal — ne postavlja opacity jer observer to radi */
+.reveal { }
+.reveal.visible { opacity: 1; }
+
+/* HERO naslov — wipe odozdo */
+.hero h1 {
+  clip-path: inset(100% 0 0 0);
+  opacity: 0;
+  transition: none;
+}
+.hero h1.visible {
+  animation: wipe-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* HERO */
-
-.hero{
-  margin-top:140px;
-  padding:0 60px;
+/* Hero eyebrow — fade in sa kašnjenjem */
+.hero-eyebrow {
+  opacity: 0;
+  transition: none;
+}
+.hero-eyebrow.visible {
+  animation: fade-in 0.6s ease forwards;
+  animation-delay: 0.15s;
 }
 
-.hero h1{
-  font-size:120px;
-  font-weight:800;
-  line-height:0.95;
+/* Hero subtitle — fade up */
+.hero-sub {
+  opacity: 0;
+  transition: none;
+}
+.hero-sub.visible {
+  animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.35s;
 }
 
-.hero p{
-  margin-top:20px;
-  font-size:22px;
-  max-width:700px;
+/* Hero search — fade up */
+.hero-search {
+  opacity: 0;
+  transition: none;
+}
+.hero-search.visible {
+  animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.5s;
 }
 
-/* SEARCH */
-
-.search{
-  margin-top:40px;
+/* Section label — slide from left */
+.section-label {
+  opacity: 0;
+  transition: none;
+}
+.section-label.visible {
+  animation: slide-right 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.search input{
-  width:420px;
-  padding:10px 0;
-  font-size:16px;
-  border:none;
-  border-bottom:2px solid black;
-  background:transparent;
-  outline:none;
+/* Section title — wipe up */
+.section-title {
+  clip-path: inset(100% 0 0 0);
+  opacity: 0;
+  transition: none;
+}
+.section-title.visible {
+  animation: wipe-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.1s;
 }
 
-/* TICKER */
+/* Kartice — slide right sa stagger po indexu */
+.card {
+  opacity: 0;
+  transition: none;
+}
+.card.visible {
+  animation: fade-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.card:nth-child(1).visible { animation-delay: 0s; }
+.card:nth-child(2).visible { animation-delay: 0.08s; }
+.card:nth-child(3).visible { animation-delay: 0.16s; }
+.card:nth-child(4).visible { animation-delay: 0.24s; }
+.card:nth-child(5).visible { animation-delay: 0.32s; }
 
-.ticker-wrap{
-  margin-top:60px;
-  border-top:1px solid #ccc;
-  border-bottom:1px solid #ccc;
-  overflow:hidden;
+/* Why grid — stagger po itemu */
+.why-item {
+  opacity: 0;
+  transition: none;
+}
+.why-item.visible {
+  animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.why-item:nth-child(1).visible { animation-delay: 0s; }
+.why-item:nth-child(2).visible { animation-delay: 0.1s; }
+.why-item:nth-child(3).visible { animation-delay: 0.2s; }
+
+/* Tier cards — stagger */
+.tier-card {
+  opacity: 0;
+  transition: none;
+}
+.tier-card.visible {
+  animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.tier-card:nth-child(1).visible { animation-delay: 0s; }
+.tier-card:nth-child(2).visible { animation-delay: 0.1s; }
+.tier-card:nth-child(3).visible { animation-delay: 0.2s; }
+
+/* FAQ items */
+.faq-item {
+  opacity: 0;
+  transition: none;
+}
+.faq-item.visible {
+  animation: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.faq-item:nth-child(1).visible { animation-delay: 0s; }
+.faq-item:nth-child(2).visible { animation-delay: 0.08s; }
+.faq-item:nth-child(3).visible { animation-delay: 0.16s; }
+
+/* Form wrap */
+.form-wrap {
+  opacity: 0;
+  transition: none;
+}
+.form-wrap.visible {
+  animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.15s;
 }
 
-.ticker{
-  display:flex;
-  animation:scroll 25s linear infinite;
+/* Ticker */
+.ticker-wrap {
+  opacity: 0;
+  transition: none;
+}
+.ticker-wrap.visible {
+  animation: fade-in 0.8s ease forwards;
+  animation-delay: 0.6s;
 }
 
-.ticker span{
-  padding:18px 40px;
-  font-size:16px;
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  header { padding: 18px 24px; }
+  section { padding: 70px 24px; }
+  .hero { padding: 100px 24px 60px; }
+  .hero h1 { font-size: clamp(52px, 16vw, 90px); white-space: normal; }
+  .hero-sub { white-space: normal; font-size: 13px; }
+  .hero-search input { width: 100%; }
+  .section-title { white-space: normal; }
+  .why-grid, .tiers-grid { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 12px; text-align: center; }
+  nav a:not(.nav-cta) { display: none; }
+  nav a.nav-cta { margin-left: 0; }
+  .faq-q { font-size: 22px; }
+  .card-title { font-size: clamp(32px, 10vw, 52px); padding: 20px 20px; }
+  .card-num { font-size: 9px; }
+  .card-right { padding: 20px 20px 20px 12px; gap: 12px; }
 }
-
-@keyframes scroll{
-  0%{transform:translateX(0);}
-  100%{transform:translateX(-50%);}
-}
-
-/* OBJECTS */
-
-.objects{
-  margin:140px 60px;
-}
-
-.card{
-  border-top:1.5px solid #bbb;
-  padding:50px 0;
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-.card:last-child{
-  border-bottom:1.5px solid #bbb;
-}
-
-.card:hover{
-  transform:translateX(8px);
-  color:#d6b600;
-}
-
-.card h2{
-  font-size:70px;
-}
-
-.card span{
-  font-size:14px;
-  opacity:0.6;
-}
-
-/* WHY */
-
-.section{
-  margin:140px 60px;
-}
-
-.section h2{
-  font-size:70px;
-  margin-bottom:40px;
-}
-
-.section p{
-  font-size:22px;
-  line-height:1.6;
-  max-width:700px;
-}
-
-/* TIERS */
-
-.tier{
-  margin-bottom:30px;
-}
-
-.tier span{
-  display:inline-block;
-  width:40px;
-  font-weight:800;
-}
-
-.tier h3{
-  display:inline-block;
-  font-size:26px;
-}
-
-.tier p{
-  margin-top:5px;
-  font-size:18px;
-  opacity:0.7;
-}
-
-/* ACCORDION */
-
-.accordion-item{
-  border-bottom:1px solid #ccc;
-  padding:20px 0;
-  cursor:pointer;
-}
-
-.accordion-title{
-  font-size:22px;
-  display:flex;
-  justify-content:space-between;
-}
-
-.accordion-content{
-  max-height:0;
-  overflow:hidden;
-  transition:0.3s;
-  font-size:18px;
-  opacity:0.7;
-}
-
-.accordion-item.active .accordion-content{
-  max-height:200px;
-  margin-top:10px;
-}
-
-/* FORM */
-
-.form{
-  margin:140px 60px;
-}
-
-.form h2{
-  font-size:60px;
-  margin-bottom:40px;
-}
-
-.form input,
-.form select{
-  display:block;
-  margin-bottom:20px;
-  padding:10px 0;
-  width:300px;
-  border:none;
-  border-bottom:2px solid black;
-  background:transparent;
-}
-
-.form button{
-  padding:12px 25px;
-  border:none;
-  background:black;
-  color:white;
-  cursor:pointer;
-}
-
-.form button:hover{
-  background:#d6b600;
-  color:black;
-}
-
-/* FOOTER */
-
-.footer{
-  margin:140px 60px 40px;
-  font-size:14px;
-  opacity:0.6;
-}
-
-.footer strong{
-  display:block;
-  margin-bottom:10px;
-}
-
 </style>
 </head>
-
 <body>
 
-<div class="cursor"></div>
+<div class="cursor" id="cursor"></div>
 
 <header>
-
-<div class="tagline">
-The most structured Doberman lineage system in the world
-</div>
-
-<nav>
-<a href="about.html">About</a>
-<a href="#objections">Objections</a>
-<a href="#tiers">Access Tiers</a>
-<a href="https://linkedin.com" target="_blank">Contact</a>
-</nav>
-
+  <div class="tagline">The most structured Doberman lineage system in the world</div>
+  <nav>
+    <a href="about.html">About</a>
+    <a href="#objections">Objections</a>
+    <a href="#tiers">Access Tiers</a>
+    <a href="https://linkedin.com" target="_blank" class="nav-cta">Contact</a>
+  </nav>
 </header>
 
 <section class="hero">
-
-<h1>Doberman Index</h1>
-
-<p>
-If your dog is not in a structured registry,
-it does not exist in the breeding economy.
-</p>
-
-<div class="search">
-<input type="text" placeholder="Search database">
-</div>
-
-<div class="ticker-wrap">
-<div class="ticker">
-<span>12,947 dogs indexed</span>
-<span>842 active studs</span>
-<span>4,113 females</span>
-<span>512 kennels</span>
-
-<span>12,947 dogs indexed</span>
-<span>842 active studs</span>
-<span>4,113 females</span>
-<span>512 kennels</span>
-</div>
-</div>
-
+  <div class="hero-eyebrow">Doberman Lineage Infrastructure</div>
+  <h1>DOBERMAN <span class="accent">INDEX</span></h1>
+  <p class="hero-sub">If your Doberman is not in a structured registry, it does not exist in the breeding economy</p>
+  <div class="hero-search"><input type="text" placeholder="Search database"></div>
+  <div class="ticker-wrap reveal">
+    <div class="ticker-track">
+      <span>12,947 dogs indexed</span><span class="dot">◆</span>
+      <span>842 active studs</span><span class="dot">◆</span>
+      <span>4,113 females</span><span class="dot">◆</span>
+      <span>512 kennels</span><span class="dot">◆</span>
+      <span>12,947 dogs indexed</span><span class="dot">◆</span>
+      <span>842 active studs</span><span class="dot">◆</span>
+      <span>4,113 females</span><span class="dot">◆</span>
+      <span>512 kennels</span><span class="dot">◆</span>
+    </div>
+  </div>
 </section>
 
 <section class="objects">
+  <div class="card reveal">
 
-<div class="card"><h2>Males</h2><span>Stud + prospects</span></div>
-<div class="card"><h2>Females</h2><span>Maternal lines</span></div>
-<div class="card"><h2>Kennels</h2><span>Production systems</span></div>
-<div class="card"><h2>Puppies</h2><span>Available / planned</span></div>
-<div class="card"><h2>Tools</h2><span>AI reports</span></div>
+    <div class="card-num">01</div>
+    <div class="card-title">Males</div>
+    <div class="card-right"><div class="card-meta">Stud + prospects</div><div class="card-arrow">→</div></div>
+  </div>
+  <div class="card reveal">
 
+    <div class="card-num">02</div>
+    <div class="card-title">Females</div>
+    <div class="card-right"><div class="card-meta">Maternal lines</div><div class="card-arrow">→</div></div>
+  </div>
+  <div class="card reveal">
+
+    <div class="card-num">03</div>
+    <div class="card-title">Kennels</div>
+    <div class="card-right"><div class="card-meta">Production systems</div><div class="card-arrow">→</div></div>
+  </div>
+  <div class="card reveal">
+
+    <div class="card-num">04</div>
+    <div class="card-title">Puppies</div>
+    <div class="card-right"><div class="card-meta">Available / planned</div><div class="card-arrow">→</div></div>
+  </div>
+  <div class="card reveal">
+
+    <div class="card-num">05</div>
+    <div class="card-title">Tools</div>
+    <div class="card-right"><div class="card-meta">AI reports</div><div class="card-arrow">→</div></div>
+  </div>
 </section>
 
-<section class="section">
-
-<h2>WHY IT WORKS</h2>
-
-<p>
-Not a database. A market layer.<br><br>
-We don’t store dogs.<br>
-We structure breeding value into searchable data.
-</p>
-
+<section class="why-section" id="why">
+  <div class="section-label reveal">The Structure</div>
+  <h2 class="section-title reveal">Why it <span class="g">works</span></h2>
+  <div class="why-grid reveal">
+    <div class="why-item"><div class="why-num">01</div><h3>Not a database</h3><p>We don't store dogs. We structure breeding value into searchable, economic data.</p></div>
+    <div class="why-item"><div class="why-num">02</div><h3>A market layer</h3><p>Every indexed dog gains a structured presence inside the breeding economy.</p></div>
+    <div class="why-item"><div class="why-num">03</div><h3>Visibility = value</h3><p>In modern breeding, if you are not structured — you are not competitive.</p></div>
+  </div>
 </section>
 
-<section id="tiers" class="section">
-
-<h2>ACCESS TIERS</h2>
-
-<div class="tier">
-<span>01</span><h3>Basic Listing</h3>
-<p>Dog profile + searchable presence</p>
-</div>
-
-<div class="tier">
-<span>02</span><h3>Pro Kennel</h3>
-<p>Lineage tracking + AI reports + visibility boost</p>
-</div>
-
-<div class="tier">
-<span>03</span><h3>Elite Genetics</h3>
-<p>Full database access + priority ranking</p>
-</div>
-
+<section class="tiers-section" id="tiers">
+  <div class="section-label reveal">Pricing</div>
+  <h2 class="section-title reveal">Access <span class="g">tiers</span></h2>
+  <div class="tiers-grid reveal">
+    <div class="tier-card"><div class="tier-num">01</div><div class="tier-title">Basic Listing</div><div class="tier-desc">Dog profile + searchable presence in the index</div><div class="tier-tag">Entry</div></div>
+    <div class="tier-card"><div class="tier-num">02</div><div class="tier-title">Pro Kennel</div><div class="tier-desc">Lineage tracking + AI reports + visibility boost</div><div class="tier-tag">Professional</div></div>
+    <div class="tier-card"><div class="tier-num">03</div><div class="tier-title">Elite Genetics</div><div class="tier-desc">Full database access + priority ranking</div><div class="tier-tag">Elite</div></div>
+  </div>
 </section>
 
-<section id="objections" class="section">
-
-<h2>OBJECTIONS</h2>
-
-<div class="accordion-item">
-<div class="accordion-title">What is this? <span>+</span></div>
-<div class="accordion-content">
-A structured Doberman lineage infrastructure system.
-</div>
-</div>
-
-<div class="accordion-item">
-<div class="accordion-title">Is my kennel data public? <span>+</span></div>
-<div class="accordion-content">
-Only what you choose to list is visible.
-</div>
-</div>
-
-<div class="accordion-item">
-<div class="accordion-title">Why does this matter? <span>+</span></div>
-<div class="accordion-content">
-Because visibility defines breeding value in modern markets.
-</div>
-</div>
-
+<section class="faq-section" id="objections">
+  <div class="section-label reveal">FAQ</div>
+  <h2 class="section-title reveal">Objections <span class="g">answered</span></h2>
+  <div class="faq reveal">
+    <div class="faq-item">
+      <div class="faq-q">What is this?<div class="faq-icon">+</div></div>
+      <div class="faq-a">A structured Doberman lineage infrastructure system.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Is my kennel data public?<div class="faq-icon">+</div></div>
+      <div class="faq-a">Only what you choose to list is visible. You control your data, your profile, and your exposure level at all times.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Why does this matter?<div class="faq-icon">+</div></div>
+      <div class="faq-a">Because visibility defines breeding value in modern markets. A dog that cannot be found does not compete.</div>
+    </div>
+  </div>
 </section>
 
-<section class="form">
-
-<h2>VISIBILITY IS VALUE</h2>
-
-<input type="email" placeholder="Your email address">
-
-<select>
-<option>Basic Listing</option>
-<option>Pro Kennel</option>
-<option>Elite Genetics</option>
-</select>
-
-<button>List your dog / kennel</button>
-
+<section class="form-section" id="contact">
+  <div class="section-label reveal">Start Today</div>
+  <h2 class="section-title reveal">Visibility is <span class="g">value</span></h2>
+  <div class="form-wrap reveal">
+    <input type="email" placeholder="Your email address">
+    <div class="pkg-select" id="pkgSelect">
+      <input type="hidden" name="package" value="">
+      <button class="pkg-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">Select a tier</button>
+      <div class="pkg-select-options" role="listbox">
+        <button class="pkg-option" type="button" data-value="Basic Listing">Basic Listing</button>
+        <button class="pkg-option" type="button" data-value="Pro Kennel">Pro Kennel</button>
+        <button class="pkg-option" type="button" data-value="Elite Genetics">Elite Genetics</button>
+      </div>
+    </div>
+    <button class="form-submit" type="button">List your dog / kennel</button>
+  </div>
 </section>
 
-<div class="footer">
-
-<strong>
-In modern breeding, if you are not structured — you are not competitive
-</strong>
-
-Platform architecture by Lionsign Identity Studio.<br>
-2019–2026. All rights reserved.
-
-</div>
+<footer>
+  <div class="footer-logo">Doberman Index</div>
+  <div class="footer-copy">Platform architecture by Lionsign Identity Studio&nbsp;·&nbsp;2019–2026&nbsp;·&nbsp;All rights reserved</div>
+</footer>
 
 <script>
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top  = e.clientY + 'px';
+});
+document.querySelectorAll('a, button, .card, .faq-q, .tier-card').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+});
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+});
+const pkgSelect = document.getElementById('pkgSelect');
+const trigger   = pkgSelect.querySelector('.pkg-select-trigger');
+const hidden    = pkgSelect.querySelector('input[type="hidden"]');
+trigger.addEventListener('click', () => {
+  const isOpen = pkgSelect.classList.toggle('open');
+  trigger.setAttribute('aria-expanded', String(isOpen));
+});
+pkgSelect.querySelectorAll('.pkg-option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    hidden.value = opt.dataset.value;
+    trigger.childNodes[0].textContent = opt.dataset.value + ' ';
+    pkgSelect.classList.remove('open');
+    trigger.setAttribute('aria-expanded', 'false');
+  });
+});
+document.addEventListener('click', e => {
+  if (!pkgSelect.contains(e.target)) {
+    pkgSelect.classList.remove('open');
+    trigger.setAttribute('aria-expanded', 'false');
+  }
+});
+/* ANIMACIJE — hero odmah, ostalo na scroll */
 
-/* CURSOR */
-
-const cursor = document.querySelector(".cursor");
-
-document.addEventListener("mousemove", e=>{
-cursor.style.top = e.clientY + "px";
-cursor.style.left = e.clientX + "px";
+// Hero elementi — dodaj visible odmah na load
+window.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('.hero-eyebrow')?.classList.add('visible');
+  document.querySelector('.hero h1')?.classList.add('visible');
+  document.querySelector('.hero-sub')?.classList.add('visible');
+  document.querySelector('.hero-search')?.classList.add('visible');
+  document.querySelector('.ticker-wrap')?.classList.add('visible');
 });
 
-/* HOVER */
+// Sve ostalo — observer na scroll
+const animObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      animObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
 
-document.querySelectorAll("a, .card, button").forEach(el=>{
-el.addEventListener("mouseenter", ()=>{
-cursor.style.transform="translate(-50%,-50%) scale(2)";
-});
-el.addEventListener("mouseleave", ()=>{
-cursor.style.transform="translate(-50%,-50%) scale(1)";
-});
-});
-
-/* ACCORDION */
-
-document.querySelectorAll(".accordion-item").forEach(item=>{
-item.addEventListener("click", ()=>{
-item.classList.toggle("active");
-});
-});
-
+document.querySelectorAll(
+  '.section-label, .section-title, ' +
+  '.card, .why-item, .tier-card, .faq-item, .form-wrap'
+).forEach(el => animObserver.observe(el));
 </script>
-
 </body>
 </html>
