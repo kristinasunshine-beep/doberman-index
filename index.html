@@ -463,36 +463,53 @@ footer {
 
   /* KARTICE — mobile fix */
   .card {
-    grid-template-columns: 44px 1fr auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     min-height: auto;
+    overflow: hidden;
+  }
+  .card-num {
+    font-size: 9px;
+    min-width: 36px;
+    width: 36px;
+    flex-shrink: 0;
+    padding: 0;
+    border-right: 1px solid rgba(0,0,0,0.07);
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card-title {
+    font-size: clamp(22px, 6vw, 34px);
+    padding: 14px 10px;
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .card-right {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     justify-content: center;
-    gap: 6px;
-    padding: 16px 14px 16px 8px;
-  }
-  .card-title {
-    font-size: clamp(24px, 7vw, 38px);
-    padding: 16px 12px;
-    white-space: normal;
-  }
-  .card-num {
-    font-size: 9px;
-    padding: 0 8px;
+    gap: 4px;
+    padding: 14px 12px 14px 6px;
+    flex-shrink: 0;
+    max-width: 80px;
   }
   .card-meta {
-    font-size: 8px;
-    letter-spacing: 1.5px;
+    font-size: 7px;
+    letter-spacing: 1px;
     text-align: right;
     line-height: 1.4;
+    word-break: break-word;
+    white-space: normal;
   }
-  .card-arrow {
-    font-size: 14px;
-  }
-  .card-bar { left: 44px; }
+  .card-arrow { font-size: 12px; }
+  .card-bar { left: 36px; }
 }
 </style>
 </head>
