@@ -57,7 +57,7 @@ header {
   display: flex; justify-content: space-between; align-items: center;
   padding: 14px 48px;
   position: sticky; top: 0; z-index: 200;
-  background: rgba(255,255,255,0.94);
+  background: rgba(255,255,255,0.97);
   border-bottom: 1px solid rgba(0,0,0,0.07);
 }
 .header-left {
@@ -510,7 +510,7 @@ footer {
     white-space: normal;
   }
   .card-arrow { font-size: 12px; }
-  .card-bar { left: 36px; }
+  .card-bar { left: 36px; right: 0; width: auto; }
 }
 </style>
 </head>
@@ -643,7 +643,9 @@ document.querySelectorAll('.card').forEach(card => {
   const meta  = card.querySelector('.card-meta');
 
   card.addEventListener('mouseenter', () => {
-    bar.style.width      = 'calc(100% - 64px)';
+    const numWidth = card.querySelector('.card-num').offsetWidth;
+    bar.style.width      = `calc(100% - ${numWidth}px)`;
+    bar.style.left       = `${numWidth}px`;
     num.style.background = '#FFD403';
     num.style.color      = 'black';
     arrow.style.color    = 'black';
@@ -653,6 +655,7 @@ document.querySelectorAll('.card').forEach(card => {
 
   card.addEventListener('mouseleave', () => {
     bar.style.width      = '0';
+    bar.style.left       = '';
     num.style.background = '';
     num.style.color      = '';
     arrow.style.color    = '';
