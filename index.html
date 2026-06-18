@@ -196,15 +196,15 @@ section { padding: 100px 48px; position: relative; z-index: 1; }
   position: relative; z-index: 6;
   overflow: visible;
 }
-/* Žuta vertikalna traka — uvek prisutna, centrirana */
+/* Žuta vertikalna traka — puna visina, trećina širine */
 .card-num::before {
   content: '';
   position: absolute;
+  top: 0;
+  bottom: 0;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 5px;
-  height: 32px;
+  transform: translateX(-50%);
+  width: calc(64px / 3);
   background: #FFD403;
   z-index: -1;
   pointer-events: none;
@@ -523,7 +523,7 @@ footer {
     white-space: normal;
   }
   .card-arrow { font-size: 12px; }
-  .card-bar { left: 36px; right: 0; width: auto; }
+  .card-bar { left: 36px; right: 0; width: 0; }
 }
 </style>
 </head>
