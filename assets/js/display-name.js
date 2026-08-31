@@ -34,9 +34,7 @@
       .join("");
   }
 
-  function displayRegisteredName(value) {
-    const source = String(value ?? "").normalize("NFC").trim().replace(/\s+/gu, " ");
-    if (!source) return "";
+  function editorialCase(source) {
     return source.split(" ").map((token, index) => {
       const lower = token.toLocaleLowerCase();
       if (index > 0 && PARTICLES.has(lower)) return lower;
@@ -44,5 +42,22 @@
     }).join(" ");
   }
 
-  return Object.freeze({ displayRegisteredName });
+  function displayRegisteredName(value) {
+    const source = String(value ?? "").normalize("NFC").trim().replace(/\s+/gu, " ");
+    if (!source) return "";
+    // Preserve intentional mixed capitalization; retain legacy lowercase-input support.
+    const mixedCase = source !== source.toLocaleUpperCase() && source !== source.toLocaleLowerCase();
+    return mixedCase ? source : editorialCase(source);
+  }
+
+  function displayKennelName(value) {
+    const source = String(value ?? "").normalize("NFC").trim().replace(/\s+/gu, " ");
+    // Normalize shouting-case identity metadata; preserve intentional brand casing.
+    const hasCasedLetters = source.toLocaleLowerCase() !== source.toLocaleUpperCase();
+    return hasCasedLetters && source === source.toLocaleUpperCase()
+      ? editorialCase(source)
+      : source;
+  }
+
+  return Object.freeze({ displayRegisteredName, displayKennelName });
 });

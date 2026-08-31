@@ -148,6 +148,10 @@
     .dossier-copy strong{font-size:18px;font-weight:900;letter-spacing:-.045em}
     .dossier-copy p{max-width:245px;font-size:12px;line-height:1.42}
     .dossier-copy #heroMeta{margin-top:30px}
+    #heroMeta .hero-identity{display:block;font-weight:400;text-transform:none}
+    #heroMeta .hero-credentials{display:block;margin-top:9px;font-size:.8em;font-weight:400;letter-spacing:.035em;line-height:1.45;text-transform:uppercase}
+    #heroMeta .hero-credentials span{display:block}
+    #heroMeta .hero-credentials span + span{margin-top:4px}
     .dossier-statement{margin-top:26px}
     .dossier-bold{margin-top:22px;font-weight:700}
     .dossier-bold a{display:inline-flex;align-items:center;gap:10px}
@@ -235,7 +239,7 @@
     .ancestor:hover .ancestor-top,.ancestor.touch-hover .ancestor-top{color:var(--ink)}
     .ancestor-line{width:32px;height:8px;margin-bottom:17px;background:var(--acid)}
     .ancestor:hover .ancestor-line,.ancestor.touch-hover .ancestor-line{background:var(--ink)}
-    .ancestor h4{font-size:30px;font-weight:600;line-height:.95;letter-spacing:-.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .ancestor h4{font-size:30px;font-weight:600;line-height:.95;letter-spacing:-.06em;white-space:normal;text-transform:none;text-wrap:balance;overflow-wrap:break-word}
     .ancestor p{margin-top:13px;color:var(--muted);font-size:10px;line-height:1.5}
 
     .data-rail{gap:20px;border-top:0}
@@ -363,7 +367,7 @@
     #performanceRail .metric.highlight::before{color:var(--ink)}
     #performanceRail .metric-badge{position:absolute;top:24px;left:22px;z-index:2;display:block;padding:6px 10px;border-radius:999px;background:var(--white);color:var(--ink);font-size:8px;font-weight:700;text-transform:uppercase}
     #performanceRail .metric.highlight .metric-badge{background:var(--ink);color:var(--white)}
-    #performanceRail .metric strong{position:absolute;right:22px;bottom:120px;z-index:2;margin:0;font-size:clamp(38px,3.2vw,52px);line-height:1;letter-spacing:-.06em}
+    #performanceRail .metric strong{position:absolute;right:12px;top:14px;bottom:auto;z-index:3;margin:0;padding:8px 10px 10px;background:inherit;font-size:clamp(38px,3.2vw,52px);line-height:1;letter-spacing:-.06em}
     #performanceRail .metric em{position:absolute;left:22px;bottom:46px;z-index:2;margin:0;max-width:80%;font-size:27px;font-weight:700;line-height:1;letter-spacing:-.055em}
     #performanceRail .metric::after{position:absolute;left:22px;bottom:21px;z-index:2;margin:0;color:#c8c8c8;font-size:10px}
     #performanceRail .metric.highlight::after{color:var(--ink)}
@@ -410,7 +414,7 @@
     .related-thumb{display:grid;place-items:center;width:50px;height:50px;border-radius:50%;background:var(--ink);color:var(--acid);font-size:21px;font-weight:700;transition:background .3s var(--ease),color .3s var(--ease),transform .3s var(--ease)}
     .related-thumb img{width:100%;height:100%;display:block;border-radius:inherit;object-fit:cover}
     .related-copy{min-width:0}
-    .related-copy strong{display:block;font-size:23px;font-weight:650;line-height:.95;letter-spacing:-.055em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .related-copy strong{display:block;font-size:23px;font-weight:650;line-height:.95;letter-spacing:-.055em;white-space:normal;text-transform:none;text-wrap:balance;overflow-wrap:break-word}
     .related-copy span{display:block;margin-top:8px;color:var(--muted);font-size:9px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
     .related-card:hover,.related-card.touch-hover{z-index:2;background:var(--white);transform:translateY(-5px);box-shadow:0 16px 34px rgba(18,18,18,.08)}
     .related-card:hover .related-card-top i,.related-card.touch-hover .related-card-top i{background:var(--acid)}
@@ -1518,7 +1522,7 @@
       <div class="section-content services-grid reveal">
         <button class="service-card" type="button">
           <div class="service-num">01</div><h3><span class="service-title-line">Compatibility</span> <span class="service-title-line">Report</span></h3>
-          <p>Structured genetic, structural, temperament and goal-alignment analysis for the selected pairing.</p>
+          <p>Structured genetic, temperament and goal-alignment analysis for the selected pairing.</p>
           <div class="service-pricing"><span class="service-fee-label">One-time fee</span><span class="service-price">€59</span></div>
         </button>
         <button class="service-card" type="button">
@@ -1574,6 +1578,7 @@
 
     const present=(value,fallback="—")=>Array.isArray(value)?(value.filter(Boolean).join(" / ")||fallback):(value===null||value===undefined||String(value).trim()===""?fallback:String(value).trim());
     const displayRegisteredName=value=>window.DIName.displayRegisteredName(value);
+    const displayKennelName=value=>window.DIName.displayKennelName(value);
     const focalPointFor=(media,role)=>window.DIMedia.focalPointFor(media,role);
     const focalPosition=value=>window.DIMedia.objectPosition(value);
     const frameSpecFor=role=>window.DIMedia.frameSpecFor(role);
@@ -1602,20 +1607,47 @@
       return {value:present(source.result,"Not submitted"),sub:details.join(" · ")||(hasResult?defaultSub:"No result submitted")};
     }
 
-    function buildBloodline(parentage){
-      const byRecordId=new Map(registryRecords.map(record=>[record.record_id,record]));
+    async function loadPedigreeIdentities(parentage){
+      const ids=new Set([parentage.sire_id,parentage.dam_id,...array(parentage.pedigree_nodes).map(node=>node.record_id)].filter(Boolean));
+      const entries=registryRecords.filter(record=>ids.has(record.record_id)&&record.entity_type==="doberman"&&record.status==="published");
+      const identities=await Promise.all(entries.map(async entry=>{
+        if(!/^data\/dobermans\/DI-[MF]-\d{6}\.json$/.test(entry.path||""))return null;
+        try{
+          const response=await fetch(new URL(entry.path,repoRoot),{cache:"no-store"});
+          if(!response.ok)return null;
+          const record=await response.json();
+          if(record.record_id!==entry.record_id||record.entity_type!=="doberman"||record.status!=="published")return null;
+          return [entry.record_id,record.doberman?.identity||{}];
+        }catch(_){return null}
+      }));
+      return new Map(identities.filter(Boolean));
+    }
+
+    function buildBloodline(parentage,parentIdentities=new Map()){
+      const byRecordId=new Map(registryRecords.filter(record=>record.entity_type==="doberman"&&record.status==="published").map(record=>[record.record_id,record]));
+      const indexedIdentity=id=>{
+        const entry=byRecordId.get(id);
+        return entry?{...entry,...parentIdentities.get(id)}:{};
+      };
       const indexedName=(id,fallback)=>{
-        const record=byRecordId.get(id);
-        return record&&record.entity_type==="doberman"?displayRegisteredName(record.registered_name||record.record_id):present(fallback,"Unknown");
+        const record=indexedIdentity(id);
+        return displayRegisteredName(record.record_id?(record.registered_name||record.record_id):present(fallback,"Unknown"));
       };
       const nodes=array(parentage.pedigree_nodes).map(node=>({
         gen:Number(node.gen)||1,role:present(node.role,"Ancestor"),name:indexedName(node.record_id,node.name),
-        titles:present(node.titles,"No titles submitted"),country:present(node.country,"Country not submitted"),
+        registration:present(node.registration,"")||present(indexedIdentity(node.record_id).registration_number,""),
+        titles:present(node.titles,""),country:present(node.country,"")||present(indexedIdentity(node.record_id).country,""),
         url:profileUrl(node.record_id)
       }));
       if(!nodes.length){
-        if(parentage.sire_name)nodes.push({gen:1,role:"Sire",name:indexedName(parentage.sire_id,parentage.sire_name),titles:present(parentage.sire_registration,"Registration not submitted"),country:"Country not submitted",url:profileUrl(parentage.sire_id)});
-        if(parentage.dam_name)nodes.push({gen:1,role:"Dam",name:indexedName(parentage.dam_id,parentage.dam_name),titles:present(parentage.dam_registration,"Registration not submitted"),country:"Country not submitted",url:profileUrl(parentage.dam_id)});
+        for(const [key,role] of [["sire","Sire"],["dam","Dam"]]){
+          const id=parentage[`${key}_id`],identity=indexedIdentity(id);
+          if(parentage[`${key}_name`]||identity.record_id)nodes.push({
+            gen:1,role,name:indexedName(id,parentage[`${key}_name`]),
+            registration:present(identity.registration_number,"")||present(parentage[`${key}_registration`],""),
+            country:present(identity.country,""),url:profileUrl(id)
+          });
+        }
       }
       return nodes;
     }
@@ -1640,7 +1672,7 @@
         const record=byRecordId.get(id);
         const linkedDoberman=record?.entity_type==="doberman";
         related.push({
-          name:linkedDoberman?displayRegisteredName(record.registered_name||record.record_id):(record?.name||fallbackName||id),
+          name:linkedDoberman?displayRegisteredName(record.registered_name||record.record_id):(!record&&(type==="Sire"||type==="Dam")?displayRegisteredName(fallbackName||id):(record?.name||fallbackName||id)),
           type,url:record?profileUrl(record.record_id):"#profile",
           image:linkedDoberman?mediaUrl(record.hero):"",
           position:focalPosition(record?.hero_focal_point)
@@ -1654,7 +1686,7 @@
       return related;
     }
 
-    function canonicalToProfile(record,recordId){
+    function canonicalToProfile(record,recordId,parentIdentities=new Map()){
       const dog=record.doberman||{};
       const identity=dog.identity||{};
       const parentage=dog.parentage||{};
@@ -1682,16 +1714,16 @@
       if(isDeceased&&mortality.cause_disclosure==="public"&&mortality.cause)healthView["Cause of death"]={value:present(mortality.cause),sub:present(mortality.evidence_source,"Submitted for review")};
       const registeredDisplayName=displayRegisteredName(identity.registered_name||recordId);
       return {
-        name:registeredDisplayName,kennel:present(identity.kennel_name,identity.kennel_id||"Independent"),country:present(identity.country),
+        name:registeredDisplayName,kennel:present(displayKennelName(identity.kennel_name),identity.kennel_id||"Independent"),country:present(identity.country),
         titles:array(performance.titles),heroImage:mediaUrl(media.hero)||placeholderImage,heroPosition:focalPosition(focalPointFor(media,"hero")),statusBadge,
-        core:{fullName:registeredDisplayName,sex:titleCase(identity.sex),dateOfBirth:formatDate(identity.date_of_birth),lifeStage,lifeStatus,lifeSpan:lifespan||"—",color:present(identity.color),kennel:present(identity.kennel_name,identity.kennel_id||"Independent"),country:present(identity.country),registration:present(identity.registration_authority),registrationNumber:present(identity.registration_number),owner:present(identity.owner),breeder:present(identity.breeder),location:present(identity.location),studServiceStatus,profileId:recordId},
+        core:{fullName:registeredDisplayName,sex:titleCase(identity.sex),dateOfBirth:formatDate(identity.date_of_birth),lifeStage,lifeStatus,lifeSpan:lifespan||"—",color:present(identity.color),kennel:present(displayKennelName(identity.kennel_name),identity.kennel_id||"Independent"),country:present(identity.country),registration:present(identity.registration_authority),registrationNumber:present(identity.registration_number),owner:present(identity.owner),breeder:present(identity.breeder),location:present(identity.location),studServiceStatus,profileId:recordId},
         health:healthView,
         dcm:{"DCM 1":present(markers.dcm_1?.result,"Not submitted"),"DCM 2":present(markers.dcm_2?.result,"Not submitted"),"DCM 3":present(markers.dcm_3?.result,"Not submitted"),"DCM 4":present(markers.dcm_4?.result,"Not submitted"),"DCM 5":present(markers.dcm_5?.result,"Not submitted")},
         structure:{Type:present(structure.type),Head:present(structure.head),Body:present(structure.body),Angulation:present(structure.angulation),Movement:present(structure.movement),Balance:present(structure.balance)},
         temperament:{Stability:present(temperament.stability),Drive:present(temperament.drive),"Social behaviour":present(temperament.social_behaviour),Defense:present(temperament.defense),Confidence:present(temperament.confidence),Evaluator:titleCase(temperament.evaluator)},
         performance:{Shows:numberOrDash(performance.shows_count),Titles:array(performance.titles).length,"Working exams":array(performance.working_exams).length,Sports:array(performance.sports).length},
         reproduction:{Litters:numberOrDash(reproduction.litters_count),Offspring:numberOrDash(reproduction.offspring_count),"Champion offspring":numberOrDash(reproduction.champion_offspring_count),"Export countries":array(reproduction.export_countries).length},
-        bloodline:buildBloodline(parentage),gallery:buildGallery(media),related:buildRelated(recordId,parentage),
+        bloodline:buildBloodline(parentage,parentIdentities),gallery:buildGallery(media),related:buildRelated(recordId,parentage),
         lastUpdated:present(publication.last_updated_label,formatDate(record.updated_at))
       };
     }
@@ -1707,7 +1739,8 @@
       if(!/^data\/dobermans\/DI-M-\d{6}\.json$/.test(item.path||""))throw new Error("Profile data location is invalid");
       const record=await fetch(new URL(item.path,repoRoot),{cache:"no-store"}).then(response=>{if(!response.ok)throw new Error("Profile data unavailable");return response.json()});
       if(record.record_id!==recordId||record.entity_type!=="doberman"||record.status!=="published"||record.doberman?.identity?.sex!=="male"||record.doberman?.identity?.life_stage==="puppy")throw new Error("Profile data does not match this male record");
-      return canonicalToProfile(record,recordId);
+      const parentIdentities=await loadPedigreeIdentities(record.doberman?.parentage||{});
+      return canonicalToProfile(record,recordId,parentIdentities);
     }
 
     const byId=id=>document.getElementById(id);
@@ -1738,7 +1771,17 @@
 
     function bloodline(depth=3){
       const entries=profileData.bloodline.filter(x=>x.gen<=depth);
-      byId("bloodlineRail").innerHTML=entries.length?entries.map(x=>`<a href="${escapeHTML(x.url||"#profile")}" class="ancestor"><div class="ancestor-top"><span>Generation ${escapeHTML(x.gen)}</span><span>${escapeHTML(x.role)}</span></div><div class="ancestor-body"><div class="ancestor-line"></div><h4>${escapeHTML(x.name)}</h4><p>${escapeHTML(x.titles)}<br>${escapeHTML(x.country)}</p></div></a>`).join(""):'<div class="ancestor"><div class="ancestor-body"><h4>Pedigree pending</h4><p>No verified ancestors are published for this record.</p></div></div>';
+      byId("bloodlineRail").innerHTML=entries.length?entries.map(x=>{
+        const lines=[x.registration,x.titles,x.country].map(value=>present(value,"")).filter(Boolean);
+        const metadata=lines.length?`<p>${lines.map(escapeHTML).join("<br>")}</p>`:"";
+        return `<a href="${escapeHTML(x.url||"#profile")}" class="ancestor"><div class="ancestor-top"><span>Generation ${escapeHTML(x.gen)}</span><span>${escapeHTML(x.role)}</span></div><div class="ancestor-body"><div class="ancestor-line"></div><h4>${escapeHTML(x.name)}</h4>${metadata}</div></a>`;
+      }).join(""):'<div class="ancestor"><div class="ancestor-body"><h4>Pedigree pending</h4><p>No verified ancestors are published for this record.</p></div></div>';
+    }
+
+    function heroMetadata(){
+      const identity=[profileData.kennel,profileData.country].filter(Boolean).join(" · ");
+      const titles=profileData.titles.slice(0,2).filter(Boolean);
+      byId("heroMeta").innerHTML=`<span class="hero-identity">${escapeHTML(identity)}</span>${titles.length?`<span class="hero-credentials">${titles.map(title=>`<span>${escapeHTML(title)}</span>`).join("")}</span>`:""}`;
     }
 
     function gallery(){
@@ -1918,7 +1961,7 @@
       const heroLines=nameParts.map((part,index)=>index===nameParts.length-1&&!/[.!?]$/.test(part)?`${part}.`:part);
       byId("dogName").innerHTML=heroLines.map(part=>`<span>${escapeHTML(part)}</span>`).join("");
       byId("dogName").setAttribute("aria-label",profileData.name);
-      byId("heroMeta").textContent=[profileData.kennel,profileData.country,...profileData.titles.slice(0,2)].filter(Boolean).join(" · ");
+      heroMetadata();
       byId("heroImage").src=profileData.heroImage;
       byId("heroImage").alt=`${profileData.name} profile hero`;
       byId("heroImage").style.objectPosition=profileData.heroPosition;

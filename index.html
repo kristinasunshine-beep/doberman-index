@@ -3777,16 +3777,17 @@ textarea {
 .search-result:focus-visible { background: #f0f0ed; outline: 0; }
 .search-result-thumb {
   width: 44px;
-  height: 44px;
+  aspect-ratio: 4 / 5;
+  height: auto;
   overflow: hidden;
   display: grid;
   place-items: center;
-  background: var(--ink);
-  color: var(--acid);
+  background: var(--paper);
+  color: var(--ink);
   font-size: 11px;
   font-weight: 800;
 }
-.search-result-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.search-result-thumb img { display: block; width: 100%; height: 100%; min-width: 0; min-height: 0; object-fit: contain; object-position: center; }
 .search-result-copy { min-width: 0; }
 .search-result-copy strong {
   display: block;
@@ -3824,7 +3825,7 @@ textarea {
   .puppy-shortcut { top: calc(100% + 12px); min-height: 32px; padding: 8px 12px; font-size: 8px; }
   .hero-search-results { top: calc(100% + 8px); max-height: 250px; }
   .search-result { grid-template-columns: 40px minmax(0,1fr) auto; min-height: 60px; padding: 9px 10px; }
-  .search-result-thumb { width: 40px; height: 40px; }
+  .search-result-thumb { width: 40px; }
 }
 
 /* Search tray refinement — editorial autocomplete and a distinct puppy browse state. */
@@ -3898,7 +3899,7 @@ textarea {
   font-weight: 700;
   letter-spacing: .08em;
 }
-.search-result-thumb { width: 46px; height: 46px; }
+.search-result-thumb { width: 46px; }
 .search-result-copy strong { font-size: 16px; font-weight: 760; }
 .search-result-copy span { margin-top: 4px; font-size: 9px; }
 .search-result-copy small {
@@ -3969,7 +3970,7 @@ textarea {
   .hero-search-results { padding: 0 10px 8px; }
   .search-results-head { min-height: 38px; }
   .search-result { grid-template-columns: 22px 40px minmax(0,1fr) 24px; gap: 9px; min-height: 68px; padding: 9px 2px; }
-  .search-result-thumb { width: 40px; height: 40px; }
+  .search-result-thumb { width: 40px; }
   .search-result-copy strong { font-size: 14px; }
   .search-result-arrow { width: 24px; height: 24px; }
 }
@@ -4035,7 +4036,7 @@ textarea {
 .search-result:hover::before,
 .search-result:focus-visible::before { transform: scaleY(1); }
 .search-result-index { padding-top: 4px; font-size: 10px; }
-.search-result-thumb { width: 52px; height: 52px; }
+.search-result-thumb { width: 52px; }
 .search-result-copy strong { font-size: 20px; line-height: 1; }
 .search-result-copy span { margin-top: 6px; font-size: 12px; }
 .search-result-copy small { margin-top: 6px; font-size: 9px; }
@@ -4105,7 +4106,7 @@ textarea {
     padding: 12px 10px;
   }
   .search-result-index { font-size: 9px; }
-  .search-result-thumb { width: 44px; height: 44px; }
+  .search-result-thumb { width: 44px; }
   .search-result-copy strong { font-size: 18px; }
   .search-result-copy span { font-size: 11px; }
   .search-result-copy small { font-size: 8px; }
@@ -4169,6 +4170,29 @@ textarea {
   filter:grayscale(0);
   transform:scale(1.018);
 }
+/* Doberman recognition previews show the complete Hero source, not its public crop. */
+.featured-record[data-entity-type="doberman"]{grid-template-rows:auto auto}
+.featured-record[data-entity-type="doberman"] .featured-record-media{
+  width:100%;
+  height:auto;
+  aspect-ratio:4 / 5;
+  align-self:start;
+  background:var(--paper);
+}
+.featured-record[data-entity-type="doberman"] .featured-record-media img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  min-width:0;
+  min-height:0;
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+  object-position:center;
+  transform:none;
+  transition:filter .45s ease;
+}
 .featured-record-index{
   position:absolute;
   top:10px;
@@ -4211,6 +4235,7 @@ textarea {
   text-transform:uppercase;
   text-overflow:ellipsis;
 }
+.featured-record-copy strong.registered-name{text-transform:none}
 .featured-record-copy span{
   display:block;
   margin-top:9px;
@@ -4252,6 +4277,8 @@ textarea {
   .featured-record:nth-child(3){display:grid}
   .featured-record-copy{min-height:108px;border-top:0;border-left:4px solid var(--acid)}
   .featured-record-copy strong{font-size:26px}
+  .featured-record[data-entity-type="doberman"]{grid-template-rows:auto}
+  .featured-record[data-entity-type="doberman"] .featured-record-copy{min-height:135px}
 }
 
 /* Paid kennel placement — separate from the registry statistics ticker. */
@@ -4671,6 +4698,7 @@ const puppyShortcut = document.querySelector('.puppy-shortcut');
 let registryRecords = [];
 let registryLoadError = '';
 const displayRegisteredName = value => window.DIName.displayRegisteredName(value);
+const displayKennelName = value => window.DIName.displayKennelName(value);
 const applyFocalPoint = (element, point) => window.DIMedia.applyFocalPoint(element, point);
 
 const resolveRegistryAsset = path => {
@@ -4686,7 +4714,7 @@ const normalizeRegistryRecord = record => ({
   name: record.entity_type === 'doberman'
     ? displayRegisteredName(record.registered_name || record.record_id)
     : (record.name || record.record_id),
-  kennel: record.kennel_name || record.kennel_id || (record.entity_type === 'kennel' ? 'Kennel profile' : 'Independent record'),
+  kennel: (record.entity_type === 'doberman' ? displayKennelName(record.kennel_name) : record.kennel_name) || record.kennel_id || (record.entity_type === 'kennel' ? 'Kennel profile' : 'Independent record'),
   location: record.location || record.country || 'Global registry',
   sex: record.sex || '',
   life_stage: record.life_stage || '',
@@ -4898,7 +4926,6 @@ const renderSearchResults = (records, mode = 'search') => {
       const image = document.createElement('img');
       image.src = record.image;
       image.alt = '';
-      applyFocalPoint(image, record.focalPoint);
       thumb.append(image);
     } else {
       thumb.textContent = record.name.split(/\s+/).map(part => part[0]).join('').slice(0, 2);
@@ -5096,6 +5123,7 @@ const renderHomepageShowcase = (category, ids) => {
   selected.forEach((record, index) => {
     const card = document.createElement('a');
     card.className = 'featured-record';
+    card.dataset.entityType = record.entity_type;
     card.href = record.url;
     card.setAttribute('aria-label', `Open ${record.name}`);
 
@@ -5106,7 +5134,7 @@ const renderHomepageShowcase = (category, ids) => {
     image.src = homepageShowcaseAsset(record.image);
     image.alt = `${record.name} — indexed profile`;
     image.loading = 'lazy';
-    applyFocalPoint(image, record.focalPoint);
+    if (record.entity_type !== 'doberman') applyFocalPoint(image, record.focalPoint);
     media.append(image);
 
     const position = document.createElement('span');
@@ -5124,6 +5152,7 @@ const renderHomepageShowcase = (category, ids) => {
     name.textContent = record.name;
 
     const detail = document.createElement('span');
+    if (record.entity_type === 'doberman') name.className = 'registered-name';
     detail.textContent = [record.kennel, record.location, record.life_status === 'deceased' ? 'Deceased' : null].filter(Boolean).join(' · ');
 
     const arrow = document.createElement('i');

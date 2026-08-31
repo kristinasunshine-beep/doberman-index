@@ -86,6 +86,7 @@ def main() -> None:
         "python scripts/test_registry_consistency.py",
         "python scripts/validate_gallery_schema_contract.py",
         "node scripts/test_display_name.js",
+        "node scripts/test_public_ui.js",
         "node scripts/test_media_presentation.js",
     )
     missing = [fragment for fragment in required_fragments if fragment not in text]

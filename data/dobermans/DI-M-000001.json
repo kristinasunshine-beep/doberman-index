@@ -237,6 +237,15 @@
             "y": 72.22222222222223
           },
           "fit_mode": "contain"
+        },
+        {
+          "path": "media/dobermans/DI-M-000001/hero.png",
+          "focal_point": {
+            "x": 50,
+            "y": 50
+          },
+          "fit_mode": "contain",
+          "caption": "Gallery 02"
         }
       ],
       "movement_video": "media/dobermans/DI-M-000001/movement.mp4",
