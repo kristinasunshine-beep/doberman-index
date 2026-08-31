@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="A simple five-step Doberman Index owner submission." name="description"/>
+<title>Owner Submission · Doberman Index</title>
+<link href="assets/css/submit-v3.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#submission-form">Skip to the form</a>
+<header class="site-header">
+<a aria-label="Doberman Index home" class="brand" href="index.html">
+<span class="brand-mark">DI</span>
+<span><strong>DOBERMAN INDEX</strong><small>OWNER SUBMISSION</small></span>
+</a>
+<span class="quiet-status" id="save-status">Text answers save on this device</span>
+</header>
+<main class="page-shell">
+<section aria-labelledby="page-title" class="intro">
+<p class="eyebrow">One clear process · five short steps</p>
+<h1 id="page-title">Tell us about your Doberman.</h1>
+<p>Complete what you know. You can return to any completed step and change your answers before you prepare the submission.</p>
+</section>
+<div class="wizard-card">
+<nav aria-label="Submission progress" class="progress">
+<div class="progress-line"><span id="progress-fill"></span></div>
+<ol>
+<li class="is-active"><button data-step-link="0" type="button"><span>1</span><em>About</em></button></li>
+<li><button data-step-link="1" type="button"><span>2</span><em>Health</em></button></li>
+<li><button data-step-link="2" type="button"><span>3</span><em>Profile</em></button></li>
+<li><button data-step-link="3" type="button"><span>4</span><em>Photos</em></button></li>
+<li><button data-step-link="4" type="button"><span>5</span><em>Review</em></button></li>
+</ol>
+</nav>
+<form id="submission-form" novalidate="">
+<section aria-labelledby="step-1-title" class="form-step is-active" data-step="0">
+<div class="step-heading"><span>01</span><div><h2 id="step-1-title">About your Doberman</h2><p>Start with the details you already know.</p></div></div>
+<div class="field-grid">
+<label class="field field-wide"><span>Registered name <b>Required</b></span><input autocomplete="off" name="registered_name" required=""/></label>
+<label class="field"><span>Date of birth <b>Required</b></span><input name="date_of_birth" required="" type="date"/></label>
+<fieldset class="field field-wide choice-field"><legend>Sex <b>Required</b></legend><div class="choice-row">
+<label><input name="sex" required="" type="radio" value="male"/><span>Male</span></label>
+<label><input name="sex" type="radio" value="female"/><span>Female</span></label>
+</div></fieldset>
+<fieldset class="field field-wide choice-field"><legend>Life stage <b>Required</b> · shown in Details</legend><div class="choice-row">
+<label><input name="life_stage" required="" type="radio" value="adult"/><span>Adult</span></label>
+<label><input name="life_stage" type="radio" value="puppy"/><span>Puppy</span></label>
+<label><input name="life_stage" type="radio" value="junior"/><span>Junior</span></label>
+<label><input name="life_stage" type="radio" value="veteran"/><span>Veteran</span></label>
+</div></fieldset>
+<fieldset class="field field-wide choice-field"><legend>Life status <b>Required</b> · shown in Details</legend><div class="choice-row">
+<label><input name="life_status" required="" type="radio" value="living"/><span>Living</span></label>
+<label><input name="life_status" type="radio" value="deceased"/><span>Deceased</span></label>
+<label><input name="life_status" type="radio" value="unknown"/><span>Not confirmed</span></label>
+</div></fieldset>
+<label class="field deceased-only" hidden=""><span>Date of death · if exact date is known</span><input name="date_of_death" type="date"/></label>
+<label class="field deceased-only" hidden=""><span>Year of death · if exact date is unknown</span><input inputmode="numeric" max="9999" min="1800" name="year_of_death" type="number"/></label>
+<label class="field field-wide deceased-only" hidden=""><span>Cause of death · optional</span><input name="cause_of_death"/></label>
+<label class="field field-wide deceased-only" hidden=""><span>Cause of death publication</span><select name="cause_disclosure"><option value="not_provided">Cause not provided</option><option value="public">May be published</option><option value="private">Private · admin review only</option></select></label>
+<label class="field field-wide adult-male-only" hidden=""><span>Stud service status · shown in Details</span><select name="stud_service_status"><option value="unknown">Not provided</option><option value="available">Available at stud</option><option value="private_arrangement">By private arrangement</option><option value="not_available">Not currently available</option><option value="retired">Retired</option></select></label>
+<label class="field"><span>Country <b>Required</b></span><input autocomplete="country-name" name="country" required=""/></label>
+<label class="field"><span>Colour <b>Required</b></span><input name="color" placeholder="Black &amp; rust" required=""/></label>
+<label class="field field-wide"><span>Kennel name</span><input name="kennel_name"/></label>
+<details class="optional-details field-wide">
+<summary>Add registration and ownership details <small>Optional</small></summary>
+<div class="field-grid">
+<label class="field"><span>City or region</span><input name="location"/></label>
+<label class="field"><span>Registration authority</span><input name="registration_authority" placeholder="FCI, AKC or other"/></label>
+<label class="field"><span>Registration number</span><input name="registration_number"/></label>
+<label class="field"><span>Breeder</span><input name="breeder_name"/></label>
+<label class="field"><span>Owner name for the public profile</span><input name="public_owner_name"/></label>
+</div>
+</details>
+</div>
+</section>
+<section aria-labelledby="step-2-title" class="form-step" data-step="1" hidden="">
+<div class="step-heading"><span>02</span><div><h2 id="step-2-title">Pedigree &amp; health</h2><p>Add what you have. Documents can be reviewed later.</p></div></div>
+<div class="field-grid">
+<label class="field"><span>Sire's registered name</span><input name="sire_name"/></label>
+<label class="field"><span>Dam's registered name</span><input name="dam_name"/></label>
+<label class="field"><span>Sire's registration number</span><input name="sire_registration"/></label>
+<label class="field"><span>Dam's registration number</span><input name="dam_registration"/></label>
+<label class="upload-simple field-wide"><input accept=".jpg,.jpeg,.png,.webp,.pdf,image/jpeg,image/png,image/webp,application/pdf" name="pedigree_file" type="file"/><span class="upload-icon">＋</span><span><strong>Add pedigree</strong><small>JPG, PNG or WebP: max 20 MB · PDF: max 25 MB · optional</small><em data-file-label="pedigree_file">No file selected</em></span></label>
+<label class="field"><span>Heart status</span><input name="dcm_clinical_status" placeholder="For example: no signs of DCM"/></label>
+<label class="field"><span>Evaluation method</span><input name="dcm_method" placeholder="Holter + Echo"/></label>
+<label class="field"><span>Evaluation date</span><input name="dcm_date" type="date"/></label>
+<label class="field"><span>Veterinarian or clinic</span><input name="dcm_clinic"/></label>
+<details class="optional-details field-wide">
+<summary>Add detailed health results <small>Optional</small></summary>
+<div class="field-grid">
+<label class="field"><span>DM</span><select name="dm"><option value="">Not provided</option><option>Clear</option><option>Carrier</option><option>Affected</option><option>Pending</option></select></label>
+<label class="field"><span>vWD</span><select name="vwd"><option value="">Not provided</option><option>Clear</option><option>Carrier</option><option>Affected</option><option>Pending</option></select></label>
+<label class="field"><span>Hip result</span><input name="hd" placeholder="For example: A or HD-A"/></label>
+<label class="field"><span>Elbow result</span><input name="ed" placeholder="For example: 0 or ED-0"/></label>
+<label class="field"><span>Thyroid</span><input name="thyroid"/></label>
+<label class="field"><span>Eyes</span><input name="eyes"/></label>
+<label class="field"><span>DCM 1</span><select name="dcm1"><option value="">Not provided</option><option>Clear</option><option>Carrier</option><option>Affected</option></select></label>
+<label class="field"><span>DCM 2</span><select name="dcm2"><option value="">Not provided</option><option>Clear</option><option>Carrier</option><option>Affected</option></select></label>
+<label class="field"><span>DCM 3</span><select name="dcm3"><option value="">Not provided</option><option>Clear</option><option>Carrier</option><option>Affected</option></select></label>
+<label class="field"><span>DCM 4</span><select name="dcm4"><option value="">Not provided</option><option>Clear</option><option>Carrier</option><option>Affected</option></select></label>
+<label class="field"><span>DCM 5</span><select name="dcm5"><option value="">Not provided</option><option>Clear</option><option>Carrier</option><option>Affected</option></select></label>
+</div>
+</details>
+<label class="upload-simple field-wide"><input accept=".jpg,.jpeg,.png,.webp,.pdf,image/jpeg,image/png,image/webp,application/pdf" multiple="" name="health_evidence" type="file"/><span class="upload-icon">＋</span><span><strong>Add reports for the health fields above</strong><small>Images: max 20 MB · PDF: max 25 MB · each file is mapped during review</small><em data-file-label="health_evidence">No files selected</em></span></label>
+<label class="upload-simple field-wide deceased-only" hidden=""><input accept=".jpg,.jpeg,.png,.webp,.pdf,image/jpeg,image/png,image/webp,application/pdf" name="mortality_evidence" type="file"/><span class="upload-icon">＋</span><span><strong>Add mortality evidence · optional</strong><small>Veterinary report or other source: image max 20 MB · PDF max 25 MB</small><em data-file-label="mortality_evidence">No file selected</em></span></label>
+</div>
+</section>
+<section aria-labelledby="step-3-title" class="form-step" data-step="2" hidden="">
+<div class="step-heading"><span>03</span><div><h2 id="step-3-title">Profile traits &amp; results</h2><p>Tick the short values that fit. Nothing to describe or write.</p></div></div>
+<div class="controlled-block structure-block">
+<div class="controlled-block-head">
+<span>05 / STRUCTURAL PROFILE</span>
+<strong>Tick one or two.</strong>
+<small>Short predefined descriptors only. Leave a row blank if you cannot assess it.</small>
+</div>
+<div aria-label="Structural Profile choices" class="assessment-scroll" role="region" tabindex="0">
+<table class="assessment-table structure-table">
+<caption class="visually-hidden">Structural Profile — tick one or two controlled descriptors per row.</caption>
+<tbody>
+<tr class="assessment-row" data-max="2"><th scope="row">TYPE</th><td><div class="assessment-choices"><label><input class="structure-choice" name="structure_type" type="checkbox" value="Balanced"/><span>Balanced</span></label><label><input class="structure-choice" name="structure_type" type="checkbox" value="Strong"/><span>Strong</span></label><label><input class="structure-choice" name="structure_type" type="checkbox" value="Elegant"/><span>Elegant</span></label><label><input class="structure-choice" name="structure_type" type="checkbox" value="Compact"/><span>Compact</span></label><label><input class="structure-choice" name="structure_type" type="checkbox" value="Extended"/><span>Extended</span></label><label><input class="structure-choice" name="structure_type" type="checkbox" value="Developing"/><span>Developing</span></label></div></td></tr>
+<tr class="assessment-row" data-max="2"><th scope="row">HEAD</th><td><div class="assessment-choices"><label><input class="structure-choice" name="structure_head" type="checkbox" value="Dry"/><span>Dry</span></label><label><input class="structure-choice" name="structure_head" type="checkbox" value="Strong"/><span>Strong</span></label><label><input class="structure-choice" name="structure_head" type="checkbox" value="Refined"/><span>Refined</span></label><label><input class="structure-choice" name="structure_head" type="checkbox" value="Correct proportions"/><span>Correct proportions</span></label><label><input class="structure-choice" name="structure_head" type="checkbox" value="Slightly heavy"/><span>Slightly heavy</span></label><label><input class="structure-choice" name="structure_head" type="checkbox" value="Slightly narrow"/><span>Slightly narrow</span></label></div></td></tr>
+<tr class="assessment-row" data-max="2"><th scope="row">BODY</th><td><div class="assessment-choices"><label><input class="structure-choice" name="structure_body" type="checkbox" value="Compact"/><span>Compact</span></label><label><input class="structure-choice" name="structure_body" type="checkbox" value="Medium"/><span>Medium</span></label><label><input class="structure-choice" name="structure_body" type="checkbox" value="Extended"/><span>Extended</span></label><label><input class="structure-choice" name="structure_body" type="checkbox" value="Strong topline"/><span>Strong topline</span></label><label><input class="structure-choice" name="structure_body" type="checkbox" value="Slightly soft topline"/><span>Slightly soft topline</span></label></div></td></tr>
+<tr class="assessment-row" data-max="2"><th scope="row">ANGULATION</th><td><div class="assessment-choices"><label><input class="structure-choice" name="structure_angulation" type="checkbox" value="Balanced"/><span>Balanced</span></label><label><input class="structure-choice" name="structure_angulation" type="checkbox" value="Moderate"/><span>Moderate</span></label><label><input class="structure-choice" name="structure_angulation" type="checkbox" value="Strong rear"/><span>Strong rear</span></label><label><input class="structure-choice" name="structure_angulation" type="checkbox" value="Over-angulated"/><span>Over-angulated</span></label><label><input class="structure-choice" name="structure_angulation" type="checkbox" value="Under-angulated"/><span>Under-angulated</span></label></div></td></tr>
+<tr class="assessment-row" data-max="2"><th scope="row">MOVEMENT</th><td><div class="assessment-choices"><label><input class="structure-choice" name="structure_movement" type="checkbox" value="Free"/><span>Free</span></label><label><input class="structure-choice" name="structure_movement" type="checkbox" value="Powerful"/><span>Powerful</span></label><label><input class="structure-choice" name="structure_movement" type="checkbox" value="Elastic"/><span>Elastic</span></label><label><input class="structure-choice" name="structure_movement" type="checkbox" value="Correct reach &amp; drive"/><span>Correct reach &amp; drive</span></label><label><input class="structure-choice" name="structure_movement" type="checkbox" value="Restricted"/><span>Restricted</span></label></div></td></tr>
+<tr class="assessment-row" data-max="2"><th scope="row">BALANCE</th><td><div class="assessment-choices"><label><input class="structure-choice" name="structure_balance" type="checkbox" value="Harmonious"/><span>Harmonious</span></label><label><input class="structure-choice" name="structure_balance" type="checkbox" value="Front-heavy"/><span>Front-heavy</span></label><label><input class="structure-choice" name="structure_balance" type="checkbox" value="Rear-heavy"/><span>Rear-heavy</span></label><label><input class="structure-choice" name="structure_balance" type="checkbox" value="Developing"/><span>Developing</span></label></div></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="controlled-block temperament-block">
+<div class="controlled-block-head">
+<span>06 / TEMPERAMENT</span>
+<strong>Tick one.</strong>
+<small>One standardized value per row. No descriptions and no free text.</small>
+</div>
+<div aria-label="Temperament choices" class="assessment-scroll" role="region" tabindex="0">
+<table class="assessment-table temperament-table">
+<caption class="visually-hidden">Temperament — tick one controlled value per row.</caption>
+<tbody>
+<tr class="assessment-row"><th scope="row">STABILITY</th><td><div class="assessment-choices"><label><input class="temperament-choice" name="stability" type="radio" value="Highly stable"/><span>Highly stable</span></label><label><input class="temperament-choice" name="stability" type="radio" value="Stable"/><span>Stable</span></label><label><input class="temperament-choice" name="stability" type="radio" value="Moderate"/><span>Moderate</span></label><label><input class="temperament-choice" name="stability" type="radio" value="Reactive"/><span>Reactive</span></label><label><input class="temperament-choice" name="stability" type="radio" value="Unstable"/><span>Unstable</span></label></div></td></tr>
+<tr class="assessment-row"><th scope="row">DRIVE</th><td><div class="assessment-choices"><label><input class="temperament-choice" name="drive" type="radio" value="Low"/><span>Low</span></label><label><input class="temperament-choice" name="drive" type="radio" value="Moderate"/><span>Moderate</span></label><label><input class="temperament-choice" name="drive" type="radio" value="High"/><span>High</span></label><label><input class="temperament-choice" name="drive" type="radio" value="Very high"/><span>Very high</span></label></div></td></tr>
+<tr class="assessment-row"><th scope="row">SOCIAL BEHAVIOUR</th><td><div class="assessment-choices"><label><input class="temperament-choice" name="social_behaviour" type="radio" value="Reserved"/><span>Reserved</span></label><label><input class="temperament-choice" name="social_behaviour" type="radio" value="Neutral"/><span>Neutral</span></label><label><input class="temperament-choice" name="social_behaviour" type="radio" value="Social"/><span>Social</span></label><label><input class="temperament-choice" name="social_behaviour" type="radio" value="Highly social"/><span>Highly social</span></label></div></td></tr>
+<tr class="assessment-row"><th scope="row">DEFENSE</th><td><div class="assessment-choices"><label><input class="temperament-choice" name="defense" type="radio" value="Low"/><span>Low</span></label><label><input class="temperament-choice" name="defense" type="radio" value="Moderate"/><span>Moderate</span></label><label><input class="temperament-choice" name="defense" type="radio" value="High"/><span>High</span></label></div></td></tr>
+<tr class="assessment-row"><th scope="row">CONFIDENCE</th><td><div class="assessment-choices"><label><input class="temperament-choice" name="confidence" type="radio" value="Low"/><span>Low</span></label><label><input class="temperament-choice" name="confidence" type="radio" value="Moderate"/><span>Moderate</span></label><label><input class="temperament-choice" name="confidence" type="radio" value="High"/><span>High</span></label><label><input class="temperament-choice" name="confidence" type="radio" value="Very high"/><span>Very high</span></label></div></td></tr>
+</tbody>
+</table>
+</div>
+<label class="field controlled-evaluator"><span>Temperament evaluated by</span><select name="temperament_evaluator"><option value="not_declared">Not declared</option><option value="owner">Owner</option><option value="breeder">Breeder</option><option value="trainer">Trainer</option><option value="judge">Judge</option></select></label>
+</div>
+<div class="results-block"><div class="controlled-block-head compact">
+<span>07 / PERFORMANCE</span>
+<strong>Four card metrics.</strong>
+<small>These are the four tiles shown in Proven by performance.</small>
+</div><div class="field-grid">
+<label class="field"><span>Shows</span><input min="0" name="shows_count" type="number"/></label>
+<label class="field"><span>Titles</span><textarea name="titles" placeholder="One title abbreviation per line · put the two hero titles first." rows="3"></textarea></label>
+<label class="field"><span>Working exams</span><textarea name="working_exams" placeholder="Exact exam + level." rows="3"></textarea></label>
+<label class="field"><span>Sports</span><textarea name="sports" placeholder="One discipline or result per line." rows="3"></textarea></label>
+</div><div class="breeding-card-block adult-only">
+<div class="controlled-block-head compact">
+<span>08 / BREEDING IMPACT</span>
+<strong>Four card metrics.</strong>
+<small>These are the four values shown in Stud Impact.</small>
+</div>
+<div class="field-grid">
+<label class="field"><span>Litters</span><input min="0" name="litters_count" type="number"/></label>
+<label class="field"><span>Offspring</span><input min="0" name="offspring_count" type="number"/></label>
+<label class="field"><span>Champion offspring</span><input min="0" name="champion_offspring_count" type="number"/></label>
+<label class="field"><span>Export countries</span><input name="export_countries" placeholder="Germany, Italy, Croatia…"/></label>
+</div>
+</div><fieldset class="field field-wide choice-field puppy-only" hidden=""><legend>Is this puppy currently available?</legend><div class="choice-row">
+<label><input name="puppy_availability" type="radio" value="available"/><span>Yes</span></label>
+<label><input name="puppy_availability" type="radio" value="reserved"/><span>Reserved</span></label>
+<label><input name="puppy_availability" type="radio" value="placed"/><span>No / placed</span></label>
+</div></fieldset><details class="optional-details field-wide puppy-only" hidden="">
+<summary>Add puppy development details <small>Optional</small></summary>
+<div class="field-grid">
+<label class="field"><span>Birth weight in grams</span><input min="0" name="birth_weight_g" type="number"/></label>
+<label class="field"><span>Evaluation</span><input name="puppy_evaluation"/></label>
+<label class="field"><span>Training</span><input name="puppy_training"/></label>
+<label class="field"><span>Current owner</span><input name="puppy_current_owner"/></label>
+<label class="field field-wide"><span>Puppy results</span><textarea name="puppy_achievements" placeholder="One per line is fine." rows="3"></textarea></label>
+</div>
+</details></div>
+</section>
+<section aria-labelledby="step-4-title" class="form-step" data-step="3" hidden="">
+<div class="step-heading"><span>04</span><div><h2 id="step-4-title">Photos &amp; movement</h2><p>Choose clear, recent files. You do not need to rename anything.</p></div></div>
+<div class="upload-grid">
+<label class="upload-card is-primary"><input accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" name="hero_photo" required="" type="file"/><span class="upload-number">01</span><strong>Main photo <b>Required</b></strong><small>A clear portrait or full-body photo</small><em data-file-label="hero_photo">Choose photo</em></label>
+<label class="upload-card"><input accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" name="head_photo" type="file"/><span class="upload-number">02</span><strong>Head</strong><small>Front or three-quarter view</small><em data-file-label="head_photo">Choose photo</em></label>
+<label class="upload-card"><input accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" name="profile_photo" type="file"/><span class="upload-number">03</span><strong>Side profile</strong><small>Whole body from the side</small><em data-file-label="profile_photo">Choose photo</em></label>
+<label class="upload-card"><input accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" name="stack_photo" type="file"/><span class="upload-number">04</span><strong>Standing pose</strong><small>Natural or show stack</small><em data-file-label="stack_photo">Choose photo</em></label>
+<label class="upload-card"><input accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" name="movement_photo" type="file"/><span class="upload-number">05</span><strong>Movement photo</strong><small>A clear moment in motion</small><em data-file-label="movement_photo">Choose photo</em></label>
+<label class="upload-card"><input accept=".mp4,.mov,video/mp4,video/quicktime" name="movement_video" type="file"/><span class="upload-number">06</span><strong>Movement video</strong><small>MP4 or MOV · 8–15 seconds · max 180 MB</small><em data-file-label="movement_video">Choose video</em></label>
+</div>
+<div class="file-note"><strong>Images: max 20 MB each · Video: max 180 MB · Complete package: max 250 MB.</strong><span>Use JPG, PNG or WebP for images and MP4 or MOV for video.</span></div>
+</section>
+<section aria-labelledby="step-5-title" class="form-step" data-step="4" hidden="">
+<div class="step-heading"><span>05</span><div><h2 id="step-5-title">Review everything</h2><p>Each section can be reopened and edited before you prepare the submission.</p></div></div>
+<div class="review-summary" id="review-summary"></div><p class="review-hint">Nothing is locked. Use <strong>Edit</strong> on any section or the progress line above to make changes.</p>
+<div class="contact-panel">
+<h3>Your contact details</h3>
+<p>Used only if we need to clarify this submission.</p>
+<div class="field-grid">
+<label class="field"><span>Your name <b>Required</b></span><input autocomplete="name" name="contact_name" required=""/></label>
+<label class="field"><span>Email <b>Required</b></span><input autocomplete="email" name="contact_email" required="" type="email"/></label>
+<label class="field"><span>Phone or WhatsApp</span><input autocomplete="tel" name="contact_phone"/></label>
+<label class="field"><span>Your relationship to this Doberman</span><select name="relationship"><option value="owner">Owner</option><option value="breeder">Breeder</option><option value="kennel_representative">Kennel representative</option><option value="trainer">Trainer</option><option value="authorized_representative">Authorized representative</option><option value="other">Other</option></select></label>
+</div>
+</div>
+<label class="consent"><input name="accuracy_consent" required="" type="checkbox"/><span>I confirm that the information is accurate to the best of my knowledge and that Doberman Index may review the files for this submission.</span></label>
+<label class="consent consent-second"><input name="publication_consent" required="" type="checkbox"/><span>I understand that approved profile information and selected files may be published after review.</span></label>
+<p class="privacy-note">Your files are prepared on this device. They are not uploaded by this page.</p>
+<div class="success-panel" hidden="" id="success-panel" role="status"><strong>Your package is ready.</strong><span>Send the saved file to your Doberman Index contact. Please do not open or change its contents.</span></div>
+</section>
+<div class="form-error" hidden="" id="form-error" role="alert"></div>
+<footer class="wizard-actions">
+<button class="button button-quiet" hidden="" id="back-button" type="button">Back</button>
+<button class="button button-review" hidden="" id="return-review-button" type="button">Return to review</button>
+<button class="button button-primary" id="next-button" type="button">Continue <span>→</span></button>
+<button class="button button-primary" hidden="" id="prepare-button" type="submit">Prepare my submission <span>↓</span></button>
+</footer>
+</form>
+</div>
+<button class="reset-button" id="reset-button" type="button">Clear this form</button>
+</main>
+<script src="assets/js/zip-tools.js"></script>
+<script src="assets/js/submit-v3.js"></script>
+</body>
+</html>

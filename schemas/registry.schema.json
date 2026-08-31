@@ -1,0 +1,1711 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://doberman-index.com/schemas/registry.schema.json",
+  "title": "Doberman Index Registry Record",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "entity_type",
+    "record_id",
+    "status",
+    "submission"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.1.0"
+    },
+    "entity_type": {
+      "enum": [
+        "doberman",
+        "kennel",
+        "litter"
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "pattern": "^DI-(M|F|K|L)-[0-9]{6}$"
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "pending_review",
+        "published",
+        "archived"
+      ]
+    },
+    "created_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "submission": {
+      "type": "object",
+      "required": [
+        "submitter_name",
+        "submitter_email",
+        "relationship",
+        "consent_publication"
+      ],
+      "properties": {
+        "submitter_name": {
+          "type": "string"
+        },
+        "submitter_email": {
+          "type": "string",
+          "format": "email"
+        },
+        "relationship": {
+          "enum": [
+            "owner",
+            "breeder",
+            "kennel_representative",
+            "trainer",
+            "authorized_representative",
+            "other"
+          ]
+        },
+        "consent_publication": {
+          "type": "boolean"
+        },
+        "notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "doberman": {
+      "$ref": "#/$defs/doberman"
+    },
+    "kennel": {
+      "$ref": "#/$defs/kennel"
+    },
+    "litter": {
+      "$ref": "#/$defs/litter"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "doberman"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "doberman"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "kennel"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "kennel"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "litter"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "litter"
+        ]
+      }
+    }
+  ],
+  "$defs": {
+    "focalPoint": {
+      "type": "object",
+      "required": [
+        "x",
+        "y"
+      ],
+      "properties": {
+        "x": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "y": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "additionalProperties": false
+    },
+    "galleryItem": {
+      "type": "object",
+      "required": [
+        "path",
+        "focal_point",
+        "fit_mode"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^media/(dobermans|kennels|litters)/[^\\s]+\\.(jpg|jpeg|png|webp|avif)$"
+        },
+        "focal_point": {
+          "$ref": "#/$defs/focalPoint"
+        },
+        "fit_mode": {
+          "enum": [
+            "cover",
+            "contain"
+          ]
+        },
+        "caption": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "doberman": {
+      "type": "object",
+      "required": [
+        "identity",
+        "parentage",
+        "media"
+      ],
+      "properties": {
+        "identity": {
+          "type": "object",
+          "required": [
+            "registered_name",
+            "sex",
+            "life_stage",
+            "life_status",
+            "date_of_birth",
+            "color",
+            "country"
+          ],
+          "properties": {
+            "registered_name": {
+              "type": "string"
+            },
+            "sex": {
+              "enum": [
+                "male",
+                "female"
+              ]
+            },
+            "life_stage": {
+              "enum": [
+                "puppy",
+                "junior",
+                "adult",
+                "veteran",
+                "unknown"
+              ]
+            },
+            "life_status": {
+              "enum": [
+                "living",
+                "deceased",
+                "unknown"
+              ]
+            },
+            "date_of_birth": {
+              "type": "string",
+              "format": "date"
+            },
+            "date_of_death": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date"
+            },
+            "year_of_death": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1800,
+              "maximum": 9999
+            },
+            "color": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            },
+            "location": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "registration_authority": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "registration_number": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "kennel_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "kennel_name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "breeder": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "owner": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "parentage": {
+          "type": "object",
+          "properties": {
+            "sire_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "sire_name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "sire_registration": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "dam_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "dam_name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "dam_registration": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "litter_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "pedigree_source": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "pedigree_file": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "pedigree_verified": {
+              "type": "boolean"
+            },
+            "pedigree_nodes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "gen",
+                  "role",
+                  "name"
+                ],
+                "properties": {
+                  "gen": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 7
+                  },
+                  "role": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "registration": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "record_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "titles": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "country": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "source": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "pedigree_extraction": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "enum": [
+                    "not_started",
+                    "extracted",
+                    "review_required",
+                    "verified"
+                  ]
+                },
+                "reviewed_by": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "reviewed_at": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date-time"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "health": {
+          "type": "object",
+          "properties": {
+            "dm": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "lab": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "date": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date"
+                },
+                "report_number": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "evidence_file": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            "vwd": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "lab": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "date": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date"
+                },
+                "report_number": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "evidence_file": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            "hd": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "lab": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "date": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date"
+                },
+                "report_number": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "evidence_file": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            "ed": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "lab": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "date": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date"
+                },
+                "report_number": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "evidence_file": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            "thyroid": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "lab": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "date": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date"
+                },
+                "report_number": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "evidence_file": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            "eyes": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "lab": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "date": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date"
+                },
+                "report_number": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "evidence_file": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            "dcm_clinical": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "evaluation_method": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "evaluation_date": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date"
+                },
+                "veterinarian_or_clinic": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "evidence_file": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            "dcm_markers": {
+              "type": "object",
+              "properties": {
+                "dcm_1": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "enum": [
+                        "Clear",
+                        "Carrier",
+                        "Affected",
+                        null
+                      ]
+                    },
+                    "lab": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "date": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "format": "date"
+                    },
+                    "report_number": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "evidence_file": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "dcm_2": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "enum": [
+                        "Clear",
+                        "Carrier",
+                        "Affected",
+                        null
+                      ]
+                    },
+                    "lab": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "date": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "format": "date"
+                    },
+                    "report_number": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "evidence_file": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "dcm_3": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "enum": [
+                        "Clear",
+                        "Carrier",
+                        "Affected",
+                        null
+                      ]
+                    },
+                    "lab": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "date": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "format": "date"
+                    },
+                    "report_number": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "evidence_file": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "dcm_4": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "enum": [
+                        "Clear",
+                        "Carrier",
+                        "Affected",
+                        null
+                      ]
+                    },
+                    "lab": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "date": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "format": "date"
+                    },
+                    "report_number": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "evidence_file": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "dcm_5": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "enum": [
+                        "Clear",
+                        "Carrier",
+                        "Affected",
+                        null
+                      ]
+                    },
+                    "lab": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "date": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "format": "date"
+                    },
+                    "report_number": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "evidence_file": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            },
+            "mortality": {
+              "type": "object",
+              "properties": {
+                "cause": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "cause_disclosure": {
+                  "enum": [
+                    "public",
+                    "private",
+                    "not_provided"
+                  ]
+                },
+                "evidence_source": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "evidence_file": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "structure": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "maxItems": 2,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "Balanced",
+                  "Strong",
+                  "Elegant",
+                  "Compact",
+                  "Extended",
+                  "Developing"
+                ]
+              }
+            },
+            "head": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "maxItems": 2,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "Dry",
+                  "Strong",
+                  "Refined",
+                  "Correct proportions",
+                  "Slightly heavy",
+                  "Slightly narrow"
+                ]
+              }
+            },
+            "body": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "maxItems": 2,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "Compact",
+                  "Medium",
+                  "Extended",
+                  "Strong topline",
+                  "Slightly soft topline"
+                ]
+              }
+            },
+            "angulation": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "maxItems": 2,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "Balanced",
+                  "Moderate",
+                  "Strong rear",
+                  "Over-angulated",
+                  "Under-angulated"
+                ]
+              }
+            },
+            "movement": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "maxItems": 2,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "Free",
+                  "Powerful",
+                  "Elastic",
+                  "Correct reach & drive",
+                  "Restricted"
+                ]
+              }
+            },
+            "balance": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "maxItems": 2,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "Harmonious",
+                  "Front-heavy",
+                  "Rear-heavy",
+                  "Developing"
+                ]
+              }
+            },
+            "evaluator": {
+              "enum": [
+                "owner",
+                "breeder",
+                "trainer",
+                "judge",
+                "not_declared"
+              ]
+            },
+            "evidence": {
+              "type": "object",
+              "properties": {
+                "source_type": {
+                  "enum": [
+                    "owner_declaration",
+                    "breeder_declaration",
+                    "official_certificate",
+                    "laboratory_report",
+                    "veterinary_report",
+                    "registry_record",
+                    "judge_report",
+                    "trainer_report",
+                    "other"
+                  ]
+                },
+                "issuer": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "date": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date"
+                },
+                "reference": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "file": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "temperament": {
+          "type": "object",
+          "properties": {
+            "stability": {
+              "enum": [
+                null,
+                "Highly stable",
+                "Stable",
+                "Moderate",
+                "Reactive",
+                "Unstable"
+              ]
+            },
+            "drive": {
+              "enum": [
+                null,
+                "Low",
+                "Moderate",
+                "High",
+                "Very high"
+              ]
+            },
+            "social_behaviour": {
+              "enum": [
+                null,
+                "Reserved",
+                "Neutral",
+                "Social",
+                "Highly social"
+              ]
+            },
+            "defense": {
+              "enum": [
+                null,
+                "Low",
+                "Moderate",
+                "High"
+              ]
+            },
+            "confidence": {
+              "enum": [
+                null,
+                "Low",
+                "Moderate",
+                "High",
+                "Very high"
+              ]
+            },
+            "evaluator": {
+              "enum": [
+                "owner",
+                "breeder",
+                "trainer",
+                "judge",
+                "not_declared"
+              ]
+            },
+            "evidence": {
+              "type": "object",
+              "properties": {
+                "source_type": {
+                  "enum": [
+                    "owner_declaration",
+                    "breeder_declaration",
+                    "official_certificate",
+                    "laboratory_report",
+                    "veterinary_report",
+                    "registry_record",
+                    "judge_report",
+                    "trainer_report",
+                    "other"
+                  ]
+                },
+                "issuer": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "date": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date"
+                },
+                "reference": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "file": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "performance": {
+          "type": "object",
+          "properties": {
+            "shows_count": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "titles": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "working_exams": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "sports": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "evidence_files": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "reproduction": {
+          "type": "object",
+          "properties": {
+            "litters_count": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "offspring_count": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "champion_offspring_count": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "export_countries": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "litter_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "availability": {
+              "enum": [
+                "not_applicable",
+                "available",
+                "private_arrangement",
+                "not_available",
+                "retired",
+                "unknown"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "puppy_lifecycle": {
+          "type": "object",
+          "properties": {
+            "birth_weight_g": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "current_status": {
+              "enum": [
+                "not_applicable",
+                "available",
+                "reserved",
+                "placed",
+                "retained",
+                "unknown"
+              ]
+            },
+            "evaluation": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "training": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "current_owner": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "achievements": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "media": {
+          "type": "object",
+          "required": [
+            "hero",
+            "head",
+            "profile",
+            "stack",
+            "movement"
+          ],
+          "properties": {
+            "hero": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "head": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "profile": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "stack": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "movement": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "focal_points": {
+              "type": "object",
+              "properties": {
+                "hero": {
+                  "$ref": "#/$defs/focalPoint"
+                },
+                "head": {
+                  "$ref": "#/$defs/focalPoint"
+                },
+                "profile": {
+                  "$ref": "#/$defs/focalPoint"
+                },
+                "stack": {
+                  "$ref": "#/$defs/focalPoint"
+                },
+                "movement": {
+                  "$ref": "#/$defs/focalPoint"
+                }
+              },
+              "additionalProperties": false
+            },
+            "gallery": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^media/(dobermans|kennels|litters)/[^\\s]+\\.(jpg|jpeg|png|webp|avif)$"
+                  },
+                  {
+                    "$ref": "#/$defs/galleryItem"
+                  }
+                ]
+              },
+              "maxItems": 10
+            },
+            "movement_video": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "movement_video_seconds": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 8,
+              "maximum": 15
+            },
+            "movement_video_audio": {
+              "enum": [
+                "natural_sound",
+                "muted"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "publication": {
+          "type": "object",
+          "properties": {
+            "last_updated_label": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "profile_template": {
+              "enum": [
+                "male",
+                "female",
+                "puppy",
+                null
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "kennel": {
+      "type": "object",
+      "required": [
+        "name",
+        "country",
+        "media"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "registration_prefix": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "registration_authority": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "country": {
+          "type": "string"
+        },
+        "location": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "founded_year": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1900
+        },
+        "owner_or_founder": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "contact_email": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "email"
+        },
+        "website": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "social_links": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "focus": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "bloodline_tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dog_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "litter_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "media": {
+          "type": "object",
+          "properties": {
+            "logo": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "cover": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "gallery": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^media/(dobermans|kennels|litters)/[^\\s]+\\.(jpg|jpeg|png|webp|avif)$"
+                  },
+                  {
+                    "$ref": "#/$defs/galleryItem"
+                  }
+                ]
+              },
+              "maxItems": 10
+            }
+          },
+          "additionalProperties": false
+        },
+        "derived_metrics": {
+          "type": "object",
+          "description": "System-generated. Do not manually maintain when build automation is active.",
+          "properties": {
+            "indexed_dobermans": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "litters": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "champions": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "active_dobermans": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "litter": {
+      "type": "object",
+      "required": [
+        "kennel_id",
+        "sire_id",
+        "dam_id",
+        "date_of_birth"
+      ],
+      "properties": {
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "kennel_id": {
+          "type": "string"
+        },
+        "sire_id": {
+          "type": "string"
+        },
+        "dam_id": {
+          "type": "string"
+        },
+        "date_of_birth": {
+          "type": "string",
+          "format": "date"
+        },
+        "planned_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "status": {
+          "enum": [
+            "planned",
+            "born",
+            "open",
+            "closed",
+            "archived"
+          ]
+        },
+        "puppy_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "available_puppy_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "media": {
+          "type": "object",
+          "properties": {
+            "cover": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "gallery": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^media/(dobermans|kennels|litters)/[^\\s]+\\.(jpg|jpeg|png|webp|avif)$"
+                  },
+                  {
+                    "$ref": "#/$defs/galleryItem"
+                  }
+                ]
+              },
+              "maxItems": 10
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

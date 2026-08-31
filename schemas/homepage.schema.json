@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://doberman-index.com/schemas/homepage.schema.json",
+  "title": "Doberman Index Homepage Showcase",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "showcases"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "updated_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "showcases": {
+      "type": "object",
+      "required": [
+        "males",
+        "females",
+        "kennels",
+        "puppies"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "males": {
+          "type": "array",
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^DI-(M|F|K)-\\d{6}$"
+          }
+        },
+        "females": {
+          "type": "array",
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^DI-(M|F|K)-\\d{6}$"
+          }
+        },
+        "kennels": {
+          "type": "array",
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^DI-(M|F|K)-\\d{6}$"
+          }
+        },
+        "puppies": {
+          "type": "array",
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^DI-(M|F|K)-\\d{6}$"
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://doberman-index.com/schemas/promotion-belt.schema.json",
+  "title": "Doberman Index Promoted Kennels Belt",
+  "type": "object",
+  "required": ["schema_version", "placements"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "updated_at": {"type": ["string", "null"], "format": "date"},
+    "placements": {
+      "type": "array",
+      "maxItems": 24,
+      "items": {
+        "type": "object",
+        "required": ["kennel_id", "kennel_name", "country", "logo", "destination", "starts_on", "ends_on", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "kennel_id": {"type": "string", "pattern": "^DI-K-\\d{6}$"},
+          "kennel_name": {"type": "string", "minLength": 2, "maxLength": 100},
+          "country": {"type": "string", "minLength": 2, "maxLength": 80},
+          "logo": {"type": "string", "pattern": "^media/kennels/DI-K-\\d{6}/[^/]+\\.(svg|png|webp)$"},
+          "destination": {"type": "string", "pattern": "^(profile\\.html\\?id=DI-K-\\d{6}|https://[^\\s]+)$"},
+          "starts_on": {"type": "string", "format": "date"},
+          "ends_on": {"type": "string", "format": "date"},
+          "status": {"enum": ["planned", "active", "expired"]}
+        }
+      }
+    }
+  }
+}

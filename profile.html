@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Doberman Index — Profile</title>
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f1f1f1;color:#121212;font-family:Arial,sans-serif}
+main{width:min(720px,calc(100% - 40px));padding:36px;background:white;border-top:6px solid #f3fe19}
+h1{margin:0 0 12px;font-size:34px}p{line-height:1.6;color:#555}
+</style>
+</head>
+<body>
+<main id="status"><h1>Loading profile…</h1><p>Doberman Index</p></main>
+<script src="assets/js/display-name.js"></script>
+<script>
+(async()=>{
+  const id=(new URLSearchParams(location.search).get("id")||"").trim().toUpperCase();
+  const status=document.getElementById("status");
+  const escapeHTML=value=>{const node=document.createElement("div");node.textContent=String(value??"");return node.innerHTML};
+  if(!/^DI-[MFKL]-\d{6}$/.test(id)){status.innerHTML='<h1>Profile ID required.</h1><p>Return to the <a href="./index.html">Doberman Index search</a> and choose a published record.</p>';return;}
+  try{
+    const registry=await fetch("./data/registry.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("Registry unavailable");return r.json()});
+    const item=(registry.records||[]).find(x=>x.record_id===id);
+    if(!item)throw new Error("Record not found in registry.");
+    const target=item.template;
+    if(target==="male"){
+      location.replace(`./profiles/male.html?id=${encodeURIComponent(id)}`);
+      return;
+    }
+    const displayName=item.entity_type==="doberman"?window.DIName.displayRegisteredName(item.registered_name||id):(item.name||id);
+    status.innerHTML=`<h1>${escapeHTML(displayName)}</h1><p>The <strong>${escapeHTML(target)}</strong> digital-card template is reserved in the architecture and will be connected here as soon as its design is approved.</p>`;
+  }catch(error){
+    status.innerHTML=`<h1>Profile unavailable.</h1><p>${error.message}</p>`;
+  }
+})();
+</script>
+</body>
+</html>

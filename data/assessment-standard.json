@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.1.0",
+  "title": "Doberman Index Controlled Assessment Standard",
+  "principle": "Structure uses one or two short controlled descriptors per field. Temperament uses one controlled value per axis. Free-text structural and temperament descriptions are not accepted.",
+  "selection_rules": {
+    "structure": {
+      "minimum": 0,
+      "maximum": 2,
+      "display": "checkbox",
+      "note": "Tick one or two. Leave blank if unknown."
+    },
+    "temperament": {
+      "minimum": 0,
+      "maximum": 1,
+      "display": "single_choice_tick",
+      "note": "Tick one. Leave blank if unknown."
+    }
+  },
+  "structure": {
+    "type": [
+      "Balanced",
+      "Strong",
+      "Elegant",
+      "Compact",
+      "Extended",
+      "Developing"
+    ],
+    "head": [
+      "Dry",
+      "Strong",
+      "Refined",
+      "Correct proportions",
+      "Slightly heavy",
+      "Slightly narrow"
+    ],
+    "body": [
+      "Compact",
+      "Medium",
+      "Extended",
+      "Strong topline",
+      "Slightly soft topline"
+    ],
+    "angulation": [
+      "Balanced",
+      "Moderate",
+      "Strong rear",
+      "Over-angulated",
+      "Under-angulated"
+    ],
+    "movement": [
+      "Free",
+      "Powerful",
+      "Elastic",
+      "Correct reach & drive",
+      "Restricted"
+    ],
+    "balance": [
+      "Harmonious",
+      "Front-heavy",
+      "Rear-heavy",
+      "Developing"
+    ]
+  },
+  "temperament": {
+    "stability": [
+      "Highly stable",
+      "Stable",
+      "Moderate",
+      "Reactive",
+      "Unstable"
+    ],
+    "drive": [
+      "Low",
+      "Moderate",
+      "High",
+      "Very high"
+    ],
+    "social_behaviour": [
+      "Reserved",
+      "Neutral",
+      "Social",
+      "Highly social"
+    ],
+    "defense": [
+      "Low",
+      "Moderate",
+      "High"
+    ],
+    "confidence": [
+      "Low",
+      "Moderate",
+      "High",
+      "Very high"
+    ]
+  },
+  "evaluator": [
+    "owner",
+    "breeder",
+    "trainer",
+    "judge",
+    "not_declared"
+  ]
+}

@@ -1,0 +1,269 @@
+{
+  "schema_version": "1.1.0",
+  "entity_type": "doberman",
+  "record_id": "DI-M-000001",
+  "status": "published",
+  "created_at": "2026-08-28T16:09:54.880Z",
+  "updated_at": "2026-08-30T15:15:53.216Z",
+  "submission": {
+    "submitter_name": "REDACTED",
+    "submitter_email": "redacted@example.invalid",
+    "relationship": "owner",
+    "consent_publication": true,
+    "notes": null
+  },
+  "doberman": {
+    "identity": {
+      "registered_name": "DION DANTE",
+      "sex": "male",
+      "life_stage": "veteran",
+      "life_status": "living",
+      "date_of_birth": "2017-12-31",
+      "date_of_death": null,
+      "year_of_death": null,
+      "color": "Black & rust",
+      "country": "Serbia",
+      "location": "Belgrade",
+      "registration_authority": "FCI",
+      "registration_number": "JR 85729",
+      "kennel_id": null,
+      "kennel_name": "SIEMPRE PELIGROSO",
+      "breeder": "Dejan Milićević",
+      "owner": "Kristina Radosavljević"
+    },
+    "parentage": {
+      "sire_id": null,
+      "sire_name": "COWBOY LUCKY LUCK DI ALTOBELLO",
+      "sire_registration": "JR 708334",
+      "dam_id": null,
+      "dam_name": "FELICITA FLAIR VON ASHANTI LEGENDE",
+      "dam_registration": "JR 713394",
+      "litter_id": null,
+      "pedigree_source": "owner_upload",
+      "pedigree_file": "media/dobermans/DI-M-000001/pedigree/pedigree.jpg",
+      "pedigree_verified": true,
+      "pedigree_nodes": [],
+      "pedigree_extraction": {
+        "status": "not_started",
+        "reviewed_by": null,
+        "reviewed_at": null
+      }
+    },
+    "health": {
+      "dm": {
+        "result": "Clear",
+        "lab": null,
+        "date": null,
+        "report_number": null,
+        "evidence_file": null
+      },
+      "vwd": {
+        "result": "Clear",
+        "lab": null,
+        "date": null,
+        "report_number": null,
+        "evidence_file": "media/dobermans/DI-M-000001/evidence/vwd.pdf"
+      },
+      "hd": {
+        "result": "HD-B",
+        "lab": null,
+        "date": null,
+        "report_number": null,
+        "evidence_file": null
+      },
+      "ed": {
+        "result": "ED-0",
+        "lab": null,
+        "date": null,
+        "report_number": null,
+        "evidence_file": null
+      },
+      "thyroid": {
+        "result": "NORMAL",
+        "lab": null,
+        "date": null,
+        "report_number": null,
+        "evidence_file": null
+      },
+      "eyes": {
+        "result": "NORMAL",
+        "lab": null,
+        "date": null,
+        "report_number": null,
+        "evidence_file": null
+      },
+      "dcm_clinical": {
+        "status": "NO SIGNS OF DCM",
+        "evaluation_method": "HOLTER + ECHO",
+        "evaluation_date": "2026-03-03",
+        "veterinarian_or_clinic": "VET CENTAR",
+        "evidence_file": null
+      },
+      "dcm_markers": {
+        "dcm_1": {
+          "result": "Carrier",
+          "lab": null,
+          "date": null,
+          "report_number": null,
+          "evidence_file": null
+        },
+        "dcm_2": {
+          "result": "Clear",
+          "lab": null,
+          "date": null,
+          "report_number": null,
+          "evidence_file": null
+        },
+        "dcm_3": {
+          "result": "Clear",
+          "lab": null,
+          "date": null,
+          "report_number": null,
+          "evidence_file": null
+        },
+        "dcm_4": {
+          "result": "Clear",
+          "lab": null,
+          "date": null,
+          "report_number": null,
+          "evidence_file": null
+        },
+        "dcm_5": {
+          "result": "Clear",
+          "lab": null,
+          "date": null,
+          "report_number": null,
+          "evidence_file": null
+        }
+      },
+      "mortality": {
+        "cause": null,
+        "cause_disclosure": "public",
+        "evidence_source": null,
+        "evidence_file": null
+      }
+    },
+    "structure": {
+      "type": [
+        "Balanced",
+        "Elegant"
+      ],
+      "head": [
+        "Refined",
+        "Correct proportions"
+      ],
+      "body": [
+        "Compact",
+        "Strong topline"
+      ],
+      "angulation": [
+        "Balanced"
+      ],
+      "movement": [
+        "Free",
+        "Elastic"
+      ],
+      "balance": [
+        "Harmonious"
+      ],
+      "evaluator": "owner",
+      "evidence": {
+        "source_type": "owner_declaration",
+        "issuer": null,
+        "date": null,
+        "reference": null,
+        "file": null
+      }
+    },
+    "temperament": {
+      "stability": "Stable",
+      "drive": "High",
+      "social_behaviour": "Neutral",
+      "defense": "Moderate",
+      "confidence": "Moderate",
+      "evaluator": "owner",
+      "evidence": {
+        "source_type": "owner_declaration",
+        "issuer": null,
+        "date": null,
+        "reference": null,
+        "file": null
+      }
+    },
+    "performance": {
+      "shows_count": 7,
+      "titles": [
+        "CHAMPION OF SERBIA IN BEAUTY"
+      ],
+      "working_exams": [
+        "BH-VT",
+        "IGP 1"
+      ],
+      "sports": [],
+      "evidence_files": []
+    },
+    "reproduction": {
+      "litters_count": 5,
+      "offspring_count": 12,
+      "champion_offspring_count": 3,
+      "export_countries": [
+        "Netherlands",
+        "USA",
+        "Germany",
+        "Poland"
+      ],
+      "litter_ids": [],
+      "availability": "available"
+    },
+    "puppy_lifecycle": {
+      "birth_weight_g": null,
+      "current_status": "not_applicable",
+      "evaluation": null,
+      "training": null,
+      "current_owner": null,
+      "achievements": []
+    },
+    "media": {
+      "hero": "media/dobermans/DI-M-000001/hero.png",
+      "head": "media/dobermans/DI-M-000001/head.png",
+      "profile": "media/dobermans/DI-M-000001/profile.png",
+      "stack": "media/dobermans/DI-M-000001/stack.png",
+      "movement": null,
+      "gallery": [
+        {
+          "path": "media/dobermans/DI-M-000001/gallery-01.png",
+          "focal_point": {
+            "x": 45.333336724175346,
+            "y": 72.22222222222223
+          },
+          "fit_mode": "contain"
+        }
+      ],
+      "movement_video": "media/dobermans/DI-M-000001/movement.mp4",
+      "movement_video_seconds": null,
+      "movement_video_audio": "natural_sound",
+      "focal_points": {
+        "hero": {
+          "x": 48.00001356336806,
+          "y": 41.46666802300347
+        },
+        "head": {
+          "x": 50.888875325520836,
+          "y": 75.06667073567708
+        },
+        "profile": {
+          "x": 48.888888888888886,
+          "y": 100
+        },
+        "stack": {
+          "x": 64.88889906141493,
+          "y": 0
+        }
+      }
+    },
+    "publication": {
+      "last_updated_label": null,
+      "profile_template": "male"
+    }
+  }
+}

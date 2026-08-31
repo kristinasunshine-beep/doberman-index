@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1200" viewBox="0 0 1800 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Doberman Index profile image placeholder</title>
+  <desc id="desc">Dark editorial placeholder with the Doberman Index initials.</desc>
+  <rect width="1800" height="1200" fill="#111111"/>
+  <path d="M0 880L620 430L1030 720L1800 250V1200H0Z" fill="#1d1d1d"/>
+  <circle cx="1420" cy="240" r="128" fill="#ffd403"/>
+  <text x="110" y="1010" fill="#f1f1ec" font-family="Arial, Helvetica, sans-serif" font-size="190" font-weight="700" letter-spacing="-12">DI.</text>
+  <text x="120" y="1100" fill="#8b8b84" font-family="Arial, Helvetica, sans-serif" font-size="34" letter-spacing="14">PROFILE MEDIA PENDING</text>
+</svg>

@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.1.0",
+  "records": [
+    {
+      "record_id": "DI-M-000001",
+      "entity_type": "doberman",
+      "status": "published",
+      "template": "male",
+      "registered_name": "DION DANTE",
+      "sex": "male",
+      "life_stage": "veteran",
+      "life_status": "living",
+      "date_of_birth": "2017-12-31",
+      "date_of_death": null,
+      "year_of_death": null,
+      "country": "Serbia",
+      "location": "Belgrade",
+      "kennel_id": null,
+      "kennel_name": "SIEMPRE PELIGROSO",
+      "litter_id": null,
+      "sire_id": null,
+      "dam_id": null,
+      "availability": "available",
+      "hero": "media/dobermans/DI-M-000001/hero.png",
+      "hero_focal_point": {
+        "x": 48.00001356336806,
+        "y": 41.46666802300347
+      },
+      "titles": [
+        "CHAMPION OF SERBIA IN BEAUTY"
+      ],
+      "path": "data/dobermans/DI-M-000001.json"
+    }
+  ],
+  "generated_at": "2026-08-31T11:19:35+00:00"
+}
