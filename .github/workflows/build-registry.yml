@@ -1,0 +1,114 @@
+name: Rebuild Doberman Index Registry
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/dobermans/**"
+      - "data/kennels/**"
+      - "data/litters/**"
+      - "data/homepage.json"
+      - "data/assessment-standard.json"
+      - "data/promotion-belt.json"
+      - "schemas/registry.schema.json"
+      - "schemas/promotion-belt.schema.json"
+      - "index.html"
+      - "profile.html"
+      - "submit.html"
+      - "profiles/male.html"
+      - "assets/js/display-name.js"
+      - "assets/js/media-presentation.js"
+      - "assets/css/submit-v3.css"
+      - "assets/js/submit-v3.js"
+      - "assets/js/zip-tools.js"
+      - "scripts/build_registry.py"
+      - "scripts/migrate_lifecycle_v1_1.py"
+      - "scripts/validate_lifecycle_contract.py"
+      - "scripts/validate_homepage.py"
+      - "scripts/validate_assessment_standard.py"
+      - "scripts/validate_male_profile_contract.py"
+      - "scripts/validate_male_visual_master.py"
+      - "scripts/validate_promotion_belt.py"
+      - "scripts/validate_submission_visual_master.py"
+      - "scripts/validate_targeted_production_patch.py"
+      - "scripts/test_registry_consistency.py"
+      - "scripts/validate_gallery_schema_contract.py"
+      - "scripts/validate_workflow_contract.py"
+      - "scripts/test_display_name.js"
+      - "scripts/test_public_ui.js"
+      - "scripts/test_media_presentation.js"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-registry-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  rebuild-registry:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Rebuild registry
+        run: |
+          python scripts/migrate_lifecycle_v1_1.py
+          python scripts/build_registry.py
+
+      - name: Validate lifecycle contract
+        run: python scripts/validate_lifecycle_contract.py
+
+      - name: Lock approved v5.9.21 submission visual master
+        run: python scripts/validate_submission_visual_master.py
+
+      - name: Validate homepage showcase
+        run: python scripts/validate_homepage.py
+
+      - name: Validate paid kennel promotion belt
+        run: python scripts/validate_promotion_belt.py
+
+      - name: Validate controlled profile standard
+        run: python scripts/validate_assessment_standard.py
+
+      - name: Validate male profile contract
+        run: |
+          python scripts/validate_male_profile_contract.py
+          python scripts/validate_male_visual_master.py
+
+      - name: Validate registered-name and focal-point presentation
+        run: |
+          node scripts/test_display_name.js
+          node scripts/test_public_ui.js
+          node scripts/test_media_presentation.js
+          python scripts/validate_targeted_production_patch.py
+          python scripts/test_registry_consistency.py
+          python scripts/validate_gallery_schema_contract.py
+
+      - name: Validate GitHub Actions workflow contract
+        run: python scripts/validate_workflow_contract.py
+
+      - name: Commit registry if changed
+        shell: bash
+        run: |
+          if git diff --quiet -- data/registry.json; then
+            echo "registry.json already up to date."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/registry.json
+          git commit -m "chore: rebuild registry"
+          git push
