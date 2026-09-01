@@ -109,9 +109,13 @@
     .mission-brief strong { display: block; margin-top: 54px; font-family: var(--display); font-size: 18px; font-weight: 900; line-height: 1; letter-spacing: -.045em; }
     .mission-brief p { max-width: 245px; margin: auto 0 0; color: var(--ink); font-size: 15px; line-height: 1.48; }
     .mission-brief p b { color: var(--ink); }
-    .hero-detail { position: absolute; top: 91svh; right: var(--pad); bottom: auto; z-index: 3; display: flex; align-items: center; gap: 14px; font: 700 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
-    .round-arrow { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--ink); color: var(--white); font-family: Inter, sans-serif; font-size: 20px; transition: transform .35s var(--ease), color .35s; }
-    .hero-detail:hover .round-arrow { color: var(--acid); transform: rotate(45deg); }
+    .hero-actions { position: absolute; top: 91svh; right: var(--pad); bottom: auto; z-index: 3; display: flex; align-items: center; gap: 28px; font: 700 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+    .details-link { display: inline-flex; align-items: center; gap: 8px; }
+    .details-link .plain-arrow { font-family: Inter, sans-serif; font-size: 16px; line-height: 1; transition: transform .28s var(--ease); }
+    .details-link:hover .plain-arrow, .details-link:focus-visible .plain-arrow { transform: translateX(4px); }
+    .mission-action { display: inline-flex; align-items: center; gap: 12px; }
+    .round-arrow { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--ink); color: var(--white); font-family: Inter, sans-serif; font-size: 20px; line-height: 1; transition: background .3s var(--ease), transform .38s var(--ease), color .3s var(--ease); }
+    .mission-action.is-activated .round-arrow { background: #0c01e6; color: var(--white); transform: rotate(45deg); }
 
     .section { position: relative; min-height: 620px; padding: var(--section-space) var(--pad); border-bottom: 1px solid var(--ink); background: var(--paper); }
     .section--white, .section--paper { background: var(--paper); }
@@ -234,7 +238,7 @@
     .provenance-copy p { margin: 0; color: #555550; font-size: 16px; line-height: 1.7; }
     .provenance-copy p + p { margin-top: 22px; }
     .provenance-signoff { position: relative; grid-column: 1 / -1; height: clamp(146px, 11vw, 190px); margin-top: 0; overflow: hidden; background: var(--white); color: var(--ink); }
-    .provenance-signoff::after { content: none; }
+    .provenance-signoff::after { content: ""; position: absolute; top: 0; left: 0; width: 58px; height: 5px; background: var(--acid); }
     .provenance-signoff-message { position: absolute; right: clamp(20px, 2.8vw, 44px); bottom: clamp(18px, 1.8vw, 28px); max-width: min(62%, 560px); margin: 0; font-family: var(--display); font-size: clamp(19px, 1.5vw, 24px); font-weight: 800; line-height: 1.08; letter-spacing: -.045em; text-align: right; }
     .provenance-signoff-message span, .provenance-signoff-message strong { display: block; font: inherit; }
     .provenance-signoff-message > span { white-space: nowrap; }
@@ -297,8 +301,9 @@
       .mission-code { font-size: 8px; }
       .mission-brief strong { margin-top: 46px; font-size: 18px; }
       .mission-brief p { font-size: 12px; line-height: 1.42; }
-      .hero-detail { top: clamp(470px, calc(100svh - 78px), 640px); right: 20px; bottom: auto; gap: 0; }
-      .hero-detail > span:first-child { display: none; }
+      .hero-actions { top: clamp(470px, calc(100svh - 78px), 640px); right: 20px; bottom: auto; gap: 18px; font-size: 10px; letter-spacing: .08em; }
+      .mission-action { gap: 8px; }
+      .round-arrow { width: 42px; height: 42px; font-size: 18px; }
       .hero::after { top: 521px; right: auto; bottom: auto; left: calc(20px + 70% - 3px); font-size: 48vw; transform: translateX(-.045em); }
       .section-index { gap: 10px; margin-bottom: 24px; font-size: 11px; letter-spacing: .08em; }
       .section-index i { width: 34px; }
@@ -345,12 +350,7 @@
       .provenance { min-height: auto; padding-bottom: 34px; }
       .provenance h2 { font-size: var(--section-heading); line-height: .86; letter-spacing: -.07em; }
       .provenance-copy { margin-left: 0; }
-      .provenance-signoff {
-        width: calc(100% + (var(--pad) * 2));
-        height: 150px;
-        margin-top: 4px;
-        margin-left: calc(var(--pad) * -1);
-      }
+      .provenance-signoff { height: 150px; margin-top: 4px; }
       .provenance-signoff-message { right: 15px; bottom: 15px; width: 240px; max-width: calc(100% - 30px); font-size: clamp(21px, 7vw, 27px); }
       footer { flex-direction: column; gap: 16px; padding: 28px var(--pad); }
       .footer-logo::after { display: block; margin-top: 8px; }
@@ -366,7 +366,7 @@
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to main</a>
+  <a class="skip-link" href="#main">Skip to content</a>
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
   <nav class="float-nav" aria-label="Primary navigation">
@@ -374,55 +374,59 @@
     <a class="nav-link" href="#why-it-exists">Why</a>
     <a class="nav-link" href="#system">System</a>
     <a class="nav-link" href="#how-it-works">Process</a>
+    <a class="nav-link" href="#principles">Principles</a>
     <a class="nav-link" href="#main" aria-current="page">About</a>
     <a class="nav-cta" href="index.html#access">Explore</a>
   </nav>
 
   <main id="main">
     <section class="hero" aria-labelledby="about-title">
-      <div class="hero-topline">—&nbsp;&nbsp;DI mission / Charter</div>
-      <p class="hero-note">A unified reference for Dobermans, kennels, litters and bloodlines.</p>
+      <div class="hero-topline">—&nbsp;&nbsp;DI mission / About</div>
+      <p class="hero-note">A shared structure for dogs, kennels, litters and bloodlines.</p>
       <h1 class="hero-title" id="about-title"><span>Why</span><span class="shift">the Index</span><span>exists.</span></h1>
       <div class="mission-brief">
-        <span class="mission-code">DI / Charter 001</span>
-        <strong>One breed.<br>One searchable catalogue.</strong>
-        <p>Doberman Index organizes breeding information into consistent digital records so it can be <b>found, understood and compared</b> without relying on visibility alone.</p>
+        <span class="mission-code">DI / Mission 001</span>
+        <strong>The Doberman world, connected through one living record.</strong>
+        <p>Structured records. Connected bloodlines.</p>
       </div>
-      <a class="hero-detail" href="#why-it-exists"><span>Read the mission</span><span class="round-arrow" aria-hidden="true">↓</span></a>
+      <div class="hero-actions" aria-label="About navigation">
+        <a class="details-link" href="#what-it-is"><span>Details</span><span class="plain-arrow" aria-hidden="true">→</span></a>
+        <a class="mission-action" href="#why-it-exists"><span>Mission</span><span class="round-arrow" aria-hidden="true">↓</span></a>
+      </div>
     </section>
 
     <section class="section section--paper" id="why-it-exists" aria-labelledby="why-title">
       <div class="section-index" data-reveal><b>01</b><i aria-hidden="true"></i><span>Why it exists</span></div>
       <div class="section-head" data-reveal>
         <h2 class="section-title" id="why-title"><span>The visibility</span><span class="ghost">problem.</span></h2>
-        <p class="section-copy">Exceptional dogs may remain obscure, while familiar names vary in the depth of proof they offer. Pedigrees, clinical findings and lineage histories are dispersed across websites, social feeds, messages, paper files and private archives. <strong>Doberman Index brings that material into a coherent public reference.</strong> <strong class="closing-sentence">Substantiation should lead attention.</strong></p>
+        <p class="section-copy">The best dogs are not always the most visible, and the most visible breeder is not automatically the most informative. Valuable material is often dispersed across websites, social feeds, messages, paper pedigrees and private archives. <strong>The shortage is not information. It is structure.</strong> <strong class="closing-sentence">Visibility should begin with evidence, not volume.</strong></p>
       </div>
     </section>
 
     <section class="section section--white" id="problem" aria-labelledby="problem-title">
       <div class="section-index" data-reveal><b>02</b><i aria-hidden="true"></i><span>The problem</span></div>
       <div class="section-head" data-reveal>
-        <h2 class="section-title" id="problem-title"><span>When evidence</span><span class="ghost">is scattered.</span></h2>
-        <p class="section-copy">Ancestry becomes harder to trace when clinical documents, results and family links live apart. Incompatible formats slow evaluation; personal familiarity stands in for clarity. <strong>A permanent DI number and explicit connections reveal the complete picture.</strong></p>
+        <h2 class="section-title" id="problem-title"><span>When data</span><span class="ghost">is scattered.</span></h2>
+        <p class="section-copy">Lineage becomes harder to trace. Health evidence sits apart from the profile it belongs to. Similar facts are described in incompatible ways. Credibility depends too heavily on who already knows whom. <strong>The Index addresses that gap by giving records a stable identity, a shared structure and explicit relationships.</strong></p>
       </div>
       <div class="ledger problem-ledger" data-reveal>
-        <article class="ledger-row"><span>01</span><h3>Family links fade.</h3><p>Parents, offspring, breeders and littermates gain meaning when their relationships are legible.</p></article>
-        <article class="ledger-row"><span>02</span><h3>Proof stays isolated.</h3><p>Pedigree, health, temperament and achievements belong in one readable view.</p></article>
-        <article class="ledger-row"><span>03</span><h3>Attention obscures gaps.</h3><p>A common format separates prominence from substantiation and exposes unavailable facts.</p></article>
+        <article class="ledger-row"><span>01</span><h3>Connections disappear.</h3><p>Parents, litters, offspring and kennels cannot form a dependable network when every source uses a different structure.</p></article>
+        <article class="ledger-row"><span>02</span><h3>Evidence stays isolated.</h3><p>Pedigree, health, temperament and results are difficult to review together when they live in separate files and formats.</p></article>
+        <article class="ledger-row"><span>03</span><h3>Presentation replaces context.</h3><p>Without a common record format, attention can look like proof and missing information can remain invisible.</p></article>
       </div>
     </section>
 
     <section class="section section--dark definition" id="what-it-is" aria-labelledby="definition-title">
-      <div class="section-index" data-reveal><b>03</b><i aria-hidden="true"></i><span>Definition</span></div>
+      <div class="section-index" data-reveal><b>03</b><i aria-hidden="true"></i><span>What Doberman Index is</span></div>
       <div class="section-head" data-reveal>
-        <h2 class="section-title" id="definition-title"><span>A registry.</span><span class="ghost">Built for clarity.</span></h2>
-        <p class="section-copy">It is an editorially controlled registry for canine subjects, breeder programs, progeny histories and bloodlines. Every digital dossier gathers identifiers, documentation and lineage; interpretation remains with the reader. <strong>Its purpose is simple: make complex breed knowledge intelligible, traceable and useful.</strong></p>
+        <h2 class="section-title" id="definition-title"><span>A registry.</span><span class="ghost">Not a ranking.</span></h2>
+        <p class="section-copy">Doberman Index is a structured registry and presentation system for Dobermans, kennels, litters and bloodlines. It does not reduce a dog to one universal score, rank breeders or declare a single “best” record. <strong>It makes relevant information easier to inspect in context.</strong></p>
       </div>
       <div class="ledger definition-ledger" data-reveal>
-        <article class="ledger-row"><span>01</span><h3>Consistent dossiers</h3><p>Pedigree, health indicators, temperament, performance, reproduction and media follow a shared data model. Empty fields stay explicit.</p></article>
-        <article class="ledger-row"><span>02</span><h3>Searchable presence</h3><p>Each publication receives a permanent address, accessible by name, profile ID or direct ancestry link.</p></article>
-        <article class="ledger-row"><span>03</span><h3>Linked families</h3><p>Persistent identifiers connect parents, breeder portfolios and related profiles as the genealogy expands.</p></article>
-        <article class="ledger-row"><span>04</span><h3>Living<br class="mobile-title-break"> profiles</h3><p>New findings, results and imagery can extend an existing page while its visual language remains intact.</p></article>
+        <article class="ledger-row"><span>01</span><h3>Standardized records</h3><p>Identity, pedigree, health indicators, temperament, performance, reproduction and media follow a consistent data model, with unavailable fields left visible as unavailable rather than replaced by marketing copy.</p></article>
+        <article class="ledger-row"><span>02</span><h3>Searchable presence</h3><p>Published records can be found through one registry instead of depending on a visitor already knowing the correct kennel, website or social account.</p></article>
+        <article class="ledger-row"><span>03</span><h3>Connected relationships</h3><p>Stable record IDs allow dogs, parents, kennels, litters and related profiles to connect as the network grows.</p></article>
+        <article class="ledger-row"><span>04</span><h3>Updatable<br class="mobile-title-break"> profiles</h3><p>New evidence, results and media can be added to the record without rebuilding the underlying design for every dog.</p></article>
       </div>
     </section>
 
@@ -430,27 +434,27 @@
       <div class="system-layout">
         <div class="system-intro" data-reveal>
           <div class="section-index"><b>04</b><i aria-hidden="true"></i><span>The system</span></div>
-          <h2 class="section-title" id="system-title"><span>Entries form</span><span class="ghost">a network.</span></h2>
-          <p class="section-copy">Value grows when every entity belongs to the wider Doberman map. Distinct IDs identify Dobermans, kennels and litter files; the DI-L entry ties sire, dam and puppies into one documented unit.</p>
+          <h2 class="section-title" id="system-title"><span>Records form</span><span class="ghost">a network.</span></h2>
+          <p class="section-copy">The value of a record increases when it can connect to the rest of the breed. Doberman Index uses dogs, kennels and litters as distinct record types, with the litter acting as the link between sire, dam, kennel and puppies.</p>
         </div>
         <div class="system-axis" data-reveal>
-          <article class="system-record"><small>Profile / DI-M · DI-F</small><h3>Doberman</h3><p>The individual dossier: verified origin, medical status, character, accomplishments, reproduction and selected imagery.</p></article>
-          <article class="system-record"><small>Relationship / DI-L</small><h3>Litter</h3><p>Sire, dam, kennel, puppies and availability in one declared relationship.</p></article>
-          <article class="system-record"><small>Program / DI-K</small><h3>Kennel</h3><p>A portfolio overview linking its roster to planned or published litters.</p></article>
-          <article class="system-record"><small>Genealogy map</small><h3>Bloodline</h3><p>Ancestors, offspring and littermates become navigable as connected entries appear.</p></article>
+          <article class="system-record"><small>Record / DI-M · DI-F</small><h3>Doberman</h3><p>The individual record: identity, pedigree, health, temperament, results, reproduction and media.</p></article>
+          <article class="system-record"><small>Record / DI-L</small><h3>Litter</h3><p>The connector: sire, dam, kennel, puppies and availability in one explicit relationship.</p></article>
+          <article class="system-record"><small>Record / DI-K</small><h3>Kennel</h3><p>The breeding-program record, connected to its dogs and litters through stable identifiers.</p></article>
+          <article class="system-record"><small>Derived network</small><h3>Bloodline</h3><p>Parents, ancestors, offspring and littermates become navigable as linked records are published.</p></article>
         </div>
-        <p class="system-note" data-reveal>This framework preserves meaningful differences among individuals and established lineages, while giving each fact a clear, comparable place.</p>
+        <p class="system-note" data-reveal>A common structure does not erase the differences between dogs or breeding programs. It creates the shared language needed to see those differences clearly.</p>
       </div>
     </section>
 
     <section class="section section--dark process" id="how-it-works" aria-labelledby="process-title">
       <div class="section-index" data-reveal><b>05</b><i aria-hidden="true"></i><span>How it works</span></div>
       <h2 class="visually-hidden" id="process-title">How it works</h2>
-      <p class="process-context" data-reveal>The experience stays direct: locate a subject, examine the available evidence, then use the complete picture to guide a mating, acquisition or professional decision.</p>
+      <p class="process-context" data-reveal>The experience is intentionally direct. Search the network, review the available evidence in a consistent format, then use that context to guide a breeding, acquisition or professional decision.</p>
       <div class="process-rail" data-reveal>
-        <article class="process-step"><span>01 / Locate</span><strong>Search</strong><p>Find a Doberman, breeding program or bloodline through the central catalogue.</p></article>
-        <article class="process-step"><span>02 / Review</span><strong>Analyze</strong><p>Study origin, source status, heritage and documented connections in one view.</p></article>
-        <article class="process-step"><span>03 / Judge</span><strong>Decide</strong><p>Choose with greater confidence from what the documentation substantiates.</p></article>
+        <article class="process-step"><span>01 / Locate</span><strong>Search</strong><p>Find a Doberman, kennel or connected bloodline through the shared registry.</p></article>
+        <article class="process-step"><span>02 / Review</span><strong>Analyze</strong><p>Review the structured profile, source status, lineage and relationships together.</p></article>
+        <article class="process-step"><span>03 / Decide</span><strong>Decide</strong><p>Make a better-informed choice based on the evidence that is actually available.</p></article>
       </div>
     </section>
 
@@ -458,24 +462,37 @@
       <div class="section-index" data-reveal><b>06</b><i aria-hidden="true"></i><span>Who it is for</span></div>
       <div class="section-head audience-head" data-reveal>
         <h2 class="section-title" id="audience-title"><span>Serious users.</span><span class="ghost">Different decisions.</span></h2>
-        <p class="section-copy audience-context">The platform serves distinct questions; every audience needs a clear, traceable and comparable perspective.</p>
+        <p class="section-copy audience-context">The same network serves different questions. What remains constant is the need for records that are clear, traceable and comparable.</p>
       </div>
       <div class="audience-band" data-reveal>
-        <article class="audience-item"><small>Breeders</small><b>01</b><h3>Present the full portfolio.</h3><p>Bring dogs, planned matings, verified assessments and long-term outcomes into one coherent public presence.</p></article>
-        <article class="audience-item"><small>Owners &amp; buyers</small><b>02</b><h3>Look past prominence.</h3><p>Study the Doberman and its heritage as a whole, with advertising and fragmented conversations kept secondary.</p></article>
-        <article class="audience-item"><small>Professionals</small><b>03</b><h3>Start from an organized foundation.</h3><p>Use a dependable framework for veterinary, training, research or selection review.</p></article>
+        <article class="audience-item"><small>Breeders</small><b>01</b><h3>Present the program in context.</h3><p>Connect dogs, litters, evidence and breeding outcomes inside a consistent public structure.</p></article>
+        <article class="audience-item"><small>Owners &amp; buyers</small><b>02</b><h3>Look beyond visibility.</h3><p>Review the available profile and lineage without depending solely on advertising or fragmented conversations.</p></article>
+        <article class="audience-item"><small>Professionals</small><b>03</b><h3>Start from organized information.</h3><p>Use a common record structure for research, veterinary, training or breeding-related review.</p></article>
+      </div>
+    </section>
+
+    <section class="section section--dark principles" id="principles" aria-labelledby="principles-title">
+      <div class="section-index" data-reveal><b>07</b><i aria-hidden="true"></i><span>Why it works</span></div>
+      <div class="section-head" data-reveal>
+        <h2 class="section-title" id="principles-title"><span>Three operating</span><span class="ghost">principles.</span></h2>
+        <p class="section-copy">Trust does not come from a louder claim. It comes from a system that makes its inputs, gaps and relationships easier to see.</p>
+      </div>
+      <div class="principle-list" data-reveal>
+        <article class="principle"><span>01</span><h3>Data, not opinion</h3><p>Profiles are organized around structured fields and supporting material. The format distinguishes recorded information from what is missing; it does not replace evidence with a promotional label.</p></article>
+        <article class="principle"><span>02</span><h3>Global standard</h3><p>Dogs and breeders across countries can be described through the same core structure, making cross-border research and comparison more coherent without pretending that every context is identical.</p></article>
+        <article class="principle"><span>03</span><h3>Real compatibility</h3><p>Compatibility is treated as a multi-factor question involving genetics, temperament, purpose and lineage. It is context for decision-making, not a promise and not a single badge.</p></article>
       </div>
     </section>
 
     <section class="provenance" id="lionsign" aria-labelledby="studio-title">
-      <div class="section-index" data-reveal><b>07</b><i aria-hidden="true"></i><span>Provenance / Lionsign Identity Studio</span></div>
-      <h2 id="studio-title" data-reveal>Form follows purpose.</h2>
+      <div class="section-index" data-reveal><b>08</b><i aria-hidden="true"></i><span>Provenance / Lionsign Identity Studio</span></div>
+      <h2 id="studio-title" data-reveal>Form follows structure.</h2>
       <div class="provenance-copy" data-reveal>
-        <p>The practice focuses on high-impact visual identities. Doberman Index applies that discipline to canine knowledge: hierarchy, rhythm and navigation turn complex material into an intuitive experience.</p>
-        <p>The interface is deliberate; the architecture beneath it is the product.</p>
+        <p>Lionsign is a design studio focused on high-impact visual systems. Doberman Index extends that practice into breeding information: design is used to clarify hierarchy, connect records and make complex material easier to navigate.</p>
+        <p>The visual language is deliberate, but presentation is not the product. The structure underneath it is.</p>
       </div>
       <div class="provenance-signoff" data-reveal>
-        <p class="provenance-signoff-message"><span>Insight made <em>useful.</em></span><strong>Built to last.</strong></p>
+        <p class="provenance-signoff-message"><span>This is not <em>content.</em></span><strong>This is infrastructure.</strong></p>
       </div>
     </section>
   </main>
@@ -508,6 +525,19 @@
     addEventListener("resize", updatePageState);
 
     const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const missionAction = document.querySelector(".mission-action");
+    if (missionAction) {
+      missionAction.addEventListener("click", event => {
+        const target = document.querySelector(missionAction.getAttribute("href"));
+        if (!target) return;
+        event.preventDefault();
+        missionAction.classList.add("is-activated");
+        const go = () => target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+        reduceMotion ? go() : setTimeout(go, 180);
+      });
+    }
+
     const revealItems = document.querySelectorAll("[data-reveal]");
     if (reduceMotion || !("IntersectionObserver" in window)) {
       revealItems.forEach(item => item.classList.add("is-visible"));

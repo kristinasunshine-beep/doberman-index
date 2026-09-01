@@ -228,6 +228,7 @@
     .visual-card img,.visual-card video{width:100%;height:100%;display:block;object-fit:cover;filter:grayscale(1);transition:filter .6s var(--ease),transform 1.1s var(--ease)}
     .visual-card[data-frame-fit="contain"] img{object-fit:contain}
     .visual-card:hover img,.visual-card.touch-hover img,.visual-card:hover video,.visual-card.touch-hover video{filter:grayscale(0);transform:scale(1.018)}
+    .visual-card[data-frame-fit="contain"]:hover img,.visual-card[data-frame-fit="contain"].touch-hover img{transform:none}
     .visual-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.48));pointer-events:none}
     .visual-card .visual-label{position:absolute;left:22px;bottom:20px;z-index:2;display:flex;align-items:center;gap:12px;color:var(--white);font-size:12px;font-weight:600}
     .visual-card .visual-label::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--acid)}
@@ -580,7 +581,16 @@
       .section-head{gap:24px;margin-bottom:54px}
       .section-note{font-size:11px}
       .impact-intro-copy{display:none}
+      .gallery-rail{align-items:flex-start}
       .visual-card{min-width:88vw;height:58vh;max-height:520px}
+      .visual-card[data-frame-orientation="portrait"],.visual-card[data-frame-orientation="landscape"]{
+        width:calc(100vw - 48px);
+        max-width:calc(100vw - 48px);
+        height:auto;
+        max-height:none;
+        aspect-ratio:var(--media-frame-ratio);
+        align-self:flex-start;
+      }
       .ancestor{min-width:270px}
       #healthRail .surface-card{min-width:78vw;min-height:182px;padding:18px 20px 20px}
       #healthRail .surface-card::after{left:20px}
@@ -1699,8 +1709,9 @@
       const publication=dog.publication||{};
       const legacyDeceased=identity.life_stage==="deceased";
       const lifeStage={puppy:"Puppy",junior:"Junior",adult:"Adult",veteran:"Veteran",unknown:"Not confirmed"}[legacyDeceased?"unknown":identity.life_stage]||"Not confirmed";
-      const lifeStatus={living:"Living",deceased:"Deceased",unknown:"Not confirmed"}[legacyDeceased?"deceased":identity.life_status]||"Not confirmed";
-      const isDeceased=lifeStatus==="Deceased";
+      const lifecycleState=legacyDeceased?"deceased":identity.life_status;
+      const isDeceased=lifecycleState==="deceased";
+      const lifeStatus=isDeceased?"DECEASED":lifecycleState==="living"?"":lifecycleState==="unknown"?"Not confirmed":"Not confirmed";
       const deathYear=yearOf(identity.date_of_death)||String(identity.year_of_death||"").trim()||null;
       const birthYear=yearOf(identity.date_of_birth);
       const lifespan=isDeceased&&deathYear?[birthYear,deathYear].filter(Boolean).join("–"):null;

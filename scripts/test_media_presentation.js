@@ -27,11 +27,11 @@ assert.equal(element.style.objectPosition, "61% 39%");
 
 assert.deepEqual(frameSpecFor("hero"), {aspectRatio:"4 / 5", orientation:"portrait", fit:"cover"});
 assert.deepEqual(frameSpecFor("head"), {aspectRatio:"4 / 5", orientation:"portrait", fit:"cover"});
-assert.deepEqual(frameSpecFor("stack"), {aspectRatio:"4 / 5", orientation:"portrait", fit:"cover"});
+assert.deepEqual(frameSpecFor("stack"), {aspectRatio:"4 / 5", orientation:"portrait", fit:"contain"});
 assert.deepEqual(frameSpecFor("movement"), {aspectRatio:"3 / 2", orientation:"landscape", fit:"cover"});
 assert.deepEqual(frameSpecFor("movement_video"), {aspectRatio:"3 / 2", orientation:"landscape", fit:"cover"});
 assert.deepEqual(frameSpecFor("gallery"), {aspectRatio:"4 / 5", orientation:"portrait", fit:"cover"});
-assert.deepEqual(frameSpecFor("profile"), {aspectRatio:"16 / 10", orientation:"landscape", fit:"cover"});
+assert.deepEqual(frameSpecFor("profile"), {aspectRatio:"16 / 10", orientation:"landscape", fit:"contain"});
 
 const publicImage = {style:{}};
 applyPublicFrame(publicImage, {focal_points:{hero:{x:42,y:27}}}, "hero");

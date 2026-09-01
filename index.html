@@ -3794,7 +3794,9 @@ textarea {
   overflow: hidden;
   font-size: 14px;
   line-height: 1.05;
-  letter-spacing: -.025em;
+  letter-spacing: -.035em;
+  word-spacing: .06em;
+  text-transform: none;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -4235,7 +4237,14 @@ textarea {
   text-transform:uppercase;
   text-overflow:ellipsis;
 }
-.featured-record-copy strong.registered-name{text-transform:none}
+.featured-record-copy strong.registered-name{
+  font-size:clamp(19px,1.8vw,28px);
+  line-height:.94;
+  letter-spacing:-.035em;
+  word-spacing:.06em;
+  text-transform:none;
+  white-space:nowrap;
+}
 .featured-record-copy span{
   display:block;
   margin-top:9px;
@@ -4279,6 +4288,9 @@ textarea {
   .featured-record-copy strong{font-size:26px}
   .featured-record[data-entity-type="doberman"]{grid-template-rows:auto}
   .featured-record[data-entity-type="doberman"] .featured-record-copy{min-height:135px}
+}
+@media(max-width:370px){
+  .featured-record-copy strong.registered-name{font-size:17px}
 }
 
 /* Paid kennel placement — separate from the registry statistics ticker. */
@@ -4700,6 +4712,7 @@ let registryLoadError = '';
 const displayRegisteredName = value => window.DIName.displayRegisteredName(value);
 const displayKennelName = value => window.DIName.displayKennelName(value);
 const applyFocalPoint = (element, point) => window.DIMedia.applyFocalPoint(element, point);
+const publicDobermanStatus = value => String(value || '').toLowerCase() === 'deceased' ? 'DECEASED' : '';
 
 const resolveRegistryAsset = path => {
   if (!path) return '';
@@ -4881,7 +4894,7 @@ const renderSearchResults = (records, mode = 'search') => {
   const header = document.createElement('div');
   header.className = 'search-results-head';
   const headerTitle = document.createElement('span');
-  headerTitle.textContent = mode === 'puppies' ? 'Live registry view' : 'Matching records';
+  headerTitle.textContent = mode === 'puppies' ? 'Current registry view' : 'Matching records';
   header.append(headerTitle);
   if (mode !== 'puppies') {
     const headerMeta = document.createElement('em');
@@ -4936,7 +4949,7 @@ const renderSearchResults = (records, mode = 'search') => {
     const name = document.createElement('strong');
     name.textContent = record.name;
     const meta = document.createElement('span');
-    meta.textContent = [record.kennel, record.location, record.life_status === 'deceased' ? 'Deceased' : null].filter(Boolean).join(' · ');
+    meta.textContent = [record.kennel, record.location, record.entity_type === 'doberman' ? publicDobermanStatus(record.life_status) : null].filter(Boolean).join(' · ');
     text.append(name, meta);
 
     const arrow = document.createElement('span');
@@ -5137,10 +5150,15 @@ const renderHomepageShowcase = (category, ids) => {
     if (record.entity_type !== 'doberman') applyFocalPoint(image, record.focalPoint);
     media.append(image);
 
-    const position = document.createElement('span');
-    position.className = 'featured-record-index';
-    position.textContent = `${String(index + 1).padStart(2, '0')} / LIVE`;
-    media.append(position);
+    const positionText = record.entity_type === 'doberman'
+      ? publicDobermanStatus(record.life_status)
+      : `${String(index + 1).padStart(2, '0')} / LIVE`;
+    if (positionText) {
+      const position = document.createElement('span');
+      position.className = 'featured-record-index';
+      position.textContent = positionText;
+      media.append(position);
+    }
 
     const copy = document.createElement('span');
     copy.className = 'featured-record-copy';
@@ -5153,7 +5171,7 @@ const renderHomepageShowcase = (category, ids) => {
 
     const detail = document.createElement('span');
     if (record.entity_type === 'doberman') name.className = 'registered-name';
-    detail.textContent = [record.kennel, record.location, record.life_status === 'deceased' ? 'Deceased' : null].filter(Boolean).join(' · ');
+    detail.textContent = [record.kennel, record.location, record.entity_type === 'doberman' ? publicDobermanStatus(record.life_status) : null].filter(Boolean).join(' · ');
 
     const arrow = document.createElement('i');
     arrow.className = 'featured-record-arrow';

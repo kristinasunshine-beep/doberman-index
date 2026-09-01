@@ -13,8 +13,8 @@
   const PUBLIC_FRAME_SPECS = Object.freeze({
     hero: Object.freeze({ aspectRatio: "4 / 5", orientation: "portrait", fit: "cover" }),
     head: Object.freeze({ aspectRatio: "4 / 5", orientation: "portrait", fit: "cover" }),
-    profile: Object.freeze({ aspectRatio: "16 / 10", orientation: "landscape", fit: "cover" }),
-    stack: Object.freeze({ aspectRatio: "4 / 5", orientation: "portrait", fit: "cover" }),
+    profile: Object.freeze({ aspectRatio: "16 / 10", orientation: "landscape", fit: "contain" }),
+    stack: Object.freeze({ aspectRatio: "4 / 5", orientation: "portrait", fit: "contain" }),
     movement: Object.freeze({ aspectRatio: "3 / 2", orientation: "landscape", fit: "cover" }),
     movement_video: Object.freeze({ aspectRatio: "3 / 2", orientation: "landscape", fit: "cover" }),
     gallery: Object.freeze({ aspectRatio: "4 / 5", orientation: "portrait", fit: "cover" }),

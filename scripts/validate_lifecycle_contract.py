@@ -34,10 +34,10 @@ for token in ('legacy_deceased = source_stage == "deceased"', 'identity["life_st
 for token in ('"life_status": life_status', 'if life_status == "deceased"', '"schema_version": "1.1.0"'):
     if token not in BUILD:
         errors.append(f"registry builder lifecycle logic missing: {token}")
-for token in ("record.life_status !== 'deceased'", "record.life_status === 'deceased' ? 'Deceased' : null"):
+for token in ("record.life_status !== 'deceased'", "const publicDobermanStatus = value", "? 'DECEASED' : ''"):
     if token not in PORTAL:
         errors.append(f"portal lifecycle behavior missing: {token}")
-for token in ('id="lifeStatusBadge"', 'lifeStatus:"Life status"', 'lifeSpan:"Life span"', 'const isDeceased=lifeStatus==="Deceased"'):
+for token in ('id="lifeStatusBadge"', 'lifeStatus:"Life status"', 'lifeSpan:"Life span"', 'const isDeceased=lifecycleState==="deceased"', 'lifecycleState==="living"?""'):
     if token not in PROFILE:
         errors.append(f"male profile lifecycle display missing: {token}")
 

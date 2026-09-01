@@ -22,7 +22,7 @@ for token in ['DM:testView(health.dm','vWD:testView(health.vwd','HD:testView(hea
     if token not in profile: errors.append('male profile missing health contract token: '+token)
 for token in ['Shows:numberOrDash(performance.shows_count)','Titles:array(performance.titles).length','"Working exams":array(performance.working_exams).length','Sports:array(performance.sports).length']:
     if token not in profile: errors.append('male profile missing performance contract token: '+token)
-for token in ['lifeStage,lifeStatus,lifeSpan:lifespan||"—"','studServiceStatus,profileId:recordId','lifeStage:"Life stage",lifeStatus:"Life status",lifeSpan:"Life span"','studServiceStatus:"Stud service status"','id="lifeStatusBadge"','const isDeceased=lifeStatus==="Deceased"']:
+for token in ['lifeStage,lifeStatus,lifeSpan:lifespan||"—"','studServiceStatus,profileId:recordId','lifeStage:"Life stage",lifeStatus:"Life status",lifeSpan:"Life span"','studServiceStatus:"Stud service status"','id="lifeStatusBadge"','const isDeceased=lifecycleState==="deceased"','lifecycleState==="living"?""']:
     if token not in profile: errors.append('male profile missing Details contract token: '+token)
 for token in ['Litters:numberOrDash(reproduction.litters_count)','Offspring:numberOrDash(reproduction.offspring_count)','"Champion offspring":numberOrDash(reproduction.champion_offspring_count)','"Export countries":array(reproduction.export_countries).length']:
     if token not in profile: errors.append('male profile missing breeding contract token: '+token)
