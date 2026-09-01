@@ -1484,10 +1484,13 @@ nav a.nav-cta { padding-inline: 16px; }
   letter-spacing: -.045em;
 }
 .hero-brief p {
-  margin-top: 32px;
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 1.45;
+  max-width: 270px;
+  margin: 0;
+  font-family: "Barlow Condensed", Impact, sans-serif;
+  font-size: clamp(24px, 1.8vw, 30px);
+  font-weight: 900;
+  line-height: .9;
+  letter-spacing: -.045em;
 }
 .hero-brief .hero-compare,
 .hero-brief .hero-decide { display: block; }
@@ -1914,7 +1917,7 @@ footer {
     padding: 24px;
   }
   .hero-brief strong { font-size: 15px; }
-  .hero-brief p { margin-top: 22px; }
+  .hero-brief p { margin-top: 0; }
   .hero-search {
     position: relative;
     right: auto;
@@ -2007,7 +2010,7 @@ nav a.nav-cta { font-size: 13px; }
 .hero-section-index,
 .section-label { font-size: 11px; }
 .hero::before { width: 210px; font-size: 13px; }
-.hero-brief p { margin-top: 0; font-size: 16px; line-height: 1.42; }
+.hero-brief p { margin-top: 0; font-size: clamp(24px, 1.8vw, 30px); line-height: .9; }
 .hero-brief b { max-width: 255px; font-size: 14px; line-height: 1.45; }
 .hero-search::before { font-size: 10px; }
 .objects-intro p { max-width: 330px; font-size: 15px; line-height: 1.55; }
@@ -2423,7 +2426,7 @@ nav a.nav-cta { font-size: 13px; }
     margin-top: 54px;
     padding: 24px;
   }
-  .hero-brief p { font-size: 15px; }
+  .hero-brief p { font-size: 24px; }
   .hero-brief b { margin-top: 24px; font-size: 13px; }
   .hero-search {
     order: 3;
@@ -4468,8 +4471,7 @@ textarea {
 <section class="hero">
   <div class="hero-section-index">—&nbsp;&nbsp;Global breeding registry</div>
   <div class="hero-brief">
-    <p><span class="hero-compare">Compare profiles.</span><strong class="hero-decide">Then decide.</strong></p>
-    <b>A connected data platform for dogs, kennels and bloodlines.</b>
+    <p>The Doberman world,<br>connected through one<br>living record.</p>
     <a class="hero-mobile-details" href="#why" aria-label="Go to The Structure">
       <span class="hero-details-line"><span>Details</span><strong aria-hidden="true">→</strong></span>
     </a>
