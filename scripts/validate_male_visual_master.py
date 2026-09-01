@@ -16,7 +16,8 @@ checks={
 'performance rail':'id="performanceRail"',
 'related rail':'id="relatedRail"',
 'live loader':'async function loadProfile()',
-'hero title cap':'profileData.titles.slice(0,2)',
+'hero identity only':'byId("heroMeta").innerHTML=`<span class="hero-identity">${escapeHTML(identity)}</span>`',
+'title listing panel':'id="performanceDetails"',
 'video support':'.visual-card img,.visual-card video',
 'portal navigation':'href="../index.html"',
 }

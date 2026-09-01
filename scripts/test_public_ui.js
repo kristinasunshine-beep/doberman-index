@@ -233,8 +233,7 @@ async function main() {
   api.setProfile({ kennel: "Siempre Peligroso", country: "Serbia", titles: ["TITLE ONE", "TITLE TWO", "TITLE THREE"] });
   api.heroMetadata(); html = elements.get("heroMeta").innerHTML;
   assert.match(html, /class="hero-identity">Siempre Peligroso · Serbia<\/span>/);
-  assert.match(html, /class="hero-credentials"><span>TITLE ONE<\/span><span>TITLE TWO<\/span>/);
-  assert.doesNotMatch(html, /TITLE THREE/);
+  assert.doesNotMatch(html, /TITLE ONE|TITLE TWO|TITLE THREE|hero-credentials/);
   api.setProfile({ kennel: "<Kennel>", titles: [] }); api.heroMetadata();
   assert.match(elements.get("heroMeta").innerHTML, /&lt;Kennel&gt;/);
   assert.doesNotMatch(elements.get("heroMeta").innerHTML, /hero-credentials/);

@@ -32,7 +32,9 @@ if schema.get('properties',{}).get('schema_version',{}).get('const') != '1.1.0':
 if set(identity.get('life_stage',{}).get('enum',[])) != {'puppy','junior','adult','veteran','unknown'}: errors.append('life_stage enum is incorrect')
 if set(identity.get('life_status',{}).get('enum',[])) != {'living','deceased','unknown'}: errors.append('life_status enum is incorrect')
 if 'Balance:present(structure.balance),Evaluator:' in profile: errors.append('Structure accidentally includes Evaluator card')
-if 'profileData.titles.slice(0,2)' not in profile: errors.append('hero title rail is not capped to the two-title master composition')
+if 'profileData.titles.slice(0,2)' in profile or 'hero-credentials' in profile.split('function heroMetadata(){',1)[1].split('function gallery(){',1)[0]: errors.append('hero identity block still renders titles')
+for token in ['id="performanceDetails"','performanceDetails:{Titles:array(performance.titles)}','function toggleTitleListing(card)','data-metric-key="${escapeHTML(k)}"']:
+    if token not in profile: errors.append('male title listing contract missing: '+token)
 if errors:
     print('Male profile contract FAIL')
     for e in errors: print('-',e)
