@@ -372,6 +372,15 @@
     #performanceRail .metric em{position:absolute;left:22px;bottom:46px;z-index:2;margin:0;max-width:80%;font-size:27px;font-weight:700;line-height:1;letter-spacing:-.055em}
     #performanceRail .metric::after{position:absolute;left:22px;bottom:21px;z-index:2;margin:0;color:#c8c8c8;font-size:10px}
     #performanceRail .metric.highlight::after{color:var(--ink)}
+    .performance-detail{margin-top:28px;padding:26px 0 0;border-top:1px solid var(--ink)}
+    .performance-detail[hidden]{display:none}
+    .performance-detail-head{display:flex;align-items:baseline;justify-content:space-between;gap:24px;margin-bottom:20px}
+    .performance-detail h3{margin:0;font-size:clamp(28px,3vw,44px);font-weight:700;line-height:.95;letter-spacing:-.055em}
+    .performance-detail small{font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+    .performance-title-list{margin:0;padding:0;list-style:none;border-top:1px solid #c9c9c4}
+    .performance-title-list li{display:grid;grid-template-columns:42px minmax(0,1fr);gap:18px;padding:18px 0;border-bottom:1px solid #c9c9c4;font-size:clamp(16px,1.35vw,21px);font-weight:650;line-height:1.2}
+    .performance-title-list li span{font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;font-size:8px;font-weight:700;letter-spacing:.08em}
+    #performanceRail .metric[data-metric-key="Titles"]{cursor:pointer!important}
 
     /* Stud Impact — dark application/CTA language from the supplied FORGE reference */
     .impact-showcase{min-height:980px;margin-top:clamp(52px,5vw,84px);padding-top:clamp(92px,7vw,118px);padding-bottom:clamp(58px,5vw,78px);background:var(--black);color:var(--white)}
@@ -1464,6 +1473,7 @@
         </div>
       </header>
       <div class="section-content metric-grid reveal" id="performanceRail"></div>
+      <div class="performance-detail reveal" id="performanceDetails" hidden aria-live="polite"></div>
     </section>
 
     <section class="section impact-showcase" id="impact">
@@ -1731,6 +1741,7 @@
         structure:{Type:present(structure.type),Head:present(structure.head),Body:present(structure.body),Angulation:present(structure.angulation),Movement:present(structure.movement),Balance:present(structure.balance)},
         temperament:{Stability:present(temperament.stability),Drive:present(temperament.drive),"Social behaviour":present(temperament.social_behaviour),Defense:present(temperament.defense),Confidence:present(temperament.confidence),Evaluator:titleCase(temperament.evaluator)},
         performance:{Shows:numberOrDash(performance.shows_count),Titles:array(performance.titles).length,"Working exams":array(performance.working_exams).length,Sports:array(performance.sports).length},
+        performanceDetails:{Titles:array(performance.titles)},
         reproduction:{Litters:numberOrDash(reproduction.litters_count),Offspring:numberOrDash(reproduction.offspring_count),"Champion offspring":numberOrDash(reproduction.champion_offspring_count),"Export countries":array(reproduction.export_countries).length},
         bloodline:buildBloodline(parentage,parentIdentities),gallery:buildGallery(media),related:buildRelated(recordId,parentage),
         lastUpdated:present(publication.last_updated_label,formatDate(record.updated_at))
@@ -1775,7 +1786,21 @@
     function metrics(id,data,highlight=1){
       const captions={Shows:"documented entries",Titles:"championship record","Working exams":"submitted exams",Sports:"active disciplines",Litters:"verified matings",Offspring:"indexed descendants","Champion offspring":"documented champions","Export countries":"international reach"};
       const badges={Shows:"Show",Titles:"Title","Working exams":"Exam",Sports:"Sport"};
-      byId(id).innerHTML=Object.entries(data).map(([k,v],i)=>`<div class="metric ${i===highlight?"highlight":""}" data-initial="${escapeHTML(k.charAt(0))}" data-caption="${escapeHTML(captions[k]||"submitted record")}"><span class="metric-badge">${escapeHTML(badges[k]||"Record")}</span><strong>${escapeHTML(v)}</strong><em>${escapeHTML(k)}</em></div>`).join("");
+      byId(id).innerHTML=Object.entries(data).map(([k,v],i)=>{
+        const expandable=id==="performanceRail"&&k==="Titles";
+        return `<div class="metric ${i===highlight?"highlight":""}" data-initial="${escapeHTML(k.charAt(0))}" data-caption="${escapeHTML(captions[k]||"submitted record")}" data-metric-key="${escapeHTML(k)}"${expandable?' role="button" tabindex="0" aria-expanded="false" aria-controls="performanceDetails"':""}><span class="metric-badge">${escapeHTML(badges[k]||"Record")}</span><strong>${escapeHTML(v)}</strong><em>${escapeHTML(k)}</em></div>`;
+      }).join("");
+    }
+
+    function toggleTitleListing(card){
+      const panel=byId("performanceDetails");
+      const titles=array(profileData.performanceDetails?.Titles).filter(Boolean);
+      const opening=panel.hidden;
+      document.querySelectorAll('#performanceRail [aria-expanded="true"]').forEach(item=>item.setAttribute("aria-expanded","false"));
+      if(!opening){panel.hidden=true;return}
+      card.setAttribute("aria-expanded","true");
+      panel.innerHTML=`<div class="performance-detail-head"><h3>Titles.</h3><small>${String(titles.length).padStart(2,"0")} documented</small></div>${titles.length?`<ol class="performance-title-list">${titles.map((title,index)=>`<li><span>${String(index+1).padStart(2,"0")}</span>${escapeHTML(title)}</li>`).join("")}</ol>`:'<ol class="performance-title-list"><li><span>00</span>No titles submitted.</li></ol>'}`;
+      panel.hidden=false;
     }
 
     function bloodline(depth=3){
@@ -1789,8 +1814,7 @@
 
     function heroMetadata(){
       const identity=[profileData.kennel,profileData.country].filter(Boolean).join(" · ");
-      const titles=profileData.titles.slice(0,2).filter(Boolean);
-      byId("heroMeta").innerHTML=`<span class="hero-identity">${escapeHTML(identity)}</span>${titles.length?`<span class="hero-credentials">${titles.map(title=>`<span>${escapeHTML(title)}</span>`).join("")}</span>`:""}`;
+      byId("heroMeta").innerHTML=`<span class="hero-identity">${escapeHTML(identity)}</span>`;
     }
 
     function gallery(){
@@ -2008,6 +2032,18 @@
     });
 
     [["coreRail",".core-chip"],["healthRail",".surface-card"],["structureRail",".surface-card"],["temperamentRail",".surface-card"],["relatedRail",".related-card"],["dcmRail",".marker"]].forEach(([id,selector])=>bindSelectableRail(id,selector));
+
+    byId("performanceRail").addEventListener("click",event=>{
+      const card=event.target.closest('[data-metric-key="Titles"]');
+      if(card)toggleTitleListing(card);
+    });
+    byId("performanceRail").addEventListener("keydown",event=>{
+      if(event.key!=="Enter"&&event.key!==" ")return;
+      const card=event.target.closest('[data-metric-key="Titles"]');
+      if(!card)return;
+      event.preventDefault();
+      toggleTitleListing(card);
+    });
 
     byId("pairingBtn").addEventListener("click",()=>{
       const value=byId("pairingInput").value.trim();
