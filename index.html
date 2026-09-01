@@ -4212,11 +4212,28 @@ textarea {
   text-transform:uppercase;
   backdrop-filter:blur(8px);
 }
+.featured-record-example{
+  position:absolute;
+  right:auto;
+  bottom:14px;
+  left:14px;
+  z-index:3;
+  color:#8b8b86;
+  font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+  font-size:6px;
+  font-weight:700;
+  line-height:1;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  text-align:left;
+  white-space:nowrap;
+}
 .featured-record-copy{
   position:relative;
   min-height:112px;
   padding:14px 42px 14px 14px;
   border-top:4px solid var(--acid);
+  text-align:left;
 }
 .featured-record-copy small{
   display:block;
@@ -5193,7 +5210,11 @@ const renderHomepageShowcase = (category, ids) => {
     arrow.setAttribute('aria-hidden', 'true');
     arrow.textContent = '↗';
 
-    copy.append(meta, name, detail, arrow);
+    const exampleLabel = document.createElement('span');
+    exampleLabel.className = 'featured-record-example';
+    exampleLabel.textContent = 'Example digital card';
+
+    copy.append(meta, name, detail, exampleLabel, arrow);
     card.append(media, copy);
     if (typeof card.addEventListener === 'function') {
       card.addEventListener('click', event => {
