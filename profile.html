@@ -11,27 +11,28 @@ h1{margin:0 0 12px;font-size:34px}p{line-height:1.6;color:#555}
 </style>
 </head>
 <body>
-<main id="status"><h1>Loading profile…</h1><p>Doberman Index</p></main>
+<main id="status" hidden aria-live="polite"></main>
 <script src="assets/js/display-name.js"></script>
 <script>
 (async()=>{
   const id=(new URLSearchParams(location.search).get("id")||"").trim().toUpperCase();
   const status=document.getElementById("status");
   const escapeHTML=value=>{const node=document.createElement("div");node.textContent=String(value??"");return node.innerHTML};
-  if(!/^DI-[MFKL]-\d{6}$/.test(id)){status.innerHTML='<h1>Profile ID required.</h1><p>Return to the <a href="./index.html">Doberman Index search</a> and choose a published record.</p>';return;}
+  const showStatus=html=>{status.hidden=false;status.innerHTML=html};
+  if(!/^DI-[MFKL]-\d{6}$/.test(id)){showStatus('<h1>Profile ID required.</h1><p>Return to the <a href="./index.html">Doberman Index search</a> and choose a published record.</p>');return;}
+  if(/^DI-M-\d{6}$/.test(id)){
+    location.replace(`./profiles/male.html?id=${encodeURIComponent(id)}`);
+    return;
+  }
   try{
     const registry=await fetch("./data/registry.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("Registry unavailable");return r.json()});
     const item=(registry.records||[]).find(x=>x.record_id===id);
     if(!item)throw new Error("Record not found in registry.");
     const target=item.template;
-    if(target==="male"){
-      location.replace(`./profiles/male.html?id=${encodeURIComponent(id)}`);
-      return;
-    }
     const displayName=item.entity_type==="doberman"?window.DIName.displayRegisteredName(item.registered_name||id):(item.name||id);
-    status.innerHTML=`<h1>${escapeHTML(displayName)}</h1><p>The <strong>${escapeHTML(target)}</strong> digital-card template is reserved in the architecture and will be connected here as soon as its design is approved.</p>`;
+    showStatus(`<h1>${escapeHTML(displayName)}</h1><p>The <strong>${escapeHTML(target)}</strong> digital-card template is reserved in the architecture and will be connected here as soon as its design is approved.</p>`);
   }catch(error){
-    status.innerHTML=`<h1>Profile unavailable.</h1><p>${error.message}</p>`;
+    showStatus(`<h1>Profile unavailable.</h1><p>${escapeHTML(error.message)}</p>`);
   }
 })();
 </script>
