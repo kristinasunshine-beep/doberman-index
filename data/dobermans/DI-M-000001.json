@@ -249,7 +249,7 @@
         }
       ],
       "movement_video": "media/dobermans/DI-M-000001/movement.mp4",
-      "movement_video_seconds": null,
+      "movement_video_seconds": 3,
       "movement_video_audio": "natural_sound",
       "focal_points": {
         "hero": {
