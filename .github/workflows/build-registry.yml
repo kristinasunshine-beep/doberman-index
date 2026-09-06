@@ -40,9 +40,10 @@ on:
       - "scripts/test_display_name.js"
       - "scripts/test_public_ui.js"
       - "scripts/test_media_presentation.js"
+      - ".github/workflows/build-registry.yml"
 
   schedule:
-    - cron: "0 3 * * *"
+    - cron: "17 3 * * *"
 
   workflow_dispatch:
 
@@ -120,7 +121,7 @@ jobs:
       - name: Commit lifecycle and registry changes if needed
         shell: bash
         run: |
-          if git diff --quiet; then
+          if git diff --quiet -- data/dobermans data/litters data/registry.json; then
             echo "Lifecycle and registry already up to date."
             exit 0
           fi
@@ -128,6 +129,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add data/
+          git add data/dobermans data/litters data/registry.json
           git commit -m "chore: sync Doberman lifecycle and registry"
           git push
