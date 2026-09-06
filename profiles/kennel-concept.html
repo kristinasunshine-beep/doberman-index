@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f1f1f1">
   <meta name="description" content="Doberman Index — structured kennel profile with breeding program, indexed Dobermans, health evidence and results.">
+  <meta name="robots" content="noindex,follow">
   <title>Doberman Index — Kennel Profile</title>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -798,7 +799,8 @@
     }
     .kennel-profile-flow .linked-record-list strong{color:#aaa;font-size:14px;font-weight:520}
     .kennel-profile-flow .linked-litter-links{display:flex;flex-wrap:wrap;gap:10px}
-    .kennel-profile-flow .linked-litter-links span{padding:10px 14px;border:1px solid #4a4a4a;border-radius:999px;color:var(--white);font-size:11px}
+    .kennel-profile-flow .linked-litter-links a{padding:10px 14px;border:1px solid #4a4a4a;border-radius:999px;color:var(--white);font-size:11px;text-decoration:none}
+    .kennel-profile-flow .linked-litter-links a:hover,.kennel-profile-flow .linked-litter-links a:focus-visible{border-color:var(--acid);color:var(--acid)}
 
     .kennel-profile-flow .visual-card{
       position:relative;
@@ -1482,6 +1484,7 @@
   </main>
   <script src="../scripts/kennel-network.js?v=20260905-4"></script>
   <script src="../scripts/kennel-services.js?v=20260905-9"></script>
+  <script src="../assets/js/seo-runtime.js"></script>
   <script>
     const recordStrip = document.querySelector('.record-strip');
     document.querySelectorAll('.record-logo-item').forEach((logoItem) => {
@@ -1604,6 +1607,7 @@
         fetchJson('../data/registry.json')
       ]);
       const kennel=record.kennel||{};
+      if(record.status==='published')await window.DISEO.applyRecord(record.record_id,new URL('../',document.baseURI));
       ['name','registration_prefix','registration_authority','country','location','founded_year','owner_or_founder','contact_email','website','social_links','focus','bloodline_tags'].forEach(name=>setField(name,kennel[name]));
       document.querySelectorAll('[data-record-id]').forEach(node=>{node.textContent=record.record_id});
       const nameParts=String(kennel.name||'Kennel').trim().split(/\s+/);
@@ -1614,7 +1618,7 @@
 
       const registryRecords=asList(registry.records);
       const dogIds=new Set([...asList(kennel.dog_ids),...registryRecords.filter(item=>item.entity_type==='doberman'&&item.kennel_id===KENNEL_ID).map(item=>item.record_id)]);
-      const dogRecords=KennelNetwork.publicRecords(record,(await Promise.all([...dogIds].filter(id=>/^DI-[MFP]-\d+$/.test(id)).map(async id=>{
+      const dogRecords=KennelNetwork.publicRecords(record,(await Promise.all([...dogIds].filter(id=>/^DI-[MF]-\d+$/.test(id)).map(async id=>{
         try{return await fetchJson(`../data/dobermans/${id}.json`)}catch{return null}
       }))).filter(Boolean));
       const dogSummaries=dogRecords.map(item=>({record_id:item.record_id,...item.doberman.identity,template:item.doberman.identity.sex==='female'?'female':'male',hero:item.doberman.media?.hero||item.doberman.media?.profile||item.doberman.media?.stack,availability:item.doberman.reproduction?.availability}));
@@ -1651,7 +1655,8 @@
         const links=document.createElement('div');
         links.className='linked-litter-links';
         litterRecords.forEach(item=>{
-          const chip=document.createElement('span');
+          const chip=document.createElement('a');
+          chip.href=`../profile.html?id=${encodeURIComponent(item.record_id)}`;
           chip.textContent=`${item.record_id} · ${item.litter?.name||'Published litter'}`;
           links.append(chip);
         });

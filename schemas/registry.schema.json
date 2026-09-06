@@ -1624,10 +1624,10 @@
     "litter": {
       "type": "object",
       "required": [
-        "kennel_id",
-        "sire_id",
-        "dam_id",
-        "date_of_birth"
+        "status",
+        "puppy_ids",
+        "available_puppy_ids",
+        "media"
       ],
       "properties": {
         "name": {
@@ -1637,16 +1637,31 @@
           ]
         },
         "kennel_id": {
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^DI-K-[0-9]{6}$"
         },
         "sire_id": {
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^DI-M-[0-9]{6}$"
         },
         "dam_id": {
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^DI-F-[0-9]{6}$"
         },
         "date_of_birth": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "format": "date"
         },
         "planned_date": {
@@ -1668,14 +1683,18 @@
         "puppy_ids": {
           "type": "array",
           "items": {
-            "type": "string"
-          }
+            "type": "string",
+            "pattern": "^DI-(M|F)-[0-9]{6}$"
+          },
+          "uniqueItems": true
         },
         "available_puppy_ids": {
           "type": "array",
           "items": {
-            "type": "string"
-          }
+            "type": "string",
+            "pattern": "^DI-(M|F)-[0-9]{6}$"
+          },
+          "uniqueItems": true
         },
         "notes": {
           "type": [
@@ -1690,7 +1709,8 @@
               "type": [
                 "string",
                 "null"
-              ]
+              ],
+              "pattern": "^media/litters/[^\\s]+\\.(jpg|jpeg|png|webp|avif)$"
             },
             "gallery": {
               "type": "array",

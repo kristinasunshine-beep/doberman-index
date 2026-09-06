@@ -57,9 +57,11 @@ def update_doberman(path:Path,policy:dict[str,Any],today:date,write:bool)->tuple
 def prune_litters(root:Path,puppy_ids:set[str],write:bool)->list[Path]:
     changed=[]
     for path in sorted((root/"data"/"litters").glob("DI-L-*.json")):
-        data=load(path); litter=data.get("litter") or {}; values=litter.get("available_puppy_ids")
+        data=load(path); litter=data.get("litter") or {}; values=litter.get("available_puppy_ids"); historical=set(litter.get("puppy_ids") or [])
         if not isinstance(values,list): continue
-        fresh=[item for item in values if item in puppy_ids]
+        fresh=[]
+        for item in values:
+            if item in puppy_ids and item in historical and item not in fresh: fresh.append(item)
         if fresh!=values:
             litter["available_puppy_ids"]=fresh
             data["updated_at"]=datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00","Z")
@@ -80,7 +82,8 @@ def main()->int:
             try: effective=derived_stage(date.fromisoformat(str(identity.get("date_of_birth"))),today,policy)
             except (TypeError,ValueError): effective=str(identity.get("life_stage") or "unknown").lower()
         else: effective=str(identity.get("life_stage") or "unknown").lower()
-        if effective=="puppy": current_puppies.add(str(data.get("record_id") or ""))
+        puppy_status=str(((data.get("doberman") or {}).get("puppy_lifecycle") or {}).get("current_status") or "").lower()
+        if data.get("status")=="published" and effective=="puppy" and puppy_status=="available": current_puppies.add(str(data.get("record_id") or ""))
         if changed: touched.append(path)
     touched.extend(prune_litters(root,current_puppies,args.write))
     if touched and not args.write:

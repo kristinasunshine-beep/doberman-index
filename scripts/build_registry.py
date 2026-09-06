@@ -76,6 +76,8 @@ def doberman_entry(path: Path, data: dict[str, Any], root: Path) -> dict[str, An
         availability = None
     return {
         "record_id": data["record_id"],
+        "created_at": data.get("created_at"),
+        "updated_at": data.get("updated_at"),
         "entity_type": "doberman",
         "status": "published",
         "template": template,
@@ -106,6 +108,8 @@ def kennel_entry(path: Path, data: dict[str, Any], root: Path) -> dict[str, Any]
     kennel = data["kennel"]
     return {
         "record_id": data["record_id"],
+        "created_at": data.get("created_at"),
+        "updated_at": data.get("updated_at"),
         "entity_type": "kennel",
         "status": "published",
         "template": "kennel",
@@ -118,19 +122,27 @@ def kennel_entry(path: Path, data: dict[str, Any], root: Path) -> dict[str, Any]
 
 def litter_entry(path: Path, data: dict[str, Any], root: Path) -> dict[str, Any]:
     litter = data["litter"]
+    media = litter.get("media") or {}
     return {
         "record_id": data["record_id"],
+        "created_at": data.get("created_at"),
+        "updated_at": data.get("updated_at"),
         "entity_type": "litter",
         "status": "published",
+        "editorial_status": data.get("status"),
         "template": "litter",
         "name": litter.get("name"),
         "kennel_id": litter.get("kennel_id"),
         "sire_id": litter.get("sire_id"),
         "dam_id": litter.get("dam_id"),
         "date_of_birth": litter.get("date_of_birth"),
+        "planned_date": litter.get("planned_date"),
+        "litter_status": litter.get("status"),
         "status_label": litter.get("status"),
+        "puppy_ids": litter.get("puppy_ids") or [],
         "available_puppy_ids": litter.get("available_puppy_ids") or [],
-        "hero": (litter.get("media") or {}).get("cover"),
+        "media": {"cover": media.get("cover")},
+        "hero": media.get("cover"),
         "path": path.relative_to(root).as_posix(),
     }
 

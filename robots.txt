@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Disallow: /data/
+Disallow: /work/
+Disallow: /scripts/
+Disallow: /schemas/
+Disallow: /NOTES_DO_NOT_UPLOAD/
+Disallow: /README.md
+Disallow: /CHANGELOG.md
+Disallow: /DEPLOY-INSTRUCTIONS.txt
+Disallow: /SEO-STRATEGY.md
+Disallow: /records/README.md
+Disallow: /submit.html
+
+Sitemap: https://doberman-index.com/sitemap.xml

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#f1f1f1">
   <meta name="description" content="Doberman Index — structured puppy profile prototype for growth, health, development, pedigree and movement data.">
+  <meta name="robots" content="noindex,follow">
   <title>Doberman Index — Puppy Card Prototype</title>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -108,7 +109,7 @@
     .detail-panel span{font-family:"SFMono-Regular",Consolas,monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase}
     .detail-panel p{max-width:700px;font-size:17px;font-weight:500;line-height:1.45;letter-spacing:-.025em}
 
-    .link-card{flex:0 0 clamp(290px,27vw,380px);min-height:270px;padding:18px 20px 22px;border-top:2px solid var(--ink);background:transparent;display:flex;flex-direction:column;transition:.35s var(--ease)}
+    .link-card{flex:0 0 clamp(290px,27vw,380px);min-height:270px;padding:18px 20px 22px;border-top:2px solid var(--ink);background:transparent;color:inherit;text-decoration:none;display:flex;flex-direction:column;transition:.35s var(--ease)}
     .link-card:hover{padding-left:25px;background:var(--acid)}
     .link-card-top{display:flex;justify-content:space-between;color:var(--muted);font-size:9px;letter-spacing:.06em;text-transform:uppercase}
     .link-card-line{width:35px;height:8px;margin-top:auto;margin-bottom:20px;background:var(--acid)}
@@ -377,10 +378,12 @@
   <script src="../assets/js/display-name.js"></script>
   <script src="../assets/js/media-presentation.js"></script>
   <script src="../assets/js/lifecycle.js"></script>
+  <script src="../assets/js/seo-runtime.js"></script>
   <script>
     const PROTOTYPE_URL="../data/prototypes/puppy-card.json";
     const repoRoot=new URL("../",document.baseURI);
     const requestedId=(new URLSearchParams(location.search).get("id")||"").trim().toUpperCase();
+    let registryRecords=[];
     const byId=id=>document.getElementById(id);
     const array=value=>Array.isArray(value)?value:[];
     const safe=value=>Array.isArray(value)?(value.filter(Boolean).join(" / ")||"Not submitted"):(value===null||value===undefined||String(value).trim()===""?"Not submitted":String(value).trim());
@@ -432,13 +435,18 @@
 
     function renderFamily(identity,parentage){
       const items=[
-        ["Sire",displayRegisteredName(parentage.sire_name)||"Not submitted",parentage.sire_registration||parentage.sire_id||"Indexed record unavailable"],
-        ["Dam",displayRegisteredName(parentage.dam_name)||"Not submitted",parentage.dam_registration||parentage.dam_id||"Indexed record unavailable"],
-        ["Pedigree",parentage.pedigree_verified?"Reviewed":"Not submitted",parentage.pedigree_file||"Document unavailable"],
-        ["Litter",parentage.litter_id||"Not linked","Connector record unavailable"],
-        ["Kennel",displayKennelName(identity.kennel_name),identity.kennel_id||"Indexed record unavailable"]
+        ["Sire",displayRegisteredName(parentage.sire_name)||"Not submitted",parentage.sire_registration||parentage.sire_id||"Indexed record unavailable",parentage.sire_id],
+        ["Dam",displayRegisteredName(parentage.dam_name)||"Not submitted",parentage.dam_registration||parentage.dam_id||"Indexed record unavailable",parentage.dam_id],
+        ["Pedigree",parentage.pedigree_verified?"Reviewed":"Not submitted",parentage.pedigree_file||"Document unavailable",null],
+        ["Litter",parentage.litter_id||"Not linked",parentage.litter_id?"Open published litter record":"Connector record unavailable",parentage.litter_id],
+        ["Kennel",displayKennelName(identity.kennel_name),identity.kennel_id||"Indexed record unavailable",identity.kennel_id]
       ];
-      byId("familyRail").innerHTML=items.map(([label,value,state],index)=>`<article class="link-card"><div class="link-card-top"><span>${escapeHTML(label)}</span><span>${String(index+1).padStart(2,"0")}</span></div><i class="link-card-line"></i><strong>${escapeHTML(safe(value))}</strong><small>${escapeHTML(state)}</small></article>`).join("");
+      byId("familyRail").innerHTML=items.map(([label,value,state,linkedId],index)=>{
+        const published=linkedId&&registryRecords.some(record=>record.record_id===linkedId&&record.status==="published");
+        const tag=published?"a":"article";
+        const href=published?` href="../profile.html?id=${encodeURIComponent(linkedId)}"`:"";
+        return `<${tag}${href} class="link-card"><div class="link-card-top"><span>${escapeHTML(label)}</span><span>${String(index+1).padStart(2,"0")}</span></div><i class="link-card-line"></i><strong>${escapeHTML(safe(value))}</strong><small>${escapeHTML(state)}</small></${tag}>`;
+      }).join("");
     }
 
     function renderRecordGrid(target,items){
@@ -556,12 +564,16 @@
     async function initialize(){
       const isPublishedId=/^DI-[MF]-\d{6}$/.test(requestedId) && requestedId!=="DI-F-000000";
       const dataUrl=isPublishedId?`../data/dobermans/${encodeURIComponent(requestedId)}.json`:PROTOTYPE_URL;
-      const response=await fetch(dataUrl,{cache:"no-store"});
+      const [response,policy,registry]=await Promise.all([
+        fetch(dataUrl,{cache:"no-store"}),
+        window.DILifecycle.loadPolicy(repoRoot),
+        fetch(new URL("data/registry.json",repoRoot),{cache:"no-store"}).then(result=>result.ok?result.json():{records:[]}).catch(()=>({records:[]}))
+      ]);
       if(!response.ok)throw new Error(isPublishedId?"Published puppy record unavailable":"Prototype data unavailable");
       const record=await response.json();
+      registryRecords=Array.isArray(registry.records)?registry.records:[];
       const puppy=record.doberman||{},identity=puppy.identity||{},lifecycle=puppy.puppy_lifecycle||{};
       const flat={entity_type:"doberman",sex:identity.sex,life_stage:identity.life_stage,life_status:identity.life_status,date_of_birth:identity.date_of_birth,template:puppy.publication?.profile_template};
-      const policy=await window.DILifecycle.loadPolicy(repoRoot);
       const effectiveStage=window.DILifecycle.stageFor(flat,policy);
       if(isPublishedId && effectiveStage!=="puppy"){
         location.replace(`../profile.html?id=${encodeURIComponent(record.record_id)}`);
@@ -569,6 +581,7 @@
       }
       if(!isPublishedId && record.status!=="prototype")throw new Error("Invalid puppy prototype data");
       if(isPublishedId && record.status!=="published")throw new Error("Puppy record is not published");
+      if(isPublishedId)await window.DISEO.applyRecord(record.record_id,repoRoot);
       const name=displayRegisteredName(identity.registered_name)||"Name not submitted";
       const words=name.split(/\s+/); const heroLines=words.length>2?[words[0],words.slice(1).join(" ")]:[name];
       heroLines[heroLines.length-1]=`${heroLines.at(-1).replace(/[.!?]$/,"")}.`;

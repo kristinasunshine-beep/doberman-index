@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f1f1f1">
   <meta name="description" content="Doberman Index — structured female profile with pedigree, health, temperament, performance and breeding data.">
+  <meta name="robots" content="noindex,follow">
   <title>Doberman Index — Female Profile</title>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1593,6 +1594,7 @@
 
   <script src="../assets/js/display-name.js"></script>
   <script src="../assets/js/media-presentation.js"></script>
+  <script src="../assets/js/seo-runtime.js"></script>
   <script>
     const repoRoot=new URL("../",document.baseURI);
     const placeholderImage=new URL("assets/profile-placeholder.svg",repoRoot).href;
@@ -1687,11 +1689,15 @@
       return items;
     }
 
-    function buildRelated(recordId,parentage){
+    function buildRelated(recordId,parentage,reproduction={}){
       const byRecordId=new Map(registryRecords.map(record=>[record.record_id,record]));
       const related=[];
+      const seen=new Set();
       const add=(id,type,fallbackName)=>{
         if(!id&&!fallbackName)return;
+        const key=id||`${type}:${fallbackName}`;
+        if(seen.has(key))return;
+        seen.add(key);
         const record=byRecordId.get(id);
         const linkedDoberman=record?.entity_type==="doberman";
         related.push({
@@ -1704,6 +1710,8 @@
       add(parentage.sire_id,"Sire",parentage.sire_name);
       add(parentage.dam_id,"Dam",parentage.dam_name);
       add(parentage.litter_id,"Litter record",parentage.litter_id);
+      array(reproduction.litter_ids).forEach(id=>add(id,"Litter record",id));
+      registryRecords.filter(record=>record.entity_type==="litter"&&(record.sire_id===recordId||record.dam_id===recordId)).forEach(record=>add(record.record_id,"Litter record",record.name||record.record_id));
       registryRecords.filter(record=>record.entity_type==="doberman"&&(record.sire_id===recordId||record.dam_id===recordId)).slice(0,4).forEach(record=>add(record.record_id,"Indexed offspring"));
       if(parentage.litter_id)registryRecords.filter(record=>record.entity_type==="doberman"&&record.record_id!==recordId&&record.litter_id===parentage.litter_id).slice(0,3).forEach(record=>add(record.record_id,"Littermate"));
       return related;
@@ -1747,7 +1755,7 @@
         temperament:{Stability:present(temperament.stability),Drive:present(temperament.drive),"Social behaviour":present(temperament.social_behaviour),Defense:present(temperament.defense),Confidence:present(temperament.confidence),Evaluator:titleCase(temperament.evaluator)},
         performance:{Shows:numberOrDash(performance.shows_count),Titles:array(performance.titles).length,"Working exams":array(performance.working_exams).length,Sports:array(performance.sports).length},
         reproduction:{Litters:numberOrDash(reproduction.litters_count),Offspring:numberOrDash(reproduction.offspring_count),"Champion offspring":numberOrDash(reproduction.champion_offspring_count),"Export countries":array(reproduction.export_countries).length},
-        bloodline:buildBloodline(parentage,parentIdentities),gallery:buildGallery(media),related:buildRelated(recordId,parentage),
+        bloodline:buildBloodline(parentage,parentIdentities),gallery:buildGallery(media),related:buildRelated(recordId,parentage,reproduction),
         lastUpdated:present(publication.last_updated_label,formatDate(record.updated_at))
       };
     }
@@ -1998,6 +2006,7 @@
       byId("lifeStatusBadge").textContent=profileData.statusBadge;
       byId("lifeStatusBadge").hidden=!profileData.statusBadge;
       document.title=`Doberman Index — ${profileData.name}`;
+      await window.DISEO.applyRecord(profileData.core.profileId,repoRoot);
       byId("footerProfileId").textContent=profileData.core.profileId;
       byId("updated").textContent=`Last updated: ${profileData.lastUpdated}`;
       core();gallery();anchorMovement();bloodline(3);health();surfaces("structureRail",profileData.structure);surfaces("temperamentRail",profileData.temperament);metrics("performanceRail",profileData.performance,1);metrics("reproductionRail",profileData.reproduction,1);related();

@@ -3,6 +3,8 @@
   "records": [
     {
       "record_id": "DI-M-000001",
+      "created_at": "2026-08-28T16:09:54.880Z",
+      "updated_at": "2026-08-30T15:15:53.216Z",
       "entity_type": "doberman",
       "status": "published",
       "template": "male",
@@ -33,5 +35,5 @@
       "path": "data/dobermans/DI-M-000001.json"
     }
   ],
-  "generated_at": "2026-09-06T13:49:11+00:00"
+  "generated_at": "2026-09-06T15:18:24+00:00"
 }

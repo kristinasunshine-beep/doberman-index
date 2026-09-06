@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="description" content="Doberman Index record router for published Doberman and kennel profiles.">
+<meta name="robots" content="noindex,follow">
 <title>Doberman Index — Profile</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <style>
@@ -16,6 +17,7 @@ h1{margin:0 0 12px;font-size:34px}p{line-height:1.6;color:#555}
 <main id="status" hidden aria-live="polite"></main>
 <script src="assets/js/display-name.js"></script>
 <script src="assets/js/lifecycle.js"></script>
+<script src="assets/js/seo-runtime.js"></script>
 <script>
 (async()=>{
   const id=(new URLSearchParams(location.search).get("id")||"").trim().toUpperCase();
@@ -30,8 +32,9 @@ h1{margin:0 0 12px;font-size:34px}p{line-height:1.6;color:#555}
     ]);
     const item=(registry.records||[]).find(x=>x.record_id===id&&x.status==="published");
     if(!item)throw new Error("Record not found in registry.");
+    await window.DISEO.applyRecord(id,document.baseURI);
     const target=window.DILifecycle.templateFor(item,policy);
-    const route={male:"./profiles/male.html",female:"./profiles/female.html",puppy:"./profiles/puppy.html",kennel:"./profiles/kennel-concept.html"}[target];
+    const route={male:"./profiles/male.html",female:"./profiles/female.html",puppy:"./profiles/puppy.html",kennel:"./profiles/kennel-concept.html",litter:"./profiles/litter.html"}[target];
     if(route){location.replace(`${route}?id=${encodeURIComponent(id)}`);return;}
     const displayName=item.entity_type==="doberman"?window.DIName.displayRegisteredName(item.registered_name||id):(item.name||id);
     showStatus(`<h1>${escapeHTML(displayName)}</h1><p>The <strong>${escapeHTML(target||item.template||"record")}</strong> digital-card template is reserved in the architecture and will be connected here as soon as its design is approved.</p>`);

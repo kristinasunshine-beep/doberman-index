@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="description" content="A published Doberman Index litter record connecting kennel, sire, dam and indexed offspring.">
+  <meta name="robots" content="noindex,follow">
+  <title>Doberman Index — Litter record</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <style>
+    :root{--ink:#0c0c0c;--paper:#f1f1ed;--white:#fff;--muted:#a7a7a2;--line:#323232;--acid:#f3fe19;--max:1440px}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+    a{color:inherit}
+    img{display:block;max-width:100%}
+    .skip-link{position:fixed;left:16px;top:-80px;z-index:50;background:var(--acid);padding:12px 16px;font-weight:800}
+    .skip-link:focus{top:16px}
+    .site-header{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:68px;padding:0 max(24px,calc((100vw - var(--max))/2));background:rgba(12,12,12,.96);color:var(--white);border-bottom:1px solid #282828}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-size:15px;font-weight:900;letter-spacing:.08em}
+    .brand-mark{width:13px;height:13px;background:var(--acid);transform:rotate(45deg)}
+    .site-nav{display:flex;align-items:center;gap:24px}
+    .site-nav a{color:#cfcfca;text-decoration:none;font-size:13px;font-weight:700}
+    .site-nav a:hover,.site-nav a:focus-visible{color:var(--acid)}
+    .hero{background:var(--ink);color:var(--white);border-bottom:8px solid var(--acid)}
+    .hero-inner{width:min(var(--max),100%);margin:auto;display:grid;grid-template-columns:minmax(0,1.04fr) minmax(420px,.96fr);min-height:710px}
+    .hero-copy{display:flex;flex-direction:column;padding:76px 56px 56px max(28px,calc((100vw - var(--max))/2 + 4px));border-right:1px solid var(--line)}
+    .eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:56px;color:var(--acid);font-size:12px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}
+    .eyebrow:before{content:"";width:34px;height:2px;background:currentColor}
+    h1{max-width:850px;margin:0;font-size:clamp(58px,7.8vw,124px);line-height:.82;letter-spacing:-.065em;text-transform:uppercase;overflow-wrap:anywhere}
+    .hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto;padding-top:56px}
+    .meta-chip{min-width:150px;padding:14px 16px;border:1px solid #414141;color:#d2d2ce;font-size:11px;letter-spacing:.09em;text-transform:uppercase}
+    .meta-chip strong{display:block;margin-top:8px;color:var(--white);font-size:17px;letter-spacing:0;text-transform:none}
+    .meta-chip.status strong{color:var(--acid)}
+    .hero-media{position:relative;min-height:620px;overflow:hidden;background:#151515}
+    .hero-media img{width:100%;height:100%;object-fit:cover}
+    .media-placeholder{position:absolute;inset:0;display:grid;align-content:center;justify-items:center;gap:18px;padding:36px;background:linear-gradient(135deg,#111 0 52%,#171717 52%);color:#696965;text-align:center}
+    .media-placeholder:before{content:"DI-L";font-size:clamp(72px,11vw,168px);font-weight:900;letter-spacing:-.08em;color:#212121}
+    .media-placeholder span{max-width:250px;font-size:12px;line-height:1.6;letter-spacing:.1em;text-transform:uppercase}
+    .record-stamp{position:absolute;right:0;bottom:0;padding:17px 21px;background:var(--acid);color:var(--ink);font-size:12px;font-weight:900;letter-spacing:.08em}
+    .section{width:min(var(--max),100%);margin:auto;padding:96px 28px}
+    .section.dark{width:100%;max-width:none;background:var(--ink);color:var(--white)}
+    .section.dark>.section-inner{width:min(var(--max),100%);margin:auto}
+    .section-heading{display:grid;grid-template-columns:170px minmax(0,1fr);gap:30px;align-items:start;margin-bottom:48px}
+    .section-index{padding-top:10px;color:#74746f;font-size:12px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
+    h2{margin:0;font-size:clamp(42px,6vw,88px);line-height:.92;letter-spacing:-.05em;text-transform:uppercase}
+    .section-copy{max-width:680px;margin:22px 0 0;font-size:17px;line-height:1.65;color:#5c5c58}
+    .dark .section-copy{color:#ababaa}
+    .facts{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #c9c9c3;border-left:1px solid #c9c9c3}
+    .fact{min-height:170px;padding:24px;border-right:1px solid #c9c9c3;border-bottom:1px solid #c9c9c3}
+    .fact span,.connection-card span,.puppy-card span{display:block;color:#74746f;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+    .fact strong{display:block;margin-top:38px;font-size:23px;line-height:1.1}
+    .network-layout{display:grid;grid-template-columns:2fr 1fr;gap:16px}
+    .connection-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .connection-card{position:relative;display:flex;min-height:230px;flex-direction:column;padding:26px;border:1px solid #373737;text-decoration:none;background:#111;color:var(--white);transition:border-color .2s,transform .2s}
+    a.connection-card:hover,a.connection-card:focus-visible{border-color:var(--acid);transform:translateY(-3px)}
+    .connection-card strong{max-width:340px;margin-top:auto;font-size:28px;line-height:1.05;overflow-wrap:anywhere}
+    .connection-card small{margin-top:10px;color:#92928e;font-size:13px}
+    .connection-arrow{position:absolute;right:24px;top:22px;color:var(--acid);font-size:25px}
+    .connection-card.unlinked{color:#6d6d68;background:#0e0e0e}
+    .kennel-card{min-height:476px;border-color:#565656;background:var(--acid);color:var(--ink)}
+    .kennel-card span,.kennel-card small{color:#333}
+    .kennel-card .connection-arrow{color:var(--ink)}
+    .kennel-card.unlinked{background:#171717;color:#777;border-color:#373737}
+    .kennel-card.unlinked span,.kennel-card.unlinked small{color:#74746f}
+    .kennel-card.unlinked .connection-arrow{color:#74746f}
+    .puppy-summary{display:grid;grid-template-columns:repeat(3,1fr);margin-bottom:24px;border:1px solid #c9c9c3}
+    .summary-stat{padding:22px 24px;border-right:1px solid #c9c9c3}
+    .summary-stat:last-child{border:0}
+    .summary-stat span{display:block;color:#74746f;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+    .summary-stat strong{display:block;margin-top:8px;font-size:30px}
+    .puppy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .puppy-card{display:grid;grid-template-columns:84px minmax(0,1fr);gap:18px;min-height:142px;padding:20px;border:1px solid #c9c9c3;background:#f7f7f3;text-decoration:none}
+    a.puppy-card:hover,a.puppy-card:focus-visible{border-color:var(--ink);box-shadow:0 5px 0 var(--acid)}
+    .puppy-thumb{display:grid;place-items:center;width:84px;height:100px;overflow:hidden;background:#dfdfd8;color:#777;font-size:26px;font-weight:900}
+    .puppy-thumb img{width:100%;height:100%;object-fit:cover}
+    .puppy-copy{min-width:0;align-self:center}
+    .puppy-copy strong{display:block;margin:9px 0 8px;font-size:20px;line-height:1.05;overflow-wrap:anywhere}
+    .puppy-copy small{color:#686864;font-size:12px;text-transform:capitalize}
+    .availability{display:inline-block;margin-top:12px;padding:5px 8px;background:var(--acid);font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+    .empty-state{padding:46px;border:1px dashed #aaa9a2;background:#e9e9e3}
+    .empty-state strong{display:block;font-size:25px}
+    .empty-state p{max-width:600px;margin:10px 0 0;color:#666661;line-height:1.55}
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .gallery figure{margin:0;background:#171717}
+    .gallery img{width:100%;aspect-ratio:4/5;object-fit:cover}
+    .gallery figcaption{padding:15px;color:#bababa;font-size:12px}
+    .notes{max-width:940px;font-size:clamp(24px,3vw,42px);line-height:1.25;letter-spacing:-.025em}
+    .site-footer{display:flex;justify-content:space-between;gap:30px;padding:38px max(28px,calc((100vw - var(--max))/2));background:var(--ink);color:#8c8c88;border-top:1px solid #2b2b2b;font-size:12px;line-height:1.6}
+    .site-footer strong{color:var(--white)}
+    .load-state{width:min(760px,calc(100% - 40px));margin:100px auto;padding:40px;border-top:8px solid var(--acid);background:var(--white)}
+    .load-state h1{font-size:42px;line-height:1;letter-spacing:-.04em}
+    .load-state p{color:#5f5f5a;line-height:1.6}
+    @media(max-width:980px){.hero-inner{grid-template-columns:1fr}.hero-copy{min-height:600px;border-right:0}.hero-media{min-height:560px}.facts{grid-template-columns:repeat(2,1fr)}.network-layout{grid-template-columns:1fr}.kennel-card{min-height:230px}.puppy-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:660px){.site-header{padding:0 18px}.site-nav a:not(:last-child){display:none}.hero-copy{min-height:520px;padding:52px 20px 30px}.eyebrow{margin-bottom:42px}h1{font-size:clamp(54px,19vw,88px)}.hero-media{min-height:430px}.section{padding:72px 20px}.section-heading{grid-template-columns:1fr;gap:12px}.facts,.connection-grid,.puppy-grid{grid-template-columns:1fr}.puppy-summary{grid-template-columns:1fr}.summary-stat{border-right:0;border-bottom:1px solid #c9c9c3}.summary-stat:last-child{border-bottom:0}.site-footer{flex-direction:column;padding:32px 20px}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to litter record</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true"></span>DOBERMAN INDEX</a>
+    <nav class="site-nav" aria-label="Primary navigation"><a href="../index.html">Search the Index</a><a href="../about.html">About</a><a href="../submit.html">Submit a record</a></nav>
+  </header>
+
+  <main id="main">
+    <div class="load-state" id="loadState" aria-live="polite"><h1>Loading litter record.</h1><p>The published registry connection is being checked.</p></div>
+    <article id="litterPage" hidden>
+      <section class="hero" aria-labelledby="litterName">
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <div class="eyebrow">Litter record <span id="heroRecordId"></span></div>
+            <h1 id="litterName">Litter</h1>
+            <div class="hero-meta">
+              <div class="meta-chip status">Litter status<strong id="litterStatus">—</strong></div>
+              <div class="meta-chip"><span id="dateLabel">Date</span><strong id="litterDate">—</strong></div>
+              <div class="meta-chip">Indexed offspring<strong id="heroPuppyCount">0</strong></div>
+              <div class="meta-chip">Available now<strong id="heroAvailableCount">0</strong></div>
+            </div>
+          </div>
+          <div class="hero-media">
+            <img id="litterCover" alt="" hidden>
+            <div class="media-placeholder" id="coverPlaceholder"><span>Cover media has not been published for this litter.</span></div>
+            <div class="record-stamp" id="recordStamp">DI-L-000000</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="recordHeading">
+        <div class="section-heading"><div class="section-index">01 / Record</div><div><h2 id="recordHeading">One permanent litter record.</h2><p class="section-copy">The litter record keeps the family connection intact as each puppy moves through Puppy, Junior, Adult and Veteran presentation without changing its permanent DI-M or DI-F identity.</p></div></div>
+        <div class="facts">
+          <article class="fact"><span>Permanent ID</span><strong id="factRecordId">—</strong></article>
+          <article class="fact"><span>Designation</span><strong id="factName">—</strong></article>
+          <article class="fact"><span id="factDateLabel">Date</span><strong id="factDate">—</strong></article>
+          <article class="fact"><span>Publication</span><strong>Published</strong></article>
+        </div>
+      </section>
+
+      <section class="section dark" aria-labelledby="networkHeading">
+        <div class="section-inner">
+          <div class="section-heading"><div class="section-index">02 / Network</div><div><h2 id="networkHeading">The family connection.</h2><p class="section-copy">Published parents and the kennel open their own permanent records. Missing or unverified relationships remain visibly unlinked.</p></div></div>
+          <div class="network-layout">
+            <div class="connection-grid" id="litterParents" aria-label="Litter parents"></div>
+            <div id="litterKennel" aria-label="Litter kennel"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="puppiesHeading">
+        <div class="section-heading"><div class="section-index">03 / Offspring</div><div><h2 id="puppiesHeading">Permanent offspring history.</h2><p class="section-copy">Availability is current; lineage is permanent. At nine months a puppy leaves Puppy search and uses its sex-coded Junior card, while its ID remains in this litter history.</p></div></div>
+        <div class="puppy-summary">
+          <div class="summary-stat"><span>Historical puppy IDs</span><strong id="puppyCount">0</strong></div>
+          <div class="summary-stat"><span>Available puppy records</span><strong id="availableCount">0</strong></div>
+          <div class="summary-stat"><span>Identity rule</span><strong>DI-M / DI-F</strong></div>
+        </div>
+        <div class="puppy-grid" id="litterPuppies"></div>
+        <div class="empty-state" id="litterEmptyPuppies" hidden><strong>No puppy records published yet.</strong><p id="emptyPuppyCopy">Permanent puppy links will appear here after their public records are approved.</p></div>
+      </section>
+
+      <section class="section dark" id="gallerySection" aria-labelledby="galleryHeading" hidden>
+        <div class="section-inner">
+          <div class="section-heading"><div class="section-index">04 / Media</div><div><h2 id="galleryHeading">Litter archive.</h2><p class="section-copy">Only reviewed public media attached to this canonical litter record is displayed.</p></div></div>
+          <div class="gallery" id="litterGallery"></div>
+        </div>
+      </section>
+
+      <section class="section" id="notesSection" aria-labelledby="notesHeading" hidden>
+        <div class="section-heading"><div class="section-index">05 / Note</div><div><h2 id="notesHeading">Published note.</h2></div></div>
+        <p class="notes" id="litterNotes"></p>
+      </section>
+    </article>
+  </main>
+
+  <footer class="site-footer"><div><strong>DOBERMAN INDEX®</strong><br>Structured records. Connected bloodlines.</div><div>Record <strong id="footerRecordId">DI-L-000000</strong><br><span id="footerUpdated">Published litter profile</span></div><div>Platform architecture by LIONSIGN<br>2019–2026 · All rights reserved</div></footer>
+
+  <script src="../assets/js/display-name.js"></script>
+  <script src="../assets/js/media-presentation.js"></script>
+  <script src="../assets/js/litter-profile.js"></script>
+  <script src="../assets/js/seo-runtime.js"></script>
+  <script>
+    (async()=>{
+      const repoRoot=new URL("../",document.baseURI);
+      const requestedId=(new URLSearchParams(location.search).get("id")||"").trim().toUpperCase();
+      const byId=id=>document.getElementById(id);
+      const escapeHTML=value=>String(value??"").replace(/[&<>'"]/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[char]));
+      const publicAsset=value=>{
+        const path=String(value||"").trim();
+        if(!/^media\/(dobermans|kennels|litters)\/[A-Za-z0-9_./ -]+\.(?:jpe?g|png|webp|avif)$/i.test(path))return "";
+        return new URL(path,repoRoot).href;
+      };
+      const showError=message=>{
+        const state=byId("loadState");
+        state.innerHTML=`<h1>Profile unavailable.</h1><p>${escapeHTML(message)}</p><p><a href="../index.html">Return to Doberman Index search</a></p>`;
+      };
+      const relationCard=(relation,extraClass="")=>{
+        const tag=relation.linked?"a":"article";
+        const href=relation.linked?` href="${escapeHTML(relation.href)}"`:"";
+        const state=relation.linked?"Open published record":"Published record unavailable";
+        return `<${tag}${href} class="connection-card ${extraClass} ${relation.linked?"":"unlinked"}"><span>${escapeHTML(relation.type)}</span><span class="connection-arrow" aria-hidden="true">${relation.linked?"↗":"—"}</span><strong>${escapeHTML(relation.name)}</strong><small>${escapeHTML(relation.id||state)} · ${escapeHTML(state)}</small></${tag}>`;
+      };
+      const puppyCard=puppy=>{
+        const tag=puppy.linked?"a":"article";
+        const href=puppy.linked?` href="${escapeHTML(puppy.href)}"`:"";
+        const image=publicAsset(puppy.image);
+        const thumb=image?`<img src="${escapeHTML(image)}" alt="${escapeHTML(puppy.name)} — indexed Doberman" loading="lazy">`:escapeHTML(puppy.name.charAt(0)||"D");
+        return `<${tag}${href} class="puppy-card"><div class="puppy-thumb">${thumb}</div><div class="puppy-copy"><span>${escapeHTML(puppy.id)}</span><strong>${escapeHTML(puppy.name)}</strong><small>${escapeHTML(puppy.linked?puppy.life_stage:"Public profile unavailable")}</small>${puppy.available?'<em class="availability">Available puppy</em>':""}</div></${tag}>`;
+      };
+      try{
+        if(!window.DILitter.LITTER_ID.test(requestedId))throw new Error("A valid DI-L-###### record ID is required.");
+        const registryResponse=await fetch(new URL("data/registry.json",repoRoot),{cache:"no-store"});
+        if(!registryResponse.ok)throw new Error("Published registry is unavailable.");
+        const registry=await registryResponse.json();
+        const summary=(registry.records||[]).find(item=>item.record_id===requestedId&&item.entity_type==="litter"&&item.status==="published");
+        if(!summary)throw new Error("This litter does not have a published public record.");
+        const expectedPath=`data/litters/${requestedId}.json`;
+        if(summary.path!==expectedPath)throw new Error("The litter registry path is invalid.");
+        const recordResponse=await fetch(new URL(expectedPath,repoRoot),{cache:"no-store"});
+        if(!recordResponse.ok)throw new Error("The canonical litter record is unavailable.");
+        const record=await recordResponse.json();
+        if(record.status!=="published"||record.record_id!==requestedId)throw new Error("The litter record is not published.");
+        const model=window.DILitter.buildModel(record,registry,{doberman:window.DIName.displayRegisteredName,kennel:window.DIName.displayKennelName});
+
+        document.title=`Doberman Index — ${model.name}`;
+        await window.DISEO.applyRecord(model.record_id,repoRoot);
+        byId("litterName").textContent=model.name;
+        byId("heroRecordId").textContent=model.record_id;
+        byId("recordStamp").textContent=model.record_id;
+        byId("factRecordId").textContent=model.record_id;
+        byId("footerRecordId").textContent=model.record_id;
+        byId("factName").textContent=model.name;
+        byId("litterStatus").textContent=model.litter_status_label;
+        byId("dateLabel").textContent=model.date.label;
+        byId("factDateLabel").textContent=model.date.label;
+        byId("litterDate").textContent=model.date.value;
+        byId("factDate").textContent=model.date.value;
+        byId("heroPuppyCount").textContent=String(model.puppy_count);
+        byId("puppyCount").textContent=String(model.puppy_count);
+        byId("heroAvailableCount").textContent=String(model.available_count);
+        byId("availableCount").textContent=String(model.available_count);
+        byId("litterParents").innerHTML=relationCard(model.sire)+relationCard(model.dam);
+        byId("litterKennel").innerHTML=relationCard(model.kennel,"kennel-card");
+
+        if(model.puppies.length)byId("litterPuppies").innerHTML=model.puppies.map(puppyCard).join("");
+        else{
+          byId("litterEmptyPuppies").hidden=false;
+          if(model.litter_status==="planned")byId("emptyPuppyCopy").textContent="This is a planned litter. Permanent DI-M and DI-F offspring records will appear only after publication.";
+        }
+
+        const cover=publicAsset(model.cover);
+        if(cover){
+          byId("litterCover").src=cover;
+          byId("litterCover").alt=`${model.name} — litter cover`;
+          byId("litterCover").hidden=false;
+          byId("coverPlaceholder").hidden=true;
+        }
+        const gallery=model.gallery.map((entry,index)=>{
+          const item=window.DIMedia.normalizeGalleryItem(entry);
+          const image=item?publicAsset(item.path):"";
+          if(!image)return "";
+          const caption=item.caption||`Litter archive ${String(index+1).padStart(2,"0")}`;
+          return `<figure><img src="${escapeHTML(image)}" alt="${escapeHTML(`${model.name} — ${caption}`)}" loading="lazy" style="object-position:${escapeHTML(window.DIMedia.objectPosition(item.focal_point))};object-fit:${escapeHTML(item.fit_mode)}"><figcaption>${escapeHTML(caption)}</figcaption></figure>`;
+        }).filter(Boolean);
+        if(gallery.length){byId("litterGallery").innerHTML=gallery.join("");byId("gallerySection").hidden=false}
+        if(model.notes){byId("litterNotes").textContent=model.notes;byId("notesSection").hidden=false}
+        if(model.updated_at){byId("footerUpdated").textContent=`Last updated: ${window.DILitter.formatDate(model.updated_at.slice(0,10))}`}
+        byId("loadState").hidden=true;
+        byId("litterPage").hidden=false;
+      }catch(error){showError(error.message||"The litter record could not be loaded.")}
+    })();
+  </script>
+</body>
+</html>
