@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0.0",
+  "mode": "automatic",
+  "puppy_until_months": 9,
+  "junior_until_months": 18,
+  "veteran_from_years": 8,
+  "visual_template_rule": "puppy_before_puppy_cutoff_then_sex_template",
+  "notes": "Puppy card/search through the day before the 9-month birthday; from 9 months use the male/female card with Junior life stage; Adult from 18 months; Veteran from 8 years. Set publication.lifecycle_mode=manual on an individual canonical record to opt out."
+}

@@ -1,47 +1,49 @@
-# DOBERMAN INDEX — PUBLIC GITHUB · v5.9.33 · 2026-08-31
+# DOBERMAN INDEX — GITHUB READY · v6.3 FINAL · 2026-09-06
 
-Deployable public repository. Only this folder goes to the public GitHub repository.
+This folder is the complete public web root. Copy its contents—not the enclosing `public` folder—into the root of the Doberman Index GitHub Pages repository.
 
-## Portal
-`index.html` is the approved data-driven portal. Search and Available Puppies read published records from `data/registry.json`; profile routing uses `profile.html?id=...`. The Male template is the only production-designed digital card at this release. Female, Puppy and Kennel are reserved registry routes and currently show the pending-design message.
+## Included public system
 
-## About
-`about.html` keeps the accepted Forge/Mission design while using a professionally tightened editorial layer. The duplicate `Data, not opinion / Global standard / Real compatibility` section has been removed because the same operating principles already appear on the portal. `A registry. Built for clarity.` replaces the former verdict wording. Generic `animal/animals` wording has been removed in favour of breed-specific or kennel-specific language. Outside required brand/UI tokens, no content-bearing word appears more than twice; the About copy shares no four-, five- or six-word phrase, and no closely matching sentence, with the portal FAQ.
+- data-driven portal search and curated Explore the Index examples;
+- final About page;
+- male and female digital-card templates;
+- data-complete puppy-card prototype;
+- final kennel profile with connected-record panels, kennel archive and configured profile actions;
+- canonical record schema, public registry builder and validation scripts;
+- reviewed owner-submission interface and media rules.
 
-## Kennel promotion belt
-`index.html` contains the paid kennel-logo belt immediately after **Explore the Index** and before **How it works**. Placements come from `data/promotion-belt.json`, use equal-size slots and a daily-rotated starting order, and the entire section stays hidden while there are no active placements. The commercial offer is one reviewed placement per kennel at **€149 per year**; no priority tier or paid ranking is supported.
+## Primary routes
 
-Add approved transparent SVG, PNG or WebP logos under `media/kennels/<DI-K...>/`, then activate the matching dated entry in `data/promotion-belt.json`. `scripts/validate_promotion_belt.py` enforces the 24-placement limit, required local logo path, date term and approved destination format.
+- `index.html`
+- `about.html`
+- `profile.html?id=DI-M-000001`
+- `profiles/male.html?id=DI-M-000001`
+- `profiles/female.html?id=DI-F-…`
+- `profiles/kennel-concept.html?id=DI-K-000001`
+- `profiles/puppy.html`
+- `submit.html`
 
-## Male digital card — current visual master
-`profiles/male.html` is the live data-driven production version of the supplied `doberman-male-profile-forge-refined-v3` master. Its visual layer preserves the refined master, including:
+Kennel Archive links use `view=gallery#gallery-movement` so the destination opens only the indexed Doberman's Gallery & Movement surface. Regular registry links continue to open the complete profile.
 
-- raised **Details** action in the yellow dossier;
-- larger section descriptor after the numbered line;
-- refined custom horizontal slider/rail controls;
-- approved DCM dropdown;
-- Gallery, Bloodline, Health, Structural Profile, Temperament, Performance, Stud Impact, Related, Pairing and Services section structures.
-- Details prikazuje odvojene podatke `Life stage` i `Life status`; deceased zapis dodatno prikazuje `Life span`, dok se `Stud service status` automatski uklanja. Diskretna oznaka uz DI broj koristi format `DECEASED · 2014–2026`. Stud Impact ostaje ograničen na četiri postojeće metrike i čuva istorijske podatke.
+## Data workflow
 
-Production-only differences are limited to canonical data binding, routing, empty states and movement-video support.
+1. Review the private submission outside this repository.
+2. Reserve the next DI number with `scripts/assign_id.py` and a private reservation ledger.
+3. Create or update the canonical JSON record under `data/`.
+4. Place approved public media under `media/`.
+5. Run the validators and rebuild `data/registry.json`.
+6. Publish only after the complete checks pass.
 
-Registered Doberman names use a shared display-only normalizer across Portal, profile routing and the Male card. Canonical `registered_name` values remain unchanged. Known working/sport acronyms, Roman numerals and meaningful mixed alphanumeric tokens are preserved; linked indexed Dobermans receive the same display treatment, while unlinked pedigree text remains untouched.
+Do not invent missing values. Unconfirmed public fields remain null or use the interface's approved neutral unavailable state.
 
-Public hero and primary-role photographs read optional percentage focal points from canonical media metadata and apply them through `object-position`, with a backward-compatible 50/50 fallback. Hero, Head and Stack use 4:5 portrait presentation; Movement uses 3:2 landscape. Each additional Gallery item uses a 4:5 portrait frame and may be either a legacy string path or an object carrying `path`, `focal_point` and `fit_mode` (`cover` or `contain`). Legacy strings render with a 50/50 + `cover` fallback. Gallery accepts 0–10 items; 11 is rejected by schema validation. The approved horizontal Gallery & Movement rail is unchanged.
+## Privacy rule
 
-`scripts/validate_male_visual_master.py` protects these decisions in CI together with `validate_male_profile_contract.py`.
+Never upload owner submission ZIPs, private contact data, completed questionnaires, reservation ledgers, internal admin notes or unapproved source files to this repository.
 
-## Owner submission
-`submit.html` is the five-step owner wizard. Structure and Temperament use controlled values only. Images accept JPG/JPEG, PNG or WebP up to 20 MB each; PDF evidence up to 25 MB each; MP4/MOV video up to 180 MB; the complete package is capped at 250 MB.
 
-The exact v5.9.21 `submit.html` together with its `assets/css/submit-v3.css` is the locked Submission visual master. Typography, colours, spacing, step layout, field styling, upload surfaces and review presentation must not be redesigned. Lifecycle and canonical data-contract work is limited to fields and runtime logic.
+## v6.3 lifecycle automation
 
-Lifecycle is split into two fields: `life_stage` (`puppy`, `junior`, `adult`, `veteran`, `unknown`) and `life_status` (`living`, `deceased`, `unknown`). A deceased record keeps its Male, Female or Puppy registry classification and permanent DI number; only Male currently has an approved production card. Reproduction and puppy availability are forced to `not_applicable`; public cause-of-death evidence appears only when disclosure is explicitly set to `public`.
+Doberman records keep one permanent sex-coded DI ID for life. There is no public DI-P ID namespace.
+Age presentation is automatic from `date_of_birth` using `data/lifecycle-policy.json`: puppy before 9 months, junior from 9 to before 18 months, adult from 18 months, veteran from 8 years. The puppy visual template is used only while the effective stage is `puppy`; after that the record routes to its male/female card without changing its ID. The browser derives the effective stage immediately, and GitHub Actions synchronizes canonical JSON plus litter `available_puppy_ids` daily.
 
-## Registry automation
-`scripts/migrate_lifecycle_v1_1.py` converts legacy `life_stage: deceased` records without guessing their age or assuming that unconfirmed records are living. `scripts/build_registry.py` rebuilds `data/registry.json` from published canonical records. GitHub Actions validates lifecycle, controlled assessment, male profile, homepage showcase and kennel-promotion contracts before committing a rebuilt registry.
-
-The targeted production validator accepts empty, first-record and multi-record production states. It requires an exact match between published canonical IDs in `data/dobermans`, `data/kennels`, `data/litters` and registry IDs. Missing, stale and duplicate IDs fail. `scripts/test_registry_consistency.py` protects these cases in the same workflow; no validator requires an empty registry.
-
-## Privacy
-Never upload owner submission ZIPs, private contact data, completed questionnaires, reservation ledgers or internal admin notes to this public repository.
+Movement video is 3–15 seconds. The owner submission UI now validates the actual selected video duration and records the measured duration in the draft JSON.

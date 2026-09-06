@@ -26,7 +26,7 @@
       "location": "Belgrade",
       "registration_authority": "FCI",
       "registration_number": "JR 85729",
-      "kennel_id": null,
+      "kennel_id": "DI-K-000001",
       "kennel_name": "SIEMPRE PELIGROSO",
       "breeder": "Dejan Milićević",
       "owner": "Kristina Radosavljević"
@@ -249,7 +249,7 @@
         }
       ],
       "movement_video": "media/dobermans/DI-M-000001/movement.mp4",
-      "movement_video_seconds": 3,
+      "movement_video_seconds": 3.844,
       "movement_video_audio": "natural_sound",
       "focal_points": {
         "hero": {

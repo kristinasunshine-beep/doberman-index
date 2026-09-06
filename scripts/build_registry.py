@@ -79,6 +79,7 @@ def doberman_entry(path: Path, data: dict[str, Any], root: Path) -> dict[str, An
         "entity_type": "doberman",
         "status": "published",
         "template": template,
+        "lifecycle_mode": publication.get("lifecycle_mode", "automatic"),
         "registered_name": identity.get("registered_name"),
         "sex": sex,
         "life_stage": life_stage,

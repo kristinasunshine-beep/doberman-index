@@ -17,6 +17,8 @@
   const IMAGE_MAX_BYTES = 20 * 1024 * 1024;
   const PDF_MAX_BYTES = 25 * 1024 * 1024;
   const VIDEO_MAX_BYTES = 180 * 1024 * 1024;
+  const MOVEMENT_VIDEO_MIN_SECONDS = 3;
+  const MOVEMENT_VIDEO_MAX_SECONDS = 15;
   const PACKAGE_MAX_BYTES = 250 * 1024 * 1024;
   let currentStep = 0;
   let maxStepReached = 0;
@@ -109,6 +111,38 @@
     if (file.type === "application/pdf" || name.endsWith(".pdf")) return "pdf";
     if (["video/mp4", "video/quicktime"].includes(file.type) || /\.(mp4|mov)$/.test(name)) return "video";
     return "unsupported";
+  }
+
+  function videoDurationSeconds(file) {
+    return new Promise((resolve, reject) => {
+      const video = document.createElement("video");
+      const url = URL.createObjectURL(file);
+      const clean = () => { URL.revokeObjectURL(url); video.removeAttribute("src"); video.load(); };
+      video.preload = "metadata";
+      video.muted = true;
+      video.onloadedmetadata = () => { const seconds = Number(video.duration); clean(); Number.isFinite(seconds) ? resolve(seconds) : reject(new Error("Video duration unavailable")); };
+      video.onerror = () => { clean(); reject(new Error("Video metadata could not be read")); };
+      video.src = url;
+    });
+  }
+
+  async function validateMovementVideoDuration(field, { clearOnFailure = false } = {}) {
+    const file = field?.files?.[0];
+    if (!file) { if (field) delete field.dataset.durationSeconds; return true; }
+    try {
+      const seconds = await videoDurationSeconds(file);
+      if (seconds < MOVEMENT_VIDEO_MIN_SECONDS || seconds > MOVEMENT_VIDEO_MAX_SECONDS) {
+        setError(`${file.name} is ${seconds.toFixed(1)} seconds. Movement video must be 3–15 seconds.`, field);
+        if (clearOnFailure) { field.value = ""; delete field.dataset.durationSeconds; updateFileLabel(field); }
+        return false;
+      }
+      field.dataset.durationSeconds = seconds.toFixed(3);
+      return true;
+    } catch (_) {
+      setError(`We could not read the duration of ${file.name}. Please use an MP4 or MOV video that is 3–15 seconds long.`, field);
+      if (clearOnFailure) { field.value = ""; delete field.dataset.durationSeconds; updateFileLabel(field); }
+      return false;
+    }
   }
 
   function validateFileField(field) {
@@ -353,11 +387,12 @@
         },
         media: {
           hero: null, head: null, profile: null, stack: null, movement: null,
-          gallery: [], movement_video: null, movement_video_seconds: null, movement_video_audio: "natural_sound",
+          gallery: [], movement_video: null, movement_video_seconds: Number(form.elements.namedItem("movement_video")?.dataset.durationSeconds) || null, movement_video_audio: "natural_sound",
         },
         publication: {
           last_updated_label: null,
           profile_template: isPuppy ? "puppy" : sex,
+          lifecycle_mode: "automatic",
         },
       },
     };
@@ -445,6 +480,8 @@
   }
 
   async function prepareSubmission() {
+    const movementVideo = form.elements.namedItem("movement_video");
+    if (!(await validateMovementVideoDuration(movementVideo))) return;
     if (!validateStep(4)) return;
     clearError();
     prepareButton.disabled = true;
@@ -500,7 +537,10 @@
     });
   });
 
-  nextButton.addEventListener("click", () => { if (validateStep(currentStep)) showStep(currentStep + 1); });
+  nextButton.addEventListener("click", async () => {
+    if (currentStep === 3 && !(await validateMovementVideoDuration(form.elements.namedItem("movement_video")))) return;
+    if (validateStep(currentStep)) showStep(currentStep + 1);
+  });
   backButton.addEventListener("click", () => showStep(currentStep - 1));
   document.querySelectorAll("[data-step-link]").forEach((button) => button.addEventListener("click", () => {
     const target = Number(button.dataset.stepLink);
@@ -510,7 +550,10 @@
   form.addEventListener("submit", (event) => { event.preventDefault(); prepareSubmission(); });
   form.addEventListener("input", (event) => { if (["life_stage", "life_status", "sex"].includes(event.target.name)) updateConditionalFields(); queueSave(); });
   form.addEventListener("change", (event) => {
-    if (event.target.type === "file") updateFileLabel(event.target);
+    if (event.target.type === "file") {
+      updateFileLabel(event.target);
+      if (event.target.name === "movement_video") validateMovementVideoDuration(event.target, { clearOnFailure: true });
+    }
     if (["life_stage", "life_status", "sex"].includes(event.target.name)) updateConditionalFields();
     if (event.target.type !== "file") queueSave();
   });

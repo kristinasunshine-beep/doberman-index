@@ -6,6 +6,7 @@
       "entity_type": "doberman",
       "status": "published",
       "template": "male",
+      "lifecycle_mode": "automatic",
       "registered_name": "DION DANTE",
       "sex": "male",
       "life_stage": "veteran",
@@ -15,7 +16,7 @@
       "year_of_death": null,
       "country": "Serbia",
       "location": "Belgrade",
-      "kennel_id": null,
+      "kennel_id": "DI-K-000001",
       "kennel_name": "SIEMPRE PELIGROSO",
       "litter_id": null,
       "sire_id": null,
@@ -32,5 +33,5 @@
       "path": "data/dobermans/DI-M-000001.json"
     }
   ],
-  "generated_at": "2026-08-31T11:19:35+00:00"
+  "generated_at": "2026-09-06T13:49:11+00:00"
 }

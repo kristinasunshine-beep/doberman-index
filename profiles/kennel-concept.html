@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f1f1f1">
+  <meta name="description" content="Doberman Index — structured kennel profile with breeding program, indexed Dobermans, health evidence and results.">
+  <title>Doberman Index — Kennel Profile</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --paper:#f1f1f1;
+      --paper-deep:#e5e5e5;
+      --ink:#121212;
+      --muted:#666;
+      --acid:#f3fe19;
+      --white:#fff;
+      --black:#0f0f0f;
+      --blue:#0c01e6;
+      --pad:clamp(20px,5vw,64px);
+      --section-space:clamp(92px,12vw,168px);
+      --ease:cubic-bezier(.16,1,.3,1);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;background:var(--paper)}
+    body{
+      min-width:280px;
+      overflow-x:hidden;
+      color:var(--ink);
+      background:var(--paper);
+      font-family:Inter,Arial,sans-serif;
+      font-size:16px;
+      -webkit-font-smoothing:antialiased;
+    }
+    a{color:inherit;text-decoration:none}
+    a:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+    img{display:block;max-width:100%}
+    ::selection{background:var(--acid);color:var(--ink)}
+
+    .float-nav{
+      position:fixed;
+      top:18px;
+      left:50%;
+      z-index:20;
+      display:flex;
+      align-items:center;
+      gap:4px;
+      max-width:calc(100vw - 24px);
+      padding:5px 6px 5px 16px;
+      border:1px solid rgba(18,18,18,.08);
+      border-radius:999px;
+      background:rgba(255,255,255,.78);
+      box-shadow:0 10px 34px rgba(0,0,0,.07);
+      backdrop-filter:blur(18px);
+      transform:translateX(-50%);
+    }
+    .nav-brand{margin-right:10px;font-size:12px;font-weight:900;letter-spacing:-.03em;white-space:nowrap}
+    .nav-link{padding:8px 11px;border-radius:999px;font-size:10px;font-weight:500;white-space:nowrap}
+    .nav-link:hover{background:#dedede}
+    .nav-cta{padding:9px 15px;border-radius:999px;background:var(--ink);color:var(--white);font-size:10px;font-weight:650;white-space:nowrap}
+
+    .hero{
+      --hero-card-left:var(--pad);
+      --hero-card-width:calc(clamp(300px,19.2vw,360px) + 1.1cm);
+      --hero-card-top:39.3svh;
+      --hero-card-height:calc(72svh - 1.6cm);
+      position:relative;
+      min-height:calc(132svh - 3.7cm);
+      overflow:hidden;
+      border-bottom:1px solid var(--ink);
+      background:var(--paper);
+    }
+    .hero-meta{
+      position:absolute;
+      top:28px;
+      z-index:5;
+      font-size:10px;
+      font-weight:600;
+      line-height:1.45;
+      letter-spacing:.015em;
+    }
+    .hero-meta.left{left:var(--pad)}
+    .hero-meta.right{right:var(--pad);max-width:190px;text-align:right}
+    .hero-meta span{display:block;color:var(--muted);font-family:"SFMono-Regular",Consolas,monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase}
+
+    .watermark{
+      position:absolute;
+      top:71.2svh;
+      left:calc(var(--hero-card-left) + var(--hero-card-width) - 23px);
+      z-index:4;
+      color:#e4e4e4;
+      font-size:clamp(140px,24vw,370px);
+      font-weight:900;
+      line-height:.8;
+      letter-spacing:-.09em;
+      white-space:nowrap;
+      user-select:none;
+      transform:translate(-.045em,.015em);
+    }
+    .hero-title{
+      position:absolute;
+      top:calc(22.5svh + 28px);
+      right:calc(var(--pad) + 18px);
+      z-index:4;
+      width:min(66vw,930px);
+      padding-right:10px;
+      font-size:164px;
+      font-weight:700;
+      line-height:.79;
+      letter-spacing:-.08em;
+      text-align:right;
+    }
+    .hero-title span{display:block;overflow-wrap:anywhere}
+    .hero-title span + span{margin-top:.025em}
+
+    .dossier{
+      position:absolute;
+      left:var(--hero-card-left);
+      top:var(--hero-card-top);
+      z-index:5;
+      display:grid;
+      grid-template-rows:minmax(0,1fr) 34px;
+      width:var(--hero-card-width);
+      height:var(--hero-card-height);
+      padding:0;
+      background:var(--white);
+      overflow:hidden;
+      box-shadow:0 3px 14px rgba(0,0,0,.045);
+      transition:transform .3s var(--ease),box-shadow .3s ease;
+    }
+    .dossier:hover,
+    .dossier:focus-visible{
+      transform:translateY(-3px);
+      box-shadow:0 10px 30px rgba(0,0,0,.09);
+    }
+    .kennel-card-media{
+      position:relative;
+      display:block;
+      width:100%;
+      height:100%;
+      background:#d2d2d2;
+      overflow:hidden;
+    }
+    .kennel-logo-frame{position:absolute;inset:0 0 49%;overflow:hidden}
+    .kennel-card-media img{
+      position:absolute;
+      left:50%;
+      top:var(--logo-center,50%);
+      width:100%;
+      height:auto;
+      max-height:100%;
+      display:block;
+      object-fit:contain;
+      filter:grayscale(1);
+      transform:translate(-50%,-50%);
+      transition:filter .45s ease,transform .7s var(--ease);
+    }
+    .kennel-card-media img.is-siempre-peligroso-oversized{transform:translate(-50%,-50%) scale(1.2544)}
+    .dossier:hover .kennel-card-media img,
+    .dossier:focus-visible .kennel-card-media img{filter:grayscale(0)}
+    .kennel-hero-facts{position:absolute;inset:51% 22px 44px;display:flex;flex-direction:column;gap:15px;align-items:flex-start;justify-content:center;text-align:left}
+    .kennel-hero-fact{min-width:0}
+    .kennel-hero-fact small{display:block;margin-bottom:5px;color:#555;font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+    .kennel-hero-fact strong{font-size:13px;line-height:1.25;font-weight:650;overflow-wrap:anywhere}
+    .kennel-card-copy{
+      position:relative;
+      display:block;
+      min-height:0;
+      padding:0;
+      border-top:24px solid var(--acid);
+      background:#d2d2d2;
+    }
+    .kennel-card-copy small{
+      display:block;
+      margin:0;
+      color:#777;
+      font-family:"SFMono-Regular",Consolas,monospace;
+      font-size:8px;
+      font-weight:700;
+      letter-spacing:.09em;
+      text-transform:uppercase;
+    }
+    .kennel-card-details{
+      position:absolute;
+      top:16px;
+      right:22px;
+      display:flex;
+      align-items:center;
+      gap:9px;
+      color:var(--ink);
+      font-size:10px;
+      font-weight:750;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .kennel-card-details b{
+      display:grid;
+      place-items:center;
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      background:var(--ink);
+      color:var(--white);
+      font:15px/1 Inter,sans-serif;
+    }
+    .kennel-card-example{
+      position:absolute;
+      left:22px;
+      bottom:20px;
+      color:#777;
+      font-family:"SFMono-Regular",Consolas,monospace;
+      font-size:7px;
+      font-weight:700;
+      line-height:1;
+      letter-spacing:.09em;
+      text-transform:uppercase;
+      white-space:nowrap;
+    }
+    .hero-jump{
+      position:absolute;
+      right:var(--pad);
+      top:91svh;
+      z-index:6;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-size:10px;
+      font-weight:650;
+      line-height:1.25;
+    }
+    .hero-jump b{display:grid;place-items:center;width:50px;height:50px;border-radius:50%;background:var(--ink);color:var(--white);font-size:20px;transition:transform .35s var(--ease),color .35s}
+    .hero-jump:hover b{color:var(--acid);transform:rotate(-45deg)}
+
+    .record-strip{--logo-frame-gap:15px;--logo-neighbor-inset:45px;position:relative;z-index:7;margin-top:-83px;overflow:hidden;border-bottom:1px solid #d5d5d1;background:#f2f2ef;color:var(--ink)}
+    .record-strip::after{content:"";position:absolute;top:0;right:0;bottom:0;z-index:2;width:64px;background:linear-gradient(90deg,transparent,#f2f2ef);pointer-events:none}
+    .record-track{display:flex;width:max-content;animation:recordTicker 42s linear infinite}
+    .record-strip:hover .record-track{animation-play-state:paused}
+    @keyframes recordTicker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .record-item{
+      position:relative;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      width:220px;
+      min-height:82px;
+      padding:15px 34px 14px 20px;
+      background:var(--white);
+    }
+    .record-item::after{content:"";position:absolute;right:12px;top:50%;width:16px;height:3px;border-radius:999px;background:var(--acid);transform:translateY(-50%)}
+    .record-item span{margin-bottom:9px;color:#777;font-family:"SFMono-Regular",Consolas,monospace;font-size:7px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+    .record-item strong{max-width:190px;overflow:hidden;font-size:16.5px;font-weight:700;line-height:1.05;letter-spacing:-.045em;text-overflow:ellipsis;white-space:nowrap}
+    .record-item em{margin-top:5px;color:var(--muted);font-size:8px;font-style:normal;line-height:1.3}
+    .record-item.is-wide{width:280px}
+    .record-item.is-wide strong{max-width:245px}
+    .record-item.logo-neighbor-before{align-items:flex-end;padding-right:var(--logo-neighbor-inset);text-align:right}
+    .record-item.logo-neighbor-after{padding-left:var(--logo-neighbor-inset)}
+    .record-logo-item{display:flex;flex:0 0 auto;align-items:center;justify-content:center;width:auto;min-height:82px;padding:10px var(--logo-frame-gap);background:var(--white)}
+    .kennel-logo-capsule{display:inline-flex;align-items:center;justify-content:center;width:max-content;height:auto;min-height:60px;padding:4px 18px;border-radius:999px;background:var(--ink);overflow:hidden;line-height:0}
+    .kennel-logo-capsule.is-light{background:var(--white);box-shadow:0 0 0 1px rgba(18,18,18,.08)}
+    .kennel-logo-capsule img{display:block;width:auto;height:auto;max-width:260px;max-height:52px;object-fit:contain;filter:grayscale(1);opacity:.92;transition:filter .55s var(--ease),opacity .55s var(--ease)}
+    .kennel-logo-capsule.is-color img{filter:grayscale(0);opacity:1}
+
+    @media(max-width:1200px){
+      .hero-title{font-size:clamp(92px,12.4vw,142px)}
+    }
+    @media(max-width:980px){
+      .hero{--hero-card-height:calc(72svh - 1.6cm)}
+      .hero-title{width:calc(100% - var(--hero-card-width) - 2 * var(--pad) - 24px);right:var(--pad);font-size:clamp(58px,9vw,86px);top:calc(var(--hero-card-top) - .35em)}
+    }
+
+    @media(max-width:620px){
+      .float-nav{top:12px;width:calc(100% - 24px);justify-content:space-between;padding-left:13px}
+      .nav-link{display:none}
+      .hero{--hero-card-height:calc(clamp(346px,98vw,389px) - 1.6cm);min-height:max(calc(132svh - 3.7cm),calc(297px + var(--hero-card-height) + 115px))}
+      .hero-meta{display:none}
+      .hero-title{top:calc(14% + 16px);right:24px;width:calc(100% - 40px);padding-right:0;font-size:clamp(58px,17vw,80px);line-height:.82}
+      .dossier{left:auto;right:24px;top:297px;width:70%;padding:0;grid-template-rows:minmax(0,1fr) 32px}
+      .kennel-hero-facts{inset:51% 16px 40px;gap:10px;align-items:flex-end;text-align:right}
+      .kennel-hero-fact small{font-size:9px;margin-bottom:2px}
+      .kennel-hero-fact strong{font-size:11px}
+      .kennel-card-copy{padding:0;border-top-width:22px}
+      .kennel-card-copy small{font-size:7px}
+      .kennel-card-details{display:none}
+      .kennel-card-example{left:16px;bottom:15px;font-size:6px}
+      .kennel-card-media img{top:calc(var(--logo-center,50%) + 16px)}
+      .hero-jump{right:24px;top:clamp(470px,calc(100svh - 78px),640px)}
+      .watermark{display:none}
+      .record-strip::after{width:32px}
+      .record-item{width:185px;min-height:72px;padding:12px 30px 11px 24px}
+      .record-strip{--logo-frame-gap:12px;--logo-neighbor-inset:36px}
+      .record-logo-item{min-height:72px;padding:7px var(--logo-frame-gap)}
+      .kennel-logo-capsule{min-height:54px;padding:4px 15px}
+      .kennel-logo-capsule img{max-width:220px;max-height:46px}
+    }
+
+    /* Kennel continuation: the male-card section system, transferred without
+       changing its typography, spacing or horizontal rail language. */
+    .kennel-profile-flow{
+      --detail-panel-title-size:clamp(28px,3vw,44px);
+      --detail-kennel-name-size:clamp(32px,3.2vw,46px);
+      --detail-dog-name-size:clamp(31px,3.1vw,45px);
+      font-family:Inter,Arial,sans-serif;
+    }
+    .kennel-profile-flow .section{
+      position:relative;
+      min-height:620px;
+      padding:var(--section-space) var(--pad);
+      overflow:hidden;
+      border-bottom:1px solid var(--ink);
+      scroll-margin-top:68px;
+      background:var(--paper);
+    }
+    .kennel-profile-flow .section.is-white{background:var(--white)}
+    .kennel-profile-flow .section-mark{
+      position:absolute;
+      right:-.035em;
+      bottom:-.23em;
+      z-index:0;
+      color:#e7e7e7;
+      font-size:clamp(140px,24vw,370px);
+      font-weight:900;
+      line-height:.8;
+      letter-spacing:-.09em;
+      white-space:nowrap;
+      pointer-events:none;
+    }
+    .kennel-profile-flow .section-head{
+      position:relative;
+      z-index:2;
+      display:grid;
+      grid-template-columns:1fr minmax(270px,36%);
+      gap:40px;
+      align-items:start;
+      margin-bottom:clamp(50px,8vw,100px);
+    }
+    .kennel-profile-flow .section-index{
+      display:flex;
+      align-items:center;
+      gap:15px;
+      margin-bottom:28px;
+      font-family:Inter,Arial,sans-serif;
+      font-size:clamp(13px,.88vw,15px);
+      font-weight:650;
+      line-height:1.25;
+      letter-spacing:0;
+      text-transform:none;
+    }
+    .kennel-profile-flow .section-index i{width:30px;height:1px;background:currentColor}
+    .kennel-profile-flow .section-index span:last-child{
+      font-size:clamp(15px,1.05vw,18px);
+      font-weight:700;
+      letter-spacing:-.018em;
+    }
+    .kennel-profile-flow .section-title{
+      max-width:900px;
+      font-family:Inter,Arial,sans-serif;
+      font-size:clamp(56px,8vw,120px);
+      font-weight:700;
+      line-height:.86;
+      letter-spacing:-.07em;
+    }
+    .kennel-profile-flow .section-note{
+      justify-self:end;
+      max-width:390px;
+      margin-top:38px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.58;
+    }
+    .kennel-profile-flow .section-note b{
+      display:block;
+      margin-bottom:14px;
+      color:var(--ink);
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+    }
+    .kennel-profile-flow .section-content{position:relative;z-index:2}
+
+    .kennel-profile-flow .gallery-rail,
+    .kennel-profile-flow .slider{
+      display:flex;
+      gap:20px;
+      overflow-x:auto;
+      scroll-behavior:auto;
+      scroll-snap-type:none;
+      overscroll-behavior-inline:contain;
+      padding:0 0 18px;
+      scrollbar-width:none;
+      -ms-overflow-style:none;
+    }
+    .kennel-profile-flow .gallery-rail::-webkit-scrollbar,
+    .kennel-profile-flow .slider::-webkit-scrollbar{display:none;width:0;height:0}
+
+    .kennel-profile-flow .surface-card{
+      position:relative;
+      min-width:300px;
+      min-height:230px;
+      padding:16px 2px 22px;
+      border:0;
+      border-top:2px solid var(--ink);
+      display:flex;
+      flex-direction:column;
+      background:transparent;
+      overflow:hidden;
+      transition:padding .35s var(--ease),background .35s var(--ease),border-color .35s var(--ease);
+    }
+    .kennel-profile-flow .surface-card::before{
+      content:"";
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:5px;
+      background:var(--acid);
+      transform:scaleX(0);
+      transform-origin:left;
+      transition:transform .4s var(--ease);
+    }
+    .kennel-profile-flow .surface-card::after{
+      content:"";
+      position:absolute;
+      left:2px;
+      top:82px;
+      width:32px;
+      height:8px;
+      background:var(--acid);
+      transition:left .35s var(--ease),width .35s var(--ease);
+    }
+    .kennel-profile-flow .surface-card .key{
+      margin:0;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:650;
+      line-height:1.25;
+      letter-spacing:.055em;
+      text-transform:uppercase;
+    }
+    .kennel-profile-flow .surface-card .value{
+      display:block;
+      margin-top:auto;
+      font-size:25px;
+      font-weight:600;
+      line-height:1.02;
+      letter-spacing:-.055em;
+    }
+    .kennel-profile-flow .surface-card .sub{
+      display:block;
+      margin-top:10px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.5;
+    }
+    .kennel-profile-flow .surface-card:hover,
+    .kennel-profile-flow .surface-card.selected{
+      padding-left:20px;
+      padding-right:20px;
+      background:var(--white);
+    }
+    .kennel-profile-flow .surface-card:hover::before,
+    .kennel-profile-flow .surface-card.selected::before{transform:scaleX(1)}
+    .kennel-profile-flow .surface-card:hover::after,
+    .kennel-profile-flow .surface-card.selected::after{left:20px;width:42px}
+    .kennel-profile-flow #kennelProgramRail .surface-card{border-top:0}
+
+    .kennel-profile-flow #kennelHealthRail{gap:12px}
+    .kennel-profile-flow #kennelHealthRail .surface-card{
+      min-width:290px;
+      min-height:190px;
+      padding:18px 20px 20px;
+      border-top:2px solid var(--ink);
+    }
+    .kennel-profile-flow #kennelHealthRail .surface-card::before{display:none}
+    .kennel-profile-flow #kennelHealthRail .surface-card::after{
+      position:static;
+      order:2;
+      flex:none;
+      width:28px;
+      height:4px;
+      margin-top:auto;
+      margin-bottom:17px;
+      background:#a9a9a3;
+    }
+    .kennel-profile-flow #kennelHealthRail .key{order:1}
+    .kennel-profile-flow #kennelHealthRail .value{
+      order:3;
+      min-height:1.9em;
+      margin-top:0;
+      font-size:clamp(26px,2.15vw,34px);
+      font-weight:700;
+      line-height:.95;
+    }
+    .kennel-profile-flow #kennelHealthRail .sub{order:4;min-height:28px}
+    .kennel-profile-flow #kennelHealthRail .sub b{color:var(--ink);font-size:12px;font-weight:750}
+
+    .kennel-profile-flow .related-card{
+      position:relative;
+      min-width:360px;
+      min-height:190px;
+      display:flex;
+      flex-direction:column;
+      padding:19px 20px 21px;
+      border-top:2px solid var(--ink);
+      overflow:hidden;
+      background:rgba(241,241,241,.78);
+      transition:transform .35s var(--ease),background .35s var(--ease),box-shadow .35s var(--ease);
+    }
+    .kennel-profile-flow .related-card::before{
+      content:"";
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:8px;
+      background:var(--acid);
+      transform:scaleX(0);
+      transform-origin:left;
+      transition:transform .45s var(--ease);
+    }
+    .kennel-profile-flow .related-card-top{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      color:var(--muted);
+      font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+      font-size:10px;
+      font-weight:700;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+    }
+    .kennel-profile-flow .related-card-top i{height:1px;flex:1;background:#c8c8c4}
+    .kennel-profile-flow .related-arrow{
+      display:grid;
+      place-items:center;
+      width:28px;
+      height:28px;
+      border:1px solid #aaa;
+      border-radius:50%;
+      font-size:13px;
+      transition:transform .3s var(--ease),background .3s,color .3s,border-color .3s;
+    }
+    .kennel-profile-flow .related-card-body{
+      display:grid;
+      grid-template-columns:88px minmax(0,1fr);
+      gap:18px;
+      align-items:center;
+      margin-top:auto;
+    }
+    .kennel-profile-flow .related-thumb{
+      position:relative;
+      display:grid;
+      place-items:center;
+      width:88px;
+      aspect-ratio:4/5;
+      overflow:hidden;
+      border-bottom:5px solid var(--acid);
+      background:#d2d2d2;
+      color:var(--ink);
+      font-size:21px;
+      font-weight:700;
+      box-shadow:0 3px 12px rgba(18,18,18,.08);
+    }
+    .kennel-profile-flow .related-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;filter:grayscale(1);transition:filter .45s ease}
+    .kennel-profile-flow .related-copy strong{
+      display:block;
+      font-size:23px;
+      font-weight:650;
+      line-height:.95;
+      letter-spacing:-.055em;
+    }
+    .kennel-profile-flow .related-copy span{
+      display:block;
+      margin-top:8px;
+      color:var(--muted);
+      font-size:11px;
+      font-weight:600;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+    }
+    .kennel-profile-flow .related-card:hover{
+      z-index:2;
+      background:var(--white);
+      transform:translateY(-5px);
+      box-shadow:0 16px 34px rgba(18,18,18,.08);
+    }
+    .kennel-profile-flow .related-card:hover::before{transform:scaleX(1)}
+    .kennel-profile-flow .related-card:hover .related-thumb img,
+    .kennel-profile-flow .related-card:focus-visible .related-thumb img,
+    .kennel-profile-flow .related-card:active .related-thumb img{filter:grayscale(0)}
+    .kennel-profile-flow .related-card:hover .related-arrow{
+      border-color:var(--ink);
+      background:var(--ink);
+      color:var(--white);
+      transform:translate(2px,-2px);
+    }
+
+    .kennel-profile-flow .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+    .kennel-profile-flow .metric{
+      position:relative;
+      min-height:240px;
+      padding:18px 0;
+      border-top:2px solid var(--ink);
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+    }
+    .kennel-profile-flow .metric strong{
+      margin-top:12px;
+      font-size:clamp(70px,9vw,138px);
+      font-weight:700;
+      line-height:.78;
+      letter-spacing:-.08em;
+    }
+    .kennel-profile-flow .metric em{
+      margin-top:auto;
+      font-style:normal;
+      font-size:15px;
+      font-weight:600;
+      letter-spacing:-.02em;
+    }
+    .kennel-profile-flow .metric::after{
+      content:attr(data-caption);
+      margin-top:12px;
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.45;
+    }
+
+    .kennel-profile-flow .performance-showcase{
+      min-height:860px;
+      padding-top:clamp(100px,9vw,138px);
+      padding-bottom:clamp(86px,8vw,122px);
+    }
+    .kennel-profile-flow .performance-showcase .section-mark{display:none}
+    .kennel-profile-flow .performance-showcase .section-head{
+      grid-template-columns:minmax(0,1fr) minmax(260px,34%);
+      margin-bottom:clamp(86px,7vw,118px);
+    }
+    .kennel-profile-flow #kennelPerformanceRail{gap:22px}
+    .kennel-profile-flow #kennelPerformanceRail .metric{
+      min-width:0;
+      min-height:390px;
+      padding:22px;
+      border:0;
+      background:#191919;
+      color:var(--white);
+      isolation:isolate;
+      transition:transform .5s var(--ease);
+    }
+    .kennel-profile-flow #kennelPerformanceRail .metric:hover{transform:translateY(-8px)}
+    .kennel-profile-flow #kennelPerformanceRail .metric::before{
+      content:attr(data-initial);
+      position:absolute;
+      left:-.035em;
+      top:-.22em;
+      z-index:0;
+      color:var(--white);
+      font-size:clamp(280px,26vw,420px);
+      font-weight:700;
+      line-height:.94;
+      letter-spacing:-.11em;
+    }
+    .kennel-profile-flow #kennelPerformanceRail .metric strong{
+      position:absolute;
+      right:12px;
+      top:14px;
+      z-index:3;
+      margin:0;
+      padding:8px 10px 10px;
+      background:inherit;
+      font-size:clamp(38px,3.2vw,52px);
+      line-height:1;
+    }
+    .kennel-profile-flow #kennelPerformanceRail .metric em{
+      position:absolute;
+      left:22px;
+      bottom:46px;
+      z-index:2;
+      margin:0;
+      max-width:80%;
+      font-size:27px;
+      font-weight:700;
+      line-height:1;
+      letter-spacing:-.055em;
+    }
+    .kennel-profile-flow #kennelPerformanceRail .metric::after{
+      position:absolute;
+      left:22px;
+      bottom:21px;
+      z-index:2;
+      margin:0;
+      color:#c8c8c8;
+      font-size:12px;
+    }
+    .kennel-profile-flow #kennelPerformanceRail .metric.highlight{background:var(--acid);color:var(--ink)}
+    .kennel-profile-flow #kennelPerformanceRail .metric.highlight::before{color:var(--ink)}
+    .kennel-profile-flow #kennelPerformanceRail .metric.highlight::after{color:var(--ink)}
+
+    .kennel-profile-flow .impact-showcase{
+      min-height:980px;
+      margin-top:clamp(52px,5vw,84px);
+      padding-top:clamp(92px,7vw,118px);
+      padding-bottom:clamp(58px,5vw,78px);
+      background:var(--black);
+      color:var(--white);
+    }
+    .kennel-profile-flow .impact-showcase .section-mark{
+      top:35%;
+      right:-.16em;
+      bottom:auto;
+      color:#2b2b2b;
+      font-size:clamp(220px,31vw,500px);
+      line-height:.78;
+    }
+    .kennel-profile-flow .impact-showcase .section-head{
+      grid-template-columns:minmax(0,1fr) minmax(420px,.8fr);
+      align-items:stretch;
+      margin-bottom:clamp(110px,10vw,170px);
+    }
+    .kennel-profile-flow .impact-showcase .section-title,
+    .kennel-profile-flow .impact-showcase .section-index{color:var(--white)}
+    .kennel-profile-flow .impact-showcase .section-note{margin:0;color:#999}
+    .kennel-profile-flow .impact-showcase .section-note b{color:var(--white)}
+    .kennel-profile-flow .impact-content{
+      position:relative;
+      z-index:2;
+      display:grid;
+      grid-template-columns:minmax(330px,.72fr) minmax(520px,1fr);
+      gap:clamp(58px,6vw,96px);
+      align-items:start;
+      margin-top:clamp(170px,13vw,250px);
+      padding-bottom:72px;
+      border-bottom:1px solid #333;
+    }
+    .kennel-profile-flow .impact-copy{
+      max-width:390px;
+      color:#999;
+      font-size:15px;
+      line-height:1.6;
+    }
+    .kennel-profile-flow #kennelLitterRail{grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 58px}
+    .kennel-profile-flow #kennelLitterRail .metric{
+      min-height:118px;
+      padding:0 0 10px 20px;
+      border:0;
+      background:transparent;
+      color:var(--white);
+      overflow:visible;
+    }
+    .kennel-profile-flow #kennelLitterRail .metric::before{
+      content:"";
+      position:absolute;
+      top:5px;
+      left:0;
+      width:24px;
+      height:3px;
+      background:var(--acid);
+    }
+    .kennel-profile-flow #kennelLitterRail .metric strong{
+      margin:29px 0 0;
+      font-size:clamp(46px,4.6vw,72px);
+      color:var(--white);
+    }
+    .kennel-profile-flow #kennelLitterRail .metric em{
+      position:absolute;
+      top:0;
+      left:34px;
+      margin:0;
+      color:var(--white);
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.055em;
+    }
+    .kennel-profile-flow #kennelLitterRail .metric::after{margin:12px 0 0;color:#777;font-size:11px}
+    .kennel-profile-flow .linked-record-list{
+      display:grid;
+      grid-template-columns:minmax(150px,.34fr) minmax(0,1fr);
+      gap:28px;
+      align-items:start;
+      margin-top:72px;
+      padding:18px 0 0;
+      border-top:1px solid #343434;
+      color:#777;
+      font-size:12px;
+      line-height:1.5;
+    }
+    .kennel-profile-flow .linked-record-list > span{
+      color:var(--white);
+      font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+      font-size:9px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .kennel-profile-flow .linked-record-list strong{color:#aaa;font-size:14px;font-weight:520}
+    .kennel-profile-flow .linked-litter-links{display:flex;flex-wrap:wrap;gap:10px}
+    .kennel-profile-flow .linked-litter-links span{padding:10px 14px;border:1px solid #4a4a4a;border-radius:999px;color:var(--white);font-size:11px}
+
+    .kennel-profile-flow .visual-card{
+      position:relative;
+      min-width:min(72vw,940px);
+      height:min(68vh,660px);
+      overflow:hidden;
+      background:#d9d9d9;
+    }
+    .kennel-profile-flow .visual-card[data-frame-orientation]{
+      min-width:0;
+      width:auto;
+      flex:0 0 auto;
+      aspect-ratio:var(--media-frame-ratio);
+    }
+    .kennel-profile-flow .visual-card img,
+    .kennel-profile-flow .visual-card video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      filter:grayscale(1);
+      transition:filter .6s var(--ease),transform 1.1s var(--ease);
+    }
+    .kennel-profile-flow .visual-card:hover img,
+    .kennel-profile-flow .visual-card:hover video{filter:grayscale(0);transform:scale(1.018)}
+    .kennel-profile-flow .visual-card::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.48));
+      pointer-events:none;
+    }
+    .kennel-profile-flow .visual-label{
+      position:absolute;
+      left:22px;
+      bottom:20px;
+      z-index:2;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      color:var(--white);
+      font-size:14px;
+      font-weight:600;
+    }
+    .kennel-profile-flow .visual-label::before{
+      content:"";
+      width:9px;
+      height:9px;
+      border-radius:50%;
+      background:var(--acid);
+    }
+    .kennel-profile-flow .visual-count{
+      position:absolute;
+      right:22px;
+      top:20px;
+      z-index:2;
+      padding:8px 11px;
+      border-radius:999px;
+      background:rgba(255,255,255,.78);
+      font-size:10px;
+      font-weight:600;
+      backdrop-filter:blur(12px);
+    }
+
+    .kennel-profile-flow .pairing-section{
+      min-height:620px;
+      padding-top:clamp(72px,6vw,96px);
+      padding-bottom:clamp(72px,6vw,96px);
+      background:var(--black);
+      color:var(--white);
+    }
+    .kennel-profile-flow .pairing-section::before{
+      content:"PUPPIES";
+      position:absolute;
+      right:-.03em;
+      bottom:-.16em;
+      color:#1a1a1a;
+      font-size:clamp(140px,24vw,370px);
+      font-weight:900;
+      line-height:.8;
+      letter-spacing:-.09em;
+    }
+    .kennel-profile-flow .pairing-grid{
+      position:relative;
+      z-index:2;
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:9vw;
+      align-items:end;
+      min-height:360px;
+    }
+    .kennel-profile-flow .pairing-kicker{
+      display:flex;
+      gap:13px;
+      align-items:center;
+      margin-bottom:32px;
+      color:var(--acid);
+      font-size:11px;
+      font-weight:600;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+    }
+    .kennel-profile-flow .pairing-kicker::before{content:"07";color:var(--white)}
+    .kennel-profile-flow .pairing-title{
+      font-size:clamp(56px,8vw,120px);
+      font-weight:700;
+      line-height:.86;
+      letter-spacing:-.07em;
+    }
+    .kennel-profile-flow .pairing-copy{max-width:480px;margin-bottom:20px}
+    .kennel-profile-flow .pairing-copy p{margin-bottom:54px;color:#aaa;font-size:15px;line-height:1.6}
+    .kennel-profile-flow .pairing-link{
+      display:grid;
+      grid-template-columns:1fr auto;
+      align-items:center;
+      padding:18px 2px;
+      border-bottom:1px solid #666;
+      color:var(--white);
+      font-size:15px;
+    }
+    .kennel-profile-flow .pairing-link i{
+      display:grid;
+      place-items:center;
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      background:var(--acid);
+      color:var(--ink);
+      font-style:normal;
+    }
+
+    .kennel-profile-flow .services-section{
+      min-height:auto;
+      display:grid;
+      grid-template-columns:minmax(300px,34%) minmax(0,1fr);
+      column-gap:clamp(56px,8vw,130px);
+      align-items:center;
+      padding-bottom:clamp(90px,9vw,142px);
+    }
+    .kennel-profile-flow .services-section .section-head{grid-column:1;display:block;position:relative;top:auto;margin:0}
+    .kennel-profile-flow .services-section .section-note{justify-self:start;max-width:330px;margin-top:46px}
+    .kennel-profile-flow .services-section .section-title{max-width:100%;font-size:clamp(50px,5.4vw,82px);line-height:.88}
+    .kennel-profile-flow .kennel-service-module{grid-column:2;align-self:center;border-top:1px solid #c9c9c4}
+    .kennel-profile-flow .service-selector{position:relative;display:grid;grid-template-columns:1fr;isolation:isolate}
+    .kennel-profile-flow .service-option{
+      position:relative;
+      min-height:0;
+      display:grid;
+      grid-template-columns:50px minmax(160px,.95fr) minmax(190px,1.15fr) 124px;
+      grid-template-rows:minmax(0,1fr);
+      column-gap:clamp(14px,1.5vw,28px);
+      align-items:start;
+      width:100%;
+      min-width:0;
+      padding:24px 16px 24px 20px;
+      border:0;
+      border-bottom:1px solid #c9c9c4;
+      border-radius:0;
+      background:transparent;
+      color:var(--ink);
+      font:inherit;
+      text-align:left;
+      cursor:pointer;
+      overflow:hidden;
+      transition:background .4s var(--ease),box-shadow .4s var(--ease);
+    }
+    .kennel-profile-flow .service-option:nth-child(1){background:var(--acid)}
+    .kennel-profile-flow .service-option:nth-child(2){background:var(--ink);color:var(--white)}
+    .kennel-profile-flow .service-option:nth-child(3){background:var(--white)}
+    .kennel-profile-flow .service-option::before{content:"";position:absolute;z-index:2;inset:0 auto 0 0;width:9px;background:var(--acid);transform:scaleY(0);transform-origin:top;transition:transform .44s var(--ease)}
+    .kennel-profile-flow .service-option:nth-child(1)::before{background:var(--ink)}
+    .kennel-profile-flow .service-option:hover::before,
+    .kennel-profile-flow .service-option:focus-visible::before{transform:scaleY(1)}
+    .kennel-profile-flow .service-option:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+    .kennel-profile-flow .service-option > *{position:relative;z-index:2;min-width:0}
+    .kennel-profile-flow .service-option-number{grid-column:1;grid-row:1;align-self:start;font-size:24px;font-weight:750;line-height:1;letter-spacing:-.045em}
+    .kennel-profile-flow .service-option-copy{grid-column:2;grid-row:1;display:block;align-self:start;max-width:360px}
+    .kennel-profile-flow .service-option-copy strong{font-size:clamp(27px,2.25vw,38px);font-weight:680;line-height:.94;letter-spacing:-.055em;overflow-wrap:break-word}
+    .kennel-profile-flow .service-option-description{grid-column:3;grid-row:1;align-self:start;max-width:370px;color:var(--muted);font-size:14px;line-height:1.55;overflow-wrap:break-word}
+    .kennel-profile-flow .service-option:nth-child(1) .service-option-description{color:rgba(18,18,18,.66)}
+    .kennel-profile-flow .service-option:nth-child(2) .service-option-description{color:#999}
+    .kennel-profile-flow .service-option-pricing{grid-column:4;grid-row:1;align-self:end;display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-height:64px;padding:2px 0 0 24px;border-left:1px solid rgba(18,18,18,.3)}
+    .kennel-profile-flow .service-option:nth-child(2) .service-option-pricing{border-left-color:rgba(255,255,255,.28)}
+    .kennel-profile-flow .service-fee-label{font-size:9px;font-weight:700;line-height:1;letter-spacing:.08em;text-transform:uppercase}
+    .kennel-profile-flow .service-option-price{font-size:clamp(34px,3vw,48px);font-weight:750;line-height:.9;letter-spacing:-.055em;white-space:nowrap}
+    .kennel-profile-flow .services-ghost{position:absolute;left:45%;top:82%;z-index:1;color:rgba(18,18,18,.09);font-size:clamp(220px,31vw,500px);font-weight:900;line-height:.75;letter-spacing:-.09em;white-space:nowrap;transform:translate(-50%,-50%);pointer-events:none;user-select:none}
+    .kennel-profile-flow .services-monolith{position:relative;height:clamp(136px,10vw,178px);display:block;margin-top:54px;padding:0;border:0;overflow:hidden;background:var(--acid);color:var(--ink)}
+    .kennel-profile-flow .services-monolith-editorial{position:relative;width:100%;height:100%}
+    .kennel-profile-flow .services-monolith-infinity{position:absolute;left:clamp(18px,2.5vw,38px);top:50%;display:flex;align-items:center;gap:clamp(5px,.7vw,11px);color:rgba(18,18,18,.14);white-space:nowrap;transform:translateY(-50%)}
+    .kennel-profile-flow .services-monolith-infinity strong{font-size:clamp(88px,8.6vw,138px);font-weight:760;line-height:.72;letter-spacing:-.09em}
+    .kennel-profile-flow .services-monolith-infinity i{font-size:clamp(42px,4vw,64px);font-style:normal;font-weight:450;line-height:1}
+    .kennel-profile-flow .services-monolith-message{position:absolute;right:clamp(20px,2.8vw,44px);bottom:clamp(18px,1.8vw,28px);max-width:min(62%,560px);margin:0;font-size:clamp(17px,1.35vw,22px);font-weight:760;line-height:1.05;letter-spacing:-.045em;text-align:right;white-space:normal}
+
+    .kennel-profile-flow .rail-scrollbar{
+      position:relative;
+      z-index:3;
+      width:100%;
+      height:22px;
+      overflow:hidden;
+      background:transparent;
+      touch-action:none;
+      user-select:none;
+    }
+    .kennel-profile-flow .rail-scrollbar::before{
+      content:"";
+      position:absolute;
+      inset:1px 0;
+      z-index:0;
+      background:#e8e8e8;
+      transition:inset .18s ease,background .18s ease;
+    }
+    .kennel-profile-flow .rail-scrollbar[hidden]{display:none}
+    .kennel-profile-flow .rail-scrollbar-track{
+      position:absolute;
+      left:22px;
+      right:22px;
+      top:50%;
+      z-index:1;
+      height:4px;
+      transform:translateY(-50%);
+    }
+    .kennel-profile-flow .rail-scrollbar-indicator{
+      position:absolute;
+      left:0;
+      top:50%;
+      width:clamp(150px,42%,300px);
+      height:3px;
+      border-radius:999px;
+      background:#737373;
+      transform:translate3d(0,-50%,0);
+      transition:height .18s ease,background .18s ease;
+      touch-action:none;
+    }
+    .kennel-profile-flow .rail-scrollbar-arrow{
+      position:absolute;
+      top:0;
+      z-index:2;
+      width:22px;
+      height:22px;
+      padding:0;
+      border:0;
+      background:transparent;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .18s ease;
+    }
+    .kennel-profile-flow .rail-scrollbar-arrow.prev{left:0}
+    .kennel-profile-flow .rail-scrollbar-arrow.next{right:0}
+    .kennel-profile-flow .rail-scrollbar-arrow::before{
+      content:"";
+      position:absolute;
+      top:7px;
+      width:0;
+      height:0;
+      border-top:4px solid transparent;
+      border-bottom:4px solid transparent;
+    }
+    .kennel-profile-flow .rail-scrollbar-arrow.prev::before{left:7px;border-right:6px solid #858585}
+    .kennel-profile-flow .rail-scrollbar-arrow.next::before{right:7px;border-left:6px solid #858585}
+    .kennel-profile-flow .rail-scrollbar:hover .rail-scrollbar-arrow,
+    .kennel-profile-flow .rail-scrollbar.is-active .rail-scrollbar-arrow{opacity:1;pointer-events:auto}
+    .kennel-profile-flow .rail-scrollbar:hover::before,
+    .kennel-profile-flow .rail-scrollbar.is-active::before{inset:0;background:#e5e5e5}
+    .kennel-profile-flow .rail-scrollbar:hover .rail-scrollbar-indicator,
+    .kennel-profile-flow .rail-scrollbar.is-active .rail-scrollbar-indicator{height:6px;background:#5f5f5f}
+
+    .kennel-profile-flow .footer{
+      display:grid;
+      grid-template-columns:minmax(0,1.25fr) auto minmax(280px,.9fr);
+      gap:clamp(28px,4vw,70px);
+      align-items:end;
+      min-height:176px;
+      padding:42px var(--pad) 36px;
+      border-top:1px solid #303030;
+      background:var(--black);
+      color:var(--white);
+      font-size:10px;
+      line-height:1.5;
+    }
+    .kennel-profile-flow .footer-identity{display:flex;align-items:baseline;gap:clamp(14px,1.6vw,26px)}
+    .kennel-profile-flow .footer-brand{font-size:28px;font-weight:900;line-height:1;letter-spacing:-.06em}
+    .kennel-profile-flow .footer-descriptor{color:#8a8a8a;font-family:"SFMono-Regular",Consolas,monospace;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+    .kennel-profile-flow .footer-descriptor span{margin-right:9px;color:var(--acid)}
+    .kennel-profile-flow .footer-record{display:flex;flex-direction:column;align-items:flex-start;min-width:122px}
+    .kennel-profile-flow .footer-record > span{color:#8a8a8a;font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+    .kennel-profile-flow .footer-record strong{margin-top:5px;font-size:18px;font-weight:750;line-height:1;letter-spacing:-.04em}
+    .kennel-profile-flow .footer-record small{margin-top:9px;color:#777;font-family:"SFMono-Regular",Consolas,monospace;font-size:8px}
+    .kennel-profile-flow .footer-right{justify-self:end;text-align:right;color:#999;font-family:"SFMono-Regular",Consolas,monospace;font-size:9px;line-height:1.55}
+
+    @media(max-width:980px){
+      .kennel-profile-flow .section-head,
+      .kennel-profile-flow .performance-showcase .section-head,
+      .kennel-profile-flow .impact-showcase .section-head{grid-template-columns:1fr}
+      .kennel-profile-flow .section-note{justify-self:start;margin-top:0}
+      .kennel-profile-flow .metric-grid{grid-template-columns:repeat(2,1fr)}
+      .kennel-profile-flow .impact-content{grid-template-columns:1fr;gap:74px;margin-top:0}
+      .kennel-profile-flow .pairing-grid{grid-template-columns:1fr;align-content:end}
+      .kennel-profile-flow .pairing-copy{margin-top:40px}
+      .kennel-profile-flow .services-section{display:block}
+      .kennel-profile-flow .services-section .section-head{position:relative;top:auto;margin-bottom:64px}
+      .kennel-profile-flow .services-section .section-note{margin-top:30px}
+      .kennel-profile-flow .service-option{min-height:0;grid-template-columns:38px minmax(0,1fr) 112px;grid-template-rows:auto 1fr;column-gap:14px;row-gap:22px;padding:22px 14px 22px 18px}
+      .kennel-profile-flow .service-option-number{font-size:20px}
+      .kennel-profile-flow .service-option-copy{grid-column:2 / 4;grid-row:1;max-width:none}
+      .kennel-profile-flow .service-option-copy strong{font-size:clamp(27px,4.5vw,36px)}
+      .kennel-profile-flow .service-option-description{grid-column:2;grid-row:2;align-self:end;max-width:100%;font-size:13px}
+      .kennel-profile-flow .service-option-pricing{grid-column:3;grid-row:2;align-self:end;min-height:58px;padding:2px 0 0 16px}
+    }
+    @media(max-width:680px){
+      :root{--pad:24px;--section-space:76px}
+      .kennel-profile-flow .section{min-height:auto}
+      .kennel-profile-flow .section-head{gap:24px;margin-bottom:54px}
+      .kennel-profile-flow .section-title,
+      .kennel-profile-flow .performance-showcase .section-title,
+      .kennel-profile-flow .impact-showcase .section-title,
+      .kennel-profile-flow .pairing-title{
+        width:100%;
+        max-width:100%;
+        padding-right:.18em;
+        font-size:clamp(48px,15.5vw,74px);
+      }
+      .kennel-profile-flow .section-index{gap:11px;font-size:12px;flex-wrap:wrap}
+      .kennel-profile-flow .section-index i{width:26px}
+      .kennel-profile-flow .section-index span:last-child{font-size:14px}
+      .kennel-profile-flow .section-note{width:100%;max-width:calc(100% - 4px);padding-right:10px;font-size:14px}
+      .kennel-profile-flow .section-mark,
+      .kennel-profile-flow .impact-showcase .section-mark,
+      .kennel-profile-flow .pairing-section::before{font-size:48vw}
+      .kennel-profile-flow #kennelHealthRail .surface-card{min-width:78vw;min-height:182px}
+      .kennel-profile-flow .related-card{min-width:84vw;min-height:190px;padding:18px}
+      .kennel-profile-flow #kennelPerformanceRail{
+        display:flex;
+        gap:10px;
+        overflow-x:auto;
+        padding-bottom:14px;
+      }
+      .kennel-profile-flow #kennelPerformanceRail .metric{min-width:78vw;min-height:360px}
+      .kennel-profile-flow #kennelPerformanceRail .metric::before{font-size:340px}
+      .kennel-profile-flow #kennelPerformanceRail .metric strong{font-size:38px}
+      .kennel-profile-flow #kennelPerformanceRail .metric em{font-size:26px}
+      .kennel-profile-flow .impact-showcase{min-height:auto;margin-top:62px;padding-top:88px;padding-bottom:64px}
+      .kennel-profile-flow .impact-showcase .section-note{display:none}
+      .kennel-profile-flow #kennelLitters .section-mark{display:none}
+      .kennel-profile-flow .impact-content{gap:50px;padding-bottom:0;border-bottom:0}
+      .kennel-profile-flow .linked-record-list{grid-template-columns:1fr;gap:12px;margin-top:48px}
+      .kennel-profile-flow #kennelLitterRail{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+      .kennel-profile-flow #kennelLitterRail .metric{min-height:154px;padding:18px 14px 16px;border-top:1px solid #3a3a3a;background:rgba(17,17,17,.62);overflow:hidden}
+      .kennel-profile-flow #kennelLitterRail .metric::before{top:0;left:14px;width:28px}
+      .kennel-profile-flow #kennelLitterRail .metric strong{margin:38px 0 0;font-size:17vw}
+      .kennel-profile-flow #kennelLitterRail .metric em{top:17px;left:52px;font-size:8px}
+      .kennel-profile-flow #kennelLitterRail .metric::after{margin-top:auto;padding-top:18px;font-size:9px}
+      .kennel-profile-flow .visual-card[data-frame-orientation]{
+        width:calc(100vw - 48px);
+        max-width:calc(100vw - 48px);
+        height:auto;
+        max-height:none;
+      }
+      .kennel-profile-flow .pairing-section{min-height:600px}
+      .kennel-profile-flow .pairing-grid{min-height:430px}
+      .kennel-profile-flow .services-section{padding-bottom:64px}
+      .kennel-profile-flow .service-option{min-height:0;grid-template-columns:28px minmax(0,1fr) 72px;grid-template-rows:auto 1fr;column-gap:8px;row-gap:18px;padding:19px 8px 19px 12px}
+      .kennel-profile-flow .service-option-number{font-size:18px}
+      .kennel-profile-flow .service-option-copy{grid-column:2 / 4;grid-row:1;padding-right:2px}
+      .kennel-profile-flow .service-option-copy strong{font-size:clamp(24px,7.4vw,31px);line-height:.96;letter-spacing:-.065em;overflow-wrap:anywhere}
+      .kennel-profile-flow .service-option-description{grid-column:2;grid-row:2;align-self:end;max-width:none;font-size:12px;line-height:1.5}
+      .kennel-profile-flow .service-option-pricing{grid-column:3;grid-row:2;justify-self:end;align-self:end;align-items:flex-end;min-width:70px;min-height:56px;padding:2px 0 0 10px;text-align:right}
+      .kennel-profile-flow .service-fee-label{font-size:8px}
+      .kennel-profile-flow .service-option-price{font-size:28px}
+      .kennel-profile-flow .services-ghost{left:50%;top:84%;font-size:72vw;line-height:.8}
+      .kennel-profile-flow .services-monolith{height:124px;margin-top:32px}
+      .kennel-profile-flow .services-monolith-infinity{left:max(15px,calc(100% - 245px));top:32%;gap:4px}
+      .kennel-profile-flow .services-monolith-infinity strong{font-size:72px}
+      .kennel-profile-flow .services-monolith-infinity i{font-size:31px}
+      .kennel-profile-flow .services-monolith-message{right:15px;bottom:15px;width:230px;max-width:230px;font-size:15px}
+      .kennel-profile-flow .footer{grid-template-columns:1fr;gap:28px;align-items:start;min-height:0;padding-top:34px;padding-bottom:32px}
+      .kennel-profile-flow .footer-identity{align-items:flex-start;flex-direction:column;gap:10px}
+      .kennel-profile-flow .footer-right{justify-self:start;text-align:left}
+    }
+
+    .kennel-profile-flow [data-detail-key]{cursor:pointer}
+    .kennel-profile-flow [data-detail-key]:focus-visible{outline:2px solid var(--blue);outline-offset:-3px}
+    .kennel-profile-flow .performance-detail{margin-top:28px;padding:26px 0 0;border-top:1px solid var(--ink);scroll-margin-top:78px}
+    .kennel-profile-flow .performance-detail[hidden]{display:none}
+    .kennel-profile-flow .performance-detail-head{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:20px}
+    .kennel-profile-flow .performance-detail h3{min-width:0;font-size:25px;font-weight:700;line-height:1.02;letter-spacing:-.055em;color:var(--blue);white-space:nowrap}
+    .kennel-profile-flow .performance-detail-close{display:inline-flex;align-items:center;gap:8px;flex:0 0 auto;padding:7px 0;border:0;background:transparent;color:var(--ink);font:700 11px "SFMono-Regular",Consolas,monospace;letter-spacing:.045em;text-transform:uppercase;cursor:pointer}
+    .kennel-profile-flow .performance-detail-close::after{content:"×";font:400 22px/1 Inter,Arial,sans-serif;transition:transform .25s var(--ease)}
+    .kennel-profile-flow .performance-detail-close:hover::after,.kennel-profile-flow .performance-detail-close:focus-visible::after{transform:rotate(90deg)}
+    .kennel-profile-flow .performance-detail-close:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+    .kennel-profile-flow .detail-record{margin-top:16px;padding:22px 0;background:transparent;border:0;box-shadow:none}
+    .kennel-profile-flow .detail-record h4{min-width:0;font-size:var(--detail-kennel-name-size);line-height:.95;letter-spacing:-.045em;margin-bottom:10px;text-transform:none;white-space:nowrap}
+    .kennel-profile-flow .detail-record.is-dog h4{font-size:var(--detail-dog-name-size)}
+    .kennel-profile-flow .detail-record h4 a{text-decoration:none}
+    .kennel-profile-flow .detail-record small{display:block;min-width:0;margin-bottom:20px;font:11px "SFMono-Regular",Consolas,monospace;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .kennel-profile-flow .performance-title-list{border-top:1px solid #c9c9c4}
+    .kennel-profile-flow .performance-title-list > div{display:grid;grid-template-columns:minmax(0,.42fr) minmax(0,.58fr);align-items:baseline;gap:18px;padding:18px 0;border-bottom:1px solid #c9c9c4;line-height:1.35}
+    .kennel-profile-flow .performance-title-list dt{min-width:0;font-size:13px;color:var(--muted);text-transform:capitalize;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .kennel-profile-flow .performance-title-list dd{min-width:0;font-size:clamp(16px,1.35vw,21px);font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .kennel-profile-flow .performance-detail a{text-decoration:none}
+    .kennel-profile-flow .performance-title-list dd .attachment-link{display:inline;color:var(--blue);text-decoration:none;transition:color .25s var(--ease),opacity .25s var(--ease)}
+    .kennel-profile-flow .performance-title-list dd .attachment-link:hover,.kennel-profile-flow .performance-title-list dd .attachment-link:focus-visible{color:var(--ink);opacity:.72}
+    .kennel-profile-flow .archive-profile-card{--archive-card-width:clamp(220px,18.5vw,264px);display:flex;flex-direction:column;flex:0 0 var(--archive-card-width);width:var(--archive-card-width);max-width:100%;min-width:0;background:#fff;box-shadow:0 4px 20px #00000008}
+    .kennel-profile-flow .archive-profile-image{display:block;width:100%;aspect-ratio:2/3;background:#ededed;overflow:hidden;line-height:0}
+    .kennel-profile-flow .archive-profile-card img{position:static;display:block;width:100%;height:100%;object-fit:contain;object-position:center;filter:grayscale(1);transition:filter .45s}
+    .kennel-profile-flow .archive-profile-card:hover img{filter:grayscale(0)}
+    .kennel-profile-flow .archive-profile-copy{display:block;padding:21px 23px;border-top:5px solid var(--acid)}
+    .kennel-profile-flow .archive-profile-copy small{display:block;font:10px Consolas,monospace;color:var(--muted);margin-bottom:11px}
+    .kennel-profile-flow .archive-profile-copy strong{display:block;font:700 clamp(24px,2.25vw,34px)/.98 Inter,Arial,sans-serif;letter-spacing:-.05em}
+    .kennel-profile-flow .archive-profile-copy > span{display:block;font-size:12px;color:var(--muted);margin-top:10px}
+    .kennel-profile-flow .archive-profile-copy em{display:block;margin-top:14px;font:10px Consolas,monospace;text-transform:uppercase}
+    .kennel-profile-flow #kennelDobermans{min-height:0;padding-top:clamp(56px,5.6vw,82px);padding-bottom:clamp(48px,4.8vw,72px)}
+    .kennel-profile-flow #kennelDobermans .section-head{margin-bottom:clamp(30px,3vw,44px)}
+    .kennel-profile-flow #kennelArchive{min-height:0;padding-top:clamp(32px,3.4vw,48px);padding-bottom:clamp(28px,3vw,42px)}
+    .kennel-profile-flow #kennelArchive .section-head{margin-bottom:clamp(18px,2.3vw,30px)}
+    @media(max-width:680px){
+      .kennel-profile-flow .archive-profile-card{--archive-card-width:min(68vw,248px)}
+      .kennel-profile-flow .archive-profile-copy{padding:18px}
+      .kennel-profile-flow #kennelDobermans{padding-top:44px;padding-bottom:38px}
+      .kennel-profile-flow #kennelDobermans .section-head{margin-bottom:30px}
+      .kennel-profile-flow #kennelArchive{padding-top:34px;padding-bottom:30px}
+      .kennel-profile-flow #kennelArchive .section-head{margin-bottom:22px}
+      .kennel-profile-flow .performance-detail h3{font-size:25px;letter-spacing:-.05em;white-space:normal;overflow-wrap:break-word}
+      .kennel-profile-flow .detail-record h4{font-size:clamp(27px,8.5vw,34px);letter-spacing:-.04em}
+      .kennel-profile-flow .detail-record.is-dog h4{font-size:clamp(27px,8.2vw,33px)}
+      .kennel-profile-flow .detail-record small{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:break-word}
+      .kennel-profile-flow .performance-title-list > div{grid-template-columns:minmax(0,.4fr) minmax(0,.6fr);align-items:start;gap:12px}
+      .kennel-profile-flow .performance-title-list dt{font-size:11px;white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:break-word}
+      .kennel-profile-flow .performance-title-list dd{font-size:14px;white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:break-word}
+      .kennel-profile-flow #kennelProgramRail .surface-card{min-width:calc(100vw - 48px);width:calc(100vw - 48px);box-sizing:border-box}
+      .kennel-profile-flow #kennelProgramRail .surface-card .value{font-size:clamp(22px,7vw,25px)}
+      .kennel-profile-flow #kennelHealthRail .surface-card{box-sizing:border-box}
+      .kennel-profile-flow #kennelHealthRail .surface-card .value{font-size:clamp(22px,7vw,28px)}
+      .kennel-profile-flow [data-detail-key] .key,.kennel-profile-flow [data-detail-key] .value,.kennel-profile-flow [data-detail-key] .sub{max-width:100%;white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:break-word}
+      .kennel-profile-flow .surface-card:hover,.kennel-profile-flow .surface-card.selected{padding-left:18px;padding-right:18px}
+      .kennel-profile-flow #kennelPerformanceRail .metric em{max-width:calc(100% - 44px);white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:break-word}
+      .kennel-profile-flow #kennelPerformanceRail .metric::after{max-width:calc(100% - 44px);white-space:normal;overflow-wrap:break-word}
+    }
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+      .record-track{animation:none}
+    }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <filter id="logoAlphaCut" color-interpolation-filters="sRGB">
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="1.2" intercept="-.2"/>
+      </feComponentTransfer>
+    </filter>
+  </svg>
+  <nav class="float-nav" aria-label="Primary">
+    <a class="nav-brand" href="../index.html">DOBERMAN INDEX®</a>
+    <a class="nav-link" href="#recordDetails">Kennel record</a>
+    <a class="nav-cta" href="../index.html">Return to portal</a>
+  </nav>
+
+  <main>
+    <section class="hero" aria-labelledby="kennelName">
+      <p class="hero-meta left">Kennel profile<span>Concept / DI-K-XXXXXX</span></p>
+      <p class="hero-meta right">Example digital card<span>For an indexed kennel</span></p>
+      <div class="watermark" aria-hidden="true">KENNEL</div>
+
+      <h1 class="hero-title" id="kennelName"><span data-kennel-name-line="first">Siempre</span><span data-kennel-name-line="rest">Peligroso</span></h1>
+
+      <a class="dossier" href="#recordDetails" aria-label="Open Siempre Peligroso kennel record">
+        <span class="kennel-card-media" data-media-slot="cover">
+          <span class="kennel-logo-frame"><img class="is-siempre-peligroso-oversized" src="../work/kennel-concept/siempre-peligroso-logo-color.png" alt="Siempre Peligroso kennel logo"></span>
+          <span class="kennel-hero-facts">
+            <span class="kennel-hero-fact"><small>Country</small><strong data-kennel-field="country">Serbia</strong></span>
+            <span class="kennel-hero-fact"><small>Founder</small><strong data-kennel-field="owner_or_founder">Not provided</strong></span>
+          </span>
+        </span>
+        <span class="kennel-card-copy" aria-hidden="true"></span>
+      </a>
+
+      <a class="hero-jump" href="#recordDetails"><b aria-hidden="true">↓</b><span>Explore<br>program</span></a>
+    </section>
+
+    <section class="record-strip" id="recordDetails" aria-label="Kennel record facts">
+      <div class="record-track">
+        <article class="record-item"><span>Location</span><strong data-kennel-field="location">Not provided</strong></article>
+        <article class="record-item"><span>Founded</span><strong data-kennel-field="founded_year">Not provided</strong></article>
+        <article class="record-item"><span>Registration prefix</span><strong data-kennel-field="registration_prefix">Not provided</strong></article>
+        <article class="record-item"><span>Registration authority</span><strong data-kennel-field="registration_authority">Not provided</strong></article>
+        <article class="record-item is-wide"><span>Public contact email</span><strong data-kennel-field="contact_email">Not provided</strong></article>
+        <article class="record-item is-wide"><span>Website</span><strong data-kennel-field="website">Not provided</strong></article>
+        <article class="record-item is-wide"><span>Social links</span><strong data-kennel-field="social_links">Not provided</strong></article>
+        <article class="record-item is-wide"><span>Breeding focus</span><strong data-kennel-field="focus">Not provided</strong></article>
+        <article class="record-item is-wide"><span>Bloodline tags</span><strong data-kennel-field="bloodline_tags">Not provided</strong></article>
+        <article class="record-item"><span>Indexed Dobermans</span><strong data-system-metric="indexed_dobermans">—</strong><em>Generated from linked records</em></article>
+        <article class="record-item"><span>Published litters</span><strong data-system-metric="litters">—</strong><em>Generated from linked records</em></article>
+        <article class="record-item"><span>Active Dobermans</span><strong data-system-metric="active_dobermans">—</strong><em>Generated from linked records</em></article>
+        <article class="record-item"><span>Available puppies</span><strong data-system-metric="available_puppies">—</strong><em>Generated from linked records</em></article>
+        <article class="record-item" aria-hidden="true"><span>Location</span><strong data-kennel-field="location">Not provided</strong></article>
+        <article class="record-item" aria-hidden="true"><span>Founded</span><strong data-kennel-field="founded_year">Not provided</strong></article>
+        <article class="record-item" aria-hidden="true"><span>Registration prefix</span><strong data-kennel-field="registration_prefix">Not provided</strong></article>
+        <article class="record-item" aria-hidden="true"><span>Registration authority</span><strong data-kennel-field="registration_authority">Not provided</strong></article>
+        <article class="record-item is-wide" aria-hidden="true"><span>Public contact email</span><strong data-kennel-field="contact_email">Not provided</strong></article>
+        <article class="record-item is-wide" aria-hidden="true"><span>Website</span><strong data-kennel-field="website">Not provided</strong></article>
+        <article class="record-item is-wide" aria-hidden="true"><span>Social links</span><strong data-kennel-field="social_links">Not provided</strong></article>
+        <article class="record-item is-wide" aria-hidden="true"><span>Breeding focus</span><strong data-kennel-field="focus">Not provided</strong></article>
+        <article class="record-item is-wide" aria-hidden="true"><span>Bloodline tags</span><strong data-kennel-field="bloodline_tags">Not provided</strong></article>
+        <article class="record-item" aria-hidden="true"><span>Indexed Dobermans</span><strong data-system-metric="indexed_dobermans">—</strong><em>Generated from linked records</em></article>
+        <article class="record-item" aria-hidden="true"><span>Published litters</span><strong data-system-metric="litters">—</strong><em>Generated from linked records</em></article>
+        <article class="record-item" aria-hidden="true"><span>Active Dobermans</span><strong data-system-metric="active_dobermans">—</strong><em>Generated from linked records</em></article>
+        <article class="record-item" aria-hidden="true"><span>Available puppies</span><strong data-system-metric="available_puppies">—</strong><em>Generated from linked records</em></article>
+      </div>
+    </section>
+
+    <div class="kennel-profile-flow">
+      <section class="section" id="kennelProgram">
+        <div class="section-mark" aria-hidden="true">PROGRAM</div>
+        <header class="section-head">
+          <div>
+            <div class="section-index"><span>01</span><i></i><span>Kennel identity</span></div>
+            <h2 class="section-title">Breeding<br>program.</h2>
+          </div>
+          <p class="section-note"><b>The program layer</b>A kennel record connects breeding identity with every indexed Doberman, litter and documented result.</p>
+        </header>
+        <div class="section-content">
+          <div class="slider" id="kennelProgramRail">
+            <article class="surface-card" tabindex="0"><span class="key">Breeding focus</span><strong class="value">Owner supplied</strong><span class="sub">Program priorities and selection goals</span></article>
+            <article class="surface-card" tabindex="0"><span class="key">Bloodline view</span><strong class="value">System generated</strong><span class="sub">Built from connected pedigrees</span></article>
+            <article class="surface-card" tabindex="0"><span class="key">Record links</span><strong class="value">Stable identifiers</strong><span class="sub">Dobermans and litters remain connected</span></article>
+            <article class="surface-card" tabindex="0"><span class="key">Derived totals</span><strong class="value">Living output</strong><span class="sub">Recalculated from published records</span></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section is-white" id="kennelDobermans">
+        <header class="section-head">
+          <div>
+            <div class="section-index"><span>02</span><i></i><span>Connected profiles</span></div>
+            <h2 class="section-title">Indexed<br>Dobermans.</h2>
+          </div>
+          <p class="section-note"><b>Living kennel network</b>Each published profile keeps its own evidence and contributes verified lineage, health and results to the kennel record.</p>
+        </header>
+        <div class="section-content">
+          <div class="slider" id="kennelDobermanRail" aria-live="polite">
+            <a class="related-card" href="male.html?id=DI-M-000001"><div class="related-card-top"><span>DI-M-000001</span><i></i><span class="related-arrow" aria-hidden="true">↗</span></div><div class="related-card-body"><span class="related-thumb"><img src="../media/dobermans/DI-M-000001/hero.png" alt="Dion Dante"></span><span class="related-copy"><strong>Dion Dante</strong><span>Male · Active stud</span></span></div></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section impact-showcase" id="kennelLitters">
+        <div class="section-mark" aria-hidden="true">LITTERS</div>
+        <header class="section-head">
+          <div>
+            <div class="section-index"><span>03</span><i></i><span>Breeding record</span></div>
+            <h2 class="section-title">Litters &<br>lineage.</h2>
+          </div>
+          <p class="section-note"><b>Stable record chain</b>Each litter connects sire, dam, kennel, puppies and availability through permanent identifiers.</p>
+        </header>
+        <div class="impact-content">
+          <p class="impact-copy">This section is generated only from published litter and offspring records. Missing information remains visibly unclaimed.</p>
+          <div class="metric-grid" id="kennelLitterRail">
+            <article class="metric" data-caption="Generated from linked litter IDs"><strong data-system-metric="litters">—</strong><em>Published litters</em></article>
+            <article class="metric" data-caption="Generated from published profiles"><strong data-system-metric="indexed_offspring">—</strong><em>Indexed offspring</em></article>
+            <article class="metric" data-caption="Generated from verified title records"><strong data-system-metric="champion_offspring">—</strong><em>Champion offspring</em></article>
+            <article class="metric" data-caption="Reported in connected Doberman profiles"><strong data-system-metric="export_countries">—</strong><em>Export countries</em></article>
+          </div>
+          <div class="linked-record-list" id="kennelLitterList" aria-live="polite"><span>Linked litter records</span><strong>No published litter records linked</strong></div>
+        </div>
+      </section>
+
+      <section class="section" id="kennelHealth">
+        <div class="section-mark" aria-hidden="true">HEALTH</div>
+        <header class="section-head">
+          <div>
+            <div class="section-index"><span>04</span><i></i><span>Evidence standard</span></div>
+            <h2 class="section-title">Health,<br>record by record.</h2>
+          </div>
+          <p class="section-note"><b>Profile-level evidence</b>The kennel view summarizes documented testing while every result remains attached to the individual Doberman.</p>
+        </header>
+        <div class="section-content">
+          <div class="slider" id="kennelHealthRail">
+            <article class="surface-card" tabindex="0"><span class="key">Cardiac</span><strong class="value">Echo + Holter</strong><span class="sub"><b data-system-metric="cardiac_records">—</b> linked · Date, issuer and attachment</span></article>
+            <article class="surface-card" tabindex="0"><span class="key">Genetics</span><strong class="value">DCM 1–5</strong><span class="sub"><b data-system-metric="genetic_results">—</b> linked · Submitted genetic markers</span></article>
+            <article class="surface-card" tabindex="0"><span class="key">Orthopedic</span><strong class="value">Hips + Elbows</strong><span class="sub"><b data-system-metric="orthopedic_results">—</b> linked · Original result preserved</span></article>
+            <article class="surface-card" tabindex="0"><span class="key">Clinical</span><strong class="value">Additional tests</strong><span class="sub"><b data-system-metric="clinical_results">—</b> linked · Where evidence is supplied</span></article>
+            <article class="surface-card" tabindex="0"><span class="key">Evidence</span><strong class="value">Source backed</strong><span class="sub"><b data-system-metric="evidence_files">—</b> files · Claim and document stay linked</span></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section performance-showcase is-white" id="kennelResults">
+        <header class="section-head">
+          <div>
+            <div class="section-index"><span>05</span><i></i><span>Program outcomes</span></div>
+            <h2 class="section-title">Results &<br>reach.</h2>
+          </div>
+          <p class="section-note"><b>Generated from evidence</b>Titles and working results belong to the Doberman that earned them, then contribute to the kennel overview.</p>
+        </header>
+        <div class="section-content">
+          <div class="metric-grid" id="kennelPerformanceRail">
+            <article class="metric" data-initial="C" data-caption="Connected title records"><strong data-system-metric="champions">—</strong><em>Indexed champions</em></article>
+            <article class="metric highlight" data-initial="S" data-caption="Documented achievements"><strong data-system-metric="titles">—</strong><em>Show titles</em></article>
+            <article class="metric" data-initial="W" data-caption="Submitted exams and sports"><strong data-system-metric="working_results">—</strong><em>Working results</em></article>
+            <article class="metric" data-initial="R" data-caption="International kennel reach"><strong data-system-metric="countries_represented">—</strong><em>Countries represented</em></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section is-white" id="kennelArchive">
+        <header class="section-head">
+          <div>
+            <div class="section-index"><span>06</span><i></i><span>Visual record</span></div>
+            <h2 class="section-title">Kennel<br>archive.</h2>
+          </div>
+          <p class="section-note"><b>Program + connected records</b>Each digital card opens the gallery and movement record of an indexed Doberman.</p>
+        </header>
+        <div class="section-content">
+          <div class="gallery-rail" id="kennelArchiveRail">
+            <a class="archive-profile-card" href="male.html?id=DI-M-000001&amp;view=gallery#gallery-movement"><span class="archive-profile-image"><img src="../media/dobermans/DI-M-000001/hero.png" alt="Dion Dante"></span><span class="archive-profile-copy"><small>DI-M-000001</small><strong>Dion Dante</strong><span>Siempre Peligroso · Serbia</span><em>Gallery & movement</em></span></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section pairing-section" id="kennelPuppies">
+        <div class="pairing-grid">
+          <div>
+            <div class="pairing-kicker">Living availability</div>
+            <h2 class="pairing-title">Available<br>puppies.</h2>
+          </div>
+          <div class="pairing-copy">
+            <p>Published availability appears here and in the global Puppies index from the same active litter record.</p>
+            <a class="pairing-link" href="#kennelLitters"><span>View litter record</span><i aria-hidden="true">↑</i></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section services-section is-white" id="kennelServices">
+        <header class="section-head">
+          <div>
+            <div class="section-index"><span>08</span><i></i><span>Profile action</span></div>
+            <h2 class="section-title">Focused<br>services.</h2>
+          </div>
+          <p class="section-note"><b>Index first</b>Run intelligence and exports from the kennel record, its connected Dobermans and documented evidence.</p>
+        </header>
+        <div class="section-content kennel-service-module" data-kennel-services>
+          <div class="service-selector" data-service-selector aria-label="Kennel profile actions">
+            <button class="service-option" type="button" aria-disabled="true" data-service-id="verified-kennel-record">
+              <span class="service-option-number">01</span>
+              <span class="service-option-copy"><strong>Kennel Record</strong></span>
+              <span class="service-option-description">An export-ready record of the kennel and its indexed Dobermans.</span>
+              <span class="service-option-pricing"><small class="service-fee-label">One-time fee</small><span class="service-option-price">€29</span></span>
+            </button>
+            <button class="service-option" type="button" aria-disabled="true" data-service-id="breeding-program-intelligence">
+              <span class="service-option-number">02</span>
+              <span class="service-option-copy"><strong>Breeding Program Intelligence</strong></span>
+              <span class="service-option-description">Reveals recurring patterns across lineage, health, temperament and results.</span>
+              <span class="service-option-pricing"><small class="service-fee-label">One-time fee</small><span class="service-option-price">€69</span></span>
+            </button>
+            <button class="service-option" type="button" aria-disabled="true" data-service-id="kennel-comparison-intelligence">
+              <span class="service-option-number">03</span>
+              <span class="service-option-copy"><strong>Kennel Comparison</strong></span>
+              <span class="service-option-description">Maps documented similarities and differences between two indexed kennels.</span>
+              <span class="service-option-pricing"><small class="service-fee-label">One-time fee</small><span class="service-option-price">€89</span></span>
+            </button>
+            <span class="services-ghost" aria-hidden="true">TOOLS</span>
+          </div>
+          <div class="services-monolith">
+            <div class="services-monolith-editorial">
+              <div class="services-monolith-infinity" aria-label="One to infinity"><strong>1</strong><i>→</i><strong>∞</strong></div>
+              <p class="services-monolith-message">One kennel. One verified record. A living network.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="footer-identity">
+          <div class="footer-brand">DOBERMAN INDEX®</div>
+          <div class="footer-descriptor"><span>//</span>Indexed kennel profile</div>
+        </div>
+        <div class="footer-record"><span>Record</span><strong data-record-id>DI-K-000001</strong><small data-record-status>Verification in progress</small></div>
+        <div class="footer-right"><span data-kennel-field="name">Siempre Peligroso</span> · <span data-kennel-field="country">Serbia</span><br>Connected through one living record.</div>
+      </footer>
+    </div>
+  </main>
+  <script src="../scripts/kennel-network.js?v=20260905-4"></script>
+  <script src="../scripts/kennel-services.js?v=20260905-9"></script>
+  <script>
+    const recordStrip = document.querySelector('.record-strip');
+    document.querySelectorAll('.record-logo-item').forEach((logoItem) => {
+      const previousCard = logoItem.previousElementSibling;
+      const nextCard = logoItem.nextElementSibling;
+      if(previousCard?.classList.contains('record-item'))previousCard.classList.add('logo-neighbor-before');
+      if(nextCard?.classList.contains('record-item'))nextCard.classList.add('logo-neighbor-after');
+    });
+    const logoCapsules = document.querySelectorAll('.kennel-logo-capsule');
+    const syncLogoColour = () => {
+      const stripBounds = recordStrip.getBoundingClientRect();
+      logoCapsules.forEach((capsule) => {
+        const capsuleBounds = capsule.getBoundingClientRect();
+        const capsuleInsideStrip = capsuleBounds.left >= stripBounds.left && capsuleBounds.right <= stripBounds.right;
+        capsule.classList.toggle('is-color', capsuleInsideStrip);
+      });
+      requestAnimationFrame(syncLogoColour);
+    };
+    requestAnimationFrame(syncLogoColour);
+
+    const KENNEL_ID='DI-K-000001';
+    const NOT_PROVIDED='Not provided';
+    const asList=value=>Array.isArray(value)?value.filter(Boolean):[];
+    const hasValue=value=>value!==null&&value!==undefined&&value!==''&&(!Array.isArray(value)||value.length>0);
+    const displayValue=value=>Array.isArray(value)?(value.length?value.join(' · '):NOT_PROVIDED):(hasValue(value)?String(value):NOT_PROVIDED);
+    const publicAsset=path=>path?`../${String(path).replace(/^\.\.\//,'').replace(/^\//,'')}`:'';
+    const fetchJson=async path=>{
+      const response=await fetch(path,{cache:'no-store'});
+      if(!response.ok)throw new Error(`Unable to load ${path}`);
+      return response.json();
+    };
+
+    function setField(name,value){
+      const missing=!hasValue(value);
+      document.querySelectorAll(`[data-kennel-field="${name}"]`).forEach(node=>{
+        node.textContent=displayValue(value);
+        node.closest('.surface-card')?.classList.toggle('is-missing',missing);
+      });
+    }
+    function setMetric(name,value){
+      document.querySelectorAll(`[data-system-metric="${name}"]`).forEach(node=>{node.textContent=String(value)});
+    }
+    function relatedDobermanCard(summary){
+      const link=document.createElement('a');
+      const template=summary.template==='female'?'female':'male';
+      link.className='related-card';
+      link.href=`${template}.html?id=${encodeURIComponent(summary.record_id)}`;
+      const top=document.createElement('div');
+      top.className='related-card-top';
+      const id=document.createElement('span');
+      id.textContent=summary.record_id;
+      const rule=document.createElement('i');
+      const arrow=document.createElement('span');
+      arrow.className='related-arrow';
+      arrow.setAttribute('aria-hidden','true');
+      arrow.textContent='↗';
+      top.append(id,rule,arrow);
+      const body=document.createElement('div');
+      body.className='related-card-body';
+      const thumb=document.createElement('span');
+      thumb.className='related-thumb';
+      if(summary.hero){
+        const image=document.createElement('img');
+        image.src=publicAsset(summary.hero);
+        image.alt=KennelNetwork.displayCase(summary.registered_name||summary.record_id);
+        thumb.append(image);
+      }else{
+        thumb.textContent=(summary.registered_name||'?').trim().charAt(0).toUpperCase();
+      }
+      const copy=document.createElement('span');
+      copy.className='related-copy';
+      const title=document.createElement('strong');
+      title.textContent=KennelNetwork.displayCase(summary.registered_name||summary.record_id);
+      const meta=document.createElement('span');
+      const sex=summary.sex?summary.sex.charAt(0).toUpperCase()+summary.sex.slice(1):'Doberman';
+      meta.textContent=[sex,summary.availability==='available'?'Active breeding profile':summary.life_stage].filter(Boolean).join(' · ');
+      copy.append(title,meta);
+      body.append(thumb,copy);
+      link.append(top,body);
+      return link;
+    }
+    function emptyRelatedCard(title,subtitle){
+      const card=document.createElement('article');
+      card.className='related-card related-card-empty';
+      const top=document.createElement('div');
+      top.className='related-card-top';
+      const label=document.createElement('span');
+      label.textContent='System link';
+      const rule=document.createElement('i');
+      const dash=document.createElement('span');
+      dash.className='related-arrow';
+      dash.setAttribute('aria-hidden','true');
+      dash.textContent='—';
+      top.append(label,rule,dash);
+      const body=document.createElement('div');
+      body.className='related-card-body';
+      const thumb=document.createElement('span');
+      thumb.className='related-thumb';
+      thumb.textContent='0';
+      const copy=document.createElement('span');
+      copy.className='related-copy';
+      const strong=document.createElement('strong');
+      strong.textContent=title;
+      const span=document.createElement('span');
+      span.textContent=subtitle;
+      copy.append(strong,span);
+      body.append(thumb,copy);
+      card.append(top,body);
+      return card;
+    }
+    const countEvidence=value=>{
+      if(Array.isArray(value))return value.reduce((total,item)=>total+countEvidence(item),0);
+      if(!value||typeof value!=='object')return 0;
+      return Object.entries(value).reduce((total,[key,item])=>total+((key==='evidence_file'||key==='evidence_files')?(Array.isArray(item)?item.filter(Boolean).length:(item?1:0)):countEvidence(item)),0);
+    };
+
+    async function hydrateKennelProfile(){
+      const [record,registry]=await Promise.all([
+        fetchJson(`../data/kennels/${KENNEL_ID}.json`),
+        fetchJson('../data/registry.json')
+      ]);
+      const kennel=record.kennel||{};
+      ['name','registration_prefix','registration_authority','country','location','founded_year','owner_or_founder','contact_email','website','social_links','focus','bloodline_tags'].forEach(name=>setField(name,kennel[name]));
+      document.querySelectorAll('[data-record-id]').forEach(node=>{node.textContent=record.record_id});
+      const nameParts=String(kennel.name||'Kennel').trim().split(/\s+/);
+      document.querySelector('[data-kennel-name-line="first"]').textContent=nameParts.shift()||'Kennel';
+      document.querySelector('[data-kennel-name-line="rest"]').textContent=nameParts.join(' ');
+      const statusLabel={published:'Published',pending_review:'Verification in progress',draft:'Draft record',archived:'Archived'}[record.status]||record.status;
+      document.querySelectorAll('[data-record-status]').forEach(node=>{node.textContent=statusLabel});
+
+      const registryRecords=asList(registry.records);
+      const dogIds=new Set([...asList(kennel.dog_ids),...registryRecords.filter(item=>item.entity_type==='doberman'&&item.kennel_id===KENNEL_ID).map(item=>item.record_id)]);
+      const dogRecords=KennelNetwork.publicRecords(record,(await Promise.all([...dogIds].filter(id=>/^DI-[MFP]-\d+$/.test(id)).map(async id=>{
+        try{return await fetchJson(`../data/dobermans/${id}.json`)}catch{return null}
+      }))).filter(Boolean));
+      const dogSummaries=dogRecords.map(item=>({record_id:item.record_id,...item.doberman.identity,template:item.doberman.identity.sex==='female'?'female':'male',hero:item.doberman.media?.hero||item.doberman.media?.profile||item.doberman.media?.stack,availability:item.doberman.reproduction?.availability}));
+      const litterIds=new Set([...asList(kennel.litter_ids),...dogRecords.flatMap(item=>asList(item.doberman?.reproduction?.litter_ids)),...registryRecords.filter(item=>item.entity_type==='litter'&&item.kennel_id===KENNEL_ID).map(item=>item.record_id)]);
+      const litterRecords=(await Promise.all([...litterIds].filter(id=>/^DI-L-\d+$/.test(id)).map(async id=>{
+        try{return await fetchJson(`../data/litters/${id}.json`)}catch{return null}
+      }))).filter(item=>item?.status==='published');
+
+      const dogs=dogRecords.map(item=>item.doberman||{});
+      const indexedDobermans=dogSummaries.length;
+      const activeDobermans=dogSummaries.filter(item=>item.life_status==='living').length;
+      const network=KennelNetwork.buildModel(record,dogRecords,litterRecords);
+      const champions=network.champions;
+      const titles=dogs.reduce((total,dog)=>total+asList(dog.performance?.titles).length,0);
+      const workingResults=dogs.reduce((total,dog)=>total+asList(dog.performance?.working_exams).length+asList(dog.performance?.sports).length,0);
+      const countriesRepresented=new Set(dogs.map(dog=>dog.identity?.country).filter(Boolean)).size;
+      const exportCountries=new Set(dogs.flatMap(dog=>asList(dog.reproduction?.export_countries))).size;
+      const availablePuppies=litterRecords.reduce((total,item)=>total+asList(item.litter?.available_puppy_ids).length,0);
+      const litterIdSet=new Set(litterRecords.map(item=>item.record_id));
+      const indexedOffspring=dogRecords.filter(item=>litterIdSet.has(item.doberman?.parentage?.litter_id)).length;
+      const championOffspring=dogRecords.filter(item=>litterIdSet.has(item.doberman?.parentage?.litter_id)&&asList(item.doberman?.performance?.titles).length>0).length;
+      const cardiacRecords=dogs.filter(dog=>hasValue(dog.health?.dcm_clinical?.status)).length;
+      const geneticResults=dogs.reduce((total,dog)=>total+Object.values(dog.health?.dcm_markers||{}).filter(item=>hasValue(item?.result)).length,0);
+      const orthopedicResults=dogs.reduce((total,dog)=>total+[dog.health?.hd,dog.health?.ed].filter(item=>hasValue(item?.result)).length,0);
+      const clinicalResults=dogs.reduce((total,dog)=>total+[dog.health?.dm,dog.health?.vwd,dog.health?.thyroid,dog.health?.eyes].filter(item=>hasValue(item?.result)).length,0);
+      const evidenceFiles=dogRecords.reduce((total,item)=>total+countEvidence(item.doberman),0);
+      const metrics={indexed_dobermans:indexedDobermans,active_dobermans:activeDobermans,champions,titles,working_results:workingResults,countries_represented:countriesRepresented,export_countries:exportCountries,available_puppies:availablePuppies,litters:litterRecords.length,indexed_offspring:indexedOffspring,champion_offspring:championOffspring,cardiac_records:cardiacRecords,genetic_results:geneticResults,orthopedic_results:orthopedicResults,clinical_results:clinicalResults,evidence_files:evidenceFiles};
+      Object.entries(metrics).forEach(([name,value])=>setMetric(name,value));
+
+      const dogRail=document.getElementById('kennelDobermanRail');
+      dogRail.replaceChildren(...(dogSummaries.length?dogSummaries.map(relatedDobermanCard):[emptyRelatedCard('No indexed Dobermans','No published profiles linked')]));
+      const litterList=document.getElementById('kennelLitterList');
+      if(litterRecords.length){
+        const links=document.createElement('div');
+        links.className='linked-litter-links';
+        litterRecords.forEach(item=>{
+          const chip=document.createElement('span');
+          chip.textContent=`${item.record_id} · ${item.litter?.name||'Published litter'}`;
+          links.append(chip);
+        });
+        litterList.querySelector('strong').replaceWith(links);
+      }
+      const media=kennel.media||{};
+      const heroLogo=document.querySelector('.kennel-card-media img');
+      if(media.logo)heroLogo.src=publicAsset(media.logo);
+      KennelNetwork.installDetails(network);
+      KennelNetwork.renderArchive(network.dogs);
+      KennelNetwork.alignHeroLogo();
+      try{
+        await KennelServices.mount({kennelRecord:record,dogRecords,litterRecords,registry,fetchJson});
+      }catch{
+        KennelServices.showLoadError();
+      }
+    }
+
+    function installHorizontalRailScrollbars(){
+      document.querySelectorAll('.kennel-profile-flow .gallery-rail,.kennel-profile-flow .slider').forEach((rail,index)=>{
+        if(!rail.id)rail.id=`kennelRail${index+1}`;
+        const label=rail.closest('.section')?.querySelector('.section-index span:last-child')?.textContent?.trim()||'Content';
+        const bar=document.createElement('div');
+        bar.className='rail-scrollbar';
+        bar.setAttribute('aria-label',`${label} horizontal navigation`);
+        bar.innerHTML='<button class="rail-scrollbar-arrow prev" type="button" aria-label="Scroll left"></button><div class="rail-scrollbar-track"><div class="rail-scrollbar-indicator" role="scrollbar" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div><button class="rail-scrollbar-arrow next" type="button" aria-label="Scroll right"></button>';
+        rail.insertAdjacentElement('afterend',bar);
+        const track=bar.querySelector('.rail-scrollbar-track');
+        const indicator=bar.querySelector('.rail-scrollbar-indicator');
+        let maximum=0;
+        let activeTimer;
+
+        const activate=()=>{
+          bar.classList.add('is-active');
+          clearTimeout(activeTimer);
+          activeTimer=setTimeout(()=>bar.classList.remove('is-active'),900);
+        };
+        const update=()=>{
+          maximum=Math.max(0,rail.scrollWidth-rail.clientWidth);
+          bar.hidden=maximum<=2;
+          if(bar.hidden)return;
+          const travel=Math.max(0,track.clientWidth-indicator.getBoundingClientRect().width);
+          const progress=maximum?Math.min(1,Math.max(0,rail.scrollLeft/maximum)):0;
+          indicator.style.transform=`translate3d(${travel*progress}px,-50%,0)`;
+          indicator.setAttribute('aria-valuenow',String(Math.round(progress*100)));
+        };
+        const move=direction=>{
+          activate();
+          rail.scrollTo({left:rail.scrollLeft+direction*Math.max(220,rail.clientWidth*.68),behavior:'smooth'});
+        };
+        bar.querySelector('.prev').addEventListener('click',()=>move(-1));
+        bar.querySelector('.next').addEventListener('click',()=>move(1));
+        rail.addEventListener('scroll',()=>{activate();requestAnimationFrame(update)},{passive:true});
+        track.addEventListener('pointerdown',event=>{
+          if(event.target===indicator)return;
+          const rect=track.getBoundingClientRect();
+          const thumb=indicator.getBoundingClientRect().width;
+          const travel=Math.max(1,rect.width-thumb);
+          const position=Math.min(travel,Math.max(0,event.clientX-rect.left-thumb/2));
+          rail.scrollLeft=(position/travel)*maximum;
+          activate();
+        });
+        indicator.addEventListener('pointerdown',event=>{
+          event.preventDefault();
+          indicator.setPointerCapture(event.pointerId);
+          const startX=event.clientX;
+          const startScroll=rail.scrollLeft;
+          const travel=Math.max(1,track.clientWidth-indicator.getBoundingClientRect().width);
+          const drag=moveEvent=>{
+            rail.scrollLeft=Math.min(maximum,Math.max(0,startScroll+((moveEvent.clientX-startX)/travel)*maximum));
+          };
+          const finish=finishEvent=>{
+            if(indicator.hasPointerCapture(finishEvent.pointerId))indicator.releasePointerCapture(finishEvent.pointerId);
+            indicator.removeEventListener('pointermove',drag);
+            indicator.removeEventListener('pointerup',finish);
+            indicator.removeEventListener('pointercancel',finish);
+          };
+          indicator.addEventListener('pointermove',drag);
+          indicator.addEventListener('pointerup',finish);
+          indicator.addEventListener('pointercancel',finish);
+          activate();
+        });
+        new ResizeObserver(update).observe(rail);
+        update();
+      });
+    }
+
+    hydrateKennelProfile().catch(()=>{
+      document.querySelectorAll('[data-record-status]').forEach(node=>{node.textContent='Preview data not loaded'});
+      KennelNetwork.alignHeroLogo();
+    }).finally(()=>{
+      installHorizontalRailScrollbars();
+    });
+  </script>
+</body>
+</html>

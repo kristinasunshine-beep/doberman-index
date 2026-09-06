@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f1f1f1">
-  <meta name="description" content="Doberman Index — structured male profile with pedigree, health, temperament, performance and breeding data.">
-  <title>Doberman Index — Male Profile</title>
+  <meta name="description" content="Doberman Index — structured female profile with pedigree, health, temperament, performance and breeding data.">
+  <title>Doberman Index — Female Profile</title>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -223,13 +223,11 @@
     .section-content{position:relative;z-index:2}
 
     .gallery-rail,.slider{display:flex;gap:20px;overflow-x:auto;scroll-behavior:auto;scroll-snap-type:none;overscroll-behavior-inline:contain;padding:0 0 18px;scrollbar-width:none;-ms-overflow-style:none}
-    .gallery-rail{align-items:center}
 
     .visual-card{position:relative;min-width:min(72vw,940px);height:min(68vh,660px);overflow:hidden;background:#d9d9d9;scroll-snap-align:start}
     .visual-card[data-frame-orientation="portrait"],.visual-card[data-frame-orientation="landscape"]{min-width:0;width:auto;flex:0 0 auto;aspect-ratio:var(--media-frame-ratio)}
     .visual-card img,.visual-card video{width:100%;height:100%;display:block;object-fit:cover;filter:grayscale(1);transition:filter .6s var(--ease),transform 1.1s var(--ease)}
     .visual-card[data-frame-fit="contain"] img{object-fit:contain}
-    .visual-card[data-frame-orientation="landscape"] img,.visual-card[data-media-role="movement_video"] video{object-position:center center!important}
     .visual-card:hover img,.visual-card.touch-hover img,.visual-card:hover video,.visual-card.touch-hover video{filter:grayscale(0);transform:scale(1.018)}
     .visual-card[data-frame-fit="contain"]:hover img,.visual-card[data-frame-fit="contain"].touch-hover img{transform:none}
     .visual-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.48));pointer-events:none}
@@ -375,17 +373,8 @@
     #performanceRail .metric em{position:absolute;left:22px;bottom:46px;z-index:2;margin:0;max-width:80%;font-size:27px;font-weight:700;line-height:1;letter-spacing:-.055em}
     #performanceRail .metric::after{position:absolute;left:22px;bottom:21px;z-index:2;margin:0;color:#c8c8c8;font-size:10px}
     #performanceRail .metric.highlight::after{color:var(--ink)}
-    .performance-detail{margin-top:28px;padding:26px 0 0;border-top:1px solid var(--ink)}
-    .performance-detail[hidden]{display:none}
-    .performance-detail-head{display:flex;align-items:baseline;justify-content:space-between;gap:24px;margin-bottom:20px}
-    .performance-detail h3{margin:0;font-size:clamp(28px,3vw,44px);font-weight:700;line-height:.95;letter-spacing:-.055em}
-    .performance-detail small{font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-    .performance-title-list{margin:0;padding:0;list-style:none;border-top:1px solid #c9c9c4}
-    .performance-title-list li{display:grid;grid-template-columns:42px minmax(0,1fr);gap:18px;padding:18px 0;border-bottom:1px solid #c9c9c4;font-size:clamp(16px,1.35vw,21px);font-weight:650;line-height:1.2}
-    .performance-title-list li span{font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;font-size:8px;font-weight:700;letter-spacing:.08em}
-    #performanceRail .metric[data-metric-key="Titles"]{cursor:pointer!important}
 
-    /* Stud Impact — dark application/CTA language from the supplied FORGE reference */
+    /* Breeding Impact — dark application/CTA language from the supplied FORGE reference */
     .impact-showcase{min-height:980px;margin-top:clamp(52px,5vw,84px);padding-top:clamp(92px,7vw,118px);padding-bottom:clamp(58px,5vw,78px);background:var(--black);color:var(--white)}
     .impact-showcase .section-mark{top:20%;right:-.055em;bottom:auto;color:#2b2b2b;font-size:clamp(220px,31vw,500px);line-height:.78}
     .impact-showcase .section-head{grid-template-columns:minmax(0,1fr) minmax(420px,.8fr);align-items:stretch;margin-bottom:clamp(110px,10vw,170px)}
@@ -593,7 +582,7 @@
       .section-head{gap:24px;margin-bottom:54px}
       .section-note{font-size:11px}
       .impact-intro-copy{display:none}
-      .gallery-rail{align-items:center}
+      .gallery-rail{align-items:flex-start}
       .visual-card{min-width:88vw;height:58vh;max-height:520px}
       .visual-card[data-frame-orientation="portrait"],.visual-card[data-frame-orientation="landscape"]{
         width:calc(100vw - 48px);
@@ -601,7 +590,7 @@
         height:auto;
         max-height:none;
         aspect-ratio:var(--media-frame-ratio);
-        align-self:center;
+        align-self:flex-start;
       }
       .ancestor{min-width:270px}
       #healthRail .surface-card{min-width:78vw;min-height:182px;padding:18px 20px 20px}
@@ -1375,10 +1364,12 @@
   <main class="profile">
     <section class="hero" id="profile">
       <div class="hero-watermark" aria-hidden="true">DOBERMAN</div>
-      <div class="hero-corner left">Male profile<br><span id="heroProfileId">—</span><span class="life-status-badge" id="lifeStatusBadge" hidden></span></div>
+      <div class="hero-corner left">Female profile<br><span id="heroProfileId">—</span><span class="life-status-badge" id="lifeStatusBadge" hidden></span></div>
       <div class="hero-corner right">Example digital card<br>for an indexed Doberman.</div>
 
-      <h1 class="hero-title" id="dogName" aria-label="Profile loading"></h1>
+      <h1 class="hero-title" id="dogName" aria-label="Loading profile">
+        <span>Loading</span><span>profile.</span>
+      </h1>
 
       <article class="hero-dossier">
         <img id="heroImage" alt="Doberman profile hero">
@@ -1488,7 +1479,6 @@
         </div>
       </header>
       <div class="section-content metric-grid reveal" id="performanceRail"></div>
-      <div class="performance-detail reveal" id="performanceDetails" hidden aria-live="polite"></div>
     </section>
 
     <section class="section impact-showcase" id="impact">
@@ -1496,7 +1486,7 @@
       <header class="section-head reveal">
         <div>
           <div class="section-index"><span>07</span><i></i><span>Breeding record</span></div>
-          <h2 class="section-title">Stud<br>impact.</h2>
+          <h2 class="section-title">Breeding<br>impact.</h2>
         </div>
         <div class="impact-aside">
           <p class="section-note"><b>Generational reach</b>One verified record connects every litter, offspring result and export market to the wider Doberman network.</p>
@@ -1533,10 +1523,10 @@
           <h2 class="pairing-title">Pairing<br>insight.</h2>
         </div>
         <div class="pairing-copy">
-          <p>Select one indexed female and compare both profiles through genetics, structure, temperament and breeding goals.</p>
+          <p>Select one indexed male and compare both profiles through genetics, structure, temperament and breeding goals.</p>
           <div class="pairing-search">
-            <input id="pairingInput" type="search" placeholder="Search indexed female" aria-label="Search indexed female">
-            <button id="pairingBtn" type="button" aria-label="Select indexed female">↗</button>
+            <input id="pairingInput" type="search" placeholder="Search indexed male" aria-label="Search indexed male">
+            <button id="pairingBtn" type="button" aria-label="Select indexed male">↗</button>
           </div>
         </div>
       </div>
@@ -1549,7 +1539,7 @@
           <div class="section-index"><span>10</span><i></i><span>Profile actions</span></div>
           <h2 class="section-title">Focused<br>services.</h2>
         </div>
-        <p class="section-note"><b>Decision tools</b>Focused reports for pairing decisions, bloodline review, pedigree presentation and stud promotion.</p>
+        <p class="section-note"><b>Decision tools</b>Focused reports for pairing decisions, bloodline review, pedigree presentation and litter promotion.</p>
       </header>
 
       <div class="section-content services-grid reveal">
@@ -1569,8 +1559,8 @@
           <div class="service-pricing"><span class="service-fee-label">One-time fee</span><span class="service-price">€249</span></div>
         </button>
         <button class="service-card" type="button">
-          <div class="service-num">04</div><h3><span class="service-title-line">Stud Promotion</span> <span class="service-title-line">Kit</span></h3>
-          <p>Instagram carousel, Facebook post, promotional copy, flyer and presentation PDF.</p>
+          <div class="service-num">04</div><h3><span class="service-title-line">Litter Promotion</span> <span class="service-title-line">Kit</span></h3>
+          <p>Instagram carousel, Facebook post, promotional copy, flyer and presentation PDF for a documented litter.</p>
           <div class="service-pricing"><span class="service-fee-label">One-time fee</span><span class="service-price">€99</span></div>
         </button>
         <button class="service-card" type="button">
@@ -1591,7 +1581,7 @@
   <footer class="footer">
     <div class="footer-identity">
       <div class="footer-brand">DOBERMAN INDEX®</div>
-      <div class="footer-descriptor"><span>//</span>Indexed male profile</div>
+      <div class="footer-descriptor"><span>//</span>Indexed female profile</div>
     </div>
     <div class="footer-record">
       <span>Record</span>
@@ -1739,7 +1729,7 @@
       const birthYear=yearOf(identity.date_of_birth);
       const lifespan=isDeceased&&deathYear?[birthYear,deathYear].filter(Boolean).join("–"):null;
       const statusBadge=isDeceased?["DECEASED",lifespan].filter(Boolean).join(" · "):"";
-      const studServiceStatus=isDeceased?"Not applicable":({available:"Available at stud",private_arrangement:"By private arrangement",not_available:"Not currently available",retired:"Retired",not_applicable:"Not applicable",unknown:"Not submitted",planned:"Planned",reserved:"Reserved",placed:"Placed",closed:"Closed"}[reproduction.availability]||titleCase(reproduction.availability));
+      const breedingAvailability=isDeceased?"Not applicable":({available:"Available for breeding",private_arrangement:"By private arrangement",not_available:"Not currently available",retired:"Retired",not_applicable:"Not applicable",unknown:"Not submitted",planned:"Planned",reserved:"Reserved",placed:"Placed",closed:"Closed"}[reproduction.availability]||titleCase(reproduction.availability));
       const clinical=health.dcm_clinical||{};
       const clinicalSub=[clinical.evaluation_method,clinical.evaluation_date?formatDate(clinical.evaluation_date):null,clinical.veterinarian_or_clinic].filter(Boolean).join(" · ")||"Clinical evaluation not submitted";
       const markers=health.dcm_markers||{};
@@ -1750,13 +1740,12 @@
       return {
         name:registeredDisplayName,kennel:present(displayKennelName(identity.kennel_name),identity.kennel_id||"Independent"),country:present(identity.country),
         titles:array(performance.titles),heroImage:mediaUrl(media.hero)||placeholderImage,heroPosition:focalPosition(focalPointFor(media,"hero")),statusBadge,
-        core:{fullName:registeredDisplayName,sex:titleCase(identity.sex),dateOfBirth:formatDate(identity.date_of_birth),lifeStage,lifeStatus,lifeSpan:lifespan||"—",color:present(identity.color),kennel:present(displayKennelName(identity.kennel_name),identity.kennel_id||"Independent"),country:present(identity.country),registration:present(identity.registration_authority),registrationNumber:present(identity.registration_number),owner:present(identity.owner),breeder:present(identity.breeder),location:present(identity.location),studServiceStatus,profileId:recordId},
+        core:{fullName:registeredDisplayName,sex:titleCase(identity.sex),dateOfBirth:formatDate(identity.date_of_birth),lifeStage,lifeStatus,lifeSpan:lifespan||"—",color:present(identity.color),kennel:present(displayKennelName(identity.kennel_name),identity.kennel_id||"Independent"),country:present(identity.country),registration:present(identity.registration_authority),registrationNumber:present(identity.registration_number),owner:present(identity.owner),breeder:present(identity.breeder),location:present(identity.location),breedingAvailability,profileId:recordId},
         health:healthView,
         dcm:{"DCM 1":present(markers.dcm_1?.result,"Not submitted"),"DCM 2":present(markers.dcm_2?.result,"Not submitted"),"DCM 3":present(markers.dcm_3?.result,"Not submitted"),"DCM 4":present(markers.dcm_4?.result,"Not submitted"),"DCM 5":present(markers.dcm_5?.result,"Not submitted")},
         structure:{Type:present(structure.type),Head:present(structure.head),Body:present(structure.body),Angulation:present(structure.angulation),Movement:present(structure.movement),Balance:present(structure.balance)},
         temperament:{Stability:present(temperament.stability),Drive:present(temperament.drive),"Social behaviour":present(temperament.social_behaviour),Defense:present(temperament.defense),Confidence:present(temperament.confidence),Evaluator:titleCase(temperament.evaluator)},
         performance:{Shows:numberOrDash(performance.shows_count),Titles:array(performance.titles).length,"Working exams":array(performance.working_exams).length,Sports:array(performance.sports).length},
-        performanceDetails:{Titles:array(performance.titles)},
         reproduction:{Litters:numberOrDash(reproduction.litters_count),Offspring:numberOrDash(reproduction.offspring_count),"Champion offspring":numberOrDash(reproduction.champion_offspring_count),"Export countries":array(reproduction.export_countries).length},
         bloodline:buildBloodline(parentage,parentIdentities),gallery:buildGallery(media),related:buildRelated(recordId,parentage),
         lastUpdated:present(publication.last_updated_label,formatDate(record.updated_at))
@@ -1765,15 +1754,15 @@
 
     async function loadProfile(){
       const recordId=(new URLSearchParams(location.search).get("id")||"").trim().toUpperCase();
-      if(!/^DI-M-\d{6}$/.test(recordId))throw new Error("A valid male profile number is required");
+      if(!/^DI-F-\d{6}$/.test(recordId))throw new Error("A valid female profile number is required");
       const registry=await fetch(new URL("data/registry.json",repoRoot),{cache:"no-store"}).then(response=>{if(!response.ok)throw new Error("Registry unavailable");return response.json()});
       registryRecords=array(registry.records);
       const item=registryRecords.find(entry=>entry.record_id===recordId&&entry.status==="published");
       if(!item)throw new Error("Published profile not found");
-      if(item.template!=="male")throw new Error("This record uses another profile template");
-      if(!/^data\/dobermans\/DI-M-\d{6}\.json$/.test(item.path||""))throw new Error("Profile data location is invalid");
+      if(item.template!=="female")throw new Error("This record uses another profile template");
+      if(!/^data\/dobermans\/DI-F-\d{6}\.json$/.test(item.path||""))throw new Error("Profile data location is invalid");
       const record=await fetch(new URL(item.path,repoRoot),{cache:"no-store"}).then(response=>{if(!response.ok)throw new Error("Profile data unavailable");return response.json()});
-      if(record.record_id!==recordId||record.entity_type!=="doberman"||record.status!=="published"||record.doberman?.identity?.sex!=="male"||record.doberman?.identity?.life_stage==="puppy")throw new Error("Profile data does not match this male record");
+      if(record.record_id!==recordId||record.entity_type!=="doberman"||record.status!=="published"||record.doberman?.identity?.sex!=="female"||record.doberman?.identity?.life_stage==="puppy")throw new Error("Profile data does not match this female record");
       const parentIdentities=await loadPedigreeIdentities(record.doberman?.parentage||{});
       return canonicalToProfile(record,recordId,parentIdentities);
     }
@@ -1783,7 +1772,7 @@
     const escapeHTML=value=>String(value).replace(/[&<>'"]/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[char]));
 
     function core(){
-      const labels={fullName:"Registered name",sex:"Sex",dateOfBirth:"Date of birth",lifeStage:"Life stage",lifeStatus:"Life status",lifeSpan:"Life span",color:"Colour",kennel:"Kennel",country:"Country",registration:"Registration authority",registrationNumber:"Registration number",owner:"Owner",breeder:"Breeder",location:"Location",studServiceStatus:"Stud service status",profileId:"DI profile number"};
+      const labels={fullName:"Registered name",sex:"Sex",dateOfBirth:"Date of birth",lifeStage:"Life stage",lifeStatus:"Life status",lifeSpan:"Life span",color:"Colour",kennel:"Kennel",country:"Country",registration:"Registration authority",registrationNumber:"Registration number",owner:"Owner",breeder:"Breeder",location:"Location",breedingAvailability:"Breeding availability",profileId:"DI profile number"};
       const entries=Object.entries(profileData.core).filter(([,value])=>!["","—","Not submitted","Not applicable"].includes(String(value??"").trim()));
       const render=duplicate=>entries.map(([key,value])=>`<div class="core-chip" role="button" tabindex="${duplicate?"-1":"0"}" aria-pressed="false"${duplicate?' aria-hidden="true"':""}><span>${escapeHTML(labels[key]||labelize(key))}</span><strong>${escapeHTML(value)}</strong></div>`).join("");
       byId("coreRail").innerHTML=render(false)+render(true);
@@ -1801,21 +1790,7 @@
     function metrics(id,data,highlight=1){
       const captions={Shows:"documented entries",Titles:"championship record","Working exams":"submitted exams",Sports:"active disciplines",Litters:"verified matings",Offspring:"indexed descendants","Champion offspring":"documented champions","Export countries":"international reach"};
       const badges={Shows:"Show",Titles:"Title","Working exams":"Exam",Sports:"Sport"};
-      byId(id).innerHTML=Object.entries(data).map(([k,v],i)=>{
-        const expandable=id==="performanceRail"&&k==="Titles";
-        return `<div class="metric ${i===highlight?"highlight":""}" data-initial="${escapeHTML(k.charAt(0))}" data-caption="${escapeHTML(captions[k]||"submitted record")}" data-metric-key="${escapeHTML(k)}"${expandable?' role="button" tabindex="0" aria-expanded="false" aria-controls="performanceDetails"':""}><span class="metric-badge">${escapeHTML(badges[k]||"Record")}</span><strong>${escapeHTML(v)}</strong><em>${escapeHTML(k)}</em></div>`;
-      }).join("");
-    }
-
-    function toggleTitleListing(card){
-      const panel=byId("performanceDetails");
-      const titles=array(profileData.performanceDetails?.Titles).filter(Boolean);
-      const opening=panel.hidden;
-      document.querySelectorAll('#performanceRail [aria-expanded="true"]').forEach(item=>item.setAttribute("aria-expanded","false"));
-      if(!opening){panel.hidden=true;return}
-      card.setAttribute("aria-expanded","true");
-      panel.innerHTML=`<div class="performance-detail-head"><h3>Titles.</h3><small>${String(titles.length).padStart(2,"0")} documented</small></div>${titles.length?`<ol class="performance-title-list">${titles.map((title,index)=>`<li><span>${String(index+1).padStart(2,"0")}</span>${escapeHTML(title)}</li>`).join("")}</ol>`:'<ol class="performance-title-list"><li><span>00</span>No titles submitted.</li></ol>'}`;
-      panel.hidden=false;
+      byId(id).innerHTML=Object.entries(data).map(([k,v],i)=>`<div class="metric ${i===highlight?"highlight":""}" data-initial="${escapeHTML(k.charAt(0))}" data-caption="${escapeHTML(captions[k]||"submitted record")}"><span class="metric-badge">${escapeHTML(badges[k]||"Record")}</span><strong>${escapeHTML(v)}</strong><em>${escapeHTML(k)}</em></div>`).join("");
     }
 
     function bloodline(depth=3){
@@ -1829,7 +1804,8 @@
 
     function heroMetadata(){
       const identity=[profileData.kennel,profileData.country].filter(Boolean).join(" · ");
-      byId("heroMeta").innerHTML=`<span class="hero-identity">${escapeHTML(identity)}</span>`;
+      const titles=profileData.titles.slice(0,2).filter(Boolean);
+      byId("heroMeta").innerHTML=`<span class="hero-identity">${escapeHTML(identity)}</span>${titles.length?`<span class="hero-credentials">${titles.map(title=>`<span>${escapeHTML(title)}</span>`).join("")}</span>`:""}`;
     }
 
     function gallery(){
@@ -2053,25 +2029,13 @@
 
     [["coreRail",".core-chip"],["healthRail",".surface-card"],["structureRail",".surface-card"],["temperamentRail",".surface-card"],["relatedRail",".related-card"],["dcmRail",".marker"]].forEach(([id,selector])=>bindSelectableRail(id,selector));
 
-    byId("performanceRail").addEventListener("click",event=>{
-      const card=event.target.closest('[data-metric-key="Titles"]');
-      if(card)toggleTitleListing(card);
-    });
-    byId("performanceRail").addEventListener("keydown",event=>{
-      if(event.key!=="Enter"&&event.key!==" ")return;
-      const card=event.target.closest('[data-metric-key="Titles"]');
-      if(!card)return;
-      event.preventDefault();
-      toggleTitleListing(card);
-    });
-
     byId("pairingBtn").addEventListener("click",()=>{
       const value=byId("pairingInput").value.trim();
-      if(!value)return alert("Enter an indexed female.");
+      if(!value)return alert("Enter an indexed male.");
       const needle=value.toLocaleLowerCase();
-      const matches=registryRecords.filter(record=>record.entity_type==="doberman"&&record.sex==="female"&&[record.record_id,record.registered_name].some(item=>String(item||"").toLocaleLowerCase().includes(needle)));
+      const matches=registryRecords.filter(record=>record.entity_type==="doberman"&&record.sex==="male"&&[record.record_id,record.registered_name].some(item=>String(item||"").toLocaleLowerCase().includes(needle)));
       if(matches.length===1){location.href=profileUrl(matches[0].record_id);return;}
-      alert(matches.length?"Please enter a more specific female name or DI number.":"No published indexed female matches that entry.");
+      alert(matches.length?"Please enter a more specific male name or DI number.":"No published indexed male matches that entry.");
     });
     byId("pairingInput").addEventListener("keydown",event=>{if(event.key==="Enter")byId("pairingBtn").click()});
 

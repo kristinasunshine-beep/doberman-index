@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0.0",
+  "services": [
+    {
+      "id": "verified-kennel-record",
+      "number": "01",
+      "name": "Kennel Record",
+      "price_eur": 29,
+      "type": "EXPORT",
+      "display_type": "EXPORT",
+      "descriptor": "An export-ready record of the kennel and its indexed Dobermans.",
+      "primary_line": "STRUCTURED. VERIFIED. EXPORT-READY.",
+      "action_label": "GENERATE RECORD",
+      "modules": [
+        "Kennel identity",
+        "Registration and location",
+        "Indexed Dobermans",
+        "Pedigree relationships",
+        "Documented health",
+        "Performance and results"
+      ],
+      "checkout": {
+        "provider": "lemon_squeezy",
+        "product_id": null,
+        "variant_id": null,
+        "checkout_url": null
+      }
+    },
+    {
+      "id": "breeding-program-intelligence",
+      "number": "02",
+      "name": "Breeding Program Intelligence",
+      "price_eur": 69,
+      "type": "AI INTELLIGENCE",
+      "display_type": "PROGRAM ANALYSIS",
+      "descriptor": "Reveals recurring patterns across lineage, health, temperament and results.",
+      "primary_line": "WHAT THIS KENNEL CONSISTENTLY PRODUCES.",
+      "action_label": "RUN ANALYSIS",
+      "modules": [
+        "Program signature",
+        "Line concentration",
+        "Health pattern",
+        "Temperament pattern",
+        "Performance footprint",
+        "Genetic diversity signal",
+        "Evidence gaps",
+        "Program trajectory"
+      ],
+      "checkout": {
+        "provider": "lemon_squeezy",
+        "product_id": null,
+        "variant_id": null,
+        "checkout_url": null
+      }
+    },
+    {
+      "id": "kennel-comparison-intelligence",
+      "number": "03",
+      "name": "Kennel Comparison",
+      "price_eur": 89,
+      "type": "AI COMPARISON",
+      "display_type": "PROGRAM COMPARISON",
+      "descriptor": "Maps documented similarities and differences between two indexed kennels.",
+      "primary_line": "HOW DO THESE TWO DOCUMENTED BREEDING PROGRAMS RELATE?",
+      "action_label": "SELECT KENNEL",
+      "modules": [
+        "Lineage relationship",
+        "Diversity signal",
+        "Health evidence",
+        "Temperament patterns",
+        "Performance footprint",
+        "Program signature",
+        "Complementarity",
+        "Data gaps"
+      ],
+      "checkout": {
+        "provider": "lemon_squeezy",
+        "product_id": null,
+        "variant_id": null,
+        "checkout_url": null
+      }
+    }
+  ]
+}

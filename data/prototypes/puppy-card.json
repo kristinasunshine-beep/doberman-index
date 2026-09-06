@@ -1,0 +1,210 @@
+{
+  "schema_version": "1.1.0-prototype",
+  "entity_type": "doberman",
+  "record_id": "DI-F-000000",
+  "status": "prototype",
+  "prototype_notice": "Example digital card — not a published registry record.",
+  "doberman": {
+    "identity": {
+      "registered_name": "ASTRA VON DER NACHT",
+      "sex": "female",
+      "life_stage": "puppy",
+      "life_status": "living",
+      "date_of_birth": "2026-06-01",
+      "color": "Black & rust",
+      "country": "Serbia",
+      "date_of_death": null,
+      "year_of_death": null,
+      "location": null,
+      "registration_authority": null,
+      "registration_number": null,
+      "kennel_id": null,
+      "kennel_name": "Example kennel",
+      "breeder": null,
+      "owner": null
+    },
+    "parentage": {
+      "sire_id": null,
+      "sire_name": null,
+      "sire_registration": null,
+      "dam_id": null,
+      "dam_name": null,
+      "dam_registration": null,
+      "pedigree_source": null,
+      "pedigree_file": null,
+      "pedigree_verified": false,
+      "pedigree_nodes": [],
+      "litter_id": null
+    },
+    "puppy_lifecycle": {
+      "birth_weight_g": 420,
+      "current_status": "available",
+      "evaluation": "Development note not submitted",
+      "training": "Early socialisation",
+      "current_owner": "Not published",
+      "achievements": []
+    },
+    "health": {
+      "dm": {
+        "result": null,
+        "lab": null,
+        "date": null,
+        "report_number": null,
+        "evidence_file": null
+      },
+      "vwd": {
+        "result": null,
+        "lab": null,
+        "date": null,
+        "report_number": null,
+        "evidence_file": null
+      },
+      "hd": {
+        "result": null,
+        "lab": null,
+        "date": null,
+        "report_number": null,
+        "evidence_file": null
+      },
+      "ed": {
+        "result": null,
+        "lab": null,
+        "date": null,
+        "report_number": null,
+        "evidence_file": null
+      },
+      "thyroid": {
+        "result": null,
+        "lab": null,
+        "date": null,
+        "report_number": null,
+        "evidence_file": null
+      },
+      "eyes": {
+        "result": null,
+        "lab": null,
+        "date": null,
+        "report_number": null,
+        "evidence_file": null
+      },
+      "dcm_clinical": {
+        "status": null,
+        "evaluation_method": null,
+        "evaluation_date": null,
+        "veterinarian_or_clinic": null,
+        "evidence_file": null
+      },
+      "dcm_markers": {
+        "dcm_1": {
+          "result": null,
+          "lab": null,
+          "date": null,
+          "report_number": null,
+          "evidence_file": null
+        },
+        "dcm_2": {
+          "result": null,
+          "lab": null,
+          "date": null,
+          "report_number": null,
+          "evidence_file": null
+        },
+        "dcm_3": {
+          "result": null,
+          "lab": null,
+          "date": null,
+          "report_number": null,
+          "evidence_file": null
+        },
+        "dcm_4": {
+          "result": null,
+          "lab": null,
+          "date": null,
+          "report_number": null,
+          "evidence_file": null
+        },
+        "dcm_5": {
+          "result": null,
+          "lab": null,
+          "date": null,
+          "report_number": null,
+          "evidence_file": null
+        }
+      },
+      "mortality": {
+        "cause": null,
+        "cause_disclosure": "not_provided",
+        "evidence_source": null,
+        "evidence_file": null
+      }
+    },
+    "structure": {
+      "type": [],
+      "head": [],
+      "body": [],
+      "angulation": [],
+      "movement": [],
+      "balance": [],
+      "evaluator": "not_declared",
+      "evidence": {
+        "source_type": null,
+        "issuer": null,
+        "date": null,
+        "reference": null,
+        "file": null
+      }
+    },
+    "temperament": {
+      "stability": null,
+      "drive": null,
+      "social_behaviour": null,
+      "defense": null,
+      "confidence": null,
+      "evaluator": "not_declared",
+      "evidence": {
+        "source_type": null,
+        "issuer": null,
+        "date": null,
+        "reference": null,
+        "file": null
+      }
+    },
+    "performance": {
+      "shows_count": null,
+      "titles": [],
+      "working_exams": [],
+      "sports": [],
+      "evidence_files": []
+    },
+    "reproduction": {
+      "litters_count": null,
+      "offspring_count": null,
+      "champion_offspring_count": null,
+      "export_countries": [],
+      "litter_ids": [],
+      "availability": "not_applicable"
+    },
+    "media": {
+      "hero": "media/prototypes/puppy/hero.webp",
+      "head": null,
+      "profile": null,
+      "stack": null,
+      "movement": null,
+      "gallery": [],
+      "movement_video": null,
+      "movement_video_seconds": null,
+      "movement_video_audio": "natural_sound",
+      "focal_points": {
+        "hero": {
+          "x": 50,
+          "y": 46
+        }
+      }
+    },
+    "publication": {
+      "last_updated_label": "Prototype · not published",
+      "profile_template": "puppy",
+      "lifecycle_mode": "automatic"
+    }
+  }
+}

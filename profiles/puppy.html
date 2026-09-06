@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f1f1f1">
+  <meta name="description" content="Doberman Index — structured puppy profile prototype for growth, health, development, pedigree and movement data.">
+  <title>Doberman Index — Puppy Card Prototype</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --paper:#f1f1f1;
+      --paper-2:#e5e5e5;
+      --ink:#121212;
+      --muted:#676767;
+      --line:#b9b9b9;
+      --acid:#f3fe19;
+      --white:#fff;
+      --blue:#0c01e6;
+      --pad:clamp(20px,5vw,64px);
+      --section-space:clamp(86px,11vw,150px);
+      --ease:cubic-bezier(.16,1,.3,1);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;background:var(--paper)}
+    body{min-width:320px;overflow-x:hidden;background:var(--paper);color:var(--ink);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+    *::selection{background:var(--acid);color:var(--ink)}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit;color:inherit}
+    img{display:block;max-width:100%}
+    a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+    .scroll-progress{position:fixed;inset:0 auto auto 0;z-index:300;width:100%;height:2px;background:var(--acid);transform:scaleX(0);transform-origin:left}
+    .float-nav{position:fixed;top:18px;left:50%;z-index:250;display:flex;align-items:center;gap:3px;width:max-content;max-width:calc(100vw - 24px);padding:5px 6px 5px 16px;border:1px solid rgba(18,18,18,.08);border-radius:999px;background:rgba(255,255,255,.78);box-shadow:0 10px 34px rgba(0,0,0,.07);backdrop-filter:blur(18px);transform:translateX(-50%);transition:.3s var(--ease)}
+    .nav-brand{margin-right:8px;font-size:12px;font-weight:900;letter-spacing:-.03em;white-space:nowrap}
+    .nav-link{padding:8px 10px;border-radius:999px;font-size:10px;font-weight:500;white-space:nowrap}
+    .nav-link:hover{background:#dedede}
+    .nav-status{display:flex;align-items:center;gap:8px;margin-left:4px;padding:8px 14px;border-radius:999px;background:var(--ink);color:var(--white);font-size:10px;font-weight:600;white-space:nowrap}
+    .nav-status::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--acid)}
+
+    .hero{--photo-w:clamp(300px,27vw,430px);position:relative;min-height:118svh;padding:28px var(--pad) 40px;overflow:hidden;border-bottom:1px solid var(--ink)}
+    .hero::after{content:"PUPPY";position:absolute;right:-.04em;top:57svh;z-index:0;color:#e3e3e3;font-size:clamp(160px,28vw,430px);font-weight:900;line-height:.8;letter-spacing:-.09em;white-space:nowrap;pointer-events:none}
+    .hero-corner{position:absolute;z-index:5;top:30px;font-size:10px;line-height:1.42}
+    .hero-corner.left{left:var(--pad);font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+    .hero-corner.right{right:var(--pad);max-width:185px;text-align:right}
+    .hero-title{position:absolute;top:24svh;right:var(--pad);z-index:3;width:min(66vw,1020px);font-size:clamp(82px,11.2vw,164px);font-weight:700;line-height:.82;letter-spacing:-.078em;text-align:right;text-wrap:balance}
+    .hero-title span{display:block;transform:translateY(35px);opacity:0;animation:title-in .9s var(--ease) forwards}
+    .hero-title span:nth-child(2){animation-delay:.12s}
+    @keyframes title-in{to{transform:none;opacity:1}}
+
+    .hero-photo{position:absolute;left:var(--pad);top:35svh;z-index:2;width:var(--photo-w);height:72svh;min-height:560px;overflow:hidden;background:#d9d9d9}
+    .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 46%;filter:grayscale(1);transition:filter .7s var(--ease),transform 1s var(--ease)}
+    .hero-photo:hover img{filter:grayscale(0);transform:scale(1.014)}
+    .photo-label{position:absolute;left:18px;bottom:17px;display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.82);font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;backdrop-filter:blur(12px)}
+    .photo-label::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--acid)}
+
+    .hero-dossier{position:absolute;left:calc(var(--pad) + var(--photo-w) - 36px);top:75svh;z-index:4;width:clamp(315px,26vw,405px);min-height:278px;padding:27px 29px 24px;background:var(--acid);display:flex;flex-direction:column;justify-content:space-between}
+    .dossier-brand{font-size:18px;font-weight:900;letter-spacing:-.045em}
+    .dossier-id{display:block;margin-top:22px;font-family:"SFMono-Regular",Consolas,monospace;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+    .dossier-identity{margin-top:10px;font-size:12px;line-height:1.45}
+    .dossier-statement{max-width:285px;margin-top:22px;font-size:12px;font-weight:600;line-height:1.45}
+    .dossier-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:22px;margin-top:28px}
+    .dossier-bottom a{display:inline-flex;align-items:center;gap:12px;font-size:12px;font-weight:700}
+    .dossier-bottom a span{transition:transform .3s var(--ease)}
+    .dossier-bottom a:hover span{transform:translateX(4px)}
+    .availability{font-size:10px;text-align:right;text-transform:uppercase;letter-spacing:.07em}
+    .availability strong{display:block;margin-top:4px;font-size:18px;letter-spacing:-.04em;text-transform:none}
+
+    .hero-jump{position:absolute;right:var(--pad);top:91svh;z-index:5;display:flex;align-items:center;gap:12px;font-size:10px;font-weight:600;line-height:1.3}
+    .round-arrow{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--ink);color:var(--white);font-size:20px;transition:transform .35s var(--ease),color .35s}
+    .hero-jump:hover .round-arrow,.hero-jump:focus-visible .round-arrow{transform:rotate(-45deg);color:var(--acid)}
+
+    .core-ticker{position:relative;overflow:hidden;border-bottom:1px solid #d5d5d1;background:#f2f2ef}
+    .ticker-track{display:flex;width:max-content;animation:ticker 38s linear infinite}
+    .core-ticker:hover .ticker-track{animation-play-state:paused}
+    @keyframes ticker{to{transform:translateX(-50%)}}
+    .core-chip{position:relative;width:220px;min-height:82px;padding:15px 34px 14px 20px;display:flex;flex-direction:column;justify-content:center;background:var(--white);text-align:left}
+    .core-chip::after{content:"";position:absolute;right:12px;top:50%;width:16px;height:3px;border-radius:99px;background:var(--acid);transform:translateY(-50%)}
+    .core-chip span{margin-bottom:9px;color:#777;font-family:"SFMono-Regular",Consolas,monospace;font-size:7px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+    .core-chip strong{font-size:16.5px;font-weight:700;line-height:1.05;letter-spacing:-.045em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+    .section{position:relative;min-height:610px;padding:var(--section-space) var(--pad);overflow:hidden;border-bottom:1px solid var(--ink);scroll-margin-top:70px}
+    .section-mark{position:absolute;right:-.03em;bottom:-.22em;z-index:0;color:#e6e6e6;font-size:clamp(150px,25vw,380px);font-weight:900;line-height:.8;letter-spacing:-.09em;white-space:nowrap;pointer-events:none}
+    .section-head{position:relative;z-index:2;display:grid;grid-template-columns:1fr minmax(260px,36%);gap:40px;align-items:start;margin-bottom:clamp(52px,8vw,94px)}
+    .section-index{display:flex;align-items:center;gap:13px;margin-bottom:28px;font-size:10px;font-weight:600}
+    .section-index i{width:22px;height:1px;background:currentColor}
+    .section-title{max-width:940px;font-size:clamp(58px,8.2vw,122px);font-weight:700;line-height:.86;letter-spacing:-.07em}
+    .section-note{justify-self:end;max-width:390px;margin-top:38px;color:var(--muted);font-size:12px;line-height:1.55}
+    .section-note b{display:block;margin-bottom:14px;color:var(--ink);font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+    .section-content{position:relative;z-index:2}
+
+    .slider,.gallery-rail{display:flex;gap:20px;overflow-x:auto;overscroll-behavior-inline:contain;padding:0 0 18px;scrollbar-width:none;-ms-overflow-style:none}
+    .slider::-webkit-scrollbar,.gallery-rail::-webkit-scrollbar{display:none;width:0;height:0}
+    .detail-card{position:relative;flex:0 0 clamp(290px,29vw,400px);min-height:235px;padding:17px 18px 20px;border:0;border-top:2px solid var(--ink);background:transparent;text-align:left;cursor:pointer;transition:padding .35s var(--ease),background .35s var(--ease)}
+    .detail-card::before{content:"";position:absolute;top:0;left:0;width:100%;height:6px;background:var(--acid);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
+    .detail-card::after{content:"";position:absolute;left:18px;top:78px;width:34px;height:8px;background:var(--acid)}
+    .detail-card:hover,.detail-card[aria-expanded="true"]{padding-left:24px;padding-right:24px;background:var(--white)}
+    .detail-card[aria-expanded="true"]::before{transform:scaleX(1)}
+    .card-key{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:10px;font-weight:650;line-height:1.3;letter-spacing:.055em;text-transform:uppercase}
+    .card-key em{font-style:normal;color:var(--ink)}
+    .detail-card strong{display:block;margin-top:110px;font-size:26px;font-weight:600;line-height:1.02;letter-spacing:-.055em}
+    .card-action{display:block;margin-top:12px;color:var(--muted);font-size:10px}
+    .detail-panel{display:grid;grid-template-columns:minmax(170px,1fr) 2fr;gap:32px;min-height:150px;margin-top:20px;padding:27px 30px;background:var(--ink);color:var(--white)}
+    .detail-panel span{font-family:"SFMono-Regular",Consolas,monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+    .detail-panel p{max-width:700px;font-size:17px;font-weight:500;line-height:1.45;letter-spacing:-.025em}
+
+    .link-card{flex:0 0 clamp(290px,27vw,380px);min-height:270px;padding:18px 20px 22px;border-top:2px solid var(--ink);background:transparent;display:flex;flex-direction:column;transition:.35s var(--ease)}
+    .link-card:hover{padding-left:25px;background:var(--acid)}
+    .link-card-top{display:flex;justify-content:space-between;color:var(--muted);font-size:9px;letter-spacing:.06em;text-transform:uppercase}
+    .link-card-line{width:35px;height:8px;margin-top:auto;margin-bottom:20px;background:var(--acid)}
+    .link-card:hover .link-card-line{background:var(--ink)}
+    .link-card strong{font-size:27px;font-weight:600;line-height:.96;letter-spacing:-.055em}
+    .link-card small{margin-top:12px;color:var(--muted);font-size:10px;line-height:1.45}
+
+    .gallery{background:#e9e9e9}
+    .gallery-rail{align-items:flex-start}
+    .visual-card,.media-state{position:relative;flex:0 0 auto;width:auto;height:min(50vh,480px);overflow:hidden;background:#d8d8d8;aspect-ratio:var(--media-frame-ratio,4 / 5)}
+    .visual-card img,.visual-card video{width:100%;height:100%;object-fit:var(--media-fit,cover);object-position:var(--media-position,50% 50%);filter:grayscale(1);transition:filter .6s var(--ease),transform 1s var(--ease)}
+    .visual-card:hover img{filter:grayscale(0);transform:scale(1.012)}
+    .visual-label{position:absolute;left:22px;bottom:20px;z-index:2;display:flex;align-items:center;gap:11px;color:var(--white);font-size:12px;font-weight:600}
+    .visual-label::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--acid)}
+    .visual-count{position:absolute;right:20px;top:20px;z-index:2;padding:8px 11px;border-radius:999px;background:rgba(255,255,255,.8);font-size:9px;font-weight:700}
+    .media-state{padding:28px;display:flex;flex-direction:column;justify-content:space-between;background:var(--acid)}
+    .media-state span{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+    .media-state strong{max-width:330px;font-size:clamp(38px,4vw,62px);font-weight:700;line-height:.88;letter-spacing:-.065em}
+    .media-state p{max-width:300px;font-size:12px;line-height:1.5}
+
+    .record-card{flex:0 0 clamp(270px,24vw,340px);min-height:220px;padding:18px 18px 22px;border-top:2px solid var(--ink);display:flex;flex-direction:column;background:transparent}
+    .record-card span{color:var(--muted);font-size:10px;font-weight:650;letter-spacing:.055em;text-transform:uppercase}
+    .record-card i{width:34px;height:8px;margin-top:52px;background:var(--acid)}
+    .record-card strong{margin-top:auto;font-size:22px;font-weight:600;line-height:1.05;letter-spacing:-.045em}
+    .record-card small{margin-top:10px;color:var(--muted);font-size:10px;line-height:1.4}
+
+    .connections{background:var(--ink);color:var(--white)}
+    .connections .section-mark{color:#1e1e1e}
+    .connections .section-note,.connections .section-note b{color:#b8b8b8}
+    .network-row{align-items:center}
+    .network-node{flex:0 0 clamp(280px,29vw,410px);min-height:190px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid #3a3a3a;background:#171717}
+    .network-node.current{background:var(--acid);color:var(--ink);border-color:var(--acid)}
+    .network-node span{font-size:9px;letter-spacing:.1em;text-transform:uppercase}
+    .network-node strong{font-size:27px;line-height:.95;letter-spacing:-.055em}
+    .network-arrow{color:var(--acid);font-size:24px}
+
+    .rail-scrollbar{position:relative;z-index:3;width:100%;height:22px;margin-top:0;overflow:hidden;background:transparent;touch-action:none;user-select:none}
+    .rail-scrollbar::before{content:"";position:absolute;inset:1px 0;z-index:0;background:#e8e8e8;transition:inset .18s ease,background .18s ease}
+    .connections .rail-scrollbar::before{background:#2a2a2a}
+    .rail-scrollbar[hidden]{display:none}
+    .rail-scrollbar-track{position:absolute;left:22px;right:22px;top:50%;z-index:1;height:4px;transform:translateY(-50%)}
+    .rail-scrollbar-indicator{position:absolute;left:0;top:50%;width:clamp(150px,42%,300px);height:3px;border-radius:999px;background:#737373;transform:translate3d(0,-50%,0);transition:height .18s ease,background .18s ease;will-change:transform;touch-action:none}
+    .rail-scrollbar-arrow{position:absolute;top:0;z-index:2;width:22px;height:22px;padding:0;border:0;background:transparent;opacity:0;pointer-events:none;transition:opacity .18s ease}
+    .rail-scrollbar-arrow.prev{left:0}.rail-scrollbar-arrow.next{right:0}
+    .rail-scrollbar-arrow::before{content:"";position:absolute;top:7px;width:0;height:0;border-top:4px solid transparent;border-bottom:4px solid transparent}
+    .rail-scrollbar-arrow.prev::before{left:7px;border-right:6px solid #858585}.rail-scrollbar-arrow.next::before{right:7px;border-left:6px solid #858585}
+    .rail-scrollbar:hover .rail-scrollbar-arrow,.rail-scrollbar:focus-within .rail-scrollbar-arrow,.rail-scrollbar.is-active .rail-scrollbar-arrow{opacity:1;pointer-events:auto}
+    .rail-scrollbar:hover::before,.rail-scrollbar:focus-within::before,.rail-scrollbar.is-active::before{inset:0;background:#e5e5e5}
+    .connections .rail-scrollbar:hover::before,.connections .rail-scrollbar:focus-within::before,.connections .rail-scrollbar.is-active::before{background:#333}
+    .rail-scrollbar:hover .rail-scrollbar-indicator,.rail-scrollbar:focus-within .rail-scrollbar-indicator,.rail-scrollbar.is-active .rail-scrollbar-indicator{height:6px;background:#5f5f5f}
+
+    .footer{display:grid;grid-template-columns:1fr auto 1fr;gap:28px;align-items:end;padding:44px var(--pad);background:var(--ink);color:var(--white);font-size:9px;line-height:1.5}
+    .footer-brand{font-size:16px;font-weight:900;letter-spacing:-.04em}
+    .footer-record{text-align:center;font-family:"SFMono-Regular",Consolas,monospace;letter-spacing:.1em;text-transform:uppercase}
+    .footer-record strong{display:block;margin:7px 0;color:var(--acid);font-size:14px}
+    .footer-right{text-align:right;color:#9b9b9b}
+
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .75s var(--ease),transform .75s var(--ease)}
+    .reveal.is-visible{opacity:1;transform:none}
+
+    @media(max-width:980px){
+      .hero{--photo-w:clamp(290px,39vw,400px);min-height:112svh}
+      .hero-title{top:25svh;font-size:clamp(78px,12vw,124px)}
+      .hero-photo{top:34svh;height:65svh;min-height:510px}
+      .hero-dossier{top:72svh;width:330px}
+      .hero-jump{top:96svh}
+      .visual-card,.media-state{height:min(46vh,430px)}
+    }
+
+    @media(max-width:680px){
+      .float-nav{top:10px;max-width:calc(100vw - 16px);padding-left:12px}
+      .nav-link{display:none}
+      .nav-status{padding:8px 11px}
+      .hero{display:flex;flex-direction:column;min-height:auto;padding:96px var(--pad) 58px}
+      .hero::after{right:-.08em;top:225px;font-size:46vw}
+      .hero-corner{top:62px}
+      .hero-corner.right{max-width:140px;font-size:9px}
+      .hero-title{position:relative;top:auto;right:auto;order:1;width:100%;margin:70px 0 30px;font-size:clamp(66px,20vw,92px);text-align:left}
+      .hero-photo{position:relative;left:auto;top:auto;order:2;width:calc(100% - 16px);height:66svh;min-height:470px;max-height:650px}
+      .hero-dossier{position:relative;left:auto;top:auto;order:3;width:calc(100% - 20px);min-height:250px;margin:-48px 0 0 auto}
+      .hero-jump{display:none}
+      .section{min-height:auto;padding:88px var(--pad)}
+      .section-head{grid-template-columns:1fr;gap:0;margin-bottom:52px}
+      .section-title{font-size:clamp(54px,17vw,78px)}
+      .section-note{justify-self:start;margin-top:28px;font-size:14px}
+      .section-index{font-size:12px}
+      .detail-card,.link-card,.record-card{min-width:82vw;scroll-snap-align:start}
+      .detail-panel{grid-template-columns:1fr;gap:16px;padding:24px}
+      .detail-panel p{font-size:16px}
+      .slider,.gallery-rail{gap:14px}
+      .visual-card,.media-state{width:auto;max-width:calc(100vw - 48px);height:auto;max-height:none;aspect-ratio:var(--media-frame-ratio,4 / 5)}
+      .network-arrow{flex:0 0 auto}
+      .network-node{min-width:82vw;min-height:150px}
+      .footer{grid-template-columns:1fr;align-items:start}
+      .footer-record{text-align:left}
+      .footer-right{text-align:left}
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+      .ticker-track{animation:none}
+      .reveal{opacity:1;transform:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <nav class="float-nav" aria-label="Primary">
+    <a class="nav-brand" href="../index.html">DOBERMAN INDEX®</a>
+    <a class="nav-link" href="#development">Development</a>
+    <a class="nav-link" href="#family">Family</a>
+    <a class="nav-link" href="#gallery">Gallery</a>
+    <a class="nav-link" href="#health">Health</a>
+    <a class="nav-link" href="#structure">Traits</a>
+    <a class="nav-link" href="#performance">Results</a>
+    <span class="nav-status" id="navStatus">Puppy · Prototype</span>
+  </nav>
+
+  <main>
+    <section class="hero" id="profile">
+      <div class="hero-corner left"><span id="puppyRecordLabel">PUPPY RECORD · FEMALE</span><br><span id="profileId">DI-F-000000</span></div>
+      <div class="hero-corner right">Example digital card<br>not a published record.</div>
+
+      <h1 class="hero-title" id="profileName" aria-label="Astra von der Nacht"><span>Astra</span><span>von der Nacht.</span></h1>
+
+      <figure class="hero-photo">
+        <img id="heroImage" src="../media/prototypes/puppy/hero.webp" alt="Fictional example Doberman puppy">
+        <figcaption class="photo-label">Prototype image</figcaption>
+      </figure>
+
+      <article class="hero-dossier">
+        <div>
+          <strong class="dossier-brand">DOBERMAN INDEX®</strong>
+          <span class="dossier-id" id="dossierId">DI-F-000000 / puppy prototype</span>
+          <p class="dossier-identity" id="heroIdentity">Example kennel · Serbia</p>
+          <p class="dossier-statement">One living puppy record, designed to grow with every documented update.</p>
+        </div>
+        <div class="dossier-bottom">
+          <a href="#development">Details <span aria-hidden="true">→</span></a>
+          <span class="availability">Current availability<strong id="availability">Available</strong></span>
+        </div>
+      </article>
+
+      <a class="hero-jump" href="#development"><span class="round-arrow" aria-hidden="true">↓</span><span>Explore<br>record</span></a>
+    </section>
+
+    <section class="core-ticker" id="recordDetails" aria-label="Core puppy facts">
+      <div class="ticker-track" id="coreRail"></div>
+    </section>
+
+    <section class="section" id="development">
+      <div class="section-mark" aria-hidden="true">GROW</div>
+      <header class="section-head reveal">
+        <div>
+          <div class="section-index"><span>01</span><i></i><span>Puppy lifecycle</span></div>
+          <h2 class="section-title">Growth<br>record.</h2>
+        </div>
+        <p class="section-note"><b>A record in motion</b>Availability, development, training and ownership remain separate, dated fields. Select a card to read its current entry.</p>
+      </header>
+      <div class="section-content reveal">
+        <div class="card-rail slider" id="lifecycleRail"></div>
+        <div class="detail-panel" id="lifecycleDetail" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="section" id="family">
+      <div class="section-mark" aria-hidden="true">LINK</div>
+      <header class="section-head reveal">
+        <div>
+          <div class="section-index"><span>02</span><i></i><span>Connected origin</span></div>
+          <h2 class="section-title">Family<br>links.</h2>
+        </div>
+        <p class="section-note"><b>System connections</b>The litter is the connector between sire, dam, kennel and every indexed puppy. Unlinked records remain visibly unavailable.</p>
+      </header>
+      <div class="section-content family-grid slider reveal" id="familyRail"></div>
+    </section>
+
+    <section class="section gallery" id="gallery">
+      <span id="gallery-movement" aria-hidden="true" style="position:absolute;top:0;scroll-margin-top:70px"></span>
+      <div class="section-mark" aria-hidden="true">VIEW</div>
+      <header class="section-head reveal">
+        <div>
+          <div class="section-index"><span>03</span><i></i><span>Standardized media</span></div>
+          <h2 class="section-title">Gallery &<br>movement.</h2>
+        </div>
+        <p class="section-note"><b>Age-aware media</b>Each update can add the next comparable view without replacing the puppy’s earlier development record.</p>
+      </header>
+      <div class="section-content gallery-rail reveal" id="visualSlider"></div>
+    </section>
+
+    <section class="section" id="health">
+      <div class="section-mark" aria-hidden="true">CARE</div>
+      <header class="section-head reveal">
+        <div>
+          <div class="section-index"><span>04</span><i></i><span>Age-appropriate record</span></div>
+          <h2 class="section-title">Health<br>status.</h2>
+        </div>
+        <p class="section-note"><b>Submitted, never assumed</b>Unavailable fields stay visible as unavailable. Later results join the same permanent record.</p>
+      </header>
+      <div class="section-content record-grid slider reveal" id="healthRail"></div>
+    </section>
+
+    <section class="section" id="structure">
+      <div class="section-mark" aria-hidden="true">FORM</div>
+      <header class="section-head reveal">
+        <div>
+          <div class="section-index"><span>05</span><i></i><span>Standardized description</span></div>
+          <h2 class="section-title">Developing<br>structure.</h2>
+        </div>
+        <p class="section-note"><b>Controlled vocabulary</b>Type, head, body, angulation, movement and balance use the same comparable fields as the adult profiles.</p>
+      </header>
+      <div class="section-content record-grid slider reveal" id="structureRail"></div>
+    </section>
+
+    <section class="section" id="temperament">
+      <div class="section-mark" aria-hidden="true">MIND</div>
+      <header class="section-head reveal">
+        <div>
+          <div class="section-index"><span>06</span><i></i><span>Developmental observation</span></div>
+          <h2 class="section-title">Early<br>traits.</h2>
+        </div>
+        <p class="section-note"><b>Evaluation changes with age</b>Early observations are kept separate from adult temperament assessments and retain their source.</p>
+      </header>
+      <div class="section-content record-grid slider reveal" id="temperamentRail"></div>
+    </section>
+
+    <section class="section" id="performance">
+      <div class="section-mark" aria-hidden="true">RESULT</div>
+      <header class="section-head reveal">
+        <div>
+          <div class="section-index"><span>07</span><i></i><span>Documented results</span></div>
+          <h2 class="section-title">Early<br>results.</h2>
+        </div>
+        <p class="section-note"><b>One continuous record</b>Shows, titles, working exams, sports and puppy achievements remain separate and continue into the later profile stages.</p>
+      </header>
+      <div class="section-content record-grid slider reveal" id="performanceRail"></div>
+    </section>
+
+    <section class="section connections" id="connections">
+      <div class="section-mark" aria-hidden="true">INDEX</div>
+      <header class="section-head reveal">
+        <div>
+          <div class="section-index"><span>08</span><i></i><span>Permanent network</span></div>
+          <h2 class="section-title">One record.<br>Growing context.</h2>
+        </div>
+        <p class="section-note"><b>Not a ranking</b>The profile follows one Doberman from puppyhood while its links remain stable.</p>
+      </header>
+      <div class="section-content network-row slider reveal" id="networkRail">
+        <article class="network-node"><span>Origin</span><strong>Litter<br>not linked</strong></article>
+        <span class="network-arrow" aria-hidden="true">→</span>
+        <article class="network-node current"><span>Current record</span><strong id="networkName">Astra<br>prototype</strong></article>
+        <span class="network-arrow" aria-hidden="true">→</span>
+        <article class="network-node"><span>Future updates</span><strong>Junior<br>adult</strong></article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div><div class="footer-brand">DOBERMAN INDEX®</div><div>Indexed puppy profile prototype</div></div>
+    <div class="footer-record"><span>Record</span><strong id="footerId">DI-F-000000</strong><small id="footerState">Example puppy digital card</small></div>
+    <div class="footer-right">Platform architecture by LIONSIGN<br>2019–2026 · All rights reserved</div>
+  </footer>
+
+  <script src="../assets/js/display-name.js"></script>
+  <script src="../assets/js/media-presentation.js"></script>
+  <script src="../assets/js/lifecycle.js"></script>
+  <script>
+    const PROTOTYPE_URL="../data/prototypes/puppy-card.json";
+    const repoRoot=new URL("../",document.baseURI);
+    const requestedId=(new URLSearchParams(location.search).get("id")||"").trim().toUpperCase();
+    const byId=id=>document.getElementById(id);
+    const array=value=>Array.isArray(value)?value:[];
+    const safe=value=>Array.isArray(value)?(value.filter(Boolean).join(" / ")||"Not submitted"):(value===null||value===undefined||String(value).trim()===""?"Not submitted":String(value).trim());
+    const titleCase=value=>safe(value).replace(/_/g," ").replace(/\b\w/g,letter=>letter.toUpperCase());
+    const displayRegisteredName=value=>window.DIName.displayRegisteredName(value);
+    const displayKennelName=value=>window.DIName.displayKennelName(value);
+    const frameSpecFor=role=>window.DIMedia.frameSpecFor(role);
+    const focalPointFor=(media,role)=>window.DIMedia.focalPointFor(media,role);
+    const focalPosition=value=>window.DIMedia.objectPosition(value);
+    const normalizeGalleryItem=value=>window.DIMedia.normalizeGalleryItem(value);
+    const formatDate=value=>{
+      if(!value)return "Not submitted";
+      const date=new Date(`${value}T00:00:00Z`);
+      return Number.isNaN(date.getTime())?safe(value):new Intl.DateTimeFormat("en-GB",{day:"2-digit",month:"short",year:"numeric",timeZone:"UTC"}).format(date);
+    };
+    const escapeHTML=value=>String(value).replace(/[&<>'"]/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[char]));
+
+    function renderCore(identity,recordId){
+      const entries=[
+        ["Registered name",displayRegisteredName(identity.registered_name)],["Sex",titleCase(identity.sex)],["Date of birth",formatDate(identity.date_of_birth)],
+        ["Life stage","Puppy"],["Life status",titleCase(identity.life_status)],["Colour",identity.color],["Country",identity.country],
+        ["City or region",identity.location],["Kennel",displayKennelName(identity.kennel_name)],["Registration authority",identity.registration_authority],
+        ["Registration number",identity.registration_number],["Breeder",identity.breeder],["Public owner",identity.owner],["DI profile number",recordId]
+      ];
+      const chips=entries.map(([label,value])=>`<article class="core-chip"><span>${escapeHTML(label)}</span><strong>${escapeHTML(safe(value))}</strong></article>`).join("");
+      byId("coreRail").innerHTML=chips+chips;
+    }
+
+    function renderLifecycle(lifecycle){
+      const achievements=Array.isArray(lifecycle.achievements)&&lifecycle.achievements.length?lifecycle.achievements.join(" · "):"Not submitted";
+      const items=[
+        ["Current availability",titleCase(lifecycle.current_status),"Availability is a current-state field and can change without changing the permanent profile number."],
+        ["Birth weight",lifecycle.birth_weight_g?`${lifecycle.birth_weight_g} g`:"Not submitted","Birth weight remains part of the original litter record when a verified value is supplied."],
+        ["Development evaluation",safe(lifecycle.evaluation),"The evaluation keeps its date, method and source when those details become available."],
+        ["Training",safe(lifecycle.training),"Training entries can be expanded as the puppy develops."],
+        ["Current owner",safe(lifecycle.current_owner),"Public ownership appears only when publication permission has been provided."],
+        ["Achievements",achievements,"Puppy results stay separate from later junior and adult performance records."]
+      ];
+      byId("lifecycleRail").innerHTML=items.map(([label,value,detail],index)=>`<button class="detail-card" type="button" aria-expanded="${index===0}" data-label="${escapeHTML(label)}" data-detail="${escapeHTML(detail)}"><span class="card-key">${escapeHTML(label)}<em>${String(index+1).padStart(2,"0")}</em></span><strong>${escapeHTML(value)}</strong><span class="card-action">Open entry&nbsp;&nbsp;→</span></button>`).join("");
+      const first=byId("lifecycleRail").querySelector(".detail-card");
+      showLifecycleDetail(first);
+    }
+
+    function showLifecycleDetail(card){
+      if(!card)return;
+      byId("lifecycleRail").querySelectorAll(".detail-card").forEach(item=>item.setAttribute("aria-expanded",String(item===card)));
+      byId("lifecycleDetail").innerHTML=`<span>${escapeHTML(card.dataset.label)}</span><p>${escapeHTML(card.dataset.detail)}</p>`;
+    }
+
+    function renderFamily(identity,parentage){
+      const items=[
+        ["Sire",displayRegisteredName(parentage.sire_name)||"Not submitted",parentage.sire_registration||parentage.sire_id||"Indexed record unavailable"],
+        ["Dam",displayRegisteredName(parentage.dam_name)||"Not submitted",parentage.dam_registration||parentage.dam_id||"Indexed record unavailable"],
+        ["Pedigree",parentage.pedigree_verified?"Reviewed":"Not submitted",parentage.pedigree_file||"Document unavailable"],
+        ["Litter",parentage.litter_id||"Not linked","Connector record unavailable"],
+        ["Kennel",displayKennelName(identity.kennel_name),identity.kennel_id||"Indexed record unavailable"]
+      ];
+      byId("familyRail").innerHTML=items.map(([label,value,state],index)=>`<article class="link-card"><div class="link-card-top"><span>${escapeHTML(label)}</span><span>${String(index+1).padStart(2,"0")}</span></div><i class="link-card-line"></i><strong>${escapeHTML(safe(value))}</strong><small>${escapeHTML(state)}</small></article>`).join("");
+    }
+
+    function renderRecordGrid(target,items){
+      byId(target).innerHTML=items.map(([label,value,sub])=>`<article class="record-card"><span>${escapeHTML(label)}</span><i></i><strong>${escapeHTML(safe(value))}</strong><small>${escapeHTML(sub)}</small></article>`).join("");
+    }
+
+    function testEntry(label,test){
+      const entry=test&&typeof test==="object"?test:{};
+      const detail=[entry.lab,entry.date?formatDate(entry.date):null,entry.report_number,entry.evidence_file?"Evidence connected":null].filter(Boolean).join(" · ")||"No result or evidence submitted";
+      return [label,entry.result,detail];
+    }
+
+    function renderHealth(health){
+      const clinical=health.dcm_clinical||{},markers=health.dcm_markers||{};
+      const clinicalDetail=[clinical.evaluation_method,clinical.evaluation_date?formatDate(clinical.evaluation_date):null,clinical.veterinarian_or_clinic,clinical.evidence_file?"Evidence connected":null].filter(Boolean).join(" · ")||"Clinical evaluation not submitted";
+      const items=[testEntry("DM",health.dm),testEntry("vWD",health.vwd),testEntry("Hip result",health.hd),testEntry("Elbow result",health.ed),testEntry("Thyroid",health.thyroid),testEntry("Eyes",health.eyes),["Heart status",clinical.status,clinicalDetail]];
+      [1,2,3,4,5].forEach(number=>items.push(testEntry(`DCM ${number}`,markers[`dcm_${number}`])));
+      const mortality=health.mortality||{};
+      if(mortality.cause_disclosure==="public"&&mortality.cause)items.push(["Cause of death",mortality.cause,mortality.evidence_source||"Public record"]);
+      renderRecordGrid("healthRail",items);
+    }
+
+    function renderStructure(structure){
+      renderRecordGrid("structureRail",[
+        ["Type",structure.type,"Controlled description"],["Head",structure.head,"Controlled description"],["Body",structure.body,"Controlled description"],
+        ["Angulation",structure.angulation,"Controlled description"],["Movement",structure.movement,"Controlled description"],["Balance",structure.balance,"Controlled description"],
+        ["Evaluated by",titleCase(structure.evaluator),structure.evidence?.source_type?`Source: ${titleCase(structure.evidence.source_type)}`:"Source not declared"]
+      ]);
+    }
+
+    function renderTemperament(temperament){
+      renderRecordGrid("temperamentRail",[
+        ["Stability",temperament.stability,"Age-appropriate observation"],["Drive",temperament.drive,"Age-appropriate observation"],
+        ["Social behaviour",temperament.social_behaviour,"Age-appropriate observation"],["Defense",temperament.defense,"Age-appropriate observation"],
+        ["Confidence",temperament.confidence,"Age-appropriate observation"],["Evaluated by",titleCase(temperament.evaluator),temperament.evidence?.source_type?`Source: ${titleCase(temperament.evidence.source_type)}`:"Source not declared"]
+      ]);
+    }
+
+    function renderPerformance(performance,lifecycle){
+      renderRecordGrid("performanceRail",[
+        ["Shows",performance.shows_count,"Documented entries"],["Titles",performance.titles,"Exact submitted titles"],
+        ["Working exams",performance.working_exams,"Exact exam and level"],["Sports",performance.sports,"Submitted disciplines"],
+        ["Puppy results",lifecycle.achievements,"Puppy-stage achievements"]
+      ]);
+    }
+
+    function renderGallery(media,name){
+      const roles=[
+        ["Main photo",media.hero,"hero"],["Head",media.head,"head"],["Side profile",media.profile,"profile"],["Standing pose",media.stack,"stack"],
+        ["Movement photo",media.movement,"movement"],["Movement video",media.movement_video,"movement_video"]
+      ];
+      array(media.gallery).forEach((entry,index)=>{
+        const item=normalizeGalleryItem(entry);
+        if(item)roles.push([item.caption||`Additional gallery ${String(index+1).padStart(2,"0")}`,item.path,"gallery",item.fit_mode,item.focal_point]);
+      });
+      if(!array(media.gallery).length)roles.push(["Additional gallery",null,"gallery"]);
+      byId("visualSlider").innerHTML=roles.map(([label,value,role,fitMode,focalPoint],index)=>{
+        const path=typeof value==="string"?value:value?.path;
+        const spec=frameSpecFor(role);
+        const fit=role==="gallery"&&fitMode?fitMode:spec.fit;
+        const position=focalPoint?focalPosition(focalPoint):focalPosition(focalPointFor(media,role));
+        const style=`--media-frame-ratio:${spec.aspectRatio||"4 / 5"};--media-fit:${fit};--media-position:${position}`;
+        const count=`${String(index+1).padStart(2,"0")} / ${String(roles.length).padStart(2,"0")}`;
+        if(!path){
+          const guidance=role==="movement_video"?"3–15 seconds · continuous natural trot · no cuts or music":"Awaiting an approved file for this media role.";
+          return `<article class="media-state" data-media-role="${escapeHTML(role)}" style="${escapeHTML(style)}"${role==="movement_video"?' id="movement"':""}><span>${escapeHTML(label)} / ${count}</span><strong>Not<br>submitted.</strong><p>${escapeHTML(guidance)}</p></article>`;
+        }
+        const src=new URL(path,repoRoot).href;
+        const mediaElement=role==="movement_video"?`<video src="${escapeHTML(src)}" controls preload="metadata" aria-label="${escapeHTML(name)} — ${escapeHTML(label)}"></video>`:`<img src="${escapeHTML(src)}" alt="${escapeHTML(name)} — ${escapeHTML(label)}" loading="${index?"lazy":"eager"}">`;
+        return `<figure class="visual-card" data-media-role="${escapeHTML(role)}" style="${escapeHTML(style)}">${mediaElement}<figcaption class="visual-label">${escapeHTML(label)}</figcaption><span class="visual-count">${count}</span></figure>`;
+      }).join("");
+    }
+
+    function installHorizontalRailScrollbars(){
+      const rails=[...document.querySelectorAll(".slider,.gallery-rail")];
+      const updates=[];
+      const resizeObserver="ResizeObserver" in window?new ResizeObserver(()=>updates.forEach(update=>update())):null;
+      rails.forEach((rail,index)=>{
+        if(rail.dataset.scrollbarReady)return;
+        rail.dataset.scrollbarReady="true";
+        if(!rail.id)rail.id=`puppyRail${index+1}`;
+        const sectionLabel=rail.closest(".section")?.querySelector(".section-index span:last-child")?.textContent.trim()||"Content";
+        const scrollbar=document.createElement("div");
+        scrollbar.className="rail-scrollbar";
+        scrollbar.setAttribute("role","group");
+        scrollbar.setAttribute("aria-controls",rail.id);
+        scrollbar.setAttribute("aria-label",`${sectionLabel} horizontal navigation`);
+        scrollbar.innerHTML=`<button class="rail-scrollbar-arrow prev" type="button" aria-label="Scroll ${escapeHTML(sectionLabel)} left"></button><div class="rail-scrollbar-track"><div class="rail-scrollbar-indicator" role="scrollbar" tabindex="0" aria-controls="${rail.id}" aria-label="Move through ${escapeHTML(sectionLabel)}" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div><button class="rail-scrollbar-arrow next" type="button" aria-label="Scroll ${escapeHTML(sectionLabel)} right"></button>`;
+        rail.insertAdjacentElement("afterend",scrollbar);
+        const track=scrollbar.querySelector(".rail-scrollbar-track"),indicator=scrollbar.querySelector(".rail-scrollbar-indicator");
+        const previous=scrollbar.querySelector(".prev"),next=scrollbar.querySelector(".next");
+        let maximum=0,startX=0,startScroll=0;
+        const activate=()=>{scrollbar.classList.add("is-active");clearTimeout(scrollbar._timer);scrollbar._timer=setTimeout(()=>scrollbar.classList.remove("is-active"),900)};
+        const sync=()=>{
+          maximum=Math.max(0,rail.scrollWidth-rail.clientWidth);
+          scrollbar.hidden=maximum<3;
+          if(scrollbar.hidden)return;
+          const travel=Math.max(0,track.clientWidth-indicator.offsetWidth);
+          const progress=maximum?rail.scrollLeft/maximum:0;
+          indicator.style.transform=`translate3d(${travel*progress}px,-50%,0)`;
+          indicator.setAttribute("aria-valuenow",String(Math.round(progress*100)));
+        };
+        const step=direction=>{activate();rail.scrollTo({left:rail.scrollLeft+direction*Math.max(240,rail.clientWidth*.68),behavior:"smooth"})};
+        previous.addEventListener("click",()=>step(-1));next.addEventListener("click",()=>step(1));
+        indicator.addEventListener("pointerdown",event=>{event.preventDefault();startX=event.clientX;startScroll=rail.scrollLeft;indicator.setPointerCapture(event.pointerId);activate()});
+        indicator.addEventListener("pointermove",event=>{if(!indicator.hasPointerCapture(event.pointerId))return;const travel=Math.max(1,track.clientWidth-indicator.offsetWidth);rail.scrollLeft=startScroll+((event.clientX-startX)/travel)*maximum;sync()});
+        track.addEventListener("pointerdown",event=>{if(event.target===indicator)return;const rect=track.getBoundingClientRect(),travel=Math.max(1,rect.width-indicator.offsetWidth);rail.scrollTo({left:Math.max(0,Math.min(1,(event.clientX-rect.left-indicator.offsetWidth/2)/travel))*maximum,behavior:"smooth"});activate()});
+        indicator.addEventListener("keydown",event=>{if(event.key==="ArrowLeft"||event.key==="ArrowRight"){event.preventDefault();step(event.key==="ArrowLeft"?-1:1)}});
+        rail.addEventListener("scroll",()=>{sync();activate()},{passive:true});
+        updates.push(sync);resizeObserver?.observe(rail);sync();
+      });
+      if(!resizeObserver)addEventListener("resize",()=>updates.forEach(update=>update()));
+    }
+
+    async function initialize(){
+      const isPublishedId=/^DI-[MF]-\d{6}$/.test(requestedId) && requestedId!=="DI-F-000000";
+      const dataUrl=isPublishedId?`../data/dobermans/${encodeURIComponent(requestedId)}.json`:PROTOTYPE_URL;
+      const response=await fetch(dataUrl,{cache:"no-store"});
+      if(!response.ok)throw new Error(isPublishedId?"Published puppy record unavailable":"Prototype data unavailable");
+      const record=await response.json();
+      const puppy=record.doberman||{},identity=puppy.identity||{},lifecycle=puppy.puppy_lifecycle||{};
+      const flat={entity_type:"doberman",sex:identity.sex,life_stage:identity.life_stage,life_status:identity.life_status,date_of_birth:identity.date_of_birth,template:puppy.publication?.profile_template};
+      const policy=await window.DILifecycle.loadPolicy(repoRoot);
+      const effectiveStage=window.DILifecycle.stageFor(flat,policy);
+      if(isPublishedId && effectiveStage!=="puppy"){
+        location.replace(`../profile.html?id=${encodeURIComponent(record.record_id)}`);
+        return;
+      }
+      if(!isPublishedId && record.status!=="prototype")throw new Error("Invalid puppy prototype data");
+      if(isPublishedId && record.status!=="published")throw new Error("Puppy record is not published");
+      const name=displayRegisteredName(identity.registered_name)||"Name not submitted";
+      const words=name.split(/\s+/); const heroLines=words.length>2?[words[0],words.slice(1).join(" ")]:[name];
+      heroLines[heroLines.length-1]=`${heroLines.at(-1).replace(/[.!?]$/,"")}.`;
+      byId("profileName").innerHTML=heroLines.map(line=>`<span>${escapeHTML(line)}</span>`).join("");
+      byId("profileName").setAttribute("aria-label",name);
+      byId("profileId").textContent=record.record_id;
+      byId("puppyRecordLabel").textContent=`PUPPY RECORD · ${String(identity.sex||"").toUpperCase()||"DOBERMAN"}`;
+      byId("dossierId").textContent=`${record.record_id} / ${isPublishedId?"puppy":"puppy prototype"}`;
+      byId("footerId").textContent=record.record_id;
+      byId("footerState").textContent=isPublishedId?"Indexed puppy profile":"Example puppy digital card";
+      byId("navStatus").textContent=isPublishedId?"Puppy":"Puppy · Prototype";
+      document.querySelector('.hero-corner.right').innerHTML=isPublishedId?'Indexed puppy profile<br>permanent DI record.':'Example digital card<br>not a published record.';
+      document.querySelector('.photo-label').textContent=isPublishedId?'Indexed puppy media':'Prototype image';
+      byId("heroIdentity").textContent=[displayKennelName(identity.kennel_name),identity.country].filter(Boolean).join(" · ");
+      byId("availability").textContent=titleCase(lifecycle.current_status);
+      byId("networkName").innerHTML=`${escapeHTML(name)}<br>${isPublishedId?"indexed record":"prototype"}`;
+      if(puppy.media?.hero)byId("heroImage").src=new URL(puppy.media.hero,repoRoot).href;
+      byId("heroImage").alt=`${name} — puppy profile hero`;
+      renderCore(identity,record.record_id); renderLifecycle(lifecycle); renderFamily(identity,puppy.parentage||{}); renderGallery(puppy.media||{},name);
+      renderHealth(puppy.health||{}); renderStructure(puppy.structure||{}); renderTemperament(puppy.temperament||{}); renderPerformance(puppy.performance||{},lifecycle);
+      installHorizontalRailScrollbars();
+      document.title=`Doberman Index — ${name} / Puppy`;
+    }
+
+    byId("lifecycleRail").addEventListener("click",event=>showLifecycleDetail(event.target.closest(".detail-card")));
+
+    const revealObserver="IntersectionObserver" in window?new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("is-visible");revealObserver.unobserve(entry.target)}}),{threshold:.1,rootMargin:"0px 0px -7%"}):null;
+    document.querySelectorAll(".reveal").forEach(element=>revealObserver?revealObserver.observe(element):element.classList.add("is-visible"));
+    const progress=byId("scrollProgress");
+    addEventListener("scroll",()=>{const distance=document.documentElement.scrollHeight-innerHeight;progress.style.transform=`scaleX(${distance?scrollY/distance:0})`},{passive:true});
+
+    initialize().catch(error=>{
+      byId("availability").textContent="Unavailable";
+      console.error("Doberman Index puppy profile:",error);
+    });
+  </script>
+</body>
+</html>

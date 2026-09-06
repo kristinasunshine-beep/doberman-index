@@ -78,6 +78,8 @@ def main() -> None:
         "python scripts/validate_submission_visual_master.py",
         "python scripts/validate_assessment_standard.py",
         "python scripts/validate_lifecycle_contract.py",
+        "python scripts/apply_lifecycle_policy.py --write",
+        "python scripts/validate_v63_contract.py",
         "python scripts/validate_male_profile_contract.py",
         "python scripts/validate_male_visual_master.py",
         "python scripts/validate_homepage.py",
@@ -86,6 +88,7 @@ def main() -> None:
         "python scripts/test_registry_consistency.py",
         "python scripts/validate_gallery_schema_contract.py",
         "node scripts/test_display_name.js",
+        "node scripts/test_lifecycle.js",
         "node scripts/test_public_ui.js",
         "node scripts/test_media_presentation.js",
     )

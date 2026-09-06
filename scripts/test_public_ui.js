@@ -10,6 +10,10 @@ const male = fs.readFileSync(path.join(root, "profiles/male.html"), "utf8");
 const index = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const DIName = require("../assets/js/display-name.js");
 const DIMedia = require("../assets/js/media-presentation.js");
+const lifecycleSource = fs.readFileSync(path.join(root, "assets/js/lifecycle.js"), "utf8");
+const lifecycleContext = { window: {}, Date, console };
+vm.runInNewContext(lifecycleSource, lifecycleContext);
+const DILifecycle = lifecycleContext.window.DILifecycle;
 
 function profileHarness(fetch = async () => { throw new Error("No fixture response"); }) {
   const elements = new Map();
@@ -68,7 +72,7 @@ function testPortalRecognition() {
   const normalization = index.slice(index.indexOf("let registryRecords = []"), index.indexOf("const updateRegistryTicker ="));
   const renderer = index.slice(index.indexOf("const homepageShowcaseAsset ="), index.indexOf("const loadHomepageShowcases ="));
   const api = vm.runInNewContext(`${normalization}\n${renderer}\n({setRecords:values=>registryRecords=values.map(normalizeRegistryRecord), renderHomepageShowcase, publicDobermanStatus});`, {
-    document, URL, window: { DIName, DIMedia: { ...DIMedia, applyFocalPoint: (image, point) => focalCalls.push({ image, point }) } },
+    document, URL, window: { DIName, DILifecycle, DIMedia: { ...DIMedia, applyFocalPoint: (image, point) => focalCalls.push({ image, point }) } },
   });
   // Synthetic future records only; no production JSON or IDs are written.
   const fixtures = [
@@ -166,7 +170,7 @@ async function main() {
   assert.match(cssRule('.visual-card[data-frame-fit="contain"] img'), /object-fit:contain/);
   assert.match(male, /\.visual-card\[data-frame-fit="contain"\]:hover img,[^{]+\{transform:none\}/);
   assert.match(male, /width:calc\(100vw - 48px\);\s*max-width:calc\(100vw - 48px\);\s*height:auto/);
-  assert.match(male, /\.gallery-rail\{align-items:flex-start\}/);
+  assert.match(male, /\.gallery-rail\{align-items:center\}/);
 
   const { api, elements } = profileHarness();
   const parentNames = Object.freeze({ sire_name: "COWBOY LUCKY LUCK DI ALTOBELLO", sire_registration: "JR 708334", dam_name: "FELICITA FLAIR VON ASHANTI LEGENDE", dam_registration: "JR 713394" });
@@ -274,7 +278,7 @@ async function main() {
     assert.equal(deceasedView.core.lifeStatus, "DECEASED");
     assert.match(deceasedView.statusBadge, /^DECEASED(?: · |$)/);
   }
-  console.log("Public UI v5.9.35 PASS (living lifecycle labels suppressed; deceased preserved; Search/Portal names kept on one line; structural media contained; mobile frame ratios and canonical data preserved)");
+  console.log("Public UI v6.3 PASS (living lifecycle labels suppressed; deceased preserved; Search/Portal names kept on one line; structural media contained; mobile frame ratios and canonical data preserved)");
 }
 
 if (require.main === module) main().catch(error => { console.error(error); process.exitCode = 1; });
