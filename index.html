@@ -2965,7 +2965,7 @@ nav a.nav-cta { font-size: 13px; }
   position: relative;
   min-height: 205px;
   display: grid;
-  grid-template-columns: 50px minmax(160px, .95fr) minmax(190px, 1.15fr) 124px 42px;
+  grid-template-columns: 50px minmax(160px, .95fr) minmax(190px, 1.15fr) 124px;
   column-gap: clamp(14px, 1.5vw, 28px);
   align-items: center;
   margin: 0;
@@ -3121,28 +3121,6 @@ nav a.nav-cta { font-size: 13px; }
   letter-spacing: 0;
   white-space: normal;
 }
-.tier-arrow {
-  grid-column: 5;
-  justify-self: center;
-  align-self: center;
-  width: 36px;
-  height: 36px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: var(--ink);
-  color: var(--white);
-  font-size: 16px;
-  line-height: 1;
-  transition: transform .35s var(--ease), background .35s var(--ease), color .35s var(--ease);
-  overflow: hidden;
-}
-.pricing-services .tier-card:nth-child(2) .tier-arrow {
-  background: var(--acid);
-  color: var(--ink);
-}
-.pricing-services .tier-card:hover .tier-arrow { transform: rotate(45deg); }
-
 .pricing-monolith {
   position: relative;
   z-index: 2;
@@ -3261,7 +3239,7 @@ nav a.nav-cta { font-size: 13px; }
   }
   .pricing-services .tier-card,
   .pricing-services .tier-card:nth-child(2) {
-    grid-template-columns: 42px minmax(150px, .9fr) minmax(170px, 1.1fr) 106px 38px;
+    grid-template-columns: 42px minmax(150px, .9fr) minmax(170px, 1.1fr) 106px;
     column-gap: 13px;
     padding-inline: 16px 12px;
   }
@@ -3301,7 +3279,7 @@ nav a.nav-cta { font-size: 13px; }
   .pricing-services .tier-card,
   .pricing-services .tier-card:nth-child(2) {
     min-height: 194px;
-    grid-template-columns: 38px minmax(0, 1fr) 112px 38px;
+    grid-template-columns: 38px minmax(0, 1fr) 112px;
     grid-template-rows: auto 1fr;
     column-gap: 14px;
     row-gap: 22px;
@@ -3331,11 +3309,6 @@ nav a.nav-cta { font-size: 13px; }
     grid-column: 3;
     grid-row: 2;
     align-self: end;
-  }
-  .tier-arrow {
-    grid-column: 4;
-    grid-row: 1 / 3;
-    align-self: center;
   }
   .pricing-monolith {
     min-height: 236px;
@@ -3383,7 +3356,7 @@ nav a.nav-cta { font-size: 13px; }
   .pricing-services .tier-card,
   .pricing-services .tier-card:nth-child(2) {
     min-height: 222px;
-    grid-template-columns: 30px minmax(0, 1fr) 76px 32px;
+    grid-template-columns: 30px minmax(0, 1fr) 76px;
     column-gap: 9px;
     row-gap: 18px;
     padding: 19px 10px 19px 14px;
@@ -3415,14 +3388,12 @@ nav a.nav-cta { font-size: 13px; }
   .pricing-services .tier-card:nth-child(2) .tier-price { font-size: 28px; }
   .pricing-services .tier-unit,
   .pricing-services .tier-card:nth-child(2) .tier-unit { font-size: 8px; }
-  .tier-arrow { width: 32px; height: 32px; font-size: 14px; }
   .pricing-monolith { min-height: 224px; }
   .pricing-monolith-note { font-size: 10px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pricing-services .tier-card::before,
-  .tier-arrow { transition: none; }
+  .pricing-services .tier-card::before { transition: none; }
 }
 
 /* Hero title uses the same type treatment as Explore the index */
@@ -4602,7 +4573,6 @@ textarea {
         <div class="tier-fee-label">ONE-TIME FEE</div>
         <div class="tier-price">€149 <span class="tier-unit">per Doberman</span></div>
       </div>
-      <span class="tier-arrow" aria-hidden="true">↗</span>
     </article>
     <article class="tier-card">
       <div class="tier-num">02</div>
@@ -4612,7 +4582,6 @@ textarea {
         <div class="tier-fee-label">ANNUAL FEE</div>
         <div class="tier-price">€149 <span class="tier-unit">/ year per kennel</span></div>
       </div>
-      <span class="tier-arrow" aria-hidden="true">↗</span>
     </article>
     <div class="pricing-monolith">
       <div class="pricing-monolith-core">

@@ -1113,6 +1113,7 @@
     .service-card{
       grid-template-columns:50px minmax(160px,.95fr) minmax(190px,1.15fr) 124px;
     }
+    .service-pricing{position:relative;left:-12px}
     .service-card::before{width:9px}
     .service-card::after{display:none}
     .service-card:nth-child(4),
@@ -1123,6 +1124,7 @@
     }
     @media(max-width:680px){
       .service-card{grid-template-columns:28px minmax(0,1fr) 72px}
+      .service-pricing{left:-8px}
       .services-section .services-tools-word{display:none}
       .service-card:nth-child(4)::after{
         content:"TOOLS";

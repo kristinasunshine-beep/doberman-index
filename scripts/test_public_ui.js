@@ -127,6 +127,9 @@ async function main() {
     assert.match(profile, /\.service-card::after\{content:none;display:none\}/);
     assert.doesNotMatch(profile, /\.service-card::after\{content:"↗"/);
   }
+  assert.doesNotMatch(index, /tier-arrow/);
+  assert.match(male, /\.service-pricing\{position:relative;left:-12px\}/);
+  assert.match(male, /@media\(max-width:680px\)\{[\s\S]*?\.service-pricing\{left:-8px\}/);
   const thumbnailRules = [...index.matchAll(/\.search-result-thumb\s*\{([^}]+)\}/g)].map(match => match[1]).join(";");
   assert.match(thumbnailRules, /aspect-ratio:\s*4\s*\/\s*5/);
   assert.doesNotMatch(thumbnailRules, /height:\s*\d/);
