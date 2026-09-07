@@ -1,4 +1,4 @@
-# DOBERMAN INDEX — GITHUB READY · v6.5 COMPREHENSIVE SEO · 2026-09-06
+# DOBERMAN INDEX — GITHUB READY · v6.5.1 PORTAL REFINEMENT · 2026-09-07
 
 This folder is the complete public web root. Copy its contents—not the enclosing `public` folder—into the root of the Doberman Index GitHub Pages repository.
 
@@ -67,3 +67,7 @@ Every published record receives a server-delivered, crawlable clean URL at `reco
 Run `python scripts/build_registry.py` and then `python scripts/build_seo.py` after approved public data changes. GitHub Actions performs both steps automatically on relevant pushes and during the daily lifecycle synchronization. The SEO validator fails when any published record lacks its canonical page, unique title/description, canonical, social metadata, supported JSON-LD, semantic main/H1 or expected internal record links.
 
 See `SEO-STRATEGY.md` for the URL, crawl and rollout contract.
+
+## v6.5.1 portal refinement
+
+Dante's two additional gallery images are presented in the approved reversed order. The Profile Actions cards in both Doberman templates no longer render circular arrow controls. On the portal, the black arrow button in the Males route card is a direct, accessible link to Dante's example digital card.

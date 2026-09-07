@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "site_origin": "https://doberman-index.com",
-  "generated_from_registry": "2026-09-06T15:18:24+00:00",
+  "generated_from_registry": "2026-09-07T07:42:38+00:00",
   "static_pages": {
     "/": {
       "title": "Doberman Index · Connected Doberman Registry",
@@ -57,7 +57,7 @@
               "@type": "ImageObject",
               "url": "https://doberman-index.com/media/dobermans/DI-M-000001/hero.png"
             },
-            "dateModified": "2026-08-30T15:15:53.216Z"
+            "dateModified": "2026-09-07T07:40:52Z"
           },
           {
             "@type": "Thing",

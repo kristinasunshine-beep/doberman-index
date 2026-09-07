@@ -1,5 +1,13 @@
 # Changelog
 
+## v6.5.1 PORTAL REFINEMENT — 2026-09-07
+
+- Reversed the two approved images in Dante's additional gallery and kept position-based `Gallery 01` / `Gallery 02` labels correct.
+- Removed the circular arrow pseudo-control from every Profile Actions card in both Doberman profile templates.
+- Turned the black arrow on the portal's Males route card into an accessible direct link to Dante's example digital card.
+- Rebuilt the public registry, canonical SEO record page, manifest and sitemap metadata.
+- Added regression checks for the approved Dante gallery order and both portal-action changes.
+
 ## v6.5 COMPREHENSIVE SEO — 2026-09-06
 
 - Added registry-generated clean canonical pages at `records/DI-ID/` for every published Doberman, kennel and litter record.

@@ -463,10 +463,8 @@
     .service-card::before{content:"";position:absolute;z-index:2;left:0;top:0;width:5px;height:100%;background:var(--acid);transform:scaleY(0);transform-origin:top;transition:transform .44s var(--ease)}
     .service-card:nth-child(1)::before{background:var(--ink)}
     .service-card:hover::before,.service-card.touch-hover::before{transform:scaleY(1)}
-    .service-card::after{content:"↗";position:static;z-index:2;grid-column:5;grid-row:1;justify-self:end;align-self:center;width:36px;height:36px;display:grid;place-items:center;border:0;border-radius:50%;background:var(--ink);color:var(--white);font-size:16px;transition:transform .4s var(--ease),background .4s var(--ease),color .4s var(--ease)}
-    .service-card:nth-child(2)::after{background:var(--acid);color:var(--ink)}
+    .service-card::after{content:none;display:none}
     .service-card:hover,.service-card.touch-hover{z-index:1;transform:none;box-shadow:none}
-    .service-card:hover::after,.service-card.touch-hover::after{transform:none}
     .service-card:focus-visible{outline:3px solid #0c01e6;outline-offset:3px}
     .service-card > *{position:relative;z-index:1}
     .service-num{grid-column:1;padding:0;font-size:18px;font-weight:750;line-height:1;letter-spacing:-.045em;transition:color .4s var(--ease),transform .4s var(--ease)}

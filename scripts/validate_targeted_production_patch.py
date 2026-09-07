@@ -75,6 +75,7 @@ def main() -> int:
     builder = (ROOT / "scripts" / "build_registry.py").read_text(encoding="utf-8")
     schema = json.loads((ROOT / "schemas" / "registry.schema.json").read_text(encoding="utf-8"))
     registry = json.loads((ROOT / "data" / "registry.json").read_text(encoding="utf-8"))
+    dante = json.loads((ROOT / "data" / "dobermans" / "DI-M-000001.json").read_text(encoding="utf-8"))
 
     for page, text in (("index", index), ("profile router", profile), ("male profile", male)):
         if "display-name.js" not in text:
@@ -124,6 +125,13 @@ def main() -> int:
         errors.append("additional gallery public frame is not locked to 4:5 portrait")
     if "hero_focal_point" not in builder or 'focal_point(media, "hero")' not in builder:
         errors.append("registry builder does not carry hero focal point into reusable public cards")
+    dante_gallery = dante.get("doberman", {}).get("media", {}).get("gallery", [])
+    expected_gallery = [
+        "media/dobermans/DI-M-000001/hero.png",
+        "media/dobermans/DI-M-000001/gallery-01.png",
+    ]
+    if [item.get("path") for item in dante_gallery if isinstance(item, dict)] != expected_gallery:
+        errors.append("Dante gallery order must keep hero first and gallery-01 second")
     errors.extend(registry_consistency_errors(ROOT, registry))
 
     if errors:

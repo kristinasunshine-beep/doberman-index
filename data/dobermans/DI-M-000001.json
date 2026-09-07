@@ -4,7 +4,7 @@
   "record_id": "DI-M-000001",
   "status": "published",
   "created_at": "2026-08-28T16:09:54.880Z",
-  "updated_at": "2026-08-30T15:15:53.216Z",
+  "updated_at": "2026-09-07T07:40:52Z",
   "submission": {
     "submitter_name": "REDACTED",
     "submitter_email": "redacted@example.invalid",
@@ -231,18 +231,19 @@
       "movement": null,
       "gallery": [
         {
-          "path": "media/dobermans/DI-M-000001/gallery-01.png",
-          "focal_point": {
-            "x": 45.333336724175346,
-            "y": 72.22222222222223
-          },
-          "fit_mode": "contain"
-        },
-        {
           "path": "media/dobermans/DI-M-000001/hero.png",
           "focal_point": {
             "x": 50,
             "y": 50
+          },
+          "fit_mode": "contain",
+          "caption": "Gallery 01"
+        },
+        {
+          "path": "media/dobermans/DI-M-000001/gallery-01.png",
+          "focal_point": {
+            "x": 45.333336724175346,
+            "y": 72.22222222222223
           },
           "fit_mode": "contain",
           "caption": "Gallery 02"

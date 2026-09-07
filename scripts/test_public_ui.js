@@ -7,6 +7,7 @@ const path = require("node:path");
 const vm = require("node:vm");
 const root = path.resolve(__dirname, "..");
 const male = fs.readFileSync(path.join(root, "profiles/male.html"), "utf8");
+const female = fs.readFileSync(path.join(root, "profiles/female.html"), "utf8");
 const index = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const DIName = require("../assets/js/display-name.js");
 const DIMedia = require("../assets/js/media-presentation.js");
@@ -120,6 +121,12 @@ function testPortalRecognition() {
 
 async function main() {
   testPortalRecognition();
+  assert.match(index, /<a class="card-arrow card-arrow-link" href="profile\.html\?id=DI-M-000001" aria-label="Open the example male digital card">→<\/a>/);
+  assert.match(index, /\.objects \.card-arrow-link\s*\{[^}]*background:\s*var\(--ink\)[^}]*color:\s*var\(--white\)/);
+  for (const profile of [male, female]) {
+    assert.match(profile, /\.service-card::after\{content:none;display:none\}/);
+    assert.doesNotMatch(profile, /\.service-card::after\{content:"↗"/);
+  }
   const thumbnailRules = [...index.matchAll(/\.search-result-thumb\s*\{([^}]+)\}/g)].map(match => match[1]).join(";");
   assert.match(thumbnailRules, /aspect-ratio:\s*4\s*\/\s*5/);
   assert.doesNotMatch(thumbnailRules, /height:\s*\d/);
