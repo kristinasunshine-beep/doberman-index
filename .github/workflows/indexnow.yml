@@ -1,0 +1,153 @@
+name: IndexNow after Pages deploy
+
+on:
+  workflow_run:
+    workflows:
+      - pages-build-deployment
+    types:
+      - completed
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: indexnow-${{ github.event.workflow_run.head_sha || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  submit-indexnow:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out deployed commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          fetch-depth: 2
+
+      - name: Submit canonical URLs to IndexNow
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import subprocess
+          import time
+          import urllib.error
+          import urllib.request
+          from pathlib import Path
+          from xml.etree import ElementTree as ET
+
+          BASE = "https://doberman-index.com"
+          HOST = "doberman-index.com"
+          KEY = "52dbc20591774f4897c62364d22b8cbe"
+          KEY_FILE = f"{KEY}.txt"
+          KEY_URL = f"{BASE}/{KEY_FILE}"
+          ENDPOINT = "https://api.indexnow.org/indexnow"
+
+          def sitemap_urls():
+              root = ET.parse("sitemap.xml").getroot()
+              urls = []
+              for el in root.iter():
+                  if el.tag.endswith("loc") and el.text:
+                      u = el.text.strip()
+                      if u == BASE or u.startswith(BASE + "/"):
+                          urls.append(u)
+              return sorted(set(urls))
+
+          def changed_paths():
+              try:
+                  out = subprocess.check_output(
+                      ["git", "diff", "--name-status", "--find-renames", "HEAD^", "HEAD", "--"],
+                      text=True,
+                      stderr=subprocess.DEVNULL,
+                  )
+              except Exception:
+                  return []
+              paths = []
+              for line in out.splitlines():
+                  if not line.strip():
+                      continue
+                  parts = line.split("\t")
+                  status = parts[0]
+                  if status.startswith(("R", "C")) and len(parts) >= 3:
+                      paths.extend(parts[-2:])
+                  elif len(parts) >= 2:
+                      paths.append(parts[-1])
+              return sorted(set(paths))
+
+          def url_for_path(path):
+              path = path.replace("\\", "/").lstrip("./")
+              if path == "index.html":
+                  return BASE + "/"
+              if path == "about.html":
+                  return BASE + "/about.html"
+              parts = path.split("/")
+              if len(parts) >= 3 and parts[0] == "records" and parts[1].startswith("DI-"):
+                  return f"{BASE}/records/{parts[1]}/"
+              return None
+
+          manual = "${{ github.event_name }}" == "workflow_dispatch"
+
+          if manual:
+              urls = sitemap_urls()
+              reason = "manual run: all current sitemap URLs"
+          else:
+              paths = changed_paths()
+              urls = sorted({u for p in paths if (u := url_for_path(p))})
+              if not urls and "sitemap.xml" in paths:
+                  urls = sitemap_urls()
+                  reason = "sitemap changed: all current sitemap URLs"
+              else:
+                  reason = "deployed canonical URLs changed in latest commit"
+
+          print("IndexNow reason:", reason)
+          print("URLs:", len(urls))
+          for u in urls:
+              print(" -", u)
+
+          if not urls:
+              print("Nothing indexable changed; no submission needed.")
+              raise SystemExit(0)
+
+          # Verify the already-hosted public key.
+          for attempt in range(4):
+              try:
+                  req = urllib.request.Request(KEY_URL, headers={"Cache-Control": "no-cache"})
+                  with urllib.request.urlopen(req, timeout=20) as r:
+                      hosted = r.read().decode("utf-8").strip()
+                  if hosted == KEY:
+                      break
+              except Exception:
+                  hosted = ""
+              if attempt == 3:
+                  raise SystemExit("Public IndexNow key verification failed.")
+              time.sleep(5 * (attempt + 1))
+
+          payload = json.dumps({
+              "host": HOST,
+              "key": KEY,
+              "keyLocation": KEY_URL,
+              "urlList": urls,
+          }).encode("utf-8")
+
+          request = urllib.request.Request(
+              ENDPOINT,
+              data=payload,
+              method="POST",
+              headers={"Content-Type": "application/json; charset=utf-8"},
+          )
+
+          try:
+              with urllib.request.urlopen(request, timeout=30) as response:
+                  status = response.getcode()
+          except urllib.error.HTTPError as exc:
+              body = exc.read().decode("utf-8", errors="replace")
+              raise SystemExit(f"IndexNow HTTP {exc.code}: {body[:300]}")
+
+          if status not in (200, 202):
+              raise SystemExit(f"Unexpected IndexNow HTTP status: {status}")
+
+          print(f"IndexNow accepted {len(urls)} URL(s). HTTP {status}.")
+          PY
