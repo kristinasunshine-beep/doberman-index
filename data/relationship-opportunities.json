@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "generated_from_registry": "2026-09-11T13:00:49+00:00",
+  "publications_created": 0,
+  "policy": "Planning artifact only. It never publishes pending or unmatched entities.",
+  "opportunity_count": 4,
+  "opportunities": [
+    {
+      "source_record_id": "DI-M-000001",
+      "relationship": "dam",
+      "candidate_record_id": null,
+      "candidate_name": "FELICITA FLAIR VON ASHANTI LEGENDE",
+      "registration": "JR 713394",
+      "state": "unmatched",
+      "next_action": "Match an existing DI record or create a new record only after source review."
+    },
+    {
+      "source_record_id": "DI-M-000001",
+      "relationship": "kennel",
+      "candidate_record_id": "DI-K-000001",
+      "candidate_name": "Siempre Peligroso",
+      "state": "pending_review",
+      "next_action": "Admin review: confirm public kennel fields before publication."
+    },
+    {
+      "source_record_id": "DI-M-000001",
+      "relationship": "offspring_litters",
+      "declared_count": 5,
+      "linked_count": 0,
+      "missing_count": 5,
+      "state": "source_records_needed",
+      "next_action": "Collect and review litter source material before creating DI-L records."
+    },
+    {
+      "source_record_id": "DI-M-000001",
+      "relationship": "sire",
+      "candidate_record_id": null,
+      "candidate_name": "COWBOY LUCKY LUCK DI ALTOBELLO",
+      "registration": "JR 708334",
+      "state": "unmatched",
+      "next_action": "Match an existing DI record or create a new record only after source review."
+    }
+  ]
+}

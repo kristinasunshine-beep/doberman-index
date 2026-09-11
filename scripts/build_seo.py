@@ -346,6 +346,98 @@ def render_owner_link_kit(kit: dict[str, Any]) -> str:
 
 
 
+def _supporting_document_references(value: Any, parent_key: str = "") -> set[str]:
+    # Return recorded evidence/pedigree document paths without exposing them publicly.
+    references: set[str] = set()
+    if isinstance(value, dict):
+        for key, item in value.items():
+            lowered = str(key).lower()
+            if lowered == "submission":
+                continue
+            if lowered in {"evidence_file", "pedigree_file"}:
+                text = clean_text(item)
+                if text:
+                    references.add(text)
+                continue
+            if lowered == "evidence_files" and isinstance(item, list):
+                references.update(clean_text(entry) for entry in item if clean_text(entry))
+                continue
+            if lowered == "file" and parent_key == "evidence":
+                text = clean_text(item)
+                if text:
+                    references.add(text)
+                continue
+            references.update(_supporting_document_references(item, lowered))
+    elif isinstance(value, list):
+        for item in value:
+            references.update(_supporting_document_references(item, parent_key))
+    return references
+
+
+def provenance_for(root: Path, summary: dict[str, Any]) -> dict[str, str]:
+    source_path = clean_text(summary.get("path"))
+    source: dict[str, Any] = {}
+    if source_path:
+        candidate = root / source_path
+        if candidate.is_file():
+            source = load_json(candidate)
+
+    relationship = clean_text((source.get("submission") or {}).get("relationship")).lower()
+    source_label = {
+        "owner": "Owner-submitted record",
+        "breeder": "Breeder-submitted record",
+        "kennel_representative": "Kennel representative submission",
+    }.get(relationship, "Submitted record")
+
+    evidence_count = len(_supporting_document_references(source))
+    supporting = (
+        f"{evidence_count} supporting document reference{'s' if evidence_count != 1 else ''} recorded"
+        if evidence_count
+        else "No supporting document reference recorded"
+    )
+
+    pedigree = "Not applicable"
+    if summary.get("entity_type") == "doberman":
+        parentage = ((source.get("doberman") or {}).get("parentage") or {})
+        if parentage.get("pedigree_verified") is True:
+            pedigree = "Pedigree document marked verified in the record"
+        elif clean_text(parentage.get("pedigree_file")):
+            pedigree = "Pedigree document recorded; verification not stated"
+        else:
+            pedigree = "No pedigree document status published"
+
+    modified = clean_text(summary.get("updated_at"))
+    if re.match(r"^\d{4}-\d{2}-\d{2}", modified):
+        modified = modified[:10]
+    else:
+        modified = "Not published"
+
+    return {
+        "source": source_label,
+        "supporting": supporting,
+        "pedigree": pedigree,
+        "updated": modified,
+    }
+
+
+def render_provenance(provenance: dict[str, str]) -> str:
+    items = (
+        ("Source", provenance["source"]),
+        ("Supporting material", provenance["supporting"]),
+        ("Pedigree status", provenance["pedigree"]),
+        ("Last updated", provenance["updated"]),
+    )
+    rows = "".join(
+        f'<div class="provenance-item"><dt>{html.escape(label)}</dt><dd>{html.escape(value)}</dd></div>'
+        for label, value in items
+    )
+    return f'''<section class="section provenance-section" data-provenance aria-labelledby="provenance-title">
+      <p class="section-label">Source &amp; evidence</p><h2 id="provenance-title">Record provenance.</h2>
+      <dl class="provenance-grid">{rows}</dl>
+      <p class="provenance-note">Evidence status applies only to fields with recorded supporting material. Other published fields are not implied to be independently verified.</p>
+    </section>'''
+
+
 def image_dimensions(path: Path) -> tuple[int, int] | None:
     try:
         data = path.read_bytes()
@@ -599,6 +691,7 @@ def render_record(root: Path, origin: str, summary: dict[str, Any], records: lis
         media_html = f'<img src="{html.escape(metadata["image"], quote=True)}" alt="{html.escape(name, quote=True)} — indexed {entity_label.lower()}" width="{width}" height="{height}" fetchpriority="high">'
     else:
         media_html = f'<div class="hero-placeholder" aria-hidden="true">{html.escape(summary["record_id"][:4])}</div>'
+    provenance_html = render_provenance(provenance_for(root, summary))
     kit = owner_link_kit(origin, summary)
     owner_kit_html = render_owner_link_kit(kit)
     return f'''<!doctype html>
@@ -613,6 +706,7 @@ def render_record(root: Path, origin: str, summary: dict[str, Any], records: lis
   <main id="main">
     <section class="record-hero" aria-labelledby="record-title"><div class="record-hero-inner"><div class="record-copy"><p class="eyebrow">{html.escape(entity_label)} · {summary['record_id']}</p><h1 id="record-title">{html.escape(name)}</h1><p class="summary">{html.escape(metadata['description'])}</p></div><div class="hero-media">{media_html}</div></div></section>
     <section class="section" aria-labelledby="facts-title"><p class="section-label">Public registry facts</p><h2 id="facts-title">Record summary.</h2><dl class="facts">{facts_html}</dl></section>
+    {provenance_html}
     <section class="section" aria-labelledby="connections-title"><p class="section-label">Internal record network</p><h2 id="connections-title">Connected records.</h2><div class="connections">{relations_html}</div></section>
     <section class="section" aria-label="Record actions"><div class="actions"><a class="button primary" href="../../profile.html?id={summary['record_id']}">Open complete digital card</a><a class="button" href="../">Browse all records</a></div></section>
     {owner_kit_html}
