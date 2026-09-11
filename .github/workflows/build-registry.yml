@@ -26,6 +26,7 @@ on:
       - "data/lifecycle-policy.json"
       - "assets/js/lifecycle.js"
       - "assets/js/seo-runtime.js"
+      - "assets/js/owner-link-kit.js"
       - "assets/css/seo-record.css"
       - "profiles/female.html"
       - "profiles/puppy.html"
@@ -55,9 +56,11 @@ on:
       - "scripts/validate_litter_contract.py"
       - "scripts/build_seo.py"
       - "scripts/validate_seo.py"
+      - "scripts/validate_owner_link_kit.py"
       - "scripts/audit_performance.py"
       - "scripts/test_seo_runtime.js"
       - "robots.txt"
+      - "llms.txt"
       - "sitemap.xml"
       - "records/**"
       - "CNAME"
@@ -78,7 +81,7 @@ jobs:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
@@ -138,6 +141,7 @@ jobs:
         run: |
           node scripts/test_seo_runtime.js
           python scripts/validate_seo.py
+          python scripts/validate_owner_link_kit.py
           python scripts/audit_performance.py
 
       - name: Validate GitHub Actions workflow contract
