@@ -10,6 +10,5 @@ Disallow: /CHANGELOG.md
 Disallow: /DEPLOY-INSTRUCTIONS.txt
 Disallow: /SEO-STRATEGY.md
 Disallow: /records/README.md
-Disallow: /submit.html
 
 Sitemap: https://doberman-index.com/sitemap.xml

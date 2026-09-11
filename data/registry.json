@@ -18,6 +18,8 @@
       "year_of_death": null,
       "country": "Serbia",
       "location": "Belgrade",
+      "registration_authority": "FCI",
+      "registration_number": "JR 85729",
       "kennel_id": "DI-K-000001",
       "kennel_name": "SIEMPRE PELIGROSO",
       "litter_id": null,
@@ -35,5 +37,5 @@
       "path": "data/dobermans/DI-M-000001.json"
     }
   ],
-  "generated_at": "2026-09-07T07:42:38+00:00"
+  "generated_at": "2026-09-11T13:00:49+00:00"
 }

@@ -91,6 +91,8 @@ def doberman_entry(path: Path, data: dict[str, Any], root: Path) -> dict[str, An
         "year_of_death": identity.get("year_of_death"),
         "country": identity.get("country"),
         "location": identity.get("location"),
+        "registration_authority": identity.get("registration_authority"),
+        "registration_number": identity.get("registration_number"),
         "kennel_id": identity.get("kennel_id"),
         "kennel_name": identity.get("kennel_name"),
         "litter_id": parentage.get("litter_id"),

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "site_origin": "https://doberman-index.com",
-  "generated_from_registry": "2026-09-07T07:42:38+00:00",
+  "generated_from_registry": "2026-09-11T13:00:49+00:00",
   "static_pages": {
     "/": {
       "title": "Doberman Index · Connected Doberman Registry",
@@ -35,7 +35,30 @@
             "url": "https://doberman-index.com/",
             "name": "Doberman Index",
             "description": "A structured, searchable registry connecting Dobermans, pedigrees, kennels, litters and bloodlines.",
+            "publisher": {
+              "@id": "https://doberman-index.com/#organization"
+            },
             "inLanguage": "en"
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://doberman-index.com/#organization",
+            "name": "Doberman Index",
+            "url": "https://doberman-index.com/",
+            "description": "A structured, searchable registry connecting Dobermans, pedigrees, kennels, litters and bloodlines."
+          },
+          {
+            "@type": "DataCatalog",
+            "@id": "https://doberman-index.com/records/#catalog",
+            "url": "https://doberman-index.com/records/",
+            "name": "Doberman Index Public Registry",
+            "description": "Canonical public catalog of published Doberman, kennel and litter records.",
+            "creator": {
+              "@id": "https://doberman-index.com/#organization"
+            },
+            "publisher": {
+              "@id": "https://doberman-index.com/#organization"
+            }
           },
           {
             "@type": "WebPage",
@@ -48,6 +71,9 @@
               "@id": "https://doberman-index.com/#website"
             },
             "mainEntity": {
+              "@id": "https://doberman-index.com/records/DI-M-000001/#dataset"
+            },
+            "about": {
               "@id": "https://doberman-index.com/records/DI-M-000001/#record"
             },
             "breadcrumb": {
@@ -60,6 +86,74 @@
             "dateModified": "2026-09-07T07:40:52Z"
           },
           {
+            "@type": "Dataset",
+            "@id": "https://doberman-index.com/records/DI-M-000001/#dataset",
+            "name": "DION DANTE · DI-M-000001 structured record",
+            "description": "DION DANTE (DI-M-000001) is a published male Doberman record from Belgrade. Explore its pedigree, health, performance and connected records.",
+            "url": "https://doberman-index.com/records/DI-M-000001/",
+            "identifier": {
+              "@type": "PropertyValue",
+              "propertyID": "Doberman Index ID",
+              "value": "DI-M-000001"
+            },
+            "creator": {
+              "@id": "https://doberman-index.com/#organization"
+            },
+            "publisher": {
+              "@id": "https://doberman-index.com/#organization"
+            },
+            "includedInDataCatalog": {
+              "@id": "https://doberman-index.com/records/#catalog"
+            },
+            "about": {
+              "@id": "https://doberman-index.com/records/DI-M-000001/#record"
+            },
+            "measurementTechnique": "Structured record compiled from submitted materials and supporting evidence under the Doberman Index data model; unavailable fields remain explicit.",
+            "variableMeasured": [
+              {
+                "@type": "PropertyValue",
+                "name": "Identity"
+              },
+              {
+                "@type": "PropertyValue",
+                "name": "Pedigree"
+              },
+              {
+                "@type": "PropertyValue",
+                "name": "Health"
+              },
+              {
+                "@type": "PropertyValue",
+                "name": "Temperament"
+              },
+              {
+                "@type": "PropertyValue",
+                "name": "Performance"
+              },
+              {
+                "@type": "PropertyValue",
+                "name": "Reproduction"
+              },
+              {
+                "@type": "PropertyValue",
+                "name": "Media"
+              }
+            ],
+            "keywords": [
+              "Doberman Index",
+              "doberman",
+              "DI-M-000001",
+              "DION DANTE"
+            ],
+            "dateCreated": "2026-08-28T16:09:54.880Z",
+            "dateModified": "2026-09-07T07:40:52Z",
+            "spatialCoverage": {
+              "@type": "Place",
+              "name": "Belgrade"
+            },
+            "image": "https://doberman-index.com/media/dobermans/DI-M-000001/hero.png"
+          },
+          {
             "@type": "Thing",
             "@id": "https://doberman-index.com/records/DI-M-000001/#record",
             "name": "DION DANTE",
@@ -69,7 +163,37 @@
               "value": "DI-M-000001"
             },
             "description": "DION DANTE (DI-M-000001) is a published male Doberman record from Belgrade. Explore its pedigree, health, performance and connected records.",
-            "image": "https://doberman-index.com/media/dobermans/DI-M-000001/hero.png"
+            "mainEntityOfPage": {
+              "@id": "https://doberman-index.com/records/DI-M-000001/#webpage"
+            },
+            "image": "https://doberman-index.com/media/dobermans/DI-M-000001/hero.png",
+            "additionalProperty": [
+              {
+                "@type": "PropertyValue",
+                "name": "Sex",
+                "value": "male"
+              },
+              {
+                "@type": "PropertyValue",
+                "name": "Life stage",
+                "value": "veteran"
+              },
+              {
+                "@type": "PropertyValue",
+                "name": "Date of birth",
+                "value": "2017-12-31"
+              },
+              {
+                "@type": "PropertyValue",
+                "name": "Registration authority",
+                "value": "FCI"
+              },
+              {
+                "@type": "PropertyValue",
+                "name": "Registration number",
+                "value": "JR 85729"
+              }
+            ]
           },
           {
             "@type": "BreadcrumbList",

@@ -153,15 +153,64 @@ def json_ld(origin: str, summary: dict[str, Any], metadata: dict[str, Any], rela
     canonical = metadata["canonical"]
     entity_type = "Organization" if summary.get("entity_type") == "kennel" else "Thing"
     page_type = "CollectionPage" if summary.get("entity_type") == "litter" else "WebPage"
+    organization_id = f"{origin}/#organization"
+    website_id = f"{origin}/#website"
+    catalog_id = f"{origin}/records/#catalog"
+    dataset_id = f"{canonical}#dataset"
+    entity_id = f"{canonical}#record"
+
+    variables = {
+        "doberman": ["Identity", "Pedigree", "Health", "Temperament", "Performance", "Reproduction", "Media"],
+        "kennel": ["Kennel identity", "Breeding program", "Indexed Dobermans", "Litters", "Media"],
+        "litter": ["Litter identity", "Kennel", "Sire", "Dam", "Indexed offspring", "Availability", "Media"],
+    }[summary["entity_type"]]
+
     entity: dict[str, Any] = {
         "@type": entity_type,
-        "@id": f"{canonical}#record",
+        "@id": entity_id,
         "name": name,
         "identifier": {"@type": "PropertyValue", "propertyID": "Doberman Index ID", "value": record_id},
         "description": metadata["description"],
+        "mainEntityOfPage": {"@id": f"{canonical}#webpage"},
     }
     if metadata["image"]:
         entity["image"] = metadata["image"]
+    if summary.get("entity_type") == "doberman":
+        props = []
+        for label, key in (("Sex", "sex"), ("Life stage", "life_stage"), ("Date of birth", "date_of_birth"), ("Registration authority", "registration_authority"), ("Registration number", "registration_number")):
+            value = clean_text(summary.get(key))
+            if value:
+                props.append({"@type": "PropertyValue", "name": label, "value": value})
+        if props:
+            entity["additionalProperty"] = props
+
+    dataset: dict[str, Any] = {
+        "@type": "Dataset",
+        "@id": dataset_id,
+        "name": f"{name} · {record_id} structured record",
+        "description": metadata["description"],
+        "url": canonical,
+        "identifier": {"@type": "PropertyValue", "propertyID": "Doberman Index ID", "value": record_id},
+        "creator": {"@id": organization_id},
+        "publisher": {"@id": organization_id},
+        "includedInDataCatalog": {"@id": catalog_id},
+        "about": {"@id": entity_id},
+        "measurementTechnique": "Structured record compiled from submitted materials and supporting evidence under the Doberman Index data model; unavailable fields remain explicit.",
+        "variableMeasured": [{"@type": "PropertyValue", "name": value} for value in variables],
+        "keywords": ["Doberman Index", summary["entity_type"], record_id, name],
+    }
+    created = clean_text(summary.get("created_at"))
+    modified = clean_text(summary.get("updated_at"))
+    if re.fullmatch(r"\d{4}-\d{2}-\d{2}T[^\s]+", created):
+        dataset["dateCreated"] = created
+    if re.fullmatch(r"\d{4}-\d{2}-\d{2}T[^\s]+", modified):
+        dataset["dateModified"] = modified
+    place = clean_text(summary.get("location") or summary.get("country"))
+    if place:
+        dataset["spatialCoverage"] = {"@type": "Place", "name": place}
+    if metadata["image"]:
+        dataset["image"] = metadata["image"]
+
     page: dict[str, Any] = {
         "@type": page_type,
         "@id": f"{canonical}#webpage",
@@ -169,22 +218,39 @@ def json_ld(origin: str, summary: dict[str, Any], metadata: dict[str, Any], rela
         "name": metadata["title"],
         "description": metadata["description"],
         "inLanguage": "en",
-        "isPartOf": {"@id": f"{origin}/#website"},
-        "mainEntity": {"@id": f"{canonical}#record"},
+        "isPartOf": {"@id": website_id},
+        "mainEntity": {"@id": dataset_id},
+        "about": {"@id": entity_id},
         "breadcrumb": {"@id": f"{canonical}#breadcrumb"},
     }
     if related:
         page["relatedLink"] = [record_url(origin, related_id) for _, related_id in related]
     if metadata["image"]:
         page["primaryImageOfPage"] = {"@type": "ImageObject", "url": metadata["image"]}
-    modified = clean_text(summary.get("updated_at"))
     if re.fullmatch(r"\d{4}-\d{2}-\d{2}T[^\s]+", modified):
         page["dateModified"] = modified
+
+    organization = {
+        "@type": "Organization", "@id": organization_id, "name": SITE_NAME, "url": f"{origin}/",
+        "description": SITE_DESCRIPTION,
+    }
+    website = {
+        "@type": "WebSite", "@id": website_id, "url": f"{origin}/", "name": SITE_NAME,
+        "description": SITE_DESCRIPTION, "publisher": {"@id": organization_id}, "inLanguage": "en",
+    }
+    catalog = {
+        "@type": "DataCatalog", "@id": catalog_id, "url": f"{origin}/records/", "name": "Doberman Index Public Registry",
+        "description": "Canonical public catalog of published Doberman, kennel and litter records.",
+        "creator": {"@id": organization_id}, "publisher": {"@id": organization_id},
+    }
     return {
         "@context": "https://schema.org",
         "@graph": [
-            {"@type": "WebSite", "@id": f"{origin}/#website", "url": f"{origin}/", "name": SITE_NAME, "description": SITE_DESCRIPTION, "inLanguage": "en"},
+            website,
+            organization,
+            catalog,
             page,
+            dataset,
             entity,
             {"@type": "BreadcrumbList", "@id": f"{canonical}#breadcrumb", "itemListElement": [
                 {"@type": "ListItem", "position": 1, "name": "Doberman Index", "item": f"{origin}/"},
@@ -193,7 +259,6 @@ def json_ld(origin: str, summary: dict[str, Any], metadata: dict[str, Any], rela
             ]},
         ],
     }
-
 
 def render_head(metadata: dict[str, Any], structured: dict[str, Any], asset_prefix: str) -> str:
     image_meta = ""
@@ -269,9 +334,15 @@ def directory_metadata(origin: str) -> dict[str, Any]:
 
 def render_directory(origin: str, records: list[dict[str, Any]], metadata: dict[str, Any]) -> str:
     canonical = metadata["canonical"]
+    organization_id = f"{origin}/#organization"
+    website_id = f"{origin}/#website"
+    catalog_id = f"{canonical}#catalog"
+    dataset_refs = [{"@id": f"{record_url(origin, item['record_id'])}#dataset"} for item in records]
     structured = {"@context": "https://schema.org", "@graph": [
-        {"@type": "WebSite", "@id": f"{origin}/#website", "url": f"{origin}/", "name": SITE_NAME, "description": SITE_DESCRIPTION, "inLanguage": "en"},
-        {"@type": "CollectionPage", "@id": f"{canonical}#webpage", "url": canonical, "name": metadata["title"], "description": metadata["description"], "isPartOf": {"@id": f"{origin}/#website"}, "mainEntity": {"@id": f"{canonical}#list"}},
+        {"@type": "WebSite", "@id": website_id, "url": f"{origin}/", "name": SITE_NAME, "description": SITE_DESCRIPTION, "publisher": {"@id": organization_id}, "inLanguage": "en"},
+        {"@type": "Organization", "@id": organization_id, "name": SITE_NAME, "url": f"{origin}/", "description": SITE_DESCRIPTION},
+        {"@type": "DataCatalog", "@id": catalog_id, "url": canonical, "name": "Doberman Index Public Registry", "description": metadata["description"], "creator": {"@id": organization_id}, "publisher": {"@id": organization_id}, "dataset": dataset_refs},
+        {"@type": "CollectionPage", "@id": f"{canonical}#webpage", "url": canonical, "name": metadata["title"], "description": metadata["description"], "isPartOf": {"@id": website_id}, "mainEntity": {"@id": catalog_id}},
         {"@type": "ItemList", "@id": f"{canonical}#list", "numberOfItems": len(records), "itemListElement": [{"@type": "ListItem", "position": index, "name": display_name(item), "url": record_url(origin, item["record_id"])} for index, item in enumerate(records, 1)]},
     ]}
     cards = "".join(f'<a class="directory-card" href="{item["record_id"]}/"><small>{item["record_id"]} · {html.escape(item["entity_type"])}</small><strong>{html.escape(display_name(item))}</strong><span>Open canonical public record →</span></a>' for item in records)
@@ -291,7 +362,6 @@ def render_directory(origin: str, records: list[dict[str, Any]], metadata: dict[
 </body>
 </html>
 '''
-
 
 def build(root: Path) -> tuple[int, int]:
     origin = origin_for(root)

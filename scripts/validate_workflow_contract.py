@@ -69,7 +69,7 @@ def main() -> None:
 
     required_fragments = (
         "name: Rebuild Doberman Index Registry",
-        "actions/checkout@v4",
+        "actions/checkout@v5",
         "actions/setup-python@v5",
         "python-version: \"3.12\"",
         "actions/setup-node@v4",

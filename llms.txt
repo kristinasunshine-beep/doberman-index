@@ -1,0 +1,32 @@
+# Doberman Index
+
+> Structured public registry connecting Doberman records, kennels, litters, pedigrees and bloodline relationships through stable record identifiers.
+
+Canonical site: https://doberman-index.com/
+Primary language: English
+Public catalog: https://doberman-index.com/records/
+
+## Canonical pages
+
+- [Doberman Index](https://doberman-index.com/): registry portal and search entry point.
+- [About](https://doberman-index.com/about.html): purpose, methodology, record types and evidence-first principles.
+- [Published Records](https://doberman-index.com/records/): canonical catalog of published records.
+
+## Record model
+
+- DI-M / DI-F: individual Doberman records.
+- DI-K: kennel records.
+- DI-L: litter records linking kennel, sire, dam and indexed offspring.
+- Stable record IDs persist as records are updated.
+- Canonical record URLs use /records/DI-ID/.
+- Published records distinguish recorded information from unavailable fields; publication does not imply that every field has independent documentary verification.
+
+## Data and provenance
+
+Doberman Index organizes submitted information and supporting material into a consistent public structure. Canonical record pages expose stable identifiers, update dates, relationships and machine-readable Dataset metadata. Source/evidence status belongs to the underlying record and should not be inferred beyond what the public record states.
+
+## Machine-readable references
+
+- [XML sitemap](https://doberman-index.com/sitemap.xml)
+- [Crawler policy](https://doberman-index.com/robots.txt)
+- [Published record catalog](https://doberman-index.com/records/)

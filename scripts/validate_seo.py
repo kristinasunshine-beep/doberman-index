@@ -17,7 +17,7 @@ from build_seo import relation_ids
 ROOT=Path(__file__).resolve().parents[1]
 ORIGIN="https://"+(ROOT/"CNAME").read_text(encoding="utf-8").strip()
 ID_RE=re.compile(r"^DI-(M|F|K|L)-\d{6}$")
-ALLOWED_TYPES={"WebSite","WebPage","AboutPage","CollectionPage","Thing","Organization","PropertyValue","BreadcrumbList","ListItem","ImageObject","ItemList"}
+ALLOWED_TYPES={"WebSite","WebPage","AboutPage","CollectionPage","Thing","Organization","PropertyValue","BreadcrumbList","ListItem","ImageObject","ItemList","Dataset","DataCatalog","Place"}
 FORBIDDEN_KEYS={"review","reviews","aggregaterating","ratingvalue","ratingcount","reviewcount"}
 errors=[]
 
@@ -110,6 +110,16 @@ for record in records:
     path=ROOT/"records"/record_id/"index.html"
     if not path.is_file():errors.append(f"canonical record page missing: {record_id}");continue
     page=check_public_page(path,metadata,record_id)
+    try:
+        graph=json.loads(page.jsonld[0]).get("@graph",[])
+    except Exception:
+        graph=[]
+    types={node.get("@type") for node in graph if isinstance(node,dict)}
+    if "Dataset" not in types or "DataCatalog" not in types:errors.append(f"{record_id}: Dataset/DataCatalog semantics missing")
+    dataset=next((node for node in graph if isinstance(node,dict) and node.get("@type")=="Dataset"),{})
+    if dataset.get("identifier",{}).get("value")!=record_id:errors.append(f"{record_id}: Dataset identifier mismatch")
+    if dataset.get("includedInDataCatalog",{}).get("@id")!=f"{ORIGIN}/records/#catalog":errors.append(f"{record_id}: Dataset catalog link mismatch")
+    if not dataset.get("measurementTechnique") or not dataset.get("variableMeasured"):errors.append(f"{record_id}: Dataset provenance/variables missing")
     if f"../../profile.html?id={record_id}" not in page.links:errors.append(f"{record_id}: backward-compatible profile link missing")
     if f"{record_id}/" not in directory.links:errors.append(f"record directory missing {record_id}")
     for _,related_id in relation_ids(record,records):
@@ -121,6 +131,17 @@ for record in records:
 if len(all_titles)!=len(set(all_titles)):errors.append("public page titles must be unique")
 if len(all_descriptions)!=len(set(all_descriptions)):errors.append("public page descriptions must be unique")
 
+for relative in ("index.html","about.html","records/index.html"):
+    page=parse_page(ROOT/relative)
+    try: graph=json.loads(page.jsonld[0]).get("@graph",[])
+    except Exception: graph=[]
+    types={node.get("@type") for node in graph if isinstance(node,dict)}
+    if "DataCatalog" not in types:errors.append(f"{relative}: DataCatalog semantic entity missing")
+    if "Organization" not in types:errors.append(f"{relative}: publisher Organization missing")
+
+submit=parse_page(ROOT/"submit.html")
+if submit.meta.get("robots")!=["noindex,follow"]:errors.append("submit.html must be crawlable noindex,follow")
+
 namespace={"sm":"http://www.sitemaps.org/schemas/sitemap/0.9"}
 try:sitemap=ET.parse(ROOT/"sitemap.xml")
 except (ET.ParseError,OSError) as exc:errors.append(f"invalid sitemap: {exc}");sitemap=None
@@ -131,7 +152,7 @@ if sitemap is not None:
     if any("profile.html" in value or "/profiles/" in value or "prototype" in value for value in locations):errors.append("sitemap contains a compatibility/prototype URL")
 
 robots=(ROOT/"robots.txt").read_text(encoding="utf-8")
-for token in ("User-agent: *","Disallow: /data/","Disallow: /work/","Disallow: /SEO-STRATEGY.md","Disallow: /records/README.md","Disallow: /submit.html",f"Sitemap: {ORIGIN}/sitemap.xml"):
+for token in ("User-agent: *","Disallow: /data/","Disallow: /work/","Disallow: /SEO-STRATEGY.md","Disallow: /records/README.md",f"Sitemap: {ORIGIN}/sitemap.xml"):
     if token not in robots:errors.append(f"robots.txt missing: {token}")
 for relative in ("profile.html","profiles/male.html","profiles/female.html","profiles/puppy.html","profiles/kennel-concept.html","profiles/litter.html"):
     page=parse_page(ROOT/relative)
