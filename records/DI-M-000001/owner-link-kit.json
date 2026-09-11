@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "DI-M-000001",
+  "display_name": "DION DANTE",
+  "canonical_url": "https://doberman-index.com/records/DI-M-000001/",
+  "anchors": [
+    {
+      "text": "DION DANTE — Doberman Index record",
+      "html": "<a href=\"https://doberman-index.com/records/DI-M-000001/\">DION DANTE — Doberman Index record</a>"
+    },
+    {
+      "text": "DI-M-000001 · Public record on Doberman Index",
+      "html": "<a href=\"https://doberman-index.com/records/DI-M-000001/\">DI-M-000001 · Public record on Doberman Index</a>"
+    },
+    {
+      "text": "View DION DANTE's structured Doberman Index record",
+      "html": "<a href=\"https://doberman-index.com/records/DI-M-000001/\">View DION DANTE&#x27;s structured Doberman Index record</a>"
+    }
+  ],
+  "qr": {
+    "target_url": "https://doberman-index.com/records/DI-M-000001/",
+    "asset_url": "https://doberman-index.com/records/DI-M-000001/owner-link-qr.svg"
+  },
+  "badge": {
+    "label": "Indexed on Doberman Index",
+    "asset_url": "https://doberman-index.com/records/DI-M-000001/indexed-badge.svg",
+    "html": "<a href=\"https://doberman-index.com/records/DI-M-000001/\"><img src=\"https://doberman-index.com/records/DI-M-000001/indexed-badge.svg\" alt=\"Indexed on Doberman Index · DI-M-000001\"></a>"
+  },
+  "generated_from_record_updated_at": "2026-09-07T07:40:52Z"
+}

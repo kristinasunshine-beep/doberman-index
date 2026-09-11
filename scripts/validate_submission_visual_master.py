@@ -17,15 +17,25 @@ EXPECTED = {
 }
 
 
-def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest().upper()
+def locked_bytes(relative: str, path: Path) -> bytes:
+    data = path.read_bytes()
+    if relative == "submit.html":
+        seo_only = b'<meta content="noindex,follow" name="robots"/>\n'
+        if data.count(seo_only) != 1:
+            raise ValueError("submit.html must contain exactly one approved SEO-only noindex meta tag")
+        data = data.replace(seo_only, b"", 1)
+    return data
+
+
+def sha256(relative: str, path: Path) -> str:
+    return hashlib.sha256(locked_bytes(relative, path)).hexdigest().upper()
 
 
 def main() -> int:
     mismatches = []
     for relative, expected in EXPECTED.items():
         path = ROOT / relative
-        actual = sha256(path) if path.exists() else "MISSING"
+        actual = sha256(relative, path) if path.exists() else "MISSING"
         if actual != expected:
             mismatches.append(f"{relative}: expected {expected}, found {actual}")
 

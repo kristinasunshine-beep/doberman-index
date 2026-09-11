@@ -95,6 +95,8 @@ def main() -> None:
         "python scripts/validate_litter_contract.py",
         "python scripts/build_seo.py",
         "python scripts/validate_seo.py",
+        "python scripts/validate_owner_link_kit.py",
+        "assets/js/owner-link-kit.js",
         "python scripts/audit_performance.py",
         "node scripts/test_seo_runtime.js",
     )

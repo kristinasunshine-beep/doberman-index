@@ -54,6 +54,298 @@ def record_url(origin: str, record_id: str) -> str:
     return f"{origin}/records/{record_id}/"
 
 
+# QR Version 5-L is deliberately fixed here. Doberman Index canonical record URLs
+# are comfortably below its byte-mode capacity, which lets us generate a valid,
+# dependency-free QR SVG during the normal registry build.
+QR_VERSION = 5
+QR_SIZE = 17 + 4 * QR_VERSION
+QR_DATA_CODEWORDS = 108
+QR_ECC_CODEWORDS = 26
+
+
+def _gf_tables() -> tuple[list[int], list[int]]:
+    exp = [0] * 512
+    log = [0] * 256
+    value = 1
+    for index in range(255):
+        exp[index] = value
+        log[value] = index
+        value <<= 1
+        if value & 0x100:
+            value ^= 0x11D
+    for index in range(255, 512):
+        exp[index] = exp[index - 255]
+    return exp, log
+
+
+_QR_EXP, _QR_LOG = _gf_tables()
+
+
+def _gf_mul(left: int, right: int) -> int:
+    if not left or not right:
+        return 0
+    return _QR_EXP[_QR_LOG[left] + _QR_LOG[right]]
+
+
+def _rs_generator(degree: int) -> list[int]:
+    polynomial = [1]
+    for index in range(degree):
+        root = _QR_EXP[index]
+        updated = [0] * (len(polynomial) + 1)
+        for offset, coefficient in enumerate(polynomial):
+            updated[offset] ^= coefficient
+            updated[offset + 1] ^= _gf_mul(coefficient, root)
+        polynomial = updated
+    return polynomial
+
+
+def _rs_remainder(data: list[int], degree: int) -> list[int]:
+    generator = _rs_generator(degree)
+    remainder = [0] * degree
+    for byte in data:
+        factor = byte ^ remainder[0]
+        remainder = remainder[1:] + [0]
+        if factor:
+            for index in range(degree):
+                remainder[index] ^= _gf_mul(generator[index + 1], factor)
+    return remainder
+
+
+def _format_bits(mask: int = 0) -> int:
+    # Error correction level L = binary 01.
+    value = (0b01 << 3) | mask
+    remainder = value << 10
+    generator = 0x537
+    for bit in range(14, 9, -1):
+        if (remainder >> bit) & 1:
+            remainder ^= generator << (bit - 10)
+    return ((value << 10) | (remainder & 0x3FF)) ^ 0x5412
+
+
+def qr_matrix(value: str) -> list[list[bool]]:
+    raw = value.encode("utf-8")
+    if len(raw) > 106:
+        raise ValueError("Owner Link Kit QR target exceeds Version 5-L byte capacity")
+
+    bits: list[int] = []
+
+    def append_bits(number: int, length: int) -> None:
+        bits.extend((number >> bit) & 1 for bit in range(length - 1, -1, -1))
+
+    append_bits(0b0100, 4)
+    append_bits(len(raw), 8)
+    for byte in raw:
+        append_bits(byte, 8)
+
+    target_bits = QR_DATA_CODEWORDS * 8
+    bits.extend([0] * min(4, target_bits - len(bits)))
+    while len(bits) % 8:
+        bits.append(0)
+
+    data: list[int] = []
+    for index in range(0, len(bits), 8):
+        byte = 0
+        for bit in bits[index:index + 8]:
+            byte = (byte << 1) | bit
+        data.append(byte)
+
+    pads = (0xEC, 0x11)
+    pad_index = 0
+    while len(data) < QR_DATA_CODEWORDS:
+        data.append(pads[pad_index % 2])
+        pad_index += 1
+
+    codewords = data + _rs_remainder(data, QR_ECC_CODEWORDS)
+    data_bits: list[int] = []
+    for byte in codewords:
+        data_bits.extend((byte >> bit) & 1 for bit in range(7, -1, -1))
+
+    size = QR_SIZE
+    matrix = [[False] * size for _ in range(size)]
+    reserved = [[False] * size for _ in range(size)]
+
+    def set_module(x: int, y: int, dark: bool, lock: bool = True) -> None:
+        if 0 <= x < size and 0 <= y < size:
+            matrix[y][x] = bool(dark)
+            if lock:
+                reserved[y][x] = True
+
+    def finder(center_x: int, center_y: int) -> None:
+        for dy in range(-4, 5):
+            for dx in range(-4, 5):
+                x, y = center_x + dx, center_y + dy
+                if not (0 <= x < size and 0 <= y < size):
+                    continue
+                dark = False
+                if abs(dx) <= 3 and abs(dy) <= 3:
+                    edge = max(abs(dx), abs(dy))
+                    dark = edge == 3 or edge <= 1
+                set_module(x, y, dark)
+
+    finder(3, 3)
+    finder(size - 4, 3)
+    finder(3, size - 4)
+
+    for index in range(8, size - 8):
+        if not reserved[6][index]:
+            set_module(index, 6, index % 2 == 0)
+        if not reserved[index][6]:
+            set_module(6, index, index % 2 == 0)
+
+    for dy in range(-2, 3):
+        for dx in range(-2, 3):
+            set_module(30 + dx, 30 + dy, max(abs(dx), abs(dy)) != 1)
+
+    primary_format: list[tuple[int, int]] = [(8, index) for index in range(6)]
+    primary_format += [(8, 7), (8, 8), (7, 8)]
+    primary_format += [(14 - index, 8) for index in range(9, 15)]
+    secondary_format = [(size - 1 - index, 8) for index in range(8)]
+    secondary_format += [(8, size - 15 + index) for index in range(8, 15)]
+    for x, y in primary_format + secondary_format:
+        set_module(x, y, False)
+    set_module(8, size - 8, True)
+
+    bit_index = 0
+    upward = True
+    x = size - 1
+    while x > 0:
+        if x == 6:
+            x -= 1
+        rows = range(size - 1, -1, -1) if upward else range(size)
+        for y in rows:
+            for column in (x, x - 1):
+                if reserved[y][column]:
+                    continue
+                bit = data_bits[bit_index] if bit_index < len(data_bits) else 0
+                bit_index += 1
+                if (column + y) % 2 == 0:
+                    bit ^= 1
+                matrix[y][column] = bool(bit)
+        upward = not upward
+        x -= 2
+
+    format_value = _format_bits(0)
+    for index, (x, y) in enumerate(primary_format):
+        matrix[y][x] = bool((format_value >> index) & 1)
+    for index, (x, y) in enumerate(secondary_format):
+        matrix[y][x] = bool((format_value >> index) & 1)
+    matrix[size - 8][8] = True
+    return matrix
+
+
+def qr_svg(value: str, title: str) -> str:
+    matrix = qr_matrix(value)
+    quiet = 4
+    size = len(matrix) + quiet * 2
+    path = []
+    for y, row in enumerate(matrix):
+        for x, dark in enumerate(row):
+            if dark:
+                path.append(f"M{x + quiet} {y + quiet}h1v1h-1z")
+    modules = "".join(path)
+    return (
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {size} {size}" '
+        'shape-rendering="crispEdges" role="img">'
+        f'<title>{html.escape(title)}</title><metadata>{html.escape(value)}</metadata>'
+        '<rect width="100%" height="100%" fill="#fff"/>'
+        f'<path d="{modules}" fill="#000"/></svg>\n'
+    )
+
+
+def badge_svg(record_id: str) -> str:
+    safe_id = html.escape(record_id)
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="286" height="54" viewBox="0 0 286 54" role="img" aria-labelledby="title desc">
+<title id="title">Indexed on Doberman Index</title><desc id="desc">Public record {safe_id}</desc>
+<rect width="286" height="54" rx="5" fill="#0d0d0d"/><rect x="11" y="11" width="9" height="32" fill="#f3fe19"/>
+<text x="31" y="24" fill="#ffffff" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="700" letter-spacing=".8">INDEXED ON DOBERMAN INDEX</text>
+<text x="31" y="41" fill="#f3fe19" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700">{safe_id}</text>
+</svg>
+'''
+
+
+def owner_link_kit(origin: str, summary: dict[str, Any]) -> dict[str, Any]:
+    record_id = summary["record_id"]
+    name = display_name(summary)
+    canonical = record_url(origin, record_id)
+    entity_type = summary["entity_type"]
+    if entity_type == "doberman":
+        anchors = [
+            f"{name} — Doberman Index record",
+            f"{record_id} · Public record on Doberman Index",
+            f"View {name}'s structured Doberman Index record",
+        ]
+    elif entity_type == "kennel":
+        anchors = [
+            f"{name} — Doberman Index kennel record",
+            f"{record_id} · Public kennel record on Doberman Index",
+            f"View {name}'s breeding-program record on Doberman Index",
+        ]
+    else:
+        anchors = [
+            f"{name} — Doberman Index litter record",
+            f"{record_id} · Public litter record on Doberman Index",
+            f"View {name}'s litter record on Doberman Index",
+        ]
+    badge_url = f"{canonical}indexed-badge.svg"
+    return {
+        "schema_version": "1.0.0",
+        "record_id": record_id,
+        "display_name": name,
+        "canonical_url": canonical,
+        "anchors": [
+            {"text": anchor, "html": f'<a href="{canonical}">{html.escape(anchor)}</a>'}
+            for anchor in anchors
+        ],
+        "qr": {"target_url": canonical, "asset_url": f"{canonical}owner-link-qr.svg"},
+        "badge": {
+            "label": "Indexed on Doberman Index",
+            "asset_url": badge_url,
+            "html": f'<a href="{canonical}"><img src="{badge_url}" alt="Indexed on Doberman Index · {record_id}"></a>',
+        },
+        "generated_from_record_updated_at": clean_text(summary.get("updated_at")),
+    }
+
+
+def write_owner_link_assets(destination_dir: Path, kit: dict[str, Any]) -> None:
+    destination_dir.mkdir(parents=True, exist_ok=True)
+    canonical = kit["canonical_url"]
+    record_id = kit["record_id"]
+    (destination_dir / "owner-link-kit.json").write_text(
+        json.dumps(kit, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+    (destination_dir / "owner-link-qr.svg").write_text(
+        qr_svg(canonical, f"QR code for Doberman Index record {record_id}"), encoding="utf-8"
+    )
+    (destination_dir / "indexed-badge.svg").write_text(badge_svg(record_id), encoding="utf-8")
+
+
+def render_owner_link_kit(kit: dict[str, Any]) -> str:
+    canonical = kit["canonical_url"]
+    anchors_html = "".join(
+        f'<div class="owner-anchor"><code>{html.escape(item["text"])}</code><button class="copy-control" type="button" data-copy-html="{html.escape(item["html"], quote=True)}">Copy HTML</button></div>'
+        for item in kit["anchors"]
+    )
+    badge_copy = html.escape(kit["badge"]["html"], quote=True)
+    record_id = html.escape(kit["record_id"], quote=True)
+    return f'''<section class="section owner-link-section" aria-labelledby="owner-link-kit-title">
+      <details class="owner-link-kit" id="owner-link-kit">
+        <summary><span>Owner Link Kit</span><small>Canonical sharing tools for this public record</small></summary>
+        <div class="owner-link-kit__body">
+          <div class="owner-link-kit__intro"><p class="section-label">Owner publishing tools</p><h2 id="owner-link-kit-title">Link this record.</h2><p>Use the permanent Doberman Index URL when referencing this record from a kennel site, Doberman profile, litter page or social profile.</p></div>
+          <div class="owner-link-kit__grid">
+            <div class="owner-link-card owner-link-card--wide"><h3>Canonical URL</h3><code class="owner-canonical">{html.escape(canonical)}</code><button class="copy-control" type="button" data-copy-text="{html.escape(canonical, quote=True)}">Copy URL</button><a class="micro-link" href="owner-link-kit.json" download>Download kit JSON</a></div>
+            <div class="owner-link-card"><h3>QR code</h3><img class="owner-qr" src="owner-link-qr.svg" alt="QR code linking to {record_id} canonical record" width="180" height="180"><a class="micro-link" href="owner-link-qr.svg" download>Download QR SVG</a></div>
+            <div class="owner-link-card"><h3>Indexed badge</h3><a href="{html.escape(canonical, quote=True)}"><img class="owner-badge" src="indexed-badge.svg" alt="Indexed on Doberman Index · {record_id}" width="286" height="54"></a><button class="copy-control" type="button" data-copy-html="{badge_copy}">Copy badge HTML</button><a class="micro-link" href="indexed-badge.svg" download>Download badge SVG</a></div>
+            <div class="owner-link-card owner-link-card--anchors"><h3>Three natural anchor options</h3>{anchors_html}</div>
+          </div>
+          <p class="owner-link-note">Use the link because it helps visitors reach the structured public record. Publication, pricing or promotion is never conditional on linking back.</p>
+        </div>
+      </details>
+    </section>'''
+
+
+
+
 def image_dimensions(path: Path) -> tuple[int, int] | None:
     try:
         data = path.read_bytes()
@@ -307,6 +599,8 @@ def render_record(root: Path, origin: str, summary: dict[str, Any], records: lis
         media_html = f'<img src="{html.escape(metadata["image"], quote=True)}" alt="{html.escape(name, quote=True)} — indexed {entity_label.lower()}" width="{width}" height="{height}" fetchpriority="high">'
     else:
         media_html = f'<div class="hero-placeholder" aria-hidden="true">{html.escape(summary["record_id"][:4])}</div>'
+    kit = owner_link_kit(origin, summary)
+    owner_kit_html = render_owner_link_kit(kit)
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -321,8 +615,10 @@ def render_record(root: Path, origin: str, summary: dict[str, Any], records: lis
     <section class="section" aria-labelledby="facts-title"><p class="section-label">Public registry facts</p><h2 id="facts-title">Record summary.</h2><dl class="facts">{facts_html}</dl></section>
     <section class="section" aria-labelledby="connections-title"><p class="section-label">Internal record network</p><h2 id="connections-title">Connected records.</h2><div class="connections">{relations_html}</div></section>
     <section class="section" aria-label="Record actions"><div class="actions"><a class="button primary" href="../../profile.html?id={summary['record_id']}">Open complete digital card</a><a class="button" href="../">Browse all records</a></div></section>
+    {owner_kit_html}
   </main>
   <footer class="site-footer"><div><strong>DOBERMAN INDEX®</strong><br>Structured records. Connected bloodlines.</div><div>Permanent record<br><strong>{summary['record_id']}</strong></div><div>Platform architecture by LIONSIGN<br>2019–2026 · All rights reserved</div></footer>
+  <script src="../../assets/js/owner-link-kit.js" defer></script>
 </body>
 </html>
 '''
@@ -383,6 +679,7 @@ def build(root: Path) -> tuple[int, int]:
         manifest_records[summary["record_id"]] = {key: value for key, value in metadata.items() if key != "image_dimensions"}
         destination = records_root / summary["record_id"] / "index.html"
         destination.parent.mkdir(parents=True, exist_ok=True)
+        write_owner_link_assets(destination.parent, owner_link_kit(origin, summary))
         destination.write_text(render_record(root, origin, summary, records, metadata), encoding="utf-8")
         modified = clean_text(summary.get("updated_at"))[:10] if re.match(r"^\d{4}-\d{2}-\d{2}", clean_text(summary.get("updated_at"))) else None
         sitemap_items.append((metadata["canonical"], modified))
