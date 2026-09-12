@@ -11,6 +11,7 @@ on:
       - "data/assessment-standard.json"
       - "data/promotion-belt.json"
       - "data/seo-manifest.json"
+      - "data/relationship-opportunities.json"
       - "schemas/registry.schema.json"
       - "schemas/promotion-belt.schema.json"
       - "index.html"
@@ -18,6 +19,10 @@ on:
       - "profile.html"
       - "submit.html"
       - "profiles/male.html"
+      - "profiles/female.html"
+      - "profiles/puppy.html"
+      - "profiles/litter.html"
+      - "profiles/kennel-concept.html"
       - "assets/js/display-name.js"
       - "assets/js/media-presentation.js"
       - "assets/css/submit-v3.css"
@@ -28,10 +33,6 @@ on:
       - "assets/js/seo-runtime.js"
       - "assets/js/owner-link-kit.js"
       - "assets/css/seo-record.css"
-      - "profiles/female.html"
-      - "profiles/puppy.html"
-      - "profiles/litter.html"
-      - "profiles/kennel-concept.html"
       - "assets/js/litter-profile.js"
       - "scripts/apply_lifecycle_policy.py"
       - "scripts/validate_v63_contract.py"
@@ -55,10 +56,18 @@ on:
       - "scripts/test_litter_profile.js"
       - "scripts/validate_litter_contract.py"
       - "scripts/build_seo.py"
+      - "scripts/build_relationship_opportunities.py"
+      - "scripts/validate_relationship_opportunities.py"
       - "scripts/validate_seo.py"
       - "scripts/validate_owner_link_kit.py"
+      - "scripts/validate_repo_hygiene.py"
+      - "scripts/sanitize_public_evidence.py"
+      - "scripts/indexnow.py"
+      - "scripts/test_indexnow.py"
       - "scripts/audit_performance.py"
       - "scripts/test_seo_runtime.js"
+      - ".gitignore"
+      - "media/**"
       - "robots.txt"
       - "llms.txt"
       - "sitemap.xml"
@@ -93,11 +102,13 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Synchronize age lifecycle and rebuild registry
+      - name: Synchronize public data and rebuild registry
         run: |
+          python scripts/sanitize_public_evidence.py
           python scripts/migrate_lifecycle_v1_1.py
           python scripts/apply_lifecycle_policy.py --write
           python scripts/build_registry.py
+          python scripts/build_relationship_opportunities.py
           python scripts/build_seo.py
 
       - name: Validate lifecycle contract
@@ -137,25 +148,37 @@ jobs:
           node scripts/test_litter_profile.js
           python scripts/validate_litter_contract.py
 
-      - name: Validate comprehensive SEO and performance
+      - name: Validate comprehensive SEO, graph and performance
         run: |
           node scripts/test_seo_runtime.js
           python scripts/validate_seo.py
           python scripts/validate_owner_link_kit.py
+          python scripts/validate_relationship_opportunities.py
           python scripts/audit_performance.py
+
+      - name: Validate repository hygiene
+        shell: bash
+        run: |
+          rm -rf scripts/__pycache__
+          rm -f scripts/indexnow.py scripts/test_indexnow.py
+          rm -f scripts/build_relationship_opportunities.py scripts/validate_relationship_opportunities.py
+          rm -f data/relationship-opportunities.json
+          find media -type d -name evidence -prune -exec rm -rf {} +
+          python scripts/sanitize_public_evidence.py
+          python scripts/validate_repo_hygiene.py
 
       - name: Validate GitHub Actions workflow contract
         run: python scripts/validate_workflow_contract.py
 
-      - name: Commit registry if changed
+      - name: Commit generated public data if changed
         shell: bash
         run: |
-          if git diff --quiet -- data/dobermans data/litters data/registry.json data/seo-manifest.json records sitemap.xml; then
-            echo "Lifecycle data and registry are already up to date."
+          if git diff --quiet -- data/dobermans data/kennels data/litters data/registry.json data/seo-manifest.json records sitemap.xml; then
+            echo "Public data, lifecycle, registry and SEO outputs are already up to date."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/dobermans data/litters data/registry.json data/seo-manifest.json records sitemap.xml
-          git commit -m "chore: sync lifecycle and registry"
+          git add data/dobermans data/kennels data/litters data/registry.json data/seo-manifest.json records sitemap.xml
+          git commit -m "chore: sync public lifecycle, registry and SEO"
           git push
