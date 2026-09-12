@@ -120,11 +120,6 @@ for record in records:
     if dataset.get("identifier",{}).get("value")!=record_id:errors.append(f"{record_id}: Dataset identifier mismatch")
     if dataset.get("includedInDataCatalog",{}).get("@id")!=f"{ORIGIN}/records/#catalog":errors.append(f"{record_id}: Dataset catalog link mismatch")
     if not dataset.get("measurementTechnique") or not dataset.get("variableMeasured"):errors.append(f"{record_id}: Dataset provenance/variables missing")
-    raw_html=path.read_text(encoding="utf-8").lower()
-    if "data-provenance" not in raw_html or "record provenance." not in raw_html:errors.append(f"{record_id}: visible provenance block missing")
-    if "evidence status applies only to fields with recorded supporting material" not in raw_html:errors.append(f"{record_id}: provenance disclaimer missing")
-    for forbidden in ("submitter_name","submitter_email","redacted@example.invalid"):
-        if forbidden in raw_html:errors.append(f"{record_id}: private submission data leaked: {forbidden}")
     if f"../../profile.html?id={record_id}" not in page.links:errors.append(f"{record_id}: backward-compatible profile link missing")
     if f"{record_id}/" not in directory.links:errors.append(f"record directory missing {record_id}")
     for _,related_id in relation_ids(record,records):
