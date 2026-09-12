@@ -179,6 +179,6 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/dobermans data/kennels data/litters data/registry.json data/seo-manifest.json records sitemap.xml
+          git add data/dobermans data/litters data/registry.json data/kennels data/seo-manifest.json records sitemap.xml
           git commit -m "chore: sync public lifecycle, registry and SEO"
           git push
