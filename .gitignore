@@ -1,0 +1,33 @@
+# Python generated files
+__pycache__/
+*.py[cod]
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# Local environment / credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local/private working material — never publish in this Pages repository
+private/
+_private/
+vault/
+evidence-vault/
+submissions/private/
+media/**/evidence/
+media/**/source-documents/
+
+# Editors / OS / logs
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
