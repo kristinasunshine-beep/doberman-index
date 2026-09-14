@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Update an existing Doberman Index record without resubmitting the full record.">
+<meta name="robots" content="noindex,nofollow">
+<title>Update Existing Record · Doberman Index</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/submit-v3.css">
+<link rel="stylesheet" href="assets/css/submit-entity.css">
+<link rel="stylesheet" href="assets/css/update-record.css">
+</head>
+<body>
+<a class="skip-link" href="#update-form">Skip to the form</a>
+<header class="site-header">
+<a class="brand" href="index.html" aria-label="Doberman Index home">
+<span class="brand-mark">DI</span>
+<span><strong>DOBERMAN INDEX</strong><small>RECORD UPDATE</small></span>
+</a>
+<span class="quiet-status" id="save-status">Text answers save on this device</span>
+</header>
+<main class="page-shell">
+<section class="intro" aria-labelledby="page-title">
+<p class="eyebrow">One living record · add only what changed</p>
+<h1 id="page-title">Update an existing record.</h1>
+<p>Add a new title, health result, litter, photo, status change or correction without completing the full submission again.</p>
+<div class="client-tag">Private update · reviewed before publication</div>
+</section>
+<div class="wizard-card">
+<nav class="progress update-progress" aria-label="Update progress">
+<div class="progress-line"><span id="progress-fill"></span></div>
+<ol>
+<li class="is-active"><button type="button" data-step-link="0"><span>1</span><em>Record</em></button></li>
+<li><button type="button" data-step-link="1"><span>2</span><em>Changes</em></button></li>
+<li><button type="button" data-step-link="2"><span>3</span><em>Evidence</em></button></li>
+<li><button type="button" data-step-link="3"><span>4</span><em>Review</em></button></li>
+</ol>
+</nav>
+<form id="update-form" novalidate>
+<section class="form-step is-active" data-step="0" aria-labelledby="u-step-1">
+<div class="step-heading"><span>01</span><div><h2 id="u-step-1">Identify the record</h2><p>Use the permanent Doberman Index ID shown on the public record.</p></div></div>
+<div class="field-grid">
+<label class="field"><span>Record ID <b>Required</b></span><input name="record_id" required autocomplete="off" placeholder="DI-M-000001" pattern="DI-[MFKL]-[0-9]{6}" inputmode="text"><small class="field-help">Accepted: DI-M, DI-F, DI-K or DI-L followed by six digits.</small></label>
+<label class="field"><span>Record name <b>Required</b></span><input name="record_name" required autocomplete="off" placeholder="Registered name / kennel / litter"></label>
+<div class="record-id-help field-wide"><span id="record-type-badge">Record type will be detected automatically.</span><a href="index.html">Find the record with Search →</a></div>
+</div>
+<div class="contact-panel update-contact"><h3>Your contact details</h3><p>Used only to review and clarify this update.</p><div class="field-grid">
+<label class="field"><span>Your name <b>Required</b></span><input name="contact_name" required autocomplete="name"></label>
+<label class="field"><span>Email <b>Required</b></span><input name="contact_email" required type="email" autocomplete="email"></label>
+<label class="field"><span>Phone or WhatsApp</span><input name="contact_phone" autocomplete="tel"></label>
+<label class="field"><span>Your relationship to this record</span><select name="relationship"><option value="owner">Owner</option><option value="breeder">Breeder</option><option value="kennel_representative">Kennel representative</option><option value="trainer">Trainer</option><option value="authorized_representative">Authorized representative</option><option value="other">Other</option></select></label>
+</div></div>
+</section>
+
+<section class="form-step" data-step="1" hidden aria-labelledby="u-step-2">
+<div class="step-heading"><span>02</span><div><h2 id="u-step-2">What changed?</h2><p>Select one or more update types. Only the relevant fields will open.</p></div></div>
+<fieldset class="update-type-fieldset"><legend class="visually-hidden">Update types</legend>
+<div class="update-type-grid">
+<label class="update-type"><input type="checkbox" name="update_types" value="title"><span><strong>New title or result</strong><small>Champion title, exam, sport or show result.</small></span></label>
+<label class="update-type"><input type="checkbox" name="update_types" value="health"><span><strong>Health or genetics</strong><small>New test, Holter, Echo, DCM or other health result.</small></span></label>
+<label class="update-type"><input type="checkbox" name="update_types" value="media"><span><strong>New media</strong><small>New profile image, movement video or other approved media.</small></span></label>
+<label class="update-type"><input type="checkbox" name="update_types" value="reproduction"><span><strong>Reproduction / litter</strong><small>New litter, offspring or breeding information.</small></span></label>
+<label class="update-type"><input type="checkbox" name="update_types" value="status"><span><strong>Status or profile detail</strong><small>Availability, location, contact or another current fact.</small></span></label>
+<label class="update-type"><input type="checkbox" name="update_types" value="correction"><span><strong>Correction</strong><small>Fix an existing value that is wrong.</small></span></label>
+<label class="update-type"><input type="checkbox" name="update_types" value="other"><span><strong>Other update</strong><small>Anything that does not fit the categories above.</small></span></label>
+</div>
+</fieldset>
+<div class="conditional-stack">
+<div class="update-panel" data-update-panel="title" hidden><div class="update-panel-head"><span>TITLE / RESULT</span><strong>Add the exact wording.</strong></div><div class="field-grid">
+<label class="field field-wide"><span>New title(s) or result(s) <b>Required when selected</b></span><textarea name="new_titles" rows="4" placeholder="One exact title or result per line"></textarea></label>
+<label class="field"><span>Date</span><input name="title_date" type="date"></label>
+<label class="field"><span>Issuing body / event</span><input name="title_issuer" placeholder="Optional"></label>
+</div></div>
+<div class="update-panel" data-update-panel="health" hidden><div class="update-panel-head"><span>HEALTH / GENETICS</span><strong>Add the new result.</strong></div><div class="field-grid">
+<label class="field"><span>Test / evaluation <b>Required when selected</b></span><input name="health_test" placeholder="Holter, Echo, vWD, DCM 1…"></label>
+<label class="field"><span>Result <b>Required when selected</b></span><input name="health_result" placeholder="Exact result"></label>
+<label class="field"><span>Date</span><input name="health_date" type="date"></label>
+<label class="field"><span>Clinic / laboratory</span><input name="health_issuer"></label>
+<label class="field field-wide"><span>Health note</span><textarea name="health_note" rows="3" placeholder="Optional factual context"></textarea></label>
+</div></div>
+<div class="update-panel" data-update-panel="media" hidden><div class="update-panel-head"><span>NEW MEDIA</span><strong>Describe what should be replaced or added.</strong></div><div class="field-grid">
+<label class="field field-wide"><span>Media role / request <b>Required when selected</b></span><textarea name="media_note" rows="3" placeholder="For example: replace hero image; add new movement video; add gallery image"></textarea></label>
+</div></div>
+<div class="update-panel" data-update-panel="reproduction" hidden><div class="update-panel-head"><span>REPRODUCTION / LITTER</span><strong>Add only the new facts.</strong></div><div class="field-grid">
+<label class="field field-wide"><span>New litter / offspring information <b>Required when selected</b></span><textarea name="reproduction_note" rows="5" placeholder="Litter date, sire/dam, offspring name, registration number or other new information"></textarea></label>
+</div></div>
+<div class="update-panel" data-update-panel="status" hidden><div class="update-panel-head"><span>STATUS / PROFILE DETAIL</span><strong>Tell us what changed.</strong></div><div class="field-grid">
+<label class="field"><span>Field or status <b>Required when selected</b></span><input name="status_field" placeholder="For example: stud status"></label>
+<label class="field"><span>New value <b>Required when selected</b></span><input name="status_value" placeholder="For example: retired"></label>
+<label class="field field-wide"><span>Context</span><textarea name="status_note" rows="3" placeholder="Optional"></textarea></label>
+</div></div>
+<div class="update-panel" data-update-panel="correction" hidden><div class="update-panel-head"><span>CORRECTION</span><strong>Show the old and correct value.</strong></div><div class="field-grid">
+<label class="field"><span>What is incorrect? <b>Required when selected</b></span><input name="correction_field" placeholder="Field / current value"></label>
+<label class="field"><span>Correct information <b>Required when selected</b></span><input name="correction_value" placeholder="Correct value"></label>
+<label class="field field-wide"><span>Explanation</span><textarea name="correction_note" rows="3" placeholder="Optional"></textarea></label>
+</div></div>
+<div class="update-panel" data-update-panel="other" hidden><div class="update-panel-head"><span>OTHER UPDATE</span><strong>Describe the new information.</strong></div><div class="field-grid">
+<label class="field field-wide"><span>Update <b>Required when selected</b></span><textarea name="other_note" rows="5"></textarea></label>
+</div></div>
+</div>
+</section>
+
+<section class="form-step" data-step="2" hidden aria-labelledby="u-step-3">
+<div class="step-heading"><span>03</span><div><h2 id="u-step-3">Evidence & files</h2><p>Add only the documents or media that support this update.</p></div></div>
+<div class="upload-grid media-two">
+<label class="upload-card is-primary"><input type="file" name="evidence_files" multiple accept=".jpg,.jpeg,.png,.webp,.pdf,image/jpeg,image/png,image/webp,application/pdf"><span class="upload-number">01</span><strong>Supporting evidence</strong><small>Optional unless the update needs documentary proof. Images max 20 MB each · PDF max 25 MB each.</small><em data-file-label="evidence_files">Choose files</em></label>
+<label class="upload-card"><input type="file" name="public_media" multiple accept=".jpg,.jpeg,.png,.webp,.mp4,.mov,image/jpeg,image/png,image/webp,video/mp4,video/quicktime"><span class="upload-number">02</span><strong>New public media</strong><small>Use only if you selected New media. Images max 20 MB each · video max 180 MB.</small><em data-file-label="public_media">Choose media</em></label>
+</div>
+<div class="field-grid update-notes-grid"><label class="field field-wide"><span>Additional note</span><textarea name="admin_note" rows="4" placeholder="Anything useful for the Doberman Index review"></textarea></label></div>
+<div class="file-note"><strong>Complete update package: max 250 MB.</strong><span>Files are packaged locally and sent securely only when you press Submit update.</span></div>
+</section>
+
+<section class="form-step" data-step="3" hidden aria-labelledby="u-step-4">
+<div class="step-heading"><span>04</span><div><h2 id="u-step-4">Review & submit</h2><p>Your existing record is not overwritten. This update is stored as a new reviewable source.</p></div></div>
+<div class="review-summary" id="review-summary"></div>
+<label class="consent"><input type="checkbox" name="accuracy_consent" required><span>I confirm that this update is accurate to the best of my knowledge and may be reviewed by Doberman Index.</span></label>
+<label class="consent consent-second"><input type="checkbox" name="publication_consent" required><span>I understand that approved information and selected public media may be added to the existing Doberman Index record after review.</span></label>
+<label class="consent consent-second"><input type="checkbox" name="asset_rights_consent" required><span>I confirm that I own or have permission to provide the submitted documents and media for the stated purpose.</span></label>
+<p class="privacy-note">Submitting an update does not delete or rewrite the original submission. Doberman Index keeps the update history as provenance.</p>
+<div class="success-panel" id="success-panel" hidden role="status"><strong>Update received.</strong><span>Your update was sent securely to Doberman Index Records.</span></div>
+</section>
+<div class="form-error" id="form-error" hidden role="alert"></div>
+<footer class="wizard-actions">
+<button class="button button-quiet" id="back-button" type="button" hidden>Back</button>
+<button class="button button-primary" id="next-button" type="button">Continue <span>→</span></button>
+<button class="button button-primary" id="submit-button" type="submit" hidden>Submit update <span>→</span></button>
+</footer>
+</form>
+</div>
+<button class="reset-button" id="reset-button" type="button">Clear this update</button>
+</main>
+<script src="assets/js/zip-tools.js"></script>
+<script src="assets/js/submission-upload.js"></script>
+<script src="assets/js/update-record.js"></script>
+</body>
+</html>

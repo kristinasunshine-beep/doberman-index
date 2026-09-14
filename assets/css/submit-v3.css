@@ -251,3 +251,5 @@ button { color: inherit; }
 }
 
 .breeding-card-block{margin-top:18px;border-top:1px solid var(--line)}.breeding-card-block>.field-grid{padding:20px}.results-block>.field-grid{padding:20px}.results-block{padding-bottom:0}.controlled-block-head strong{letter-spacing:-.04em}
+
+.record-update-link{margin:12px 0 0;font-size:14px}.record-update-link a{color:inherit;font-weight:800;text-decoration:none;border-bottom:1px solid currentColor}

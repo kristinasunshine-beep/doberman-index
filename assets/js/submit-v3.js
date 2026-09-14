@@ -487,10 +487,14 @@
     prepareButton.disabled = true;
     prepareButton.firstChild.textContent = "Preparing… ";
     try {
+      if (!window.DISubmissionUpload) throw new Error("Secure submission service is unavailable.");
       const { uploads, entries } = manifestAndEntries();
       const submission = {
-        package_version: "2.0",
+        package_version: "2.2",
         package_type: "doberman_owner_submission",
+        submission_kind: "initial",
+        record_id: null,
+        supersedes_submission_reference: null,
         submission_reference: globalThis.crypto?.randomUUID?.() || `submission-${Date.now()}`,
         created_at: new Date().toISOString(),
         canonical_record: buildCanonicalRecord(),
@@ -505,21 +509,29 @@
       };
       entries.unshift({ name: "submission.json", data: `${JSON.stringify(submission, null, 2)}\n` });
       const archive = await window.DIZip.create(entries);
-      const url = URL.createObjectURL(archive);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `DOBERMAN-INDEX-${safeSlug(value("registered_name"))}-SUBMISSION.zip`;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 30000);
+      const filename = `DOBERMAN-INDEX-${safeSlug(value("registered_name"))}-SUBMISSION.zip`;
+      const result = await window.DISubmissionUpload.send({
+        archive,
+        filename,
+        submission,
+        entityName: value("registered_name"),
+        packageType: "doberman",
+        onProgress: ({ phase, percent }) => {
+          prepareButton.firstChild.textContent = phase === "finalizing" ? "Finalizing… " : `Sending… ${percent}% `;
+        },
+      });
+      const ref = escapeHtml(result.submissionReference || submission.submission_reference);
+      successPanel.innerHTML = `<strong>Submission received.</strong><span>Your package was sent securely to Doberman Index Records. Reference: ${ref}</span>`;
       successPanel.hidden = false;
       successPanel.scrollIntoView({ behavior: "smooth", block: "center" });
+      localStorage.removeItem(storageKey);
+      saveStatus.textContent = "Submission received";
+      prepareButton.firstChild.textContent = "Submitted ";
+      return;
     } catch (error) {
-      setError(`We could not prepare the package. ${error.message || "Please try again."}`);
-    } finally {
+      setError(`We could not send the submission. Your answers and selected files are still here. Check the connection and try again. ${error.message || ""}`.trim());
       prepareButton.disabled = false;
-      prepareButton.firstChild.textContent = "Prepare my submission ";
+      prepareButton.firstChild.textContent = "Submit my record ";
     }
   }
 
@@ -567,6 +579,8 @@
     maxStepReached = 0;
     showStep(0);
     saveStatus.textContent = "Text answers save on this device";
+    prepareButton.disabled = false;
+    prepareButton.firstChild.textContent = "Submit my record ";
   });
 
   restoreDraft();

@@ -5,7 +5,6 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="A simple five-step Doberman Index owner submission." name="description"/>
-<meta content="noindex,follow" name="robots"/>
 <title>Owner Submission · Doberman Index</title>
 <link href="assets/css/submit-v3.css" rel="stylesheet"/>
 </head>
@@ -23,6 +22,7 @@
 <p class="eyebrow">One clear process · five short steps</p>
 <h1 id="page-title">Tell us about your Doberman.</h1>
 <p>Complete what you know. You can return to any completed step and change your answers before you prepare the submission.</p>
+<p class="record-update-link"><strong>Already indexed?</strong> <a href="update.html">Update an existing record →</a></p>
 </section>
 <div class="wizard-card">
 <nav aria-label="Submission progress" class="progress">
@@ -199,7 +199,7 @@
 <div class="file-note"><strong>Images: max 20 MB each · Video: max 180 MB · Complete package: max 250 MB.</strong><span>Use JPG, PNG or WebP for images and MP4 or MOV for video.</span></div>
 </section>
 <section aria-labelledby="step-5-title" class="form-step" data-step="4" hidden="">
-<div class="step-heading"><span>05</span><div><h2 id="step-5-title">Review everything</h2><p>Each section can be reopened and edited before you prepare the submission.</p></div></div>
+<div class="step-heading"><span>05</span><div><h2 id="step-5-title">Review everything</h2><p>Each section can be reopened and edited before you send the submission.</p></div></div>
 <div class="review-summary" id="review-summary"></div><p class="review-hint">Nothing is locked. Use <strong>Edit</strong> on any section or the progress line above to make changes.</p>
 <div class="contact-panel">
 <h3>Your contact details</h3>
@@ -213,21 +213,22 @@
 </div>
 <label class="consent"><input name="accuracy_consent" required="" type="checkbox"/><span>I confirm that the information is accurate to the best of my knowledge and that Doberman Index may review the files for this submission.</span></label>
 <label class="consent consent-second"><input name="publication_consent" required="" type="checkbox"/><span>I understand that approved profile information and selected files may be published after review.</span></label>
-<p class="privacy-note">Your files are prepared on this device. They are not uploaded by this page.</p>
-<div class="success-panel" hidden="" id="success-panel" role="status"><strong>Your package is ready.</strong><span>Send the saved file to your Doberman Index contact. Please do not open or change its contents.</span></div>
+<p class="privacy-note">Your selected files are packaged on this device and sent securely to Doberman Index Records when you submit.</p>
+<div class="success-panel" hidden="" id="success-panel" role="status"><strong>Submission received.</strong><span>Your package was sent securely to Doberman Index Records.</span></div>
 </section>
 <div class="form-error" hidden="" id="form-error" role="alert"></div>
 <footer class="wizard-actions">
 <button class="button button-quiet" hidden="" id="back-button" type="button">Back</button>
 <button class="button button-review" hidden="" id="return-review-button" type="button">Return to review</button>
 <button class="button button-primary" id="next-button" type="button">Continue <span>→</span></button>
-<button class="button button-primary" hidden="" id="prepare-button" type="submit">Prepare my submission <span>↓</span></button>
+<button class="button button-primary" hidden="" id="prepare-button" type="submit">Submit my record <span>→</span></button>
 </footer>
 </form>
 </div>
 <button class="reset-button" id="reset-button" type="button">Clear this form</button>
 </main>
 <script src="assets/js/zip-tools.js"></script>
+<script src="assets/js/submission-upload.js"></script>
 <script src="assets/js/submit-v3.js"></script>
 </body>
 </html>

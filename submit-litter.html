@@ -22,6 +22,7 @@
 <h1 id="page-title">Tell us about the litter.</h1>
 <p>Connect the kennel, sire, dam and offspring in one permanent family record.</p>
 <div class="client-tag">Private submission · reviewed before publication</div>
+<p class="record-update-link"><strong>Already indexed?</strong> <a href="update.html">Update an existing record →</a></p>
 </section>
 <div class="wizard-card">
 <nav class="progress" aria-label="Submission progress"><div class="progress-line"><span id="progress-fill"></span></div><ol>
@@ -78,8 +79,8 @@
 </section>
 
 <section class="form-step" data-step="4" hidden aria-labelledby="l-step-5">
-<div class="step-heading"><span>05</span><div><h2 id="l-step-5">Review & prepare</h2><p>Check your answers before preparing the submission package.</p></div></div>
-<p class="review-meta"><strong>You can still edit any section.</strong> Nothing is uploaded automatically from this page.</p>
+<div class="step-heading"><span>05</span><div><h2 id="l-step-5">Review & submit</h2><p>Check your answers before sending the submission.</p></div></div>
+<p class="review-meta"><strong>You can still edit any section.</strong> Nothing is locked until you press Submit.</p>
 <div class="review-summary" id="review-summary"></div>
 <div class="contact-panel"><h3>Your contact details</h3><p>Used only for this submission and review questions.</p><div class="field-grid">
 <label class="field"><span>Your name <b>Required</b></span><input name="contact_name" required autocomplete="name"></label>
@@ -90,15 +91,16 @@
 <label class="consent"><input type="checkbox" name="accuracy_consent" required><span>I confirm that the information is accurate to the best of my knowledge and may be reviewed by Doberman Index.</span></label>
 <label class="consent consent-second"><input type="checkbox" name="publication_consent" required><span>I understand that only reviewed litter information and selected public media may be published.</span></label>
 <label class="consent consent-second"><input type="checkbox" name="asset_rights_consent" required><span>I confirm that I own or have permission to provide the submitted public media for Doberman Index publication.</span></label>
-<p class="privacy-note">Source documents remain review material unless specifically approved for public use.</p>
-<div class="success-panel" id="success-panel" hidden role="status"><strong>Your litter submission is ready.</strong><span>Send the saved ZIP to your Doberman Index contact without opening or changing its contents.</span></div>
+<p class="privacy-note">Source documents remain review material unless specifically approved for public use. Your package is sent securely to Doberman Index Records when you submit.</p>
+<div class="success-panel" id="success-panel" hidden role="status"><strong>Submission received.</strong><span>Your litter package was sent securely to Doberman Index Records.</span></div>
 </section>
 <div class="form-error" id="form-error" hidden role="alert"></div>
-<footer class="wizard-actions"><button class="button button-quiet" id="back-button" type="button" hidden>Back</button><button class="button button-primary" id="next-button" type="button">Continue <span>→</span></button><button class="button button-primary" id="prepare-button" type="submit" hidden>Prepare submission <span>↓</span></button></footer>
+<footer class="wizard-actions"><button class="button button-quiet" id="back-button" type="button" hidden>Back</button><button class="button button-primary" id="next-button" type="button">Continue <span>→</span></button><button class="button button-primary" id="prepare-button" type="submit" hidden>Submit litter <span>→</span></button></footer>
 </form></div>
 <button class="reset-button" id="reset-button" type="button">Clear this form</button>
 </main>
 <script src="assets/js/zip-tools.js"></script>
+<script src="assets/js/submission-upload.js"></script>
 <script src="assets/js/submit-litter.js"></script>
 </body>
 </html>
