@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Lock the approved Submission visual master and paired runtime."""
+"""Lock the approved Submission visual master and paired secure-intake runtime."""
 
 from __future__ import annotations
 
@@ -10,9 +10,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED = {
-    "submit.html": "43048F9799D3F54D009F03D978B86CB8E5D67AAA70A0A0212D310192442C7E89",
-    "assets/css/submit-v3.css": "23FD5A395F5D24F663F0E67AF987F7316E9EBB6E913165B617E43B1C0CC1B357",
-    "assets/js/submit-v3.js": "CBB69D7804AFEAAF0E1E7F6ABCFD0B94B1B31678238A489C0B769E4E1E98BF02",
+    "submit.html": "7E2D5EBA1351756B839F8F48C52A2049BB6D38CE9CE41435C08230D4597F31E7",
+    "assets/css/submit-v3.css": "E39B9989A9F3BD6324C49971D21F9D910CDB3798C86D94466BC5FD4D2273445D",
+    "assets/js/submit-v3.js": "6D8B7806E8DCA007843A71F3C799C8BFDAACE0BDA741311C11D8452784309FD7",
     "assets/js/zip-tools.js": "C2D00A7E08A013C574289BBBF2ACF1D7EBBF09EEE187053981D28DBE2221826E",
 }
 
@@ -45,7 +45,7 @@ def main() -> int:
             print(f" - {mismatch}", file=sys.stderr)
         return 1
 
-    print("Submission visual-master lock PASS (approved HTML/CSS, v6.3 validated submission runtime and ZIP tools exact)")
+    print("Submission visual-master lock PASS (approved secure-intake HTML/CSS/runtime and ZIP tools exact)")
     return 0
 
 
