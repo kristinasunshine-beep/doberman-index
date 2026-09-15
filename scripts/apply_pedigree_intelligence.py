@@ -2,15 +2,14 @@
 """Apply deterministic pedigree intelligence to published Doberman records.
 
 The canonical graph is intentionally separate from display pedigrees. A name
-match alone never establishes identity. COI is published only when the subject
-has both canonical parents mapped. Missing ancestry remains visible through
-pedigree completeness rather than being silently treated as verified data.
+match alone never establishes identity. Numeric lineage values are published
+only when the subject has canonical ancestry mapped. Missing ancestry remains
+visible through pedigree completeness.
 """
 from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
-from typing import Any, Dict
 
 from pedigree_engine import Node, analyze
 
@@ -28,18 +27,17 @@ def dump_json(path: Path, payload: dict) -> None:
 
 
 def canonical_nodes(graph: dict) -> list[Node]:
-    nodes = []
-    for node_id, item in graph.get("nodes", {}).items():
-        nodes.append(Node(node_id, item.get("sire_id"), item.get("dam_id")))
-    return nodes
+    return [Node(node_id, item.get("sire_id"), item.get("dam_id")) for node_id, item in graph.get("nodes", {}).items()]
 
 
 def status_payload(message: str, generations: int = 6) -> dict:
     return {
         "status": "pending_canonical_mapping",
         "coi_percent": None,
+        "avk_percent": None,
         "completeness_percent": None,
         "unique_ancestors_count": None,
+        "maximum_ancestor_slots": None,
         "repeated_ancestors_count": None,
         "generation_depth": generations,
         "calculation_method": "tabular_relationship_matrix",
@@ -50,25 +48,21 @@ def status_payload(message: str, generations: int = 6) -> dict:
 def intelligence_for(record_id: str, graph: dict, generations: int) -> dict:
     item = graph.get("nodes", {}).get(record_id)
     if not item:
-        return status_payload(
-            "Pedigree supplied; canonical ancestor mapping is required before publishing pedigree calculations.",
-            generations,
-        )
+        return status_payload("Pedigree supplied; canonical ancestor mapping is required before publishing pedigree calculations.", generations)
     if not item.get("sire_id") or not item.get("dam_id"):
-        return status_payload(
-            "Canonical sire and dam must both be mapped before publishing pedigree COI.",
-            generations,
-        )
+        return status_payload("Canonical sire and dam must both be mapped before publishing pedigree COI.", generations)
     result = analyze(record_id, canonical_nodes(graph), generations)
     return {
         "status": "calculated",
         "coi_percent": result["coi_percent"],
+        "avk_percent": result["avk_percent"],
         "completeness_percent": result["completeness_percent"],
         "unique_ancestors_count": result["unique_ancestors_count"],
+        "maximum_ancestor_slots": result["maximum_ancestor_slots"],
         "repeated_ancestors_count": result["repeated_ancestors_count"],
         "generation_depth": result["generation_depth"],
         "calculation_method": result["calculation_method"],
-        "note": "Pedigree COI is calculated from currently mapped canonical ancestry; unknown ancestors reduce pedigree completeness.",
+        "note": "Pedigree COI and AVK are calculated from currently mapped canonical ancestry; unknown ancestors reduce pedigree completeness.",
     }
 
 
@@ -94,7 +88,8 @@ def main() -> None:
             changed += 1
             if args.write:
                 dump_json(path, payload)
-        print(f"{record_id}: {result['status']}" + (f" · COI {result['coi_percent']}%" if result['coi_percent'] is not None else ""))
+        suffix = f" · COI {result['coi_percent']}% · AVK {result['avk_percent']}%" if result['coi_percent'] is not None else ""
+        print(f"{record_id}: {result['status']}{suffix}")
 
     if args.write:
         print(f"Pedigree intelligence sync complete: {changed} record(s) updated.")
