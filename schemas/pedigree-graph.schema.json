@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://doberman-index.com/schemas/pedigree-graph.schema.json",
+  "title": "Doberman Index Canonical Pedigree Graph",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "nodes"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0.0"},
+    "description": {"type": "string"},
+    "nodes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["registered_name", "mapping_status"],
+        "properties": {
+          "registered_name": {"type": "string", "minLength": 1},
+          "registration_numbers": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+          "sex": {"type": ["string", "null"], "enum": ["male", "female", null]},
+          "sire_id": {"type": ["string", "null"]},
+          "dam_id": {"type": ["string", "null"]},
+          "mapping_status": {"type": "string", "enum": ["resolved", "partial", "boundary"]},
+          "source_record_id": {"type": ["string", "null"]},
+          "notes": {"type": ["string", "null"]}
+        }
+      }
+    }
+  }
+}
