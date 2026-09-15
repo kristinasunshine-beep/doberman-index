@@ -55,50 +55,38 @@ jobs:
         run: |
           set -euo pipefail
           git reset --hard HEAD
-          rm -f \
-            data/pedigree-graph.json \
-            schemas/pedigree-graph.schema.json \
-            scripts/apply_pedigree_intelligence.py \
-            scripts/pedigree_engine.py \
-            scripts/test_pedigree_engine.py \
-            scripts/validate_pedigree_graph.py
-
+          rm -f data/pedigree-graph.json schemas/pedigree-graph.schema.json scripts/apply_pedigree_intelligence.py scripts/pedigree_engine.py scripts/test_pedigree_engine.py scripts/validate_pedigree_graph.py
           set +e
           patch -p1 --forward --batch --fuzz=3 < /tmp/v42-review.patch
           patch_rc=$?
           set -e
-
-          # Resolve the three known main-vs-v4.1 context drifts deterministically.
           python - <<'PY'
           from pathlib import Path
           import json, re
-
           dog_path = Path('data/dobermans/DI-M-000001.json')
           dog = json.loads(dog_path.read_text(encoding='utf-8'))
           dog['doberman']['health']['vwd']['evidence_file'] = None
           dog_path.write_text(json.dumps(dog, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-
           index_path = Path('index.html')
           s = index_path.read_text(encoding='utf-8')
           s = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="A Doberman breed-intelligence system connecting structured records, pedigrees, kennels, lineage analysis and breeding context.">', s, count=1)
-          block = '''<div class="why-grid structure-metrics" id="structureGrid">
-      <article class="why-item"><div class="why-num">01</div><h3>STRUCTURED INPUT</h3><p>One simple submission becomes one consistent Doberman record. Health results are stored as submitted; pedigree-derived values are calculated separately.</p></article>
-      <article class="why-item"><div class="why-num">02</div><h3>COMPUTED LINEAGE</h3><p>Pedigree becomes measurable through ancestry depth, repetition, concentration, relationship and pedigree COI.</p></article>
-      <article class="why-item"><div class="why-num">03</div><h3>CONNECTED INTELLIGENCE</h3><p>Dobermans, litters, kennels and descendants form one living graph for explainable comparison and future pairing analysis.</p></article>
-      <article class="why-item"><div class="why-num">04</div><h3>ONE SYSTEM</h3><p>One living system connecting Dobermans, kennels, litters, descendants and breeding decisions.</p></article>
-    </div>'''
+          block = "\n".join((
+              '<div class="why-grid structure-metrics" id="structureGrid">',
+              '      <article class="why-item"><div class="why-num">01</div><h3>STRUCTURED INPUT</h3><p>One simple submission becomes one consistent Doberman record. Health results are stored as submitted; pedigree-derived values are calculated separately.</p></article>',
+              '      <article class="why-item"><div class="why-num">02</div><h3>COMPUTED LINEAGE</h3><p>Pedigree becomes measurable through ancestry depth, repetition, concentration, relationship and pedigree COI.</p></article>',
+              '      <article class="why-item"><div class="why-num">03</div><h3>CONNECTED INTELLIGENCE</h3><p>Dobermans, litters, kennels and descendants form one living graph for explainable comparison and future pairing analysis.</p></article>',
+              '      <article class="why-item"><div class="why-num">04</div><h3>ONE SYSTEM</h3><p>One living system connecting Dobermans, kennels, litters, descendants and breeding decisions.</p></article>',
+              '    </div>'
+          ))
           s, n = re.subn(r'<div class="why-grid structure-metrics" id="structureGrid">.*?</div>\s*</div>\s*</section>', block + '\n  </div>\n</section>', s, count=1, flags=re.S)
           if n != 1:
               raise SystemExit('Could not replace How it works grid')
           s = re.sub(r'(<div class="pricing-monolith-note"><small>01</small>)[^<]*(</div>)', r'\1One structured record.\2', s, count=1)
           index_path.write_text(s, encoding='utf-8')
-
-          # This validator is an internal lock, not part of the browser surface; retain the current-main lock.
           Path('scripts/validate_submission_visual_master.py.rej').unlink(missing_ok=True)
-          for reject in [Path('data/dobermans/DI-M-000001.json.rej'), Path('index.html.rej')]:
-              reject.unlink(missing_ok=True)
+          Path('data/dobermans/DI-M-000001.json.rej').unlink(missing_ok=True)
+          Path('index.html.rej').unlink(missing_ok=True)
           PY
-
           rejects="$(find . -name '*.rej' -print)"
           if [ -n "$rejects" ]; then
             echo "Unexpected rejected v4.2 hunks remain:"
@@ -110,7 +98,7 @@ jobs:
           fi
           git status --short
 
-      - name: Validate pedigree engine and submission JavaScript
+      - name: Validate pedigree engine and browser surface
         shell: bash
         run: |
           set -euo pipefail
