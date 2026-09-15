@@ -356,7 +356,8 @@
           evidence: evidenceBlock(),
         },
         performance: {
-          shows_count: numberValue("shows_count"),
+          show_results: listValue("show_results"),
+          shows_count: listValue("show_results").length,
           titles: listValue("titles"),
           working_exams: listValue("working_exams"),
           sports: listValue("sports"),

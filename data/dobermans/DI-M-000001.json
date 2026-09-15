@@ -199,7 +199,8 @@
         "IGP 1"
       ],
       "sports": [],
-      "evidence_files": []
+      "evidence_files": [],
+      "show_results": []
     },
     "reproduction": {
       "notable_offspring": [],
@@ -270,19 +271,21 @@
     "pedigree_intelligence": {
       "status": "calculated",
       "coi_percent": 0.78125,
+      "avk_percent": 96.667,
       "completeness_percent": 100.0,
       "unique_ancestors_count": 29,
+      "maximum_ancestor_slots": 30,
       "repeated_ancestors_count": 1,
       "generation_depth": 4,
       "calculation_method": "tabular_relationship_matrix",
-      "note": "Pedigree COI is calculated from currently mapped canonical ancestry; unknown ancestors reduce pedigree completeness."
+      "note": "Pedigree COI and AVK are calculated from currently mapped canonical ancestry; unknown ancestors reduce pedigree completeness."
     },
     "breeding_lens": {
-      "status": "pending_record_review",
-      "preserve": null,
-      "complement": null,
-      "watch": null,
-      "unknown": "Pedigree intelligence pending canonical ancestor mapping."
+      "status": "generated",
+      "preserve": "Balanced, elegant type · strong topline · free, elastic movement · stable high drive · proven IGP 1 working qualification.",
+      "complement": "Prioritize high confidence, stable social behaviour and structural compatibility while protecting overall balance and movement.",
+      "watch": "DCM1 carrier status remains a pairing consideration together with the current Holter + Echo status and the selected female’s cardiac and genetic profile.",
+      "unknown": "The mapped four-generation pedigree is complete at the analysed depth. Deeper ancestry and event-level show history can extend the analysis further."
     }
   }
 }
