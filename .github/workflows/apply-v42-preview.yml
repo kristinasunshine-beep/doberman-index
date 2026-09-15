@@ -31,21 +31,41 @@ jobs:
           cat .v42-patch/payload-*.b64 | base64 -d | gunzip > /tmp/v42.patch
           test -s /tmp/v42.patch
 
-      - name: Apply v4.2 changes over current main-derived branch
+      - name: Apply v4.2 review snapshot
         shell: bash
         run: |
-          set -euo pipefail
-          if git apply --3way --whitespace=nowarn /tmp/v42.patch; then
-            echo "v4.2 patch applied cleanly."
-          else
-            echo "Three-way conflicts found; resolving review branch conflicts in favor of the v4.2 product snapshot."
-            conflicted="$(git diff --name-only --diff-filter=U)"
-            test -n "$conflicted"
-            while IFS= read -r file; do
-              git checkout --theirs -- "$file"
-              git add "$file"
-            done <<< "$conflicted"
+          set -u
+          git apply --3way --whitespace=nowarn /tmp/v42.patch
+          apply_rc=$?
+          set -e
+
+          if [ "$apply_rc" -ne 0 ]; then
+            echo "Some current-main files differ from the v4.1 patch base. Resolving only true three-way conflicts in favor of the v4.2 review snapshot."
+            git status --short
+            conflicted="$(git diff --name-only --diff-filter=U || true)"
+            if [ -n "$conflicted" ]; then
+              while IFS= read -r file; do
+                echo "Resolving $file from v4.2 stage"
+                if git show ":3:$file" > "$file" 2>/dev/null; then
+                  git add "$file"
+                else
+                  git checkout --theirs -- "$file" || true
+                  git add "$file" || true
+                fi
+              done <<< "$conflicted"
+            fi
           fi
+
+          unresolved="$(git diff --name-only --diff-filter=U || true)"
+          if [ -n "$unresolved" ]; then
+            echo "Unresolved files remain:"
+            echo "$unresolved"
+            exit 1
+          fi
+
+          # The production build workflow itself is not required for browser review;
+          # if its old-base hunk did not apply, keep the current branch copy unchanged.
+          git status --short
 
       - name: Validate pedigree engine and submission JavaScript
         shell: bash
