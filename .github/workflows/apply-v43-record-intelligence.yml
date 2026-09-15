@@ -1,0 +1,50 @@
+name: Apply v4.3 Record Intelligence
+
+on:
+  push:
+    branches: [v4.3-record-intelligence]
+    paths:
+      - "scripts/apply_v43_record_intelligence.py"
+      - "scripts/pedigree_engine.py"
+      - "scripts/apply_pedigree_intelligence.py"
+      - ".github/workflows/apply-v43-record-intelligence.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply-v43:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply deterministic pedigree intelligence
+        run: |
+          python scripts/apply_pedigree_intelligence.py --write
+      - name: Apply v4.3 UI/data migration
+        run: |
+          python scripts/apply_v43_record_intelligence.py
+      - name: Validate core engine and browser JavaScript
+        run: |
+          python scripts/validate_pedigree_graph.py
+          python scripts/test_pedigree_engine.py
+          python scripts/apply_pedigree_intelligence.py
+          node --check assets/js/submit-v3.js
+          grep -q "Coefficient of inbreeding (COI)" profiles/male.html
+          grep -q "Ancestor loss (AVK)" profiles/male.html
+          grep -q "buildCanonicalBloodline" profiles/male.html
+          grep -q "togglePerformanceListing" profiles/male.html
+          grep -q "show_results" submit.html
+      - name: Commit v4.3 snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add profiles/male.html submit.html assets/js/submit-v3.js data/dobermans/DI-M-000001.json
+          git add scripts/pedigree_engine.py scripts/apply_pedigree_intelligence.py
+          if git diff --cached --quiet; then
+            echo "v4.3 snapshot already current"
+            exit 0
+          fi
+          git commit -m "preview: apply v4.3 record intelligence"
+          git push
