@@ -31,40 +31,56 @@ jobs:
           cat .v42-patch/payload-*.b64 | base64 -d | gunzip > /tmp/v42.patch
           test -s /tmp/v42.patch
 
-      - name: Apply v4.2 review snapshot
+      - name: Prepare browser-review patch
         shell: bash
         run: |
-          set -u
+          python - <<'PY'
+          from pathlib import Path
+          src = Path('/tmp/v42.patch').read_text(encoding='utf-8')
+          chunks = src.split('diff --git ')
+          keep = []
+          for chunk in chunks:
+              if not chunk:
+                  continue
+              header = chunk.splitlines()[0]
+              if header.startswith('a/.github/workflows/build-registry.yml '):
+                  continue
+              keep.append('diff --git ' + chunk)
+          Path('/tmp/v42-review.patch').write_text(''.join(keep), encoding='utf-8')
+          PY
+          test -s /tmp/v42-review.patch
+
+      - name: Apply v4.2 browser review snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          git reset --hard HEAD
+          rm -f \
+            data/pedigree-graph.json \
+            schemas/pedigree-graph.schema.json \
+            scripts/apply_pedigree_intelligence.py \
+            scripts/pedigree_engine.py \
+            scripts/test_pedigree_engine.py \
+            scripts/validate_pedigree_graph.py
+
           set +e
-          git apply --3way --whitespace=nowarn /tmp/v42.patch
-          apply_rc=$?
+          patch -p1 --forward --batch --fuzz=3 < /tmp/v42-review.patch
+          patch_rc=$?
           set -e
 
-          if [ "$apply_rc" -ne 0 ]; then
-            echo "Some current-main files differ from the v4.1 patch base. Resolving true three-way conflicts in favor of the v4.2 review snapshot."
-            git status --short
-            conflicted="$(git diff --name-only --diff-filter=U || true)"
-            if [ -n "$conflicted" ]; then
-              while IFS= read -r file; do
-                echo "Resolving $file from v4.2 stage"
-                if git show ":3:$file" > "$file" 2>/dev/null; then
-                  git add "$file"
-                else
-                  git checkout --theirs -- "$file" || true
-                  git add "$file" || true
-                fi
-              done <<< "$conflicted"
-            fi
-          fi
-
-          unresolved="$(git diff --name-only --diff-filter=U || true)"
-          if [ -n "$unresolved" ]; then
-            echo "Unresolved files remain:"
-            echo "$unresolved"
+          rejects="$(find . -name '*.rej' -print)"
+          if [ -n "$rejects" ]; then
+            echo "Rejected v4.2 hunks remain:"
+            echo "$rejects"
+            for f in $rejects; do
+              echo "===== $f ====="
+              cat "$f"
+            done
             exit 1
           fi
-
-          # build-registry.yml may stay at the current-main version for this isolated browser review.
+          if [ "$patch_rc" -ne 0 ]; then
+            echo "patch exited with $patch_rc but produced no reject files; continuing to validation."
+          fi
           git status --short
 
       - name: Validate pedigree engine and submission JavaScript
