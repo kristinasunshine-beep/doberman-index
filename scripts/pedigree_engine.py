@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Deterministic pedigree analysis for Doberman Index.
 
-COI is calculated from canonical pedigree nodes using the tabular additive
-relationship matrix. AI/LLM output is never used for numeric pedigree values.
+Numeric pedigree values are calculated from canonical pedigree nodes. AI/LLM
+output is never used for COI, AVK, completeness or relationship coefficients.
 """
 from __future__ import annotations
 from dataclasses import dataclass
-from collections import Counter, defaultdict
+from collections import Counter
 from typing import Dict, Iterable, List, Optional, Tuple
+
 
 @dataclass(frozen=True)
 class Node:
@@ -18,6 +19,7 @@ class Node:
 
 def _topological_order(nodes: Dict[str, Node]) -> List[str]:
     visiting, visited, out = set(), set(), []
+
     def visit(node_id: str):
         if node_id in visited:
             return
@@ -31,6 +33,7 @@ def _topological_order(nodes: Dict[str, Node]) -> List[str]:
         visiting.remove(node_id)
         visited.add(node_id)
         out.append(node_id)
+
     for node_id in nodes:
         visit(node_id)
     return out
@@ -39,8 +42,8 @@ def _topological_order(nodes: Dict[str, Node]) -> List[str]:
 def relationship_matrix(node_iter: Iterable[Node]) -> Tuple[List[str], List[List[float]]]:
     """Return ordered IDs and numerator/additive relationship matrix A.
 
-    Unknown parents are treated as unrelated founders. This makes the resulting
-    COI explicitly a pedigree COI conditional on known ancestry.
+    Unknown parents are treated as unrelated founders. The resulting value is
+    therefore explicitly a pedigree COI conditional on known ancestry.
     """
     nodes = {n.id: n for n in node_iter}
     order = _topological_order(nodes)
@@ -92,7 +95,7 @@ def _ancestor_occurrences(root_id: str, nodes: Dict[str, Node], max_generations:
 
 
 def pedigree_completeness(root_id: str, nodes: Dict[str, Node], generations: int) -> float:
-    """Percent of known ancestor slots through N generations."""
+    """Percent of known ancestor positions through N generations."""
     if generations <= 0:
         return 100.0
     known_slots = 0
@@ -110,17 +113,35 @@ def pedigree_completeness(root_id: str, nodes: Dict[str, Node], generations: int
     return 100.0 * known_slots / expected_slots if expected_slots else 100.0
 
 
+def ancestor_loss_coefficient(root_id: str, nodes: Dict[str, Node], generations: int) -> float:
+    """Return AVK (Ahnenverlustkoeffizient / ancestor loss coefficient).
+
+    AVK = unique known ancestors / maximum ancestor positions through N
+    generations × 100. Repeated ancestors reduce AVK; unknown positions remain
+    visible separately through pedigree completeness.
+    """
+    if generations <= 0:
+        return 100.0
+    maximum_slots = sum(2 ** g for g in range(1, generations + 1))
+    unique_known = len(_ancestor_occurrences(root_id, nodes, generations))
+    return 100.0 * unique_known / maximum_slots if maximum_slots else 100.0
+
+
 def analyze(root_id: str, node_iter: Iterable[Node], generations: int = 6) -> dict:
     nodes = {n.id: n for n in node_iter}
     if root_id not in nodes:
         raise KeyError(root_id)
     occ = _ancestor_occurrences(root_id, nodes, generations)
     repeated = {k: v for k, v in occ.items() if v > 1}
+    maximum_slots = sum(2 ** g for g in range(1, generations + 1))
+    value = coi(root_id, nodes.values())
     return {
-        "coi": coi(root_id, nodes.values()),
-        "coi_percent": round(coi(root_id, nodes.values()) * 100, 6),
+        "coi": value,
+        "coi_percent": round(value * 100, 6),
+        "avk_percent": round(ancestor_loss_coefficient(root_id, nodes, generations), 3),
         "completeness_percent": round(pedigree_completeness(root_id, nodes, generations), 3),
         "unique_ancestors_count": len(occ),
+        "maximum_ancestor_slots": maximum_slots,
         "repeated_ancestors_count": len(repeated),
         "repeated_ancestors": repeated,
         "generation_depth": generations,
