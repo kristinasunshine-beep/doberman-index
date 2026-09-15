@@ -35,12 +35,13 @@ jobs:
         shell: bash
         run: |
           set -u
+          set +e
           git apply --3way --whitespace=nowarn /tmp/v42.patch
           apply_rc=$?
           set -e
 
           if [ "$apply_rc" -ne 0 ]; then
-            echo "Some current-main files differ from the v4.1 patch base. Resolving only true three-way conflicts in favor of the v4.2 review snapshot."
+            echo "Some current-main files differ from the v4.1 patch base. Resolving true three-way conflicts in favor of the v4.2 review snapshot."
             git status --short
             conflicted="$(git diff --name-only --diff-filter=U || true)"
             if [ -n "$conflicted" ]; then
@@ -63,8 +64,7 @@ jobs:
             exit 1
           fi
 
-          # The production build workflow itself is not required for browser review;
-          # if its old-base hunk did not apply, keep the current branch copy unchanged.
+          # build-registry.yml may stay at the current-main version for this isolated browser review.
           git status --short
 
       - name: Validate pedigree engine and submission JavaScript
