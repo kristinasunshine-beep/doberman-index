@@ -6,7 +6,7 @@ relationship matrix. AI/LLM output is never used for numeric pedigree values.
 """
 from __future__ import annotations
 from dataclasses import dataclass
-from collections import Counter
+from collections import Counter, defaultdict
 from typing import Dict, Iterable, List, Optional, Tuple
 
 @dataclass(frozen=True)

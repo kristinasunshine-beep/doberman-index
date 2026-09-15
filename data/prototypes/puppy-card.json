@@ -177,11 +177,9 @@
       "evidence_files": []
     },
     "reproduction": {
-      "litters_count": null,
-      "offspring_count": null,
-      "champion_offspring_count": null,
-      "export_countries": [],
+      "notable_offspring": [],
       "litter_ids": [],
+      "offspring_ids": [],
       "availability": "not_applicable"
     },
     "media": {

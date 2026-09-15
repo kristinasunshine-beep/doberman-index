@@ -24,8 +24,12 @@ for token in ['Shows:numberOrDash(performance.shows_count)','Titles:array(perfor
     if token not in profile: errors.append('male profile missing performance contract token: '+token)
 for token in ['lifeStage,lifeStatus,lifeSpan:lifespan||"—"','studServiceStatus,profileId:recordId','lifeStage:"Life stage",lifeStatus:"Life status",lifeSpan:"Life span"','studServiceStatus:"Stud service status"','id="lifeStatusBadge"','const isDeceased=lifecycleState==="deceased"','lifecycleState==="living"?""']:
     if token not in profile: errors.append('male profile missing Details contract token: '+token)
-for token in ['Litters:numberOrDash(reproduction.litters_count)','Offspring:numberOrDash(reproduction.offspring_count)','"Champion offspring":numberOrDash(reproduction.champion_offspring_count)','"Export countries":array(reproduction.export_countries).length']:
-    if token not in profile: errors.append('male profile missing breeding contract token: '+token)
+for token in ['id="pedigreeIntelligenceRail"','pedigreeIntelligence:{"Pedigree COI"','id="breedingLensRail"','breedingLens:{Preserve:','notable_offspring','Connected descendants']:
+    if token not in profile: errors.append('male profile missing breed-intelligence contract token: '+token)
+for forbidden in ['litters_count','champion_offspring_count','export_countries']:
+    if forbidden in submit: errors.append('owner form still exposes competitive breeding counter: '+forbidden)
+for forbidden in ['name="health_evidence"','name="mortality_evidence"']:
+    if forbidden in submit: errors.append('owner form still requests supporting evidence upload: '+forbidden)
 if 'name="stud_service_status"' not in submit: errors.append('owner form is missing Stud service status in About')
 if 'name="breeding_availability"' in submit: errors.append('owner form still exposes legacy breeding_availability control')
 if schema.get('properties',{}).get('schema_version',{}).get('const') != '1.1.0': errors.append('canonical schema is not v1.1.0')

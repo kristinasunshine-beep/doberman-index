@@ -1,9 +1,17 @@
 #!/usr/bin/env python3
-"""Apply deterministic pedigree intelligence to published Doberman records."""
+"""Apply deterministic pedigree intelligence to published Doberman records.
+
+The canonical graph is intentionally separate from display pedigrees. A name
+match alone never establishes identity. COI is published only when the subject
+has both canonical parents mapped. Missing ancestry remains visible through
+pedigree completeness rather than being silently treated as verified data.
+"""
 from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+from typing import Any, Dict
+
 from pedigree_engine import Node, analyze
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,7 +28,10 @@ def dump_json(path: Path, payload: dict) -> None:
 
 
 def canonical_nodes(graph: dict) -> list[Node]:
-    return [Node(node_id, item.get("sire_id"), item.get("dam_id")) for node_id, item in graph.get("nodes", {}).items()]
+    nodes = []
+    for node_id, item in graph.get("nodes", {}).items():
+        nodes.append(Node(node_id, item.get("sire_id"), item.get("dam_id")))
+    return nodes
 
 
 def status_payload(message: str, generations: int = 6) -> dict:
@@ -39,9 +50,15 @@ def status_payload(message: str, generations: int = 6) -> dict:
 def intelligence_for(record_id: str, graph: dict, generations: int) -> dict:
     item = graph.get("nodes", {}).get(record_id)
     if not item:
-        return status_payload("Pedigree supplied; canonical ancestor mapping is required before publishing pedigree calculations.", generations)
+        return status_payload(
+            "Pedigree supplied; canonical ancestor mapping is required before publishing pedigree calculations.",
+            generations,
+        )
     if not item.get("sire_id") or not item.get("dam_id"):
-        return status_payload("Canonical sire and dam must both be mapped before publishing pedigree COI.", generations)
+        return status_payload(
+            "Canonical sire and dam must both be mapped before publishing pedigree COI.",
+            generations,
+        )
     result = analyze(record_id, canonical_nodes(graph), generations)
     return {
         "status": "calculated",
@@ -57,9 +74,10 @@ def intelligence_for(record_id: str, graph: dict, generations: int) -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--write", action="store_true")
+    parser.add_argument("--write", action="store_true", help="Write calculated values back to Doberman JSON records")
     parser.add_argument("--generations", type=int, default=6)
     args = parser.parse_args()
+
     graph = load_json(GRAPH_PATH)
     changed = 0
     for path in sorted(DOG_DIR.glob("*.json")):
@@ -68,7 +86,7 @@ def main() -> None:
         dog = payload.get("doberman") or {}
         if not record_id or not dog:
             continue
-        current_depth = (dog.get("pedigree_intelligence") or {}).get("generation_depth")
+        current_depth = ((dog.get("pedigree_intelligence") or {}).get("generation_depth"))
         generations = int(current_depth or args.generations)
         result = intelligence_for(record_id, graph, generations)
         if dog.get("pedigree_intelligence") != result:
@@ -77,7 +95,11 @@ def main() -> None:
             if args.write:
                 dump_json(path, payload)
         print(f"{record_id}: {result['status']}" + (f" · COI {result['coi_percent']}%" if result['coi_percent'] is not None else ""))
-    print(f"Pedigree intelligence {'sync complete' if args.write else 'dry run'}: {changed} record(s) {'updated' if args.write else 'would change'}.")
+
+    if args.write:
+        print(f"Pedigree intelligence sync complete: {changed} record(s) updated.")
+    else:
+        print(f"Pedigree intelligence dry run: {changed} record(s) would change.")
 
 
 if __name__ == "__main__":

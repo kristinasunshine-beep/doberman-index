@@ -35,6 +35,7 @@ def main() -> None:
                 fail(f"registration number {reg!r} is assigned to both {regs[key]} and {node_id}")
             if key:
                 regs[key] = node_id
+    # relationship engine performs the final cycle check
     sys.path.insert(0, str(ROOT / "scripts"))
     from pedigree_engine import Node, relationship_matrix
     relationship_matrix(Node(i, n.get("sire_id"), n.get("dam_id")) for i, n in nodes.items())

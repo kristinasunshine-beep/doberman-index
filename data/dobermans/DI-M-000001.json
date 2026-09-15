@@ -41,7 +41,7 @@
       "litter_id": null,
       "pedigree_source": "owner_upload",
       "pedigree_file": "media/dobermans/DI-M-000001/pedigree/pedigree.jpg",
-      "pedigree_verified": true,
+      "pedigree_verified": false,
       "pedigree_nodes": [],
       "pedigree_extraction": {
         "status": "not_started",
@@ -139,7 +139,6 @@
       "mortality": {
         "cause": null,
         "cause_disclosure": "public",
-        "evidence_source": null,
         "evidence_file": null
       }
     },
@@ -203,16 +202,9 @@
       "evidence_files": []
     },
     "reproduction": {
-      "litters_count": 5,
-      "offspring_count": 12,
-      "champion_offspring_count": 3,
-      "export_countries": [
-        "Netherlands",
-        "USA",
-        "Germany",
-        "Poland"
-      ],
+      "notable_offspring": [],
       "litter_ids": [],
+      "offspring_ids": [],
       "availability": "available"
     },
     "puppy_lifecycle": {
@@ -274,6 +266,23 @@
     "publication": {
       "last_updated_label": null,
       "profile_template": "male"
+    },
+    "pedigree_intelligence": {
+      "status": "calculated",
+      "coi_percent": 0.78125,
+      "completeness_percent": 100.0,
+      "unique_ancestors_count": 29,
+      "repeated_ancestors_count": 1,
+      "generation_depth": 4,
+      "calculation_method": "tabular_relationship_matrix",
+      "note": "Pedigree COI is calculated from currently mapped canonical ancestry; unknown ancestors reduce pedigree completeness."
+    },
+    "breeding_lens": {
+      "status": "pending_record_review",
+      "preserve": null,
+      "complement": null,
+      "watch": null,
+      "unknown": "Pedigree intelligence pending canonical ancestor mapping."
     }
   }
 }

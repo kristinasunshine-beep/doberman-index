@@ -77,7 +77,7 @@
         return [row('Sire',displayDogName(p.sire_name || p.sire_id)),row('Dam',displayDogName(p.dam_name || p.dam_id)),...list(p.pedigree_nodes).map(node => row(node.role || 'Ancestor',displayDogName(node.name || node.registered_name)))];
       }, 'bloodline')]},
       links: {title:'Record links', groups:[...each((dog,record) => [row('Doberman record',record.record_id),row('Kennel record',kennelRecord.record_id),row('Sire',displayDogName(dog.parentage?.sire_id || dog.parentage?.sire_name)),row('Dam',displayDogName(dog.parentage?.dam_id || dog.parentage?.dam_name)),row('Birth litter',dog.parentage?.litter_id),row('Linked litter IDs',list(dog.reproduction?.litter_ids).length ? dog.reproduction.litter_ids : null)], 'related'), ...publishedLitters.map(item => ({name:item.litter?.name || item.record_id,id:item.record_id,rows:[row('Sire',displayDogName(item.litter?.sire_id)),row('Dam',displayDogName(item.litter?.dam_id)),row('Puppy records',item.litter?.puppy_ids)]}))]},
-      totals: {title:'Derived totals', groups:[owner([row('Published Dobermans',dogs.length),row('Published litter records',publishedLitters.length)],'Connected records'),...each(dog => [row('Titles',list(dog.performance?.titles).length),row('Working exams',list(dog.performance?.working_exams).length),row('Sports',list(dog.performance?.sports).length),row('Reported litters',dog.reproduction?.litters_count),row('Reported offspring',dog.reproduction?.offspring_count)],'impact')]},
+      totals: {title:'Derived totals', groups:[owner([row('Published Dobermans',dogs.length),row('Published litter records',publishedLitters.length)],'Connected records'),...each((dog,record) => [row('Titles',list(dog.performance?.titles).length),row('Working exams',list(dog.performance?.working_exams).length),row('Sports',list(dog.performance?.sports).length),row('Connected litters',list(dog.reproduction?.litter_ids).length),row('Connected offspring',dogRecords.filter(child=>child.doberman?.parentage?.sire_id===record.record_id||child.doberman?.parentage?.dam_id===record.record_id).length)],'impact')]},
       cardiac: {title:'Cardiac',groups:each(dog => healthRows(dog.health || {},[['dcm_clinical','Clinical DCM']]),'health')},
       genetics: {title:'Genetics',groups:each(dog => healthRows(dog.health?.dcm_markers || {},['dcm_1','dcm_2','dcm_3','dcm_4','dcm_5'].map((key,i)=>[key,`DCM ${i+1}`])),'health')},
       orthopedic: {title:'Orthopedic',groups:each(dog => healthRows(dog.health || {},[['hd','HD'],['ed','ED']]),'health')},
@@ -86,7 +86,7 @@
       champions: {title:'Indexed champions',groups:dogs.filter(champion).map(record=>group(record,list(record.doberman.performance.titles).map(title=>row('Title',title)),'performance'))},
       titles: {title:'Show titles',groups:each(dog=>list(dog.performance?.titles).map(title=>row('Title',title)),'performance')},
       working: {title:'Working results',groups:each(dog=>[...list(dog.performance?.working_exams).map(value=>row('Working exam',value)),...list(dog.performance?.sports).map(value=>row('Sport',value))],'performance')},
-      reach: {title:'Countries represented',groups:each(dog=>[row('Profile country',dog.identity?.country),row('Reported export countries',list(dog.reproduction?.export_countries).length ? dog.reproduction.export_countries : null)],'impact')}
+      reach: {title:'Countries represented',groups:each(dog=>[row('Profile country',dog.identity?.country)],'impact')}
     };
     return {dogs,panels,champions:dogs.filter(champion).length};
   }

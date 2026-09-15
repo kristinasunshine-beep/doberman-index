@@ -375,7 +375,7 @@
     #performanceRail .metric::after{position:absolute;left:22px;bottom:21px;z-index:2;margin:0;color:#c8c8c8;font-size:10px}
     #performanceRail .metric.highlight::after{color:var(--ink)}
 
-    /* Breeding Impact — dark application/CTA language from the supplied FORGE reference */
+    /* Lineage Forward — dark application/CTA language from the supplied FORGE reference */
     .impact-showcase{min-height:980px;margin-top:clamp(52px,5vw,84px);padding-top:clamp(92px,7vw,118px);padding-bottom:clamp(58px,5vw,78px);background:var(--black);color:var(--white)}
     .impact-showcase .section-mark{top:20%;right:-.055em;bottom:auto;color:#2b2b2b;font-size:clamp(220px,31vw,500px);line-height:.78}
     .impact-showcase .section-head{grid-template-columns:minmax(0,1fr) minmax(420px,.8fr);align-items:stretch;margin-bottom:clamp(110px,10vw,170px)}
@@ -1354,6 +1354,7 @@
     <a class="nav-brand" href="../index.html">DOBERMAN INDEX®</a>
     <a class="nav-link" href="#gallery">Gallery</a>
     <a class="nav-link" href="#bloodline">Bloodline</a>
+    <a class="nav-link" href="#pedigree-intelligence">Pedigree intelligence</a>
     <a class="nav-link" href="#health">Health</a>
     <a class="nav-link" href="#performance">Results</a>
     <a class="nav-link" href="#services">Services</a>
@@ -1376,7 +1377,7 @@
           <div>
             <strong>DOBERMAN INDEX®</strong>
             <p id="heroMeta">Doberman Index registry</p>
-            <p class="dossier-statement">A structured profile connecting health, ancestry, performance and breeding impact.</p>
+            <p class="dossier-statement">A structured profile connecting submitted health data, computed ancestry, performance and breeding intelligence.</p>
             <p class="dossier-bold"><a href="#recordDetails" aria-label="Open profile details">Details <span aria-hidden="true">→</span></a></p>
           </div>
         </div>
@@ -1416,11 +1417,24 @@
       <div class="section-content slider reveal" id="bloodlineRail"></div>
     </section>
 
+
+    <section class="section impact-showcase" id="pedigree-intelligence">
+      <div class="section-mark" aria-hidden="true">COI</div>
+      <header class="section-head reveal">
+        <div>
+          <div class="section-index"><span>03</span><i></i><span>Computed ancestry</span></div>
+          <h2 class="section-title">Pedigree<br>intelligence.</h2>
+        </div>
+        <div class="impact-aside"><p class="section-note"><b>Calculated, not self-reported</b>Pedigree COI, completeness and repeated ancestry are generated from canonical pedigree nodes. Unknown ancestry remains visible.</p></div>
+      </header>
+      <div class="section-content impact-content reveal"><div class="metric-grid" id="pedigreeIntelligenceRail"></div></div>
+    </section>
+
     <section class="section" id="health">
       <div class="section-mark" aria-hidden="true">DNA</div>
       <header class="section-head reveal">
         <div>
-          <div class="section-index"><span>03</span><i></i><span>Medical record</span></div>
+          <div class="section-index"><span>04</span><i></i><span>Submitted health record</span></div>
           <h2 class="section-title">Genetic<br>profile.</h2>
         </div>
         <p class="section-note"><b>Clinical + genetic</b>Clinical cardiac status and genetic markers remain separate. <span class="desktop-note-line">DCM 1–DCM 5 open only when detailed review is needed.</span></p>
@@ -1446,7 +1460,7 @@
       <div class="section-mark" aria-hidden="true">FORM</div>
       <header class="section-head reveal">
         <div>
-          <div class="section-index"><span>04</span><i></i><span>Standardized description</span></div>
+          <div class="section-index"><span>05</span><i></i><span>Standardized description</span></div>
           <h2 class="section-title">Structural<br>profile.</h2>
         </div>
         <p class="section-note"><b>Controlled vocabulary</b>The same descriptive structure keeps every indexed profile clear and comparable.</p>
@@ -1458,7 +1472,7 @@
       <div class="section-mark" aria-hidden="true">MIND</div>
       <header class="section-head reveal">
         <div>
-          <div class="section-index"><span>05</span><i></i><span>Behavioural record</span></div>
+          <div class="section-index"><span>06</span><i></i><span>Behavioural record</span></div>
           <h2 class="section-title">Tempera&shy;ment.</h2>
         </div>
         <p class="section-note"><b>Observed traits</b>Consistent terms make stability, drive, confidence and social behaviour easier to compare.</p>
@@ -1469,7 +1483,7 @@
     <section class="section performance-showcase" id="performance">
       <header class="section-head reveal">
         <div>
-          <div class="section-index"><span>06</span><i></i><span>Documented results</span></div>
+          <div class="section-index"><span>07</span><i></i><span>Submitted results</span></div>
           <h2 class="section-title">Proven by<br><span class="performance-word"><span>perfor</span><span>mance.</span></span></h2>
         </div>
         <div class="performance-side">
@@ -1481,24 +1495,13 @@
     </section>
 
     <section class="section impact-showcase" id="impact">
-      <div class="section-mark" aria-hidden="true">IMPACT</div>
+      <div class="section-mark" aria-hidden="true">NEXT</div>
       <header class="section-head reveal">
-        <div>
-          <div class="section-index"><span>07</span><i></i><span>Breeding record</span></div>
-          <h2 class="section-title">Breeding<br>impact.</h2>
-        </div>
-        <div class="impact-aside">
-          <p class="section-note"><b>Generational reach</b>One verified record connects every litter, offspring result and export market to the wider Doberman network.</p>
-        </div>
+        <div><div class="section-index"><span>08</span><i></i><span>Connected descendants</span></div><h2 class="section-title">Lineage<br>forward.</h2></div>
+        <div class="impact-aside"><p class="section-note"><b>No competitive counters</b>Notable progeny may be shown by name. Descendant counts are derived only from records actually connected inside Doberman Index.</p></div>
       </header>
       <div class="section-content impact-content reveal">
-        <div class="impact-action-row">
-          <div>
-            <p class="impact-intro-copy">Breeding outcomes remain connected to the litters, descendants and countries that shaped the record.</p>
-            <div class="impact-tags"><span>Verified lineage</span><span>Indexed offspring</span><span>Global record</span></div>
-          </div>
-          <a class="impact-cta" href="#related">Explore offspring <span>→</span></a>
-        </div>
+        <div class="impact-action-row"><div><p class="impact-intro-copy">The record follows meaningful lineage connections without asking owners to estimate litter totals, offspring totals or export reach.</p><div class="impact-tags"><span>Named progeny</span><span>Connected descendants</span><span>Derived counts only</span></div></div><a class="impact-cta" href="#related">Explore connections <span>→</span></a></div>
         <div class="metric-grid" id="reproductionRail"></div>
       </div>
     </section>
@@ -1507,12 +1510,21 @@
       <div class="section-mark" aria-hidden="true">LINK</div>
       <header class="section-head reveal">
         <div>
-          <div class="section-index"><span>08</span><i></i><span>Profile connections</span></div>
+          <div class="section-index"><span>09</span><i></i><span>Profile connections</span></div>
           <h2 class="section-title">Related<br>Dobermans.</h2>
         </div>
         <p class="section-note"><b>Living network</b>Parents, littermates and directly connected indexed Dobermans stay one tap away.</p>
       </header>
       <div class="section-content slider reveal" id="relatedRail"></div>
+    </section>
+
+
+    <section class="section performance-showcase" id="breeding-lens">
+      <header class="section-head reveal">
+        <div><div class="section-index"><span>10</span><i></i><span>Decision context</span></div><h2 class="section-title">Breeding<br>lens.</h2></div>
+        <div class="performance-side"><p class="section-note"><b>Explainable context</b>Four lenses organize what the current record suggests to preserve, complement, watch and still learn. They are guidance, not a breeding verdict.</p></div>
+      </header>
+      <div class="section-content metric-grid reveal" id="breedingLensRail"></div>
     </section>
 
     <section class="section pairing-section" id="pairing">
@@ -1522,7 +1534,7 @@
           <h2 class="pairing-title">Pairing<br>insight.</h2>
         </div>
         <div class="pairing-copy">
-          <p>Select one indexed male and compare both profiles through genetics, structure, temperament and breeding goals.</p>
+          <p>Select one indexed male to calculate pedigree relationship and projected pedigree COI, then compare health, structure, temperament, performance and breeding goals in one explainable analysis.</p>
           <div class="pairing-search">
             <input id="pairingInput" type="search" placeholder="Search indexed male" aria-label="Search indexed male">
             <button id="pairingBtn" type="button" aria-label="Select indexed male">↗</button>
@@ -1535,26 +1547,26 @@
       <div class="section-mark services-tools-word" aria-hidden="true">TOOLS</div>
       <header class="section-head reveal">
         <div>
-          <div class="section-index"><span>10</span><i></i><span>Profile actions</span></div>
+          <div class="section-index"><span>12</span><i></i><span>Optional analyses &amp; promotion</span></div>
           <h2 class="section-title">Focused<br>services.</h2>
         </div>
-        <p class="section-note"><b>Decision tools</b>Focused reports for pairing decisions, bloodline review, pedigree presentation and litter promotion.</p>
+        <p class="section-note"><b>The €149 record is complete on its own</b>These are optional new analyses or promotional deliverables — core pedigree intelligence and Breeding Lens are included in the record build.</p>
       </header>
 
       <div class="section-content services-grid reveal">
         <button class="service-card" type="button">
-          <div class="service-num">01</div><h3><span class="service-title-line">Compatibility</span> <span class="service-title-line">Report</span></h3>
-          <p>Structured genetic, temperament and goal-alignment analysis for the selected pairing.</p>
+          <div class="service-num">01</div><h3><span class="service-title-line">Pairing</span> <span class="service-title-line">Intelligence</span></h3>
+          <p>Projected pedigree COI, shared ancestry and multidimensional comparison for one selected pairing.</p>
           <div class="service-pricing"><span class="service-fee-label">One-time fee</span><span class="service-price">€59</span></div>
         </button>
         <button class="service-card" type="button">
           <div class="service-num">02</div><h3><span class="service-title-line">Breeding Decision</span> <span class="service-title-line">Report</span></h3>
-          <p>Expanded pairing interpretation, risk flags and decision-focused guidance.</p>
+          <p>Expanded written interpretation of one pairing, including uncertainty, conflicts, watch points and alternatives.</p>
           <div class="service-pricing"><span class="service-fee-label">One-time fee</span><span class="service-price">€149</span></div>
         </button>
         <button class="service-card" type="button">
-          <div class="service-num">03</div><h3><span class="service-title-line">Multi-Generation</span> <span class="service-title-line">Line Analysis</span></h3>
-          <p>Pedigree concentration, repeated ancestors, line patterns and strategic breeding signals.</p>
+          <div class="service-num">03</div><h3><span class="service-title-line">Deep Lineage</span> <span class="service-title-line">Analysis</span></h3>
+          <p>Extended multi-generation review beyond the standard record: concentration paths, recurrent ancestors and lineage context.</p>
           <div class="service-pricing"><span class="service-fee-label">One-time fee</span><span class="service-price">€249</span></div>
         </button>
         <button class="service-card" type="button">
@@ -1570,7 +1582,7 @@
         <div class="services-monolith">
           <div class="services-monolith-editorial">
             <div class="services-monolith-infinity" aria-label="One to infinity"><strong>1</strong><i>→</i><strong>∞</strong></div>
-            <p class="services-monolith-message">One dog. One verified record. A living network.</p>
+            <p class="services-monolith-message">One Doberman. One structured record. A living network.</p>
           </div>
         </div>
       </div>
@@ -1724,6 +1736,8 @@
       const temperament=dog.temperament||{};
       const performance=dog.performance||{};
       const reproduction=dog.reproduction||{};
+      const pedigreeIntelligence=dog.pedigree_intelligence||{};
+      const breedingLens=dog.breeding_lens||{};
       const media=dog.media||{};
       const publication=dog.publication||{};
       const legacyDeceased=identity.life_stage==="deceased";
@@ -1741,7 +1755,7 @@
       const markers=health.dcm_markers||{};
       const mortality=health.mortality||{};
       const healthView={DM:testView(health.dm,"Genetic result"),vWD:testView(health.vwd,"Genetic result"),HD:testView(health.hd,"Hip dysplasia"),ED:testView(health.ed,"Elbow dysplasia"),"DCM clinical":{value:present(clinical.status,"Not submitted"),sub:clinicalSub},Thyroid:testView(health.thyroid,"Latest submitted result"),Eyes:testView(health.eyes,"Latest submitted result")};
-      if(isDeceased&&mortality.cause_disclosure==="public"&&mortality.cause)healthView["Cause of death"]={value:present(mortality.cause),sub:present(mortality.evidence_source,"Submitted for review")};
+      if(isDeceased&&mortality.cause_disclosure==="public"&&mortality.cause)healthView["Cause of death"]={value:present(mortality.cause),sub:"Owner reported"};
       const registeredDisplayName=displayRegisteredName(identity.registered_name||recordId);
       return {
         name:registeredDisplayName,kennel:present(displayKennelName(identity.kennel_name),identity.kennel_id||"Independent"),country:present(identity.country),
@@ -1752,7 +1766,9 @@
         structure:{Type:present(structure.type),Head:present(structure.head),Body:present(structure.body),Angulation:present(structure.angulation),Movement:present(structure.movement),Balance:present(structure.balance)},
         temperament:{Stability:present(temperament.stability),Drive:present(temperament.drive),"Social behaviour":present(temperament.social_behaviour),Defense:present(temperament.defense),Confidence:present(temperament.confidence),Evaluator:titleCase(temperament.evaluator)},
         performance:{Shows:numberOrDash(performance.shows_count),Titles:array(performance.titles).length,"Working exams":array(performance.working_exams).length,Sports:array(performance.sports).length},
-        reproduction:{Litters:numberOrDash(reproduction.litters_count),Offspring:numberOrDash(reproduction.offspring_count),"Champion offspring":numberOrDash(reproduction.champion_offspring_count),"Export countries":array(reproduction.export_countries).length},
+        pedigreeIntelligence:{"Pedigree COI": pedigreeIntelligence.coi_percent != null ? `${Number(pedigreeIntelligence.coi_percent).toFixed(2)}%` : "Pending mapping","Completeness": pedigreeIntelligence.completeness_percent != null ? `${Number(pedigreeIntelligence.completeness_percent).toFixed(0)}%` : "Pending mapping","Repeated ancestors": pedigreeIntelligence.repeated_ancestors_count ?? "—","Unique ancestors": pedigreeIntelligence.unique_ancestors_count ?? "—"},
+        reproduction: (()=>{ const named=array(reproduction.notable_offspring).slice(0,2); const connected=registryRecords.filter(r=>r.entity_type==="doberman"&&(r.sire_id===recordId||r.dam_id===recordId)); return {"Notable progeny": named.length?named.join(" · "):"—","Connected descendants":connected.length,"Connected litters":array(reproduction.litter_ids).length,"Record basis":connected.length?"Index-derived":"Named only"}; })(),
+        breedingLens:{Preserve:present(breedingLens.preserve,"Generated after pedigree mapping"),Complement:present(breedingLens.complement,"Generated after record review"),Watch:present(breedingLens.watch,"Generated after record review"),Unknown:present(breedingLens.unknown,"Missing data remain explicit")},
         bloodline:buildBloodline(parentage,parentIdentities),gallery:buildGallery(media),related:buildRelated(recordId,parentage,reproduction),
         lastUpdated:present(publication.last_updated_label,formatDate(record.updated_at))
       };
@@ -1794,7 +1810,7 @@
     }
 
     function metrics(id,data,highlight=1){
-      const captions={Shows:"documented entries",Titles:"championship record","Working exams":"submitted exams",Sports:"active disciplines",Litters:"verified matings",Offspring:"indexed descendants","Champion offspring":"documented champions","Export countries":"international reach"};
+      const captions={Shows:"submitted entries",Titles:"championship record","Working exams":"submitted exams",Sports:"active disciplines","Notable progeny":"owner-named highlight","Connected descendants":"index-derived","Connected litters":"index-derived","Record basis":"source model","Pedigree COI":"known ancestry","Completeness":"known pedigree slots","Repeated ancestors":"within analysed depth","Unique ancestors":"within analysed depth",Preserve:"record context",Complement:"record context",Watch:"record context",Unknown:"explicit uncertainty"};
       const badges={Shows:"Show",Titles:"Title","Working exams":"Exam",Sports:"Sport"};
       byId(id).innerHTML=Object.entries(data).map(([k,v],i)=>`<div class="metric ${i===highlight?"highlight":""}" data-initial="${escapeHTML(k.charAt(0))}" data-caption="${escapeHTML(captions[k]||"submitted record")}"><span class="metric-badge">${escapeHTML(badges[k]||"Record")}</span><strong>${escapeHTML(v)}</strong><em>${escapeHTML(k)}</em></div>`).join("");
     }
@@ -2007,7 +2023,7 @@
       await window.DISEO.applyRecord(profileData.core.profileId,repoRoot);
       byId("footerProfileId").textContent=profileData.core.profileId;
       byId("updated").textContent=`Last updated: ${profileData.lastUpdated}`;
-      core();gallery();anchorMovement();bloodline(3);health();surfaces("structureRail",profileData.structure);surfaces("temperamentRail",profileData.temperament);metrics("performanceRail",profileData.performance,1);metrics("reproductionRail",profileData.reproduction,1);related();
+      core();gallery();anchorMovement();bloodline(3);metrics("pedigreeIntelligenceRail",profileData.pedigreeIntelligence,1);health();surfaces("structureRail",profileData.structure);surfaces("temperamentRail",profileData.temperament);metrics("performanceRail",profileData.performance,1);metrics("reproductionRail",profileData.reproduction,1);related();metrics("breedingLensRail",profileData.breedingLens,1);
       installHorizontalRailScrollbars();
     }
 

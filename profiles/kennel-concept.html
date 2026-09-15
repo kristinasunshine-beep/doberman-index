@@ -1360,8 +1360,8 @@
           <div class="metric-grid" id="kennelLitterRail">
             <article class="metric" data-caption="Generated from linked litter IDs"><strong data-system-metric="litters">—</strong><em>Published litters</em></article>
             <article class="metric" data-caption="Generated from published profiles"><strong data-system-metric="indexed_offspring">—</strong><em>Indexed offspring</em></article>
-            <article class="metric" data-caption="Generated from verified title records"><strong data-system-metric="champion_offspring">—</strong><em>Champion offspring</em></article>
-            <article class="metric" data-caption="Reported in connected Doberman profiles"><strong data-system-metric="export_countries">—</strong><em>Export countries</em></article>
+            <article class="metric" data-caption="Generated from connected title records"><strong data-system-metric="champion_offspring">—</strong><em>Champion offspring</em></article>
+            <article class="metric" data-caption="Generated from connected profile countries"><strong data-system-metric="countries_represented">—</strong><em>Countries represented</em></article>
           </div>
           <div class="linked-record-list" id="kennelLitterList" aria-live="polite"><span>Linked litter records</span><strong>No published litter records linked</strong></div>
         </div>
@@ -1371,10 +1371,10 @@
         <div class="section-mark" aria-hidden="true">HEALTH</div>
         <header class="section-head">
           <div>
-            <div class="section-index"><span>04</span><i></i><span>Evidence standard</span></div>
+            <div class="section-index"><span>04</span><i></i><span>Health record</span></div>
             <h2 class="section-title">Health,<br>record by record.</h2>
           </div>
-          <p class="section-note"><b>Profile-level evidence</b>The kennel view summarizes documented testing while every result remains attached to the individual Doberman.</p>
+          <p class="section-note"><b>Profile-level results</b>The kennel view summarizes submitted health results while every value remains attached to the individual Doberman record.</p>
         </header>
         <div class="section-content">
           <div class="slider" id="kennelHealthRail">
@@ -1382,7 +1382,7 @@
             <article class="surface-card" tabindex="0"><span class="key">Genetics</span><strong class="value">DCM 1–5</strong><span class="sub"><b data-system-metric="genetic_results">—</b> linked · Submitted genetic markers</span></article>
             <article class="surface-card" tabindex="0"><span class="key">Orthopedic</span><strong class="value">Hips + Elbows</strong><span class="sub"><b data-system-metric="orthopedic_results">—</b> linked · Original result preserved</span></article>
             <article class="surface-card" tabindex="0"><span class="key">Clinical</span><strong class="value">Additional tests</strong><span class="sub"><b data-system-metric="clinical_results">—</b> linked · Where evidence is supplied</span></article>
-            <article class="surface-card" tabindex="0"><span class="key">Evidence</span><strong class="value">Source backed</strong><span class="sub"><b data-system-metric="evidence_files">—</b> files · Claim and document stay linked</span></article>
+            <article class="surface-card" tabindex="0"><span class="key">Mortality</span><strong class="value">Recorded</strong><span class="sub"><b data-system-metric="mortality_records">—</b> deceased records with a submitted cause</span></article>
           </div>
         </div>
       </section>
@@ -1466,7 +1466,7 @@
           <div class="services-monolith">
             <div class="services-monolith-editorial">
               <div class="services-monolith-infinity" aria-label="One to infinity"><strong>1</strong><i>→</i><strong>∞</strong></div>
-              <p class="services-monolith-message">One kennel. One verified record. A living network.</p>
+              <p class="services-monolith-message">One kennel. Connected records. A living network.</p>
             </div>
           </div>
         </div>
@@ -1635,7 +1635,6 @@
       const titles=dogs.reduce((total,dog)=>total+asList(dog.performance?.titles).length,0);
       const workingResults=dogs.reduce((total,dog)=>total+asList(dog.performance?.working_exams).length+asList(dog.performance?.sports).length,0);
       const countriesRepresented=new Set(dogs.map(dog=>dog.identity?.country).filter(Boolean)).size;
-      const exportCountries=new Set(dogs.flatMap(dog=>asList(dog.reproduction?.export_countries))).size;
       const availablePuppies=litterRecords.reduce((total,item)=>total+asList(item.litter?.available_puppy_ids).length,0);
       const litterIdSet=new Set(litterRecords.map(item=>item.record_id));
       const indexedOffspring=dogRecords.filter(item=>litterIdSet.has(item.doberman?.parentage?.litter_id)).length;
@@ -1644,8 +1643,8 @@
       const geneticResults=dogs.reduce((total,dog)=>total+Object.values(dog.health?.dcm_markers||{}).filter(item=>hasValue(item?.result)).length,0);
       const orthopedicResults=dogs.reduce((total,dog)=>total+[dog.health?.hd,dog.health?.ed].filter(item=>hasValue(item?.result)).length,0);
       const clinicalResults=dogs.reduce((total,dog)=>total+[dog.health?.dm,dog.health?.vwd,dog.health?.thyroid,dog.health?.eyes].filter(item=>hasValue(item?.result)).length,0);
-      const evidenceFiles=dogRecords.reduce((total,item)=>total+countEvidence(item.doberman),0);
-      const metrics={indexed_dobermans:indexedDobermans,active_dobermans:activeDobermans,champions,titles,working_results:workingResults,countries_represented:countriesRepresented,export_countries:exportCountries,available_puppies:availablePuppies,litters:litterRecords.length,indexed_offspring:indexedOffspring,champion_offspring:championOffspring,cardiac_records:cardiacRecords,genetic_results:geneticResults,orthopedic_results:orthopedicResults,clinical_results:clinicalResults,evidence_files:evidenceFiles};
+      const mortalityRecords=dogs.filter(dog=>dog.identity?.life_status==='deceased'&&hasValue(dog.health?.mortality?.cause)).length;
+      const metrics={indexed_dobermans:indexedDobermans,active_dobermans:activeDobermans,champions,titles,working_results:workingResults,countries_represented:countriesRepresented,available_puppies:availablePuppies,litters:litterRecords.length,indexed_offspring:indexedOffspring,champion_offspring:championOffspring,cardiac_records:cardiacRecords,genetic_results:geneticResults,orthopedic_results:orthopedicResults,clinical_results:clinicalResults,mortality_records:mortalityRecords};
       Object.entries(metrics).forEach(([name,value])=>setMetric(name,value));
 
       const dogRail=document.getElementById('kennelDobermanRail');

@@ -1295,6 +1295,19 @@
                 "retired",
                 "unknown"
               ]
+            },
+            "notable_offspring": {
+              "type": "array",
+              "maxItems": 2,
+              "items": {
+                "type": "string"
+              }
+            },
+            "offspring_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           },
           "additionalProperties": false
@@ -1466,6 +1479,102 @@
               "enum": [
                 "automatic",
                 "manual"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "pedigree_intelligence": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "coi_percent": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "completeness_percent": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "unique_ancestors_count": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "repeated_ancestors_count": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "generation_depth": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "calculation_method": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "note": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "breeding_lens": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "preserve": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "complement": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "watch": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "unknown": {
+              "type": [
+                "string",
+                "null"
               ]
             }
           },

@@ -25,10 +25,7 @@
   let saveTimer;
 
   const fileFields = [
-    { name: "pedigree_file", role: "pedigree", base: "pedigree" },
-    { name: "health_evidence", role: "evidence", base: "health-evidence", multiple: true },
-    { name: "mortality_evidence", role: "evidence_mortality", base: "mortality-evidence" },
-    { name: "hero_photo", role: "hero", base: "main-photo" },
+    { name: "pedigree_file", role: "pedigree", base: "pedigree" },    { name: "hero_photo", role: "hero", base: "main-photo" },
     { name: "head_photo", role: "head", base: "head-photo" },
     { name: "profile_photo", role: "profile", base: "side-profile" },
     { name: "stack_photo", role: "stack", base: "standing-pose" },
@@ -225,7 +222,7 @@
     const selectedFiles = fileFields.reduce((count, config) => count + form.elements.namedItem(config.name).files.length, 0);
     const healthFields = ["dm", "vwd", "hd", "ed", "thyroid", "eyes", "dcm1", "dcm2", "dcm3", "dcm4", "dcm5", "dcm_clinical_status"];
     const healthResults = healthFields.filter((name) => value(name)).length;
-    const hasPedigree = Boolean(value("sire_name") || value("dam_name") || form.elements.namedItem("pedigree_file").files.length);
+    const hasPedigree = Boolean(form.elements.namedItem("pedigree_file").files.length);
     const achievementCount = listValue("titles").length + listValue("working_exams").length + listValue("sports").length;
     const structureFields = ["structure_type","structure_head","structure_body","structure_angulation","structure_movement","structure_balance"];
     const temperamentFields = ["stability","drive","social_behaviour","defense","confidence"];
@@ -256,11 +253,7 @@
     if (isDeceased) form.elements.namedItem("stud_service_status").value = "unknown";
     if (!isDeceased) {
       ["date_of_death", "year_of_death", "cause_of_death"].forEach((name) => { form.elements.namedItem(name).value = ""; });
-      form.elements.namedItem("cause_disclosure").value = "not_provided";
-      const evidence = form.elements.namedItem("mortality_evidence");
-      evidence.value = "";
-      updateFileLabel(evidence);
-    }
+  }
   }
 
   function buildCanonicalRecord() {
@@ -306,11 +299,11 @@
         },
         parentage: {
           sire_id: null,
-          sire_name: value("sire_name") || null,
-          sire_registration: value("sire_registration") || null,
+          sire_name: null,
+          sire_registration: null,
           dam_id: null,
-          dam_name: value("dam_name") || null,
-          dam_registration: value("dam_registration") || null,
+          dam_name: null,
+          dam_registration: null,
           litter_id: null,
           pedigree_source: form.elements.namedItem("pedigree_file").files.length ? "owner_upload" : null,
           pedigree_file: null,
@@ -338,8 +331,8 @@
           },
           mortality: {
             cause: isDeceased ? (value("cause_of_death") || null) : null,
-            cause_disclosure: isDeceased ? (value("cause_disclosure") || "not_provided") : "not_provided",
-            evidence_source: isDeceased && form.elements.namedItem("mortality_evidence").files.length ? "owner_upload" : null,
+            cause_disclosure: isDeceased && value("cause_of_death") ? "public" : "not_provided",
+            source_type: isDeceased && value("cause_of_death") ? "owner_reported" : null,
             evidence_file: null,
           },
         },
@@ -359,7 +352,7 @@
           social_behaviour: value("social_behaviour") || null,
           defense: value("defense") || null,
           confidence: value("confidence") || null,
-          evaluator: value("temperament_evaluator") || "not_declared",
+          evaluator: ["owner", "breeder", "trainer"].includes(value("relationship")) ? value("relationship") : "not_declared",
           evidence: evidenceBlock(),
         },
         performance: {
@@ -370,11 +363,9 @@
           evidence_files: [],
         },
         reproduction: {
-          litters_count: isPuppy ? null : numberValue("litters_count"),
-          offspring_count: isPuppy ? null : numberValue("offspring_count"),
-          champion_offspring_count: isPuppy ? null : numberValue("champion_offspring_count"),
-          export_countries: isPuppy ? [] : listValue("export_countries"),
+          notable_offspring: isPuppy ? [] : listValue("notable_offspring").slice(0, 2),
           litter_ids: [],
+          offspring_ids: [],
           availability: isAdultMale ? (value("stud_service_status") || "unknown") : "not_applicable",
         },
         puppy_lifecycle: {
@@ -412,7 +403,7 @@
       const input = form.elements.namedItem(config.name);
       Array.from(input.files || []).forEach((file, index) => {
         const suffix = config.multiple ? `-${String(index + 1).padStart(2, "0")}` : "";
-        const packageName = `uploads/${config.role.startsWith("evidence") ? "health/" : ""}${config.base}${suffix}${safeExtension(file)}`;
+        const packageName = `uploads/${config.role === "pedigree" ? "pedigree/" : "media/"}${config.base}${suffix}${safeExtension(file)}`;
         uploads.push({
           role: config.role,
           package_file: packageName,
