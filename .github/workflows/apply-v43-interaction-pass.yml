@@ -23,19 +23,15 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
           s=Path('profiles/male.html').read_text(encoding='utf-8')
           required=['bloodline-breadcrumb','data-bloodline-path','function pedigreeIntelligence()','function breedingLens()','width:max-content;min-width:220px']
           missing=[x for x in required if x not in s]
           if missing: raise SystemExit('Missing v4.3 interaction markers: '+', '.join(missing))
-          PY
-          node --check <(python - <<'PY'
-          from pathlib import Path
-          import re
-          s=Path('profiles/male.html').read_text(encoding='utf-8')
           scripts=re.findall(r'<script>(.*?)</script>',s,re.S)
-          print('\n'.join(scripts))
+          Path('/tmp/profile-inline.js').write_text('\n'.join(scripts),encoding='utf-8')
           PY
-          )
+          node --check /tmp/profile-inline.js
       - name: Commit interaction snapshot
         run: |
           git config user.name "github-actions[bot]"
