@@ -1,0 +1,49 @@
+name: Apply v4.3 Interaction Pass
+
+on:
+  push:
+    branches: [v4.3-record-intelligence]
+    paths:
+      - "scripts/apply_v43_interaction_pass.py"
+      - ".github/workflows/apply-v43-interaction-pass.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply-interaction-pass:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply interaction pass
+        run: python scripts/apply_v43_interaction_pass.py
+      - name: Validate browser surface
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('profiles/male.html').read_text(encoding='utf-8')
+          required=['bloodline-breadcrumb','data-bloodline-path','function pedigreeIntelligence()','function breedingLens()','width:max-content;min-width:220px']
+          missing=[x for x in required if x not in s]
+          if missing: raise SystemExit('Missing v4.3 interaction markers: '+', '.join(missing))
+          PY
+          node --check <(python - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('profiles/male.html').read_text(encoding='utf-8')
+          scripts=re.findall(r'<script>(.*?)</script>',s,re.S)
+          print('\n'.join(scripts))
+          PY
+          )
+      - name: Commit interaction snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add profiles/male.html
+          if git diff --cached --quiet; then
+            echo "Interaction pass already current"
+            exit 0
+          fi
+          git commit -m "preview: apply v4.3 interaction pass"
+          git push
