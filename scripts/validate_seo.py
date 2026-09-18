@@ -154,7 +154,7 @@ if sitemap is not None:
 robots=(ROOT/"robots.txt").read_text(encoding="utf-8")
 for token in ("User-agent: *","Disallow: /data/","Disallow: /work/","Disallow: /SEO-STRATEGY.md","Disallow: /records/README.md",f"Sitemap: {ORIGIN}/sitemap.xml"):
     if token not in robots:errors.append(f"robots.txt missing: {token}")
-for relative in ("profile.html","profiles/male/index.html","profiles/female/index.html","profiles/puppy.html","profiles/kennel-concept.html","profiles/litter.html"):
+for relative in ("profile.html","male.html","female.html","kennel.html","puppy.html","profiles/male.html","profiles/female.html","profiles/male/index.html","profiles/female/index.html","profiles/puppy.html","profiles/kennel-concept.html","profiles/litter.html"):
     page=parse_page(ROOT/relative)
     if page.meta.get("robots")!=["noindex,follow"]:errors.append(f"compatibility/prototype page must be noindex: {relative}")
 
