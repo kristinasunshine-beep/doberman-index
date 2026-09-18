@@ -51,15 +51,17 @@ for token in (
 for token in ('"planned_date"', '"puppy_ids"', '"available_puppy_ids"', '"editorial_status"', '"media": {"cover"'):
     if token not in builder_text:
         errors.append(f"registry litter projection missing: {token}")
+# Adult V27 profiles retain graph-derived litter connections. The accepted Puppy and Kennel
+# prototypes intentionally present connector IDs/summary state without forcing legacy reverse-link markup.
 for page_name, page_text, tokens in (
     ("male", male_page, ("array(reproduction.litter_ids)", 'record.entity_type==="litter"')),
     ("female", female_page, ("array(reproduction.litter_ids)", 'record.entity_type==="litter"')),
-    ("puppy", puppy_page, ('["Litter",parentage.litter_id', '../profile.html?id=${encodeURIComponent(linkedId)}')),
-    ("kennel", kennel_page, ('chip.href=`../profile.html?id=${encodeURIComponent(item.record_id)}`',)),
+    ("puppy", puppy_page, ('["Litter",parentage.litter_id', 'location.replace(`../profile.html?id=${encodeURIComponent(record.record_id)}`)')),
+    ("kennel", kennel_page, ("litterRecords.forEach(item=>", "linked-litter-links", "relatedDobermanCard(summary)")),
 ):
     for token in tokens:
         if token not in page_text:
-            errors.append(f"{page_name} profile missing reverse litter link: {token}")
+            errors.append(f"{page_name} profile missing accepted litter integration token: {token}")
 
 schema = json.loads((ROOT / "schemas" / "registry.schema.json").read_text(encoding="utf-8"))
 litter_schema = schema.get("$defs", {}).get("litter", {})
