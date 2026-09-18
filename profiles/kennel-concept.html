@@ -1668,11 +1668,17 @@
       });
     }
 
+    function kennelDeskEscape(value){
+      return String(value??"").replace(/[&<>'"]/g,function(char){
+        return {"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[char];
+      });
+    }
+
     function kennelDeskRows(target,rows){
       const host=document.getElementById(target);
       if(!host)return;
       host.innerHTML=rows.filter(function(row){return row&&row.label;}).map(function(row){
-        return "<div><span>"+escapeHTML(row.label)+"</span><strong>"+escapeHTML(row.value||"Not provided")+"</strong>"+(row.sub?"<small>"+escapeHTML(row.sub)+"</small>":"")+"</div>";
+        return "<div><span>"+kennelDeskEscape(row.label)+"</span><strong>"+kennelDeskEscape(row.value||"Not provided")+"</strong>"+(row.sub?"<small>"+kennelDeskEscape(row.sub)+"</small>":"")+"</div>";
       }).join("");
     }
 
@@ -1975,9 +1981,12 @@
     });
 
     installKennelRecordDesk();
-    const kennelDeskObserver=new MutationObserver(function(){hydrateKennelRecordDesk();});
-    kennelDeskObserver.observe(document.querySelector(".kennel-profile-flow"),{subtree:true,childList:true,characterData:true});
-    requestAnimationFrame(function(){hydrateKennelRecordDesk();setTimeout(hydrateKennelRecordDesk,250);setTimeout(hydrateKennelRecordDesk,900);});
+    requestAnimationFrame(function(){
+      hydrateKennelRecordDesk();
+      setTimeout(hydrateKennelRecordDesk,250);
+      setTimeout(hydrateKennelRecordDesk,900);
+      setTimeout(hydrateKennelRecordDesk,2200);
+    });
 
   </script>
 </body>
