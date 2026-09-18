@@ -214,6 +214,45 @@
       .ticker-track{animation:none}
       .reveal{opacity:1;transform:none}
     }
+
+    /* REVIEW — Puppy Record Desk, adapted from the Dante hybrid architecture.
+       Original source sections remain in the DOM as data renderers and are only visually consolidated. */
+    #health,#structure,#temperament,#performance{display:none!important}
+
+    .puppy-record-desk{position:relative;overflow:hidden;padding-top:clamp(92px,8vw,132px)!important;padding-bottom:clamp(88px,7vw,118px)!important;background:#111;color:#f5f5ef}
+    .puppy-record-desk .record-desk-ghost{position:absolute;right:-.04em;top:70px;color:#1d1d1d;font-size:clamp(180px,23vw,360px);font-weight:900;line-height:.75;letter-spacing:-.09em;pointer-events:none}
+    .puppy-record-desk .section-head{position:relative;z-index:2;margin-bottom:56px}
+    .puppy-record-desk .section-index,.puppy-record-desk .section-title{color:#fff}
+    .puppy-record-desk .section-note{color:#969696}.puppy-record-desk .section-note b{color:#fff}
+    .puppy-record-desk .record-desk-shell{position:relative;z-index:2;display:grid;grid-template-columns:minmax(300px,34%) minmax(0,66%);gap:0;margin:0 var(--pad);min-height:690px;border:1px solid #333;background:#161616}
+    .puppy-record-desk .record-desk-visual{position:sticky;top:70px;align-self:start;min-height:688px;display:flex;flex-direction:column;border-right:1px solid #343434;background:#0e0e0e}
+    .puppy-record-desk .record-desk-image{height:360px;overflow:hidden;background:#1b1b1b}
+    .puppy-record-desk .record-desk-image img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}
+    .puppy-record-desk .record-desk-identity{padding:26px 26px 18px;border-top:5px solid var(--acid)}
+    .puppy-record-desk .record-desk-identity span{font:800 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.1em;color:#9d9d9d;text-transform:uppercase}
+    .puppy-record-desk .record-desk-identity h3{margin:13px 0 8px;color:#fff;font-size:clamp(34px,3.3vw,50px);line-height:.9;letter-spacing:-.06em}
+    .puppy-record-desk .record-desk-identity p{margin:0;color:#bdbdbd;font-size:12px}
+    .puppy-record-desk .record-desk-anchor{display:grid;gap:8px;margin-top:auto;padding:18px 26px 22px;border-top:1px solid #2e2e2e}
+    .puppy-record-desk .record-desk-anchor span{color:#858585;font-size:10px}
+    .puppy-record-desk .record-desk-workspace{min-width:0;padding:0 30px 30px}
+    .puppy-record-desk .record-desk-tabs{display:flex;gap:0;overflow-x:auto;margin-bottom:0;border-bottom:1px solid #373737;scrollbar-width:none}
+    .puppy-record-desk .record-desk-tabs::-webkit-scrollbar{display:none}
+    .puppy-record-desk .record-desk-tabs button{flex:0 0 auto;padding:22px 15px 18px;border:0;border-bottom:3px solid transparent;background:none;color:#777;font:750 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.07em;text-transform:uppercase;cursor:pointer}
+    .puppy-record-desk .record-desk-tabs button:first-child{padding-left:0}
+    .puppy-record-desk .record-desk-tabs button.is-active{color:#fff;border-bottom-color:var(--acid)}
+    .puppy-record-desk .record-desk-panel{padding-top:34px}.puppy-record-desk .record-desk-panel[hidden]{display:none!important}.puppy-record-desk .record-desk-panel.is-active{display:block}
+    .puppy-record-desk .desk-panel-head{display:grid;grid-template-columns:112px minmax(0,1fr);gap:14px 26px;align-items:start;margin-bottom:26px}
+    .puppy-record-desk .desk-panel-head>span{color:var(--acid);font:800 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.1em;text-transform:uppercase}
+    .puppy-record-desk .desk-panel-head h3{margin:0;color:#fff;font-size:clamp(28px,2.7vw,42px);line-height:.94;letter-spacing:-.055em}
+    .puppy-record-desk .desk-panel-head p{grid-column:2;margin:0;max-width:58ch;color:#929292;font-size:11px;line-height:1.5}
+    .puppy-record-desk .desk-ledger{border-top:1px solid #3b3b3b}
+    .puppy-record-desk .desk-ledger>div{display:grid;grid-template-columns:minmax(145px,.65fr) minmax(0,1.35fr);gap:22px;align-items:baseline;padding:14px 0;border-bottom:1px solid #303030}
+    .puppy-record-desk .desk-ledger span{color:#858585;font-size:9px;font-weight:700;letter-spacing:.045em;text-transform:uppercase}
+    .puppy-record-desk .desk-ledger strong{color:#fff;font-size:14px;font-weight:650;line-height:1.25}
+    .puppy-record-desk .desk-ledger small{grid-column:2;color:#777;font-size:9px;line-height:1.4;margin-top:-6px}
+    @media(max-width:900px){.puppy-record-desk .record-desk-shell{grid-template-columns:1fr}.puppy-record-desk .record-desk-visual{position:relative;top:auto;min-height:0;border-right:0;border-bottom:1px solid #343434;display:grid;grid-template-columns:40% 1fr}.puppy-record-desk .record-desk-image{height:300px;grid-row:1/3}.puppy-record-desk .record-desk-anchor{margin-top:0}}
+    @media(max-width:680px){.puppy-record-desk .record-desk-shell{margin:0 var(--pad)}.puppy-record-desk .record-desk-visual{display:block}.puppy-record-desk .record-desk-image{height:280px}.puppy-record-desk .record-desk-workspace{padding:0 18px 22px}.puppy-record-desk .record-desk-tabs{margin:0 -18px;padding:0 18px}.puppy-record-desk .desk-panel-head{grid-template-columns:1fr;gap:12px}.puppy-record-desk .desk-panel-head p{grid-column:1}.puppy-record-desk .desk-ledger>div{grid-template-columns:1fr;gap:5px;padding:13px 0}.puppy-record-desk .desk-ledger small{grid-column:1;margin-top:0}}
+
   </style>
 </head>
 <body>
@@ -300,6 +339,38 @@
         <p class="section-note"><b>Age-aware media</b>Each update can add the next comparable view without replacing the puppy’s earlier development record.</p>
       </header>
       <div class="section-content gallery-rail reveal" id="visualSlider"></div>
+    </section>
+
+    <section class="section puppy-record-desk" id="puppyRecordDesk">
+      <div class="record-desk-ghost" aria-hidden="true">RECORD</div>
+      <header class="section-head reveal">
+        <div>
+          <div class="section-index"><span>04</span><i></i><span>Compact record intelligence</span></div>
+          <h2 class="section-title">Puppy<br>record desk.</h2>
+        </div>
+        <p class="section-note"><b>One growing record. Five views.</b>Health, developing structure, early temperament and results are kept together while every entry retains its age, source and developmental context.</p>
+      </header>
+      <div class="record-desk-shell reveal">
+        <aside class="record-desk-visual">
+          <div class="record-desk-image"><img id="puppyDeskImage" alt="Puppy record desk view"></div>
+          <div class="record-desk-identity"><span id="puppyDeskCode">PUPPY RECORD</span><h3 id="puppyDeskName">—</h3><p id="puppyDeskMeta">—</p></div>
+          <div class="record-desk-anchor"><span id="puppyDeskRegistration">Registration · —</span><span id="puppyDeskKennel">Kennel · —</span><span id="puppyDeskBirth">Born · —</span></div>
+        </aside>
+        <div class="record-desk-workspace">
+          <div class="record-desk-tabs" role="tablist" aria-label="Puppy Record Desk views">
+            <button class="is-active" role="tab" aria-selected="true" data-puppy-desk-tab="overview">Overview</button>
+            <button role="tab" aria-selected="false" data-puppy-desk-tab="health">Health</button>
+            <button role="tab" aria-selected="false" data-puppy-desk-tab="structure">Structure</button>
+            <button role="tab" aria-selected="false" data-puppy-desk-tab="temperament">Temperament</button>
+            <button role="tab" aria-selected="false" data-puppy-desk-tab="performance">Results</button>
+          </div>
+          <div class="record-desk-panel is-active" data-puppy-desk-panel="overview" role="tabpanel"><div class="desk-panel-head"><span>01 / Overview</span><h3>Permanent identity, current stage.</h3><p>The profile number stays stable while availability, ownership and developmental evidence continue to change.</p></div><div class="desk-ledger" id="puppyDeskOverview"></div></div>
+          <div class="record-desk-panel" data-puppy-desk-panel="health" role="tabpanel" hidden><div class="desk-panel-head"><span>02 / Health</span><h3>Submitted, never assumed.</h3><p>Age-appropriate results remain attributable to their source and later evidence joins the same permanent record.</p></div><div class="desk-ledger" id="puppyDeskHealth"></div></div>
+          <div class="record-desk-panel" data-puppy-desk-panel="structure" role="tabpanel" hidden><div class="desk-panel-head"><span>03 / Structure</span><h3>Development stays explicit.</h3><p>The same controlled vocabulary as the adult profile is retained without presenting a growing puppy as a finished adult.</p></div><div class="desk-ledger" id="puppyDeskStructure"></div></div>
+          <div class="record-desk-panel" data-puppy-desk-panel="temperament" role="tabpanel" hidden><div class="desk-panel-head"><span>04 / Temperament</span><h3>Early traits keep their age and source.</h3><p>Developmental observations remain distinct from later adult temperament assessment.</p></div><div class="desk-ledger" id="puppyDeskTemperament"></div></div>
+          <div class="record-desk-panel" data-puppy-desk-panel="performance" role="tabpanel" hidden><div class="desk-panel-head"><span>05 / Results</span><h3>One evidence trail through every stage.</h3><p>Puppy achievements, shows, exams and sports remain separate entries that can continue into junior and adult records.</p></div><div class="desk-ledger" id="puppyDeskPerformance"></div></div>
+        </div>
+      </div>
     </section>
 
     <section class="section" id="health">
@@ -561,6 +632,70 @@
       if(!resizeObserver)addEventListener("resize",()=>updates.forEach(update=>update()));
     }
 
+
+    function installPuppyRecordDesk(){
+      const root=byId("puppyRecordDesk");
+      if(!root)return;
+      root.querySelectorAll("[data-puppy-desk-tab]").forEach(function(button){
+        if(button.dataset.bound==="true")return;
+        button.dataset.bound="true";
+        button.addEventListener("click",function(){
+          const key=button.dataset.puppyDeskTab;
+          root.querySelectorAll("[data-puppy-desk-tab]").forEach(function(tab){
+            const active=tab===button;
+            tab.classList.toggle("is-active",active);
+            tab.setAttribute("aria-selected",String(active));
+          });
+          root.querySelectorAll("[data-puppy-desk-panel]").forEach(function(panel){
+            const active=panel.dataset.puppyDeskPanel===key;
+            panel.classList.toggle("is-active",active);
+            panel.hidden=!active;
+          });
+        });
+      });
+    }
+
+    function puppyDeskRowsFrom(selector,itemSelector){
+      return Array.from(document.querySelectorAll(selector+" "+itemSelector)).map(function(item){
+        const label=(item.querySelector("span")||{}).textContent||"";
+        const value=(item.querySelector("strong")||{}).textContent||"Not submitted";
+        const sub=(item.querySelector("small")||{}).textContent||"";
+        return {label:label.trim(),value:value.trim(),sub:sub.trim()};
+      }).filter(function(row){return row.label;});
+    }
+
+    function renderPuppyDeskRows(target,rows){
+      const host=byId(target);
+      if(!host)return;
+      host.innerHTML=rows.map(function(row){
+        return "<div><span>"+escapeHTML(row.label)+"</span><strong>"+escapeHTML(row.value)+"</strong>"+(row.sub?"<small>"+escapeHTML(row.sub)+"</small>":"")+"</div>";
+      }).join("");
+    }
+
+    function hydratePuppyRecordDesk(identity,lifecycle,recordId,name){
+      const overview=[],seen=new Set();
+      document.querySelectorAll("#coreRail .core-chip").forEach(function(chip){
+        const label=((chip.querySelector("span")||{}).textContent||"").trim();
+        const value=((chip.querySelector("strong")||{}).textContent||"").trim();
+        const key=label+"::"+value;
+        if(label&&!seen.has(key)){seen.add(key);overview.push({label:label,value:value,sub:""});}
+      });
+      renderPuppyDeskRows("puppyDeskOverview",overview);
+      renderPuppyDeskRows("puppyDeskHealth",puppyDeskRowsFrom("#healthRail",".record-card"));
+      renderPuppyDeskRows("puppyDeskStructure",puppyDeskRowsFrom("#structureRail",".record-card"));
+      renderPuppyDeskRows("puppyDeskTemperament",puppyDeskRowsFrom("#temperamentRail",".record-card"));
+      renderPuppyDeskRows("puppyDeskPerformance",puppyDeskRowsFrom("#performanceRail",".record-card"));
+      const hero=byId("heroImage"),deskImage=byId("puppyDeskImage");
+      if(hero&&deskImage){deskImage.src=hero.src;deskImage.alt=name+" — puppy record desk view";}
+      byId("puppyDeskCode").textContent=recordId+" · "+String(lifecycle.current_status||"puppy").replace(/_/g," ").toUpperCase();
+      byId("puppyDeskName").textContent=name;
+      byId("puppyDeskMeta").textContent=[titleCase(identity.sex),"Puppy",identity.country].filter(Boolean).join(" · ");
+      byId("puppyDeskRegistration").textContent="Registration · "+safe(identity.registration_authority)+" / "+safe(identity.registration_number);
+      byId("puppyDeskKennel").textContent="Kennel · "+(displayKennelName(identity.kennel_name)||"Not submitted");
+      byId("puppyDeskBirth").textContent="Born · "+formatDate(identity.date_of_birth);
+      installPuppyRecordDesk();
+    }
+
     async function initialize(){
       const isPublishedId=/^DI-[MF]-\d{6}$/.test(requestedId) && requestedId!=="DI-F-000000";
       const dataUrl=isPublishedId?`../data/dobermans/${encodeURIComponent(requestedId)}.json`:PROTOTYPE_URL;
@@ -602,6 +737,7 @@
       byId("heroImage").alt=`${name} — puppy profile hero`;
       renderCore(identity,record.record_id); renderLifecycle(lifecycle); renderFamily(identity,puppy.parentage||{}); renderGallery(puppy.media||{},name);
       renderHealth(puppy.health||{}); renderStructure(puppy.structure||{}); renderTemperament(puppy.temperament||{}); renderPerformance(puppy.performance||{},lifecycle);
+      hydratePuppyRecordDesk(identity,lifecycle,record.record_id,name);
       installHorizontalRailScrollbars();
       document.title=`Doberman Index — ${name} / Puppy`;
     }
