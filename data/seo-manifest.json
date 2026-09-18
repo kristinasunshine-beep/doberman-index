@@ -4,8 +4,8 @@
   "generated_from_registry": "2026-09-11T13:00:49+00:00",
   "static_pages": {
     "/": {
-      "title": "Doberman Index · Connected Doberman Registry",
-      "description": "A structured, searchable registry connecting Dobermans, pedigrees, kennels, litters and bloodlines.",
+      "title": "Doberman Index",
+      "description": "A global registry that organizes Dobermans, pedigrees, and kennels into standardized, searchable profiles.",
       "canonical": "https://doberman-index.com/"
     },
     "/about.html": {

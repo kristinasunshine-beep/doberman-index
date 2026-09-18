@@ -1,0 +1,368 @@
+{
+  "schema_version": "1.0.0",
+  "root_records": [
+    "DI-M-000001"
+  ],
+  "nodes": {
+    "DI-M-000001": {
+      "record_id": "DI-M-000001",
+      "registered_name": "Dion Dante",
+      "registration_numbers": [
+        "JR 85729"
+      ],
+      "country": "Serbia",
+      "sex": "male",
+      "source_record_id": "DI-M-000001",
+      "sire_id": "DI-A-000001",
+      "dam_id": "DI-A-000002"
+    },
+    "DI-A-000001": {
+      "record_id": "DI-A-000001",
+      "registered_name": "Cowboy Lucky Luck di Altobello",
+      "registration_numbers": [
+        "JR 708334 Dob"
+      ],
+      "country": "Serbia",
+      "sex": "male",
+      "source_record_id": null,
+      "sire_id": "DI-A-000003",
+      "dam_id": "DI-A-000004"
+    },
+    "DI-A-000002": {
+      "record_id": "DI-A-000002",
+      "registered_name": "Felicita Flair von Ashanti Legende",
+      "registration_numbers": [
+        "JR 713394 Dob"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": "DI-A-000005",
+      "dam_id": "DI-A-000006"
+    },
+    "DI-A-000003": {
+      "record_id": "DI-A-000003",
+      "registered_name": "Beowulf",
+      "registration_numbers": [
+        "ROI 11/82055"
+      ],
+      "country": "",
+      "sex": "male",
+      "source_record_id": null,
+      "sire_id": "DI-A-000007",
+      "dam_id": "DI-A-000008"
+    },
+    "DI-A-000004": {
+      "record_id": "DI-A-000004",
+      "registered_name": "Freya Fleming di Altobello",
+      "registration_numbers": [
+        "JR 83377 Dob"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": "DI-A-000009",
+      "dam_id": "DI-A-000010"
+    },
+    "DI-A-000005": {
+      "record_id": "DI-A-000005",
+      "registered_name": "Tahi-Reme Max",
+      "registration_numbers": [
+        "MET 9579/10"
+      ],
+      "country": "",
+      "sex": "male",
+      "source_record_id": null,
+      "sire_id": "DI-A-000011",
+      "dam_id": "DI-A-000012"
+    },
+    "DI-A-000006": {
+      "record_id": "DI-A-000006",
+      "registered_name": "Veronika del Mediano",
+      "registration_numbers": [
+        "MET.Dob.9599/10"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": "DI-A-000013",
+      "dam_id": "DI-A-000014"
+    },
+    "DI-A-000007": {
+      "record_id": "DI-A-000007",
+      "registered_name": "Maxim di Altobello",
+      "registration_numbers": [
+        "JR 82778 Dob"
+      ],
+      "country": "Serbia",
+      "sex": "male",
+      "source_record_id": null,
+      "sire_id": "DI-A-000015",
+      "dam_id": "DI-A-000016"
+    },
+    "DI-A-000008": {
+      "record_id": "DI-A-000008",
+      "registered_name": "Birbakira di Villa Conte",
+      "registration_numbers": [
+        "ROI 07/57679"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": "DI-A-000017",
+      "dam_id": "DI-A-000018"
+    },
+    "DI-A-000009": {
+      "record_id": "DI-A-000009",
+      "registered_name": "Macho di Altobello",
+      "registration_numbers": [
+        "JR 82665 Dob"
+      ],
+      "country": "",
+      "sex": "male",
+      "source_record_id": null,
+      "sire_id": "DI-A-000019",
+      "dam_id": "DI-A-000020"
+    },
+    "DI-A-000010": {
+      "record_id": "DI-A-000010",
+      "registered_name": "Zulu Lady di Altobello",
+      "registration_numbers": [
+        "JR 701225 Dob"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": "DI-A-000021",
+      "dam_id": "DI-A-000022"
+    },
+    "DI-A-000011": {
+      "record_id": "DI-A-000011",
+      "registered_name": "Pride of Russia Ferro",
+      "registration_numbers": [
+        "RKF 2122611"
+      ],
+      "country": "",
+      "sex": "male",
+      "source_record_id": null,
+      "sire_id": "DI-A-000023",
+      "dam_id": "DI-A-000024"
+    },
+    "DI-A-000012": {
+      "record_id": "DI-A-000012",
+      "registered_name": "Tahi-Reme Giniti",
+      "registration_numbers": [
+        "MET 5799/04"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": "DI-A-000025",
+      "dam_id": "DI-A-000026"
+    },
+    "DI-A-000013": {
+      "record_id": "DI-A-000013",
+      "registered_name": "Teraline Midgard",
+      "registration_numbers": [
+        "RKF 2323108"
+      ],
+      "country": "",
+      "sex": "male",
+      "source_record_id": null,
+      "sire_id": "DI-A-000027",
+      "dam_id": "DI-A-000028"
+    },
+    "DI-A-000014": {
+      "record_id": "DI-A-000014",
+      "registered_name": "Pandora del Mediano",
+      "registration_numbers": [
+        "MET 7185/06"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": "DI-A-000019",
+      "dam_id": "DI-A-000029"
+    },
+    "DI-A-000015": {
+      "record_id": "DI-A-000015",
+      "registered_name": "Icarus di Altobello",
+      "registration_numbers": [
+        "JR 79838 Dob"
+      ],
+      "country": "Serbia",
+      "sex": "male",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000016": {
+      "record_id": "DI-A-000016",
+      "registered_name": "Daria Deniz di Altobello",
+      "registration_numbers": [
+        "JR 700539 Dob"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000017": {
+      "record_id": "DI-A-000017",
+      "registered_name": "Ramos Best of Island",
+      "registration_numbers": [
+        "HR 12417"
+      ],
+      "country": "",
+      "sex": "male",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000018": {
+      "record_id": "DI-A-000018",
+      "registered_name": "Fey di Villa Conte",
+      "registration_numbers": [
+        "ROI 00/61112"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000019": {
+      "record_id": "DI-A-000019",
+      "registered_name": "Fedor del Nasi",
+      "registration_numbers": [
+        "JR 7005-9 Dob"
+      ],
+      "country": "",
+      "sex": "male",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000020": {
+      "record_id": "DI-A-000020",
+      "registered_name": "Ester di Altobello",
+      "registration_numbers": [
+        "JR 700503 Dob"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000021": {
+      "record_id": "DI-A-000021",
+      "registered_name": "Don Juan di Altobello",
+      "registration_numbers": [
+        "JR 700510 Dob"
+      ],
+      "country": "",
+      "sex": "male",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000022": {
+      "record_id": "DI-A-000022",
+      "registered_name": "Ombra Omega Sawages",
+      "registration_numbers": [
+        "JR 79158 Dob"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000023": {
+      "record_id": "DI-A-000023",
+      "registered_name": "Urbano del Diamante Nero",
+      "registration_numbers": [
+        "ROI 04/53422"
+      ],
+      "country": "",
+      "sex": "male",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000024": {
+      "record_id": "DI-A-000024",
+      "registered_name": "Sharon iz Zoosfery",
+      "registration_numbers": [
+        "RKF 1534782"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000025": {
+      "record_id": "DI-A-000025",
+      "registered_name": "Gino Gomez del Citone",
+      "registration_numbers": [
+        "ROI 98/42928"
+      ],
+      "country": "",
+      "sex": "male",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000026": {
+      "record_id": "DI-A-000026",
+      "registered_name": "Tahi-Reme Triniti",
+      "registration_numbers": [
+        "MET 4103/01"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000027": {
+      "record_id": "DI-A-000027",
+      "registered_name": "Pako Daker",
+      "registration_numbers": [
+        "PKR 86395"
+      ],
+      "country": "",
+      "sex": "male",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000028": {
+      "record_id": "DI-A-000028",
+      "registered_name": "Teraline Aurora",
+      "registration_numbers": [
+        "RKF 1228570"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000029": {
+      "record_id": "DI-A-000029",
+      "registered_name": "Come As You Are della Baronessa",
+      "registration_numbers": [
+        "MET 2815/00"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    }
+  }
+}

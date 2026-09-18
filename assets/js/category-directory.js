@@ -1,0 +1,8 @@
+(async()=>{
+const host=document.getElementById('categoryRecords');const category=document.body.dataset.category;const prototype=document.body.dataset.prototype;
+const display=record=>record.entity_type==='doberman'?(window.DIName?.displayRegisteredName?.(record.registered_name||record.record_id)||record.registered_name||record.record_id):(record.name||record.kennel_name||record.record_id);
+try{const response=await fetch('data/registry.json',{cache:'no-store'});if(!response.ok)throw new Error('Registry unavailable');const data=await response.json();const records=(data.records||[]).filter(record=>{if(record.status!=='published')return false;if(category==='male')return record.entity_type==='doberman'&&record.sex==='male'&&record.life_stage!=='puppy';if(category==='female')return record.entity_type==='doberman'&&record.sex==='female'&&record.life_stage!=='puppy';if(category==='puppy')return record.entity_type==='doberman'&&record.life_stage==='puppy';if(category==='kennel')return record.entity_type==='kennel';return false;});
+if(!records.length){host.innerHTML=`<p class="empty">No published ${category} records yet.</p>${prototype?`<p><a class="prototype-link" href="${prototype}">Open the approved ${category} prototype →</a></p>`:''}`;return;}
+host.replaceChildren(...records.map(record=>{const a=document.createElement('a');a.className='directory-card';a.href=`profile.html?id=${encodeURIComponent(record.record_id)}`;a.innerHTML=`<small>${record.record_id}</small><strong></strong><span>Open digital card →</span>`;a.querySelector('strong').textContent=display(record);return a;}));
+}catch(error){host.innerHTML='<p class="empty">Registry is temporarily unavailable.</p>';console.warn(error);}
+})();

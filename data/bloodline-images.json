@@ -1,0 +1,116 @@
+{
+  "schema_version": "1.0.0",
+  "records": {
+    "DI-M-000001": {
+      "ancestors": {
+        "DI-A-000001": {
+          "status": "selected",
+          "selected": {
+            "image_url": "https://altobellodobermann.com/images/stories/news2016/buctro.jpg",
+            "source_label": "Altobello · Bucharest Trophy Romania 2016 · Image buctro",
+            "source_url": "https://altobellodobermann.com/shows/1599-bucharest-trophy-romania"
+          }
+        },
+        "DI-A-000002": {
+          "status": "missing"
+        },
+        "DI-A-000003": {
+          "status": "missing"
+        },
+        "DI-A-000004": {
+          "status": "missing"
+        },
+        "DI-A-000005": {
+          "status": "missing"
+        },
+        "DI-A-000006": {
+          "status": "missing"
+        },
+        "DI-A-000007": {
+          "status": "selected",
+          "selected": {
+            "image_url": "https://grandevinko.com/admin/images/uploads/products/9951_4531.jpg",
+            "source_label": "Grande Vinko · confirmed stance image",
+            "source_url": "https://grandevinko.com/admin/images/uploads/products/9951_4531.jpg"
+          }
+        },
+        "DI-A-000008": {
+          "status": "missing"
+        },
+        "DI-A-000009": {
+          "status": "missing"
+        },
+        "DI-A-000010": {
+          "status": "missing"
+        },
+        "DI-A-000011": {
+          "status": "missing"
+        },
+        "DI-A-000012": {
+          "status": "missing"
+        },
+        "DI-A-000013": {
+          "status": "missing"
+        },
+        "DI-A-000014": {
+          "status": "missing"
+        },
+        "DI-A-000015": {
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.altobellodobermann.com/images/stories/gallery/males/icarus/icarus-athens08.jpg",
+            "source_label": "Altobello · official males gallery · Icarus",
+            "source_url": "https://www.altobellodobermann.com/multimedia/altobello-males/1459-int-ch-icarus-di-altobello"
+          }
+        },
+        "DI-A-000016": {
+          "status": "missing"
+        },
+        "DI-A-000017": {
+          "status": "missing"
+        },
+        "DI-A-000018": {
+          "status": "missing"
+        },
+        "DI-A-000019": {
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.the-dobermann.com/images/Agiota/1/fedor7.JPG",
+            "source_label": "The-Dobermann · Giota gallery · fedor7",
+            "source_url": "https://www.the-dobermann.com/shows/gallery/653-idc-by-giota-fedor-del-nasi"
+          }
+        },
+        "DI-A-000020": {
+          "status": "missing"
+        },
+        "DI-A-000021": {
+          "status": "missing"
+        },
+        "DI-A-000022": {
+          "status": "missing"
+        },
+        "DI-A-000023": {
+          "status": "missing"
+        },
+        "DI-A-000024": {
+          "status": "missing"
+        },
+        "DI-A-000025": {
+          "status": "missing"
+        },
+        "DI-A-000026": {
+          "status": "missing"
+        },
+        "DI-A-000027": {
+          "status": "missing"
+        },
+        "DI-A-000028": {
+          "status": "missing"
+        },
+        "DI-A-000029": {
+          "status": "missing"
+        }
+      }
+    }
+  }
+}
