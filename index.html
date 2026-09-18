@@ -4064,6 +4064,57 @@ textarea {
   .hero-search.is-puppy-results .search-empty{padding-left:15px}
 }
 </style>
+
+<style id="homepage-search-hard-fix">
+#recordSearch{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  z-index:9999!important;
+  overflow:visible!important;
+}
+#recordSearchInput{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  width:100%!important;
+}
+#recordSearch .hero-search-field{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#recordSearch .puppy-shortcut{
+  display:inline-flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  pointer-events:auto!important;
+}
+@media (min-width:721px){
+  .hero #recordSearch{
+    position:absolute!important;
+    top:58%!important;
+    right:var(--pad)!important;
+    bottom:auto!important;
+    left:auto!important;
+    width:min(38vw,510px)!important;
+    margin:0!important;
+  }
+}
+@media (max-width:720px){
+  .hero #recordSearch{
+    position:relative!important;
+    top:auto!important;
+    right:auto!important;
+    bottom:auto!important;
+    left:auto!important;
+    width:100%!important;
+    margin:58px 0 0!important;
+    order:3!important;
+  }
+}
+</style>
+
 </head>
 <body>
 <div aria-hidden="true" class="scroll-progress" id="scrollProgress"></div>
