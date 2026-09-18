@@ -15,10 +15,11 @@ function assertTokens(source, tokens, label) {
   for (const token of tokens) assert.ok(source.includes(token), `${label} missing: ${token}`);
 }
 
-// Homepage keeps the accepted visual shell and restores registry-backed search/category routes.
+// Homepage keeps the accepted visual shell, central registry search and the Dante example card.
 assertTokens(index, [
-  'data-route="male.html"', 'data-route="female.html"', 'data-route="kennel.html"', 'data-route="puppy.html"',
-  'assets/js/display-name.js', 'data/registry.json', 'profile.html?id=', 'portal-search-results'
+  'data-search-anchor="males"', 'data-search-anchor="females"', 'data-search-anchor="kennels"', 'data-search-anchor="puppies"',
+  'id="recordSearchInput"', 'assets/js/display-name.js', 'data/registry.json', 'profile.html?id=', 'portal-search-results',
+  'href="profiles/male/?id=DI-M-000001"', 'Example digital card', 'media/dobermans/DI-M-000001/hero.png'
 ], "homepage");
 
 assertTokens(router, [
