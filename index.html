@@ -3745,6 +3745,298 @@ textarea {
   .featured-record-media{aspect-ratio:auto;height:135px}
   .featured-record-copy{min-height:135px;border-top:0;border-left:4px solid var(--acid)}
 }
+
+
+/* HOME SEARCH MODULE — restored registry search + available-puppies shortcut */
+.hero-search{
+  overflow:visible!important;
+  z-index:30!important;
+}
+.hero-search::after{display:none!important}
+.hero-search-field{position:relative}
+.hero-search-submit{
+  position:absolute;
+  right:0;
+  bottom:4px;
+  display:grid;
+  place-items:center;
+  width:46px;
+  height:46px;
+  padding:0;
+  border:0;
+  border-radius:50%;
+  background:var(--ink);
+  color:var(--white,#fff);
+  font-size:20px;
+  line-height:1;
+  cursor:pointer;
+  transition:color .28s ease,transform .32s var(--ease),box-shadow .32s ease;
+}
+.hero-search:focus-within .hero-search-submit{
+  color:var(--acid);
+  transform:rotate(180deg);
+}
+.puppy-shortcut{
+  position:absolute;
+  top:calc(100% + 14px);
+  right:0!important;
+  left:auto!important;
+  display:inline-flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:11px;
+  width:max-content;
+  min-height:40px;
+  padding:7px 7px 7px 16px;
+  border:0;
+  border-radius:999px;
+  background:var(--acid);
+  color:var(--ink);
+  box-shadow:0 8px 22px rgba(18,18,18,.09);
+  font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+  font-size:9px;
+  font-weight:750;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:transform .28s var(--ease),opacity .2s ease,box-shadow .28s ease;
+}
+.puppy-shortcut strong{
+  display:grid;
+  place-items:center;
+  width:25px;
+  height:25px;
+  border-radius:50%;
+  background:var(--ink);
+  color:var(--white,#fff);
+  font-size:12px;
+  line-height:1;
+  transition:transform .3s var(--ease),color .3s ease;
+}
+.puppy-shortcut:hover,
+.puppy-shortcut:focus-visible{
+  transform:translateY(-2px);
+  box-shadow:0 10px 24px rgba(18,18,18,.13);
+}
+.puppy-shortcut:hover strong,
+.puppy-shortcut:focus-visible strong{
+  color:var(--acid);
+  transform:rotate(45deg);
+}
+.hero-search.is-open:not(.is-puppy-results) .puppy-shortcut{
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(-4px);
+}
+.hero-search.is-open.is-puppy-results .puppy-shortcut{
+  opacity:1;
+  pointer-events:auto;
+  transform:none;
+}
+.hero-search-results{
+  position:absolute;
+  top:calc(100% + 10px);
+  right:0;
+  z-index:40;
+  width:100%;
+  max-height:318px;
+  overflow-y:auto;
+  padding:0;
+  border:0;
+  border-top:3px solid var(--ink);
+  background:var(--white,#fff);
+  box-shadow:0 24px 58px rgba(18,18,18,.2);
+}
+.hero-search-results[hidden]{display:none}
+.search-results-head{
+  display:flex;
+  align-items:center;
+  min-height:50px;
+  padding:0 17px;
+  background:var(--ink);
+  color:var(--white,#fff);
+  font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+  font-size:11px;
+  font-weight:750;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.search-results-head::before{
+  content:"";
+  width:14px;
+  height:3px;
+  margin-right:10px;
+  background:var(--acid);
+}
+.search-results-head>span{margin-right:auto}
+.search-results-head em{
+  color:#9c9c9c;
+  font-size:10px;
+  font-style:normal;
+}
+.search-result{
+  position:relative;
+  display:grid;
+  grid-template-columns:28px 52px minmax(0,1fr) 30px;
+  gap:14px;
+  align-items:center;
+  min-height:88px;
+  padding:14px 17px;
+  border-bottom:1px solid #d8d8d4;
+  background:var(--white,#fff);
+  color:var(--ink);
+  text-decoration:none!important;
+  overflow:hidden;
+}
+.search-result::before{
+  content:"";
+  position:absolute;
+  top:0;bottom:0;left:0;
+  width:4px;
+  background:var(--acid);
+  transform:scaleY(0);
+  transform-origin:top;
+  transition:transform .3s var(--ease);
+}
+.search-result:hover,
+.search-result:focus-visible{background:#f2f2ef;outline:0}
+.search-result:hover::before,
+.search-result:focus-visible::before{transform:scaleY(1)}
+.search-result-index{
+  align-self:start;
+  padding-top:4px;
+  color:var(--muted,#666);
+  font:700 10px/1.2 "SFMono-Regular",Consolas,monospace;
+  letter-spacing:.08em;
+}
+.search-result-thumb{
+  width:52px;
+  aspect-ratio:4/5;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+  background:var(--paper);
+  color:var(--ink);
+  font-size:11px;
+  font-weight:800;
+}
+.search-result-thumb img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center;
+}
+.search-result-copy{min-width:0}
+.search-result-copy strong{
+  display:block;
+  overflow:hidden;
+  color:var(--ink);
+  font-size:20px;
+  line-height:1;
+  letter-spacing:-.035em;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.search-result-copy span{
+  display:block;
+  margin-top:6px;
+  overflow:hidden;
+  color:var(--muted,#666);
+  font-size:12px;
+  line-height:1.15;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.search-result-copy small{
+  display:block;
+  margin-top:6px;
+  color:#8b8b86;
+  font:650 9px/1.2 "SFMono-Regular",Consolas,monospace;
+  letter-spacing:.08em;
+}
+.search-result-arrow{
+  display:grid;
+  place-items:center;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background:var(--ink);
+  color:var(--white,#fff);
+  font-size:13px;
+}
+.search-empty{
+  min-height:128px;
+  padding:31px 20px 26px 48px;
+  color:var(--muted,#666);
+  font-size:13px;
+  line-height:1.5;
+}
+.search-empty strong{
+  display:block;
+  margin-bottom:7px;
+  color:var(--ink);
+  font-size:15px;
+}
+.hero-search.is-puppy-results .hero-search-results{
+  top:calc(100% + 66px);
+  border-top-color:var(--acid);
+  background:var(--ink);
+  color:var(--white,#fff);
+}
+.hero-search.is-puppy-results .search-results-head{
+  background:var(--acid);
+  color:var(--ink);
+}
+.hero-search.is-puppy-results .search-results-head::before{background:var(--ink)}
+.hero-search.is-puppy-results .search-results-head em{color:rgba(18,18,18,.6)}
+.hero-search.is-puppy-results .search-result{
+  border-bottom-color:rgba(255,255,255,.15);
+  background:var(--ink);
+  color:var(--white,#fff);
+}
+.hero-search.is-puppy-results .search-result:hover,
+.hero-search.is-puppy-results .search-result:focus-visible{background:#242424}
+.hero-search.is-puppy-results .search-result-copy strong{color:var(--white,#fff)}
+.hero-search.is-puppy-results .search-result-index,
+.hero-search.is-puppy-results .search-result-copy span,
+.hero-search.is-puppy-results .search-result-copy small{color:#999}
+.hero-search.is-puppy-results .search-result-arrow{
+  background:var(--acid);
+  color:var(--ink);
+}
+.hero-search.is-puppy-results .search-empty{padding-left:20px;color:#999}
+.hero-search.is-puppy-results .search-empty strong{color:var(--white,#fff)}
+
+@media(max-width:680px){
+  .hero-search .puppy-shortcut{
+    top:calc(100% + 12px);
+    right:auto!important;
+    left:0!important;
+    min-height:36px;
+    padding:6px 6px 6px 13px;
+    font-size:8px;
+  }
+  .puppy-shortcut strong{width:23px;height:23px;font-size:11px}
+  .hero-search-results{top:calc(100% + 8px);max-height:250px}
+  .hero-search.is-puppy-results .hero-search-results{top:calc(100% + 58px)}
+  .search-results-head{min-height:46px;padding:0 12px;font-size:10px}
+  .search-results-head em{font-size:9px}
+  .search-result{
+    grid-template-columns:24px 44px minmax(0,1fr) 28px;
+    gap:10px;
+    min-height:78px;
+    padding:12px 10px;
+  }
+  .search-result-index{font-size:9px}
+  .search-result-thumb{width:44px}
+  .search-result-copy strong{font-size:18px}
+  .search-result-copy span{font-size:11px}
+  .search-result-copy small{font-size:8px}
+  .search-result-arrow{width:28px;height:28px}
+  .search-empty{min-height:118px;padding:27px 15px 22px 41px;font-size:12px}
+  .search-empty strong{font-size:14px}
+  .hero-search.is-puppy-results .search-empty{padding-left:15px}
+}
 </style>
 </head>
 <body>
@@ -3774,7 +4066,16 @@ textarea {
 </a>
 <small class="hero-est hero-est-desktop"><span>Est.</span><em>2026</em></small>
 <h1>Doberman <span class="accent">Index.</span></h1>
-<div class="hero-search" id="recordSearch"><input id="recordSearchInput" placeholder="Search the records" type="text"/></div>
+<div class="hero-search" id="recordSearch" role="search">
+  <div class="hero-search-field">
+    <input id="recordSearchInput" type="text" placeholder="Search the records" aria-label="Search the records" aria-autocomplete="list" aria-controls="recordSearchResults" aria-expanded="false" autocomplete="off"/>
+    <button class="hero-search-submit" type="button" aria-label="Open matching record">→</button>
+  </div>
+  <div class="hero-search-results" id="recordSearchResults" role="listbox" aria-label="Matching records" aria-live="polite" hidden></div>
+  <button class="puppy-shortcut" type="button" aria-controls="recordSearchResults" aria-expanded="false">
+    <span>Available puppies</span><strong aria-hidden="true">↗</strong>
+  </button>
+</div>
 <div class="ticker-wrap">
 <div class="ticker-track">
 <span class="ticker-chip"><small>Identity</small><strong>DI-M/F</strong><em>permanent record</em></span>
@@ -3965,48 +4266,162 @@ document.addEventListener('click', e => {
   }
 });
 
-/* SEARCH RECORDS — title case while typing */
-const heroSearchInput = document.querySelector('.hero-search input');
-heroSearchInput?.addEventListener('input', () => {
-  const start = heroSearchInput.selectionStart;
-  const end = heroSearchInput.selectionEnd;
-  const formatted = heroSearchInput.value
-    .toLocaleLowerCase()
-    .replace(/(^|[\s\-–—'’])(\p{L})/gu, (_, separator, letter) => separator + letter.toLocaleUpperCase());
+/* SEARCH RECORDS — restored registry autocomplete + available puppies shortcut. */
+const heroSearch=document.getElementById('recordSearch');
+const heroSearchInput=document.getElementById('recordSearchInput');
+const heroSearchResults=document.getElementById('recordSearchResults');
+const heroSearchSubmit=document.querySelector('.hero-search-submit');
+const puppyShortcut=document.querySelector('.puppy-shortcut');
 
-  if (formatted !== heroSearchInput.value) {
-    heroSearchInput.value = formatted;
-    if (start !== null && end !== null) heroSearchInput.setSelectionRange(start, end);
+let portalRegistryRecords=[];
+let portalRegistryError='';
+fetch(new URL('data/registry.json',document.baseURI),{cache:'no-store'})
+  .then(response=>response.ok?response.json():Promise.reject(new Error(`Registry request failed (${response.status})`)))
+  .then(data=>{portalRegistryRecords=Array.isArray(data.records)?data.records.filter(record=>record&&record.record_id&&record.status==='published'):[];})
+  .catch(error=>{portalRegistryError=error.message||'Registry unavailable';console.warn('Doberman Index search unavailable',error);});
+
+const recordDisplayName=record=>record.entity_type==='doberman'
+  ? (window.DIName?.displayRegisteredName?.(record.registered_name||record.record_id)||record.registered_name||record.record_id)
+  : (record.name||record.kennel_name||record.record_id);
+
+const normalizeSearchText=value=>String(value||'')
+  .normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase().trim();
+
+const recordIsPuppy=record=>record.entity_type==='doberman'&&(
+  String(record.life_stage||'').toLocaleLowerCase()==='puppy'||
+  String(record.template||'').toLocaleLowerCase()==='puppy'
+);
+
+const recordIsAvailablePuppy=record=>recordIsPuppy(record)&&
+  String(record.availability||'').toLocaleLowerCase()==='available'&&
+  String(record.life_status||'living').toLocaleLowerCase()!=='deceased';
+
+const recordSearchHref=record=>`profile.html?id=${encodeURIComponent(record.record_id)}`;
+
+const buildSearchResult=(record,index)=>{
+  const link=document.createElement('a');
+  link.className='search-result';
+  link.href=recordSearchHref(record);
+  link.setAttribute('role','option');
+
+  const number=document.createElement('span');
+  number.className='search-result-index';
+  number.textContent=String(index+1).padStart(2,'0');
+
+  const thumb=document.createElement('span');
+  thumb.className='search-result-thumb';
+  if(record.hero){
+    const image=document.createElement('img');
+    image.src=new URL(record.hero,document.baseURI).href;
+    image.alt='';
+    image.loading='lazy';
+    thumb.append(image);
+  }else{
+    thumb.textContent=(record.entity_type||'DI').slice(0,2).toUpperCase();
+  }
+
+  const copy=document.createElement('span');
+  copy.className='search-result-copy';
+  const name=document.createElement('strong');
+  name.textContent=recordDisplayName(record);
+  const meta=document.createElement('span');
+  meta.textContent=[record.kennel_name,record.country||record.location].filter(Boolean).join(' · ')||record.entity_type||'Record';
+  const id=document.createElement('small');
+  id.textContent=[record.record_id,record.sex,record.life_stage].filter(Boolean).join(' · ');
+  copy.append(name,meta,id);
+
+  const arrow=document.createElement('span');
+  arrow.className='search-result-arrow';
+  arrow.textContent='→';
+
+  link.append(number,thumb,copy,arrow);
+  return link;
+};
+
+const setSearchOpen=(open,mode='search')=>{
+  if(!heroSearch||!heroSearchResults)return;
+  heroSearch.classList.toggle('is-open',open);
+  heroSearch.classList.toggle('is-puppy-results',open&&mode==='puppies');
+  heroSearchResults.hidden=!open;
+  heroSearchInput?.setAttribute('aria-expanded',String(open&&mode==='search'));
+  puppyShortcut?.setAttribute('aria-expanded',String(open&&mode==='puppies'));
+};
+
+const renderSearchTray=(records,mode='search')=>{
+  if(!heroSearchResults)return;
+  const head=document.createElement('div');
+  head.className='search-results-head';
+  const label=document.createElement('span');
+  label.textContent=mode==='puppies'?'Available puppies':'Matching records';
+  const count=document.createElement('em');
+  count.textContent=`${records.length} ${records.length===1?'record':'records'}`;
+  head.append(label,count);
+
+  const nodes=[head];
+  if(records.length){
+    records.slice(0,8).forEach((record,index)=>nodes.push(buildSearchResult(record,index)));
+  }else{
+    const empty=document.createElement('div');
+    empty.className='search-empty';
+    const strong=document.createElement('strong');
+    strong.textContent=portalRegistryError?'Search temporarily unavailable':(mode==='puppies'?'No available puppies are published yet.':'No matching records.');
+    const detail=document.createElement('span');
+    detail.textContent=portalRegistryError?'Please try again shortly.':(mode==='puppies'?'Published puppy records will appear here automatically.':'Try a registered name, DI ID, kennel, country or location.');
+    empty.append(strong,detail);
+    nodes.push(empty);
+  }
+  heroSearchResults.replaceChildren(...nodes);
+  setSearchOpen(true,mode);
+};
+
+const searchPublishedRecords=query=>{
+  const needle=normalizeSearchText(query);
+  if(!needle)return[];
+  return portalRegistryRecords
+    .filter(record=>[
+      record.record_id,record.registered_name,record.name,record.kennel_name,
+      record.location,record.country,record.registration_number
+    ].some(value=>normalizeSearchText(value).includes(needle)))
+    .sort((a,b)=>{
+      const an=normalizeSearchText(recordDisplayName(a));
+      const bn=normalizeSearchText(recordDisplayName(b));
+      return Number(bn.startsWith(needle))-Number(an.startsWith(needle))||an.localeCompare(bn);
+    })
+    .slice(0,8);
+};
+
+const renderTypedSearch=()=>{
+  if(!heroSearchInput)return;
+  const query=heroSearchInput.value.trim();
+  if(!query){setSearchOpen(false);heroSearchResults?.replaceChildren();return;}
+  renderSearchTray(searchPublishedRecords(query),'search');
+};
+
+heroSearchInput?.addEventListener('input',renderTypedSearch);
+heroSearchInput?.addEventListener('keydown',event=>{
+  if(event.key==='Escape'){setSearchOpen(false);return;}
+  if(event.key==='Enter'){
+    const first=heroSearchResults?.querySelector('.search-result');
+    if(first){event.preventDefault();location.href=first.href;}
   }
 });
-
-const portalSearchResults=document.createElement('div');
-portalSearchResults.className='portal-search-results';
-portalSearchResults.hidden=true;
-portalSearchResults.setAttribute('role','listbox');
-document.querySelector('.hero-search')?.appendChild(portalSearchResults);
-let portalRegistryRecords=[];
-fetch('data/registry.json',{cache:'no-store'})
-  .then(response=>response.ok?response.json():Promise.reject(new Error('Registry unavailable')))
-  .then(data=>{portalRegistryRecords=Array.isArray(data.records)?data.records.filter(record=>record.status==='published'):[];})
-  .catch(error=>console.warn('Doberman Index search unavailable',error));
-const recordDisplayName=record=>record.entity_type==='doberman'
-  ? (window.DIName?.displayRegisteredName?.(record.registered_name||record.record_id) || record.registered_name || record.record_id)
-  : (record.name||record.kennel_name||record.record_id);
-const renderPortalSearch=()=>{
-  const query=(heroSearchInput?.value||'').trim().toLocaleLowerCase();
-  if(!query){portalSearchResults.hidden=true;portalSearchResults.replaceChildren();return;}
-  const matches=portalRegistryRecords.filter(record=>[record.record_id,record.registered_name,record.name,record.kennel_name,record.location,record.country].some(value=>String(value||'').toLocaleLowerCase().includes(query))).slice(0,8);
-  portalSearchResults.replaceChildren(...matches.map(record=>{
-    const link=document.createElement('a');link.className='portal-search-result';link.href=`profile.html?id=${encodeURIComponent(record.record_id)}`;link.setAttribute('role','option');
-    const copy=document.createElement('div');const name=document.createElement('strong');name.textContent=recordDisplayName(record);const meta=document.createElement('small');meta.textContent=[record.record_id,record.entity_type,record.country||record.location].filter(Boolean).join(' · ');copy.append(name,meta);
-    const arrow=document.createElement('span');arrow.textContent='→';link.append(copy,arrow);return link;
-  }));
-  portalSearchResults.hidden=!matches.length;
-};
-heroSearchInput?.addEventListener('input',renderPortalSearch);
-heroSearchInput?.addEventListener('keydown',event=>{if(event.key==='Enter'&&!portalSearchResults.hidden){const first=portalSearchResults.querySelector('a');if(first){event.preventDefault();location.href=first.href;}}});
-document.addEventListener('click',event=>{if(!event.target.closest('.hero-search'))portalSearchResults.hidden=true;});
+heroSearchSubmit?.addEventListener('click',()=>{
+  const first=heroSearchResults?.querySelector('.search-result');
+  if(first&&!heroSearchResults.hidden){location.href=first.href;return;}
+  if(heroSearchInput?.value.trim()){renderTypedSearch();return;}
+  heroSearchInput?.focus();
+});
+puppyShortcut?.addEventListener('click',()=>{
+  const opening=heroSearchResults?.hidden||!heroSearch?.classList.contains('is-puppy-results');
+  if(!opening){setSearchOpen(false);return;}
+  const puppies=portalRegistryRecords
+    .filter(recordIsAvailablePuppy)
+    .sort((a,b)=>recordDisplayName(a).localeCompare(recordDisplayName(b)));
+  renderSearchTray(puppies,'puppies');
+});
+document.addEventListener('click',event=>{
+  if(!event.target.closest('.hero-search'))setSearchOpen(false);
+});
 
 /* ANIMACIJE */
 // Hero — odmah, ispravni selektori
