@@ -65,10 +65,12 @@ for sex in ('male','female'):
         if token not in page:errors.append(f'{sex}: profile missing Bloodline Network token: {token}')
     js=(base/'assets/bloodline-network_v23.js').read_text(encoding='utf-8')
     css=(base/'assets/bloodline-network_v23.css').read_text(encoding='utf-8')
-    for token in ('function fitViewerImage()', 'style.setProperty("width"', 'bln-viewer-network-scrollbar', 'bln-viewer-network-thumb', 'bln-stage-scrollbar', 'root.classList.add("is-image-viewing")'):
-        if token not in js:errors.append(f'{sex}: stable stance viewer token missing: {token}')
-    for token in ('V29 — in-section stance viewer + dual active scroll systems','V31 — stable stance viewer + independent Bloodline proxy slider','bln-image-viewer-stage::-webkit-scrollbar','bln-viewer-network-thumb'):
-        if token not in css:errors.append(f'{sex}: stance viewer CSS contract missing: {token}')
+    for token in ('document.documentElement.classList.add("bln-image-open")','document.body.classList.add("bln-image-open")','viewerImage.style.opacity = "1"'):
+        if token not in js:errors.append(f'{sex}: pre-V29 stance viewer JS token missing: {token}')
+    for token in ('.bln-image-open{overflow:hidden!important}','bln-image-viewer::before','overflow-y:auto!important','max-height:min(60svh,680px)!important','bln-image-viewer-stage img'):
+        if token not in css:errors.append(f'{sex}: pre-V29 stance viewer CSS token missing: {token}')
+    for forbidden in ('V29 — in-section stance viewer + dual active scroll systems','V31 — stable stance viewer + independent Bloodline proxy slider','bln-viewer-network-scrollbar','bln-viewer-network-thumb'):
+        if forbidden in css or forbidden in js:errors.append(f'{sex}: retired experimental stance viewer token still present: {forbidden}')
 # Male accepted offline snapshot should use canonical IDs represented in the graph.
 male=(ROOT/'profiles/male/index.html').read_text(encoding='utf-8')
 match=re.search(r'const offlineBloodlineNodes=(\[.*?\]);\s*window\.DIBloodline\.mount',male,re.S)
