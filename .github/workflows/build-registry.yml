@@ -12,14 +12,16 @@ on:
       - "data/promotion-belt.json"
       - "data/seo-manifest.json"
       - "data/relationship-opportunities.json"
+      - "data/pedigree-graph.json"
+      - "data/bloodline-images.json"
       - "schemas/registry.schema.json"
       - "schemas/promotion-belt.schema.json"
       - "index.html"
       - "about.html"
       - "profile.html"
       - "submit.html"
-      - "profiles/male.html"
-      - "profiles/female.html"
+      - "profiles/male/**"
+      - "profiles/female/**"
       - "profiles/puppy.html"
       - "profiles/litter.html"
       - "profiles/kennel-concept.html"
@@ -74,6 +76,7 @@ on:
       - "records/**"
       - "CNAME"
       - ".github/workflows/build-registry.yml"
+      - ".github/workflows/indexnow.yml"
   schedule:
     - cron: "17 3 * * *"
   workflow_dispatch:
@@ -128,10 +131,11 @@ jobs:
       - name: Validate controlled profile standard
         run: python scripts/validate_assessment_standard.py
 
-      - name: Validate male profile contract
+      - name: Validate V27 profile and Bloodline Network contracts
         run: |
           python scripts/validate_male_profile_contract.py
           python scripts/validate_male_visual_master.py
+          python scripts/validate_bloodline_network.py
 
       - name: Validate registered-name and focal-point presentation
         run: |
@@ -156,12 +160,13 @@ jobs:
           python scripts/validate_relationship_opportunities.py
           python scripts/audit_performance.py
 
+      - name: Validate IndexNow publisher offline
+        run: python scripts/test_indexnow.py
+
       - name: Validate repository hygiene
         shell: bash
         run: |
           rm -rf scripts/__pycache__
-          rm -f scripts/indexnow.py scripts/test_indexnow.py
-          rm -f scripts/build_relationship_opportunities.py scripts/validate_relationship_opportunities.py
           rm -f data/relationship-opportunities.json
           find media -type d -name evidence -prune -exec rm -rf {} +
           python scripts/sanitize_public_evidence.py
