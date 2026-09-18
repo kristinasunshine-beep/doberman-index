@@ -690,7 +690,7 @@ def build(root: Path) -> tuple[int, int]:
         "site_origin": origin,
         "generated_from_registry": registry.get("generated_at"),
         "static_pages": {
-            "/": {"title": "Doberman Index · Connected Doberman Registry", "description": SITE_DESCRIPTION, "canonical": f"{origin}/"},
+            "/": {"title": "Doberman Index", "description": "A global registry that organizes Dobermans, pedigrees, and kennels into standardized, searchable profiles.", "canonical": f"{origin}/"},
             "/about.html": {"title": "About · Doberman Index", "description": "Why Doberman Index exists: a structured, searchable registry for Dobermans, kennels, litters and bloodlines.", "canonical": f"{origin}/about.html"},
             "/records/": {key: value for key, value in directory_meta.items() if key != "image_dimensions"},
         },

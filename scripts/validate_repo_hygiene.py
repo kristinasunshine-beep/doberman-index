@@ -22,14 +22,17 @@ for relative in tracked:
         errors.append(f"tracked Python cache/bytecode present: {normalized}")
 
 for relative in (
-    "scripts/indexnow.py",
-    "scripts/test_indexnow.py",
-    "scripts/build_relationship_opportunities.py",
-    "scripts/validate_relationship_opportunities.py",
     "data/relationship-opportunities.json",
 ):
     if (ROOT / relative).exists():
         errors.append(f"retired/admin-only artifact present: {relative}")
+
+for relative in (
+    "scripts/indexnow.py",
+    "scripts/test_indexnow.py",
+):
+    if not (ROOT / relative).is_file():
+        errors.append(f"required IndexNow publisher artifact missing: {relative}")
 
 for relative in tracked:
     path = ROOT / relative

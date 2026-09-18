@@ -3,7 +3,7 @@ from pathlib import Path
 import json,sys
 ROOT=Path(__file__).resolve().parents[1]
 errors=[]
-profile=(ROOT/'profiles/male.html').read_text(encoding='utf-8')
+profile=(ROOT/'profiles/male/index.html').read_text(encoding='utf-8')
 submit=(ROOT/'submit.html').read_text(encoding='utf-8')
 schema=json.loads((ROOT/'schemas/registry.schema.json').read_text(encoding='utf-8'))
 dob=schema['$defs']['doberman']['properties']
@@ -24,8 +24,9 @@ for token in ['Shows:numberOrDash(performance.shows_count)','Titles:array(perfor
     if token not in profile: errors.append('male profile missing performance contract token: '+token)
 for token in ['lifeStage,lifeStatus,lifeSpan:lifespan||"—"','studServiceStatus,profileId:recordId','lifeStage:"Life stage",lifeStatus:"Life status",lifeSpan:"Life span"','studServiceStatus:"Stud service status"','id="lifeStatusBadge"','const isDeceased=lifecycleState==="deceased"','lifecycleState==="living"?""']:
     if token not in profile: errors.append('male profile missing Details contract token: '+token)
-for token in ['Litters:numberOrDash(reproduction.litters_count)','Offspring:numberOrDash(reproduction.offspring_count)','"Champion offspring":numberOrDash(reproduction.champion_offspring_count)','"Export countries":array(reproduction.export_countries).length']:
-    if token not in profile: errors.append('male profile missing breeding contract token: '+token)
+# V27 replaced owner-entered aggregate breeding counters with graph-derived connections.
+for token in ['"Notable progeny": named.length?named.join(" · "):"—"','"Connected descendants":connected.length','"Connected litters":array(reproduction.litter_ids).length','"Source":connected.length?"Connected":"Owner entry"']:
+    if token not in profile: errors.append('male profile missing connected-descendants contract token: '+token)
 if 'name="stud_service_status"' not in submit: errors.append('owner form is missing Stud service status in About')
 if 'name="breeding_availability"' in submit: errors.append('owner form still exposes legacy breeding_availability control')
 if schema.get('properties',{}).get('schema_version',{}).get('const') != '1.1.0': errors.append('canonical schema is not v1.1.0')
@@ -33,8 +34,10 @@ if set(identity.get('life_stage',{}).get('enum',[])) != {'puppy','junior','adult
 if set(identity.get('life_status',{}).get('enum',[])) != {'living','deceased','unknown'}: errors.append('life_status enum is incorrect')
 if 'Balance:present(structure.balance),Evaluator:' in profile: errors.append('Structure accidentally includes Evaluator card')
 if 'profileData.titles.slice(0,2)' in profile or 'hero-credentials' in profile.split('function heroMetadata(){',1)[1].split('function gallery(){',1)[0]: errors.append('hero identity block still renders titles')
-for token in ['id="performanceDetails"','performanceDetails:{Titles:array(performance.titles)}','function toggleTitleListing(card)','data-metric-key="${escapeHTML(k)}"']:
-    if token not in profile: errors.append('male title listing contract missing: '+token)
+for token in ['id="performanceDetails"','performanceDetails:{Shows:array(performance.show_results),Titles:array(performance.titles)','function togglePerformanceListing(card)','data-metric-key="${escapeHTML(k)}"']:
+    if token not in profile: errors.append('male performance listing contract missing: '+token)
+for token in ['assets/bloodline-network_v23.css','assets/bloodline-network_v23.js','window.DIBloodline.mount','data/pedigree-graph.json','data/bloodline-images.json']:
+    if token not in profile: errors.append('male bloodline contract missing: '+token)
 if errors:
     print('Male profile contract FAIL')
     for e in errors: print('-',e)

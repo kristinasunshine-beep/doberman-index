@@ -17,9 +17,9 @@ if (ROOT/"index.html").stat().st_size>500_000:errors.append("index.html exceeds 
 if (ROOT/"assets/css/seo-record.css").stat().st_size>24_000:errors.append("canonical record CSS exceeds 24 KB")
 if (ROOT/"assets/js/seo-runtime.js").stat().st_size>12_000:errors.append("SEO runtime exceeds 12 KB")
 
-for page in (ROOT/"index.html",ROOT/"about.html",ROOT/"profiles/male.html",ROOT/"profiles/female.html",ROOT/"profiles/puppy.html"):
+for page in (ROOT/"index.html",ROOT/"about.html",ROOT/"profiles/male/index.html",ROOT/"profiles/female/index.html",ROOT/"profiles/puppy.html"):
     text=page.read_text(encoding="utf-8")
-    if "fonts.googleapis.com" in text and "display=swap" not in text:errors.append(f"font loading lacks display=swap: {page.name}")
+    if "fonts.googleapis.com/css" in text and "display=swap" not in text:errors.append(f"font loading lacks display=swap: {page.relative_to(ROOT)}")
 
 for record in registry.get("records",[]):
     if record.get("status")!="published":continue
@@ -31,7 +31,7 @@ for record in registry.get("records",[]):
         elif not re.search(r'\bwidth="\d+"',hero.group(0)) or not re.search(r'\bheight="\d+"',hero.group(0)):errors.append(f"canonical hero lacks dimensions: {record['record_id']}")
         if '<link rel="preload" as="image"' not in text:errors.append(f"canonical hero is not preloaded: {record['record_id']}")
 
-for page in ("profiles/male.html","profiles/female.html","profiles/puppy.html"):
+for page in ("profiles/male/index.html","profiles/female/index.html","profiles/puppy.html"):
     text=(ROOT/page).read_text(encoding="utf-8")
     if 'preload="metadata"' not in text:errors.append(f"movement video must use metadata preload: {page}")
     if 'loading="${index?"lazy":"eager"}"' not in text:errors.append(f"gallery loading policy missing: {page}")

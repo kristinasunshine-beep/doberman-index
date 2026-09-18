@@ -2,7 +2,7 @@
 from pathlib import Path
 import sys
 ROOT=Path(__file__).resolve().parents[1]
-text=(ROOT/'profiles'/'male.html').read_text(encoding='utf-8')
+text=(ROOT/'profiles'/'male'/'index.html').read_text(encoding='utf-8')
 checks={
 'raised Details action':'.hero-dossier .dossier-bold{',
 'raised Details top':'top:calc(91svh - var(--hero-card-top) + 8px)',
@@ -16,14 +16,23 @@ checks={
 'performance rail':'id="performanceRail"',
 'related rail':'id="relatedRail"',
 'live loader':'async function loadProfile()',
+'live initializer':'async function initializeProfile()',
 'hero identity only':'byId("heroMeta").innerHTML=`<span class="hero-identity">${escapeHTML(identity)}</span>`',
 'title listing panel':'id="performanceDetails"',
 'video support':'.visual-card img,.visual-card video',
-'portal navigation':'href="../index.html"',
+'portal navigation':'href="../../index.html"',
+'bloodline stylesheet':'assets/bloodline-network_v23.css',
+'bloodline runtime':'assets/bloodline-network_v23.js',
+'correct repository root':'const repoRoot=new URL("../../",document.baseURI);',
+'pedigree intelligence':'id="pedigree-intelligence"',
+'breeding lens':'id="breeding-lens"',
+'bloodline mount':'window.DIBloodline.mount',
+'offline accepted snapshot':'profileData={performanceDetails:',
+'offline bloodline graph':'const offlineBloodlineNodes=[',
 }
 missing=[name for name,token in checks.items() if token not in text]
-for forbidden in ['const profileData={\n      name:"Dion Dante"','href="#profile">DOBERMAN INDEX®</a>']:
-    if forbidden in text: missing.append('static demo content leaked into production')
+if 'href="#profile">DOBERMAN INDEX®</a>' in text:
+    missing.append('legacy self-link still replaces portal navigation')
 if missing:
     print('Male visual master FAIL')
     for x in missing: print('-',x)
