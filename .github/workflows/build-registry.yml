@@ -2,7 +2,7 @@ name: Rebuild Doberman Index Registry
 
 on:
   push:
-    branches: [main, fix/stance-viewer-title-slider]
+    branches: [main]
     paths:
       - "data/dobermans/**"
       - "data/kennels/**"
