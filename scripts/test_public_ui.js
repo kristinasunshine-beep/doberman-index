@@ -18,7 +18,8 @@ function assertTokens(source, tokens, label) {
 // Homepage keeps the accepted visual shell, central registry search and the Dante example card.
 assertTokens(index, [
   'data-search-anchor="males"', 'data-search-anchor="females"', 'data-search-anchor="kennels"', 'data-search-anchor="puppies"',
-  'id="recordSearchInput"', 'assets/js/display-name.js', 'data/registry.json', 'profile.html?id=', 'portal-search-results',
+  'id="recordSearchInput"', 'class="hero-search-submit"', 'class="puppy-shortcut"', 'id="recordSearchResults"',
+  'Available puppies', 'Search the records', 'search-results-head', 'data/registry.json', 'profile.html?id=',
   'href="profiles/male/?id=DI-M-000001"', 'Example digital card', 'media/dobermans/DI-M-000001/hero.png'
 ], "homepage");
 
