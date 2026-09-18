@@ -2,7 +2,7 @@ name: Rebuild Doberman Index Registry
 
 on:
   push:
-    branches: [main]
+    branches: [main, fix/bloodline-dual-scroll-viewer]
     paths:
       - "data/dobermans/**"
       - "data/kennels/**"
