@@ -30,6 +30,8 @@ def main() -> None:
     if "\t" in text:
         fail("tabs are not valid indentation")
 
+    # This workflow deliberately uses a conservative YAML subset. Validate its
+    # indentation and mapping/list shape without adding a third-party dependency.
     previous_significant = ""
     previous_indent = 0
     in_block_scalar = False
@@ -72,9 +74,9 @@ def main() -> None:
         "name: Rebuild Doberman Index Registry",
         "actions/checkout@v5",
         "actions/setup-python@v5",
-        'python-version: "3.12"',
+        "python-version: \"3.12\"",
         "actions/setup-node@v4",
-        'node-version: "20"',
+        "node-version: \"20\"",
         "python scripts/validate_workflow_contract.py",
         "python scripts/validate_submission_visual_master.py",
         "python scripts/validate_assessment_standard.py",
