@@ -1242,6 +1242,116 @@
       *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
       .record-track{animation:none}
     }
+
+    /* REVIEW — Kennel Record Desk, adapted from the Dante hybrid architecture.
+       Original program, health and results sections remain in the DOM as source renderers. */
+    #kennelProgram,#kennelHealth,#kennelResults{display:none!important}
+
+    .kennel-profile-flow .kennel-record-desk{
+      position:relative;
+      overflow:hidden;
+      padding-top:clamp(92px,8vw,132px)!important;
+      padding-bottom:clamp(88px,7vw,118px)!important;
+      background:#111;
+      color:#f5f5ef;
+    }
+    .kennel-profile-flow .kennel-record-desk .record-desk-ghost{
+      position:absolute;right:-.04em;top:70px;color:#1d1d1d;
+      font-size:clamp(180px,23vw,360px);font-weight:900;line-height:.75;
+      letter-spacing:-.09em;pointer-events:none;
+    }
+    .kennel-profile-flow .kennel-record-desk .section-head{position:relative;z-index:2;margin-bottom:56px}
+    .kennel-profile-flow .kennel-record-desk .section-index,
+    .kennel-profile-flow .kennel-record-desk .section-title{color:#fff}
+    .kennel-profile-flow .kennel-record-desk .section-note{color:#969696}
+    .kennel-profile-flow .kennel-record-desk .section-note b{color:#fff}
+    .kennel-profile-flow .kennel-record-desk .record-desk-shell{
+      position:relative;z-index:2;
+      display:grid;grid-template-columns:minmax(300px,34%) minmax(0,66%);
+      gap:0;margin:0 var(--pad);min-height:700px;border:1px solid #333;background:#161616;
+    }
+    .kennel-profile-flow .kennel-record-desk .record-desk-visual{
+      position:sticky;top:70px;align-self:start;min-height:698px;
+      display:flex;flex-direction:column;border-right:1px solid #343434;background:#0e0e0e;
+    }
+    .kennel-profile-flow .kennel-record-desk .record-desk-image{
+      display:grid;place-items:center;height:350px;padding:34px;overflow:hidden;background:#f0f0ec
+    }
+    .kennel-profile-flow .kennel-record-desk .record-desk-image img{
+      display:block;width:100%;height:100%;object-fit:contain;filter:grayscale(1) contrast(1.15)
+    }
+    .kennel-profile-flow .kennel-record-desk .record-desk-identity{padding:26px 26px 18px;border-top:5px solid var(--acid)}
+    .kennel-profile-flow .kennel-record-desk .record-desk-identity span{
+      font:800 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.1em;color:#9d9d9d;text-transform:uppercase
+    }
+    .kennel-profile-flow .kennel-record-desk .record-desk-identity h3{
+      margin:13px 0 8px;color:#fff;font-size:clamp(34px,3.3vw,50px);line-height:.9;letter-spacing:-.06em
+    }
+    .kennel-profile-flow .kennel-record-desk .record-desk-identity p{margin:0;color:#bdbdbd;font-size:12px}
+    .kennel-profile-flow .kennel-record-desk .record-desk-anchor{
+      display:grid;gap:8px;margin-top:auto;padding:18px 26px 22px;border-top:1px solid #2e2e2e
+    }
+    .kennel-profile-flow .kennel-record-desk .record-desk-anchor span{color:#858585;font-size:10px}
+    .kennel-profile-flow .kennel-record-desk .record-desk-workspace{min-width:0;padding:0 30px 30px}
+    .kennel-profile-flow .kennel-record-desk .record-desk-tabs{
+      display:flex;gap:0;overflow-x:auto;margin-bottom:0;border-bottom:1px solid #373737;scrollbar-width:none
+    }
+    .kennel-profile-flow .kennel-record-desk .record-desk-tabs::-webkit-scrollbar{display:none}
+    .kennel-profile-flow .kennel-record-desk .record-desk-tabs button{
+      flex:0 0 auto;padding:22px 15px 18px;border:0;border-bottom:3px solid transparent;
+      background:none;color:#777;font:750 9px/1 "SFMono-Regular",Consolas,monospace;
+      letter-spacing:.07em;text-transform:uppercase;cursor:pointer
+    }
+    .kennel-profile-flow .kennel-record-desk .record-desk-tabs button:first-child{padding-left:0}
+    .kennel-profile-flow .kennel-record-desk .record-desk-tabs button.is-active{color:#fff;border-bottom-color:var(--acid)}
+    .kennel-profile-flow .kennel-record-desk .record-desk-panel{padding-top:34px}
+    .kennel-profile-flow .kennel-record-desk .record-desk-panel[hidden]{display:none!important}
+    .kennel-profile-flow .kennel-record-desk .record-desk-panel.is-active{display:block}
+    .kennel-profile-flow .kennel-record-desk .desk-panel-head{
+      display:grid;grid-template-columns:112px minmax(0,1fr);gap:14px 26px;align-items:start;margin-bottom:26px
+    }
+    .kennel-profile-flow .kennel-record-desk .desk-panel-head>span{
+      color:var(--acid);font:800 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.1em;text-transform:uppercase
+    }
+    .kennel-profile-flow .kennel-record-desk .desk-panel-head h3{
+      margin:0;color:#fff;font-size:clamp(28px,2.7vw,42px);line-height:.94;letter-spacing:-.055em
+    }
+    .kennel-profile-flow .kennel-record-desk .desk-panel-head p{
+      grid-column:2;margin:0;max-width:58ch;color:#929292;font-size:11px;line-height:1.5
+    }
+    .kennel-profile-flow .kennel-record-desk .desk-ledger{border-top:1px solid #3b3b3b}
+    .kennel-profile-flow .kennel-record-desk .desk-ledger>div{
+      display:grid;grid-template-columns:minmax(145px,.65fr) minmax(0,1.35fr);
+      gap:22px;align-items:baseline;padding:14px 0;border-bottom:1px solid #303030
+    }
+    .kennel-profile-flow .kennel-record-desk .desk-ledger span{
+      color:#858585;font-size:9px;font-weight:700;letter-spacing:.045em;text-transform:uppercase
+    }
+    .kennel-profile-flow .kennel-record-desk .desk-ledger strong{color:#fff;font-size:14px;font-weight:650;line-height:1.25}
+    .kennel-profile-flow .kennel-record-desk .desk-ledger small{
+      grid-column:2;color:#777;font-size:9px;line-height:1.4;margin-top:-6px
+    }
+    @media(max-width:900px){
+      .kennel-profile-flow .kennel-record-desk .record-desk-shell{grid-template-columns:1fr}
+      .kennel-profile-flow .kennel-record-desk .record-desk-visual{
+        position:relative;top:auto;min-height:0;border-right:0;border-bottom:1px solid #343434;
+        display:grid;grid-template-columns:40% 1fr
+      }
+      .kennel-profile-flow .kennel-record-desk .record-desk-image{height:300px;grid-row:1/3}
+      .kennel-profile-flow .kennel-record-desk .record-desk-anchor{margin-top:0}
+    }
+    @media(max-width:680px){
+      .kennel-profile-flow .kennel-record-desk .record-desk-shell{margin:0 var(--pad)}
+      .kennel-profile-flow .kennel-record-desk .record-desk-visual{display:block}
+      .kennel-profile-flow .kennel-record-desk .record-desk-image{height:250px}
+      .kennel-profile-flow .kennel-record-desk .record-desk-workspace{padding:0 18px 22px}
+      .kennel-profile-flow .kennel-record-desk .record-desk-tabs{margin:0 -18px;padding:0 18px}
+      .kennel-profile-flow .kennel-record-desk .desk-panel-head{grid-template-columns:1fr;gap:12px}
+      .kennel-profile-flow .kennel-record-desk .desk-panel-head p{grid-column:1}
+      .kennel-profile-flow .kennel-record-desk .desk-ledger>div{grid-template-columns:1fr;gap:5px;padding:13px 0}
+      .kennel-profile-flow .kennel-record-desk .desk-ledger small{grid-column:1;margin-top:0}
+    }
+
   </style>
 </head>
 <body>
@@ -1312,6 +1422,36 @@
     </section>
 
     <div class="kennel-profile-flow">
+      <section class="section kennel-record-desk" id="kennelRecordDesk">
+        <div class="record-desk-ghost" aria-hidden="true">RECORD</div>
+        <header class="section-head">
+          <div>
+            <div class="section-index"><span>01</span><i></i><span>Compact kennel intelligence</span></div>
+            <h2 class="section-title">Kennel<br>record desk.</h2>
+          </div>
+          <p class="section-note"><b>One program. Four views.</b>Identity, breeding focus, documented health coverage and program outcomes are brought into one persistent desk while every underlying Doberman and litter remains independently traceable.</p>
+        </header>
+        <div class="record-desk-shell">
+          <aside class="record-desk-visual">
+            <div class="record-desk-image"><img id="kennelDeskLogo" alt="Kennel record desk logo"></div>
+            <div class="record-desk-identity"><span id="kennelDeskCode">KENNEL RECORD</span><h3 id="kennelDeskName">—</h3><p id="kennelDeskMeta">—</p></div>
+            <div class="record-desk-anchor"><span id="kennelDeskRegistration">Registration · —</span><span id="kennelDeskLocation">Location · —</span><span id="kennelDeskFounded">Founded · —</span></div>
+          </aside>
+          <div class="record-desk-workspace">
+            <div class="record-desk-tabs" role="tablist" aria-label="Kennel Record Desk views">
+              <button class="is-active" role="tab" aria-selected="true" data-kennel-desk-tab="overview">Overview</button>
+              <button role="tab" aria-selected="false" data-kennel-desk-tab="program">Program</button>
+              <button role="tab" aria-selected="false" data-kennel-desk-tab="health">Health</button>
+              <button role="tab" aria-selected="false" data-kennel-desk-tab="outcomes">Outcomes</button>
+            </div>
+            <div class="record-desk-panel is-active" data-kennel-desk-panel="overview" role="tabpanel"><div class="desk-panel-head"><span>01 / Overview</span><h3>Program identity at a glance.</h3><p>Stable kennel identity and current system-derived totals stay visible while deeper evidence remains one step away.</p></div><div class="desk-ledger" id="kennelDeskOverview"></div></div>
+            <div class="record-desk-panel" data-kennel-desk-panel="program" role="tabpanel" hidden><div class="desk-panel-head"><span>02 / Program</span><h3>Breeding identity, connected to records.</h3><p>Focus, bloodline view, stable record links and derived totals remain distinct instead of being flattened into promotional copy.</p></div><div class="desk-ledger" id="kennelDeskProgram"></div></div>
+            <div class="record-desk-panel" data-kennel-desk-panel="health" role="tabpanel" hidden><div class="desk-panel-head"><span>03 / Health</span><h3>Coverage without losing provenance.</h3><p>The kennel view summarizes documented testing while each result remains attached to the individual Doberman, date and source.</p></div><div class="desk-ledger" id="kennelDeskHealth"></div></div>
+            <div class="record-desk-panel" data-kennel-desk-panel="outcomes" role="tabpanel" hidden><div class="desk-panel-head"><span>04 / Outcomes</span><h3>Results stay attributable.</h3><p>Titles, working results and reach are summarized at program level without detaching them from the Dobermans that produced them.</p></div><div class="desk-ledger" id="kennelDeskOutcomes"></div></div>
+          </div>
+        </div>
+      </section>
+
       <section class="section" id="kennelProgram">
         <div class="section-mark" aria-hidden="true">PROGRAM</div>
         <header class="section-head">
@@ -1504,6 +1644,89 @@
       requestAnimationFrame(syncLogoColour);
     };
     requestAnimationFrame(syncLogoColour);
+
+
+    function installKennelRecordDesk(){
+      const root=document.getElementById("kennelRecordDesk");
+      if(!root)return;
+      root.querySelectorAll("[data-kennel-desk-tab]").forEach(function(button){
+        if(button.dataset.bound==="true")return;
+        button.dataset.bound="true";
+        button.addEventListener("click",function(){
+          const key=button.dataset.kennelDeskTab;
+          root.querySelectorAll("[data-kennel-desk-tab]").forEach(function(tab){
+            const active=tab===button;
+            tab.classList.toggle("is-active",active);
+            tab.setAttribute("aria-selected",String(active));
+          });
+          root.querySelectorAll("[data-kennel-desk-panel]").forEach(function(panel){
+            const active=panel.dataset.kennelDeskPanel===key;
+            panel.classList.toggle("is-active",active);
+            panel.hidden=!active;
+          });
+        });
+      });
+    }
+
+    function kennelDeskRows(target,rows){
+      const host=document.getElementById(target);
+      if(!host)return;
+      host.innerHTML=rows.filter(function(row){return row&&row.label;}).map(function(row){
+        return "<div><span>"+escapeHTML(row.label)+"</span><strong>"+escapeHTML(row.value||"Not provided")+"</strong>"+(row.sub?"<small>"+escapeHTML(row.sub)+"</small>":"")+"</div>";
+      }).join("");
+    }
+
+    function readKennelSurfaceCards(selector){
+      return Array.from(document.querySelectorAll(selector+" .surface-card")).map(function(card){
+        return {
+          label:((card.querySelector(".key")||{}).textContent||"").trim(),
+          value:((card.querySelector(".value")||{}).textContent||"").trim(),
+          sub:((card.querySelector(".sub")||{}).textContent||"").trim()
+        };
+      });
+    }
+
+    function readKennelMetrics(selector){
+      return Array.from(document.querySelectorAll(selector+" .metric")).map(function(card){
+        return {
+          label:((card.querySelector("em")||{}).textContent||"").trim(),
+          value:((card.querySelector("strong")||{}).textContent||"").trim(),
+          sub:(card.getAttribute("data-caption")||"").trim()
+        };
+      });
+    }
+
+    function hydrateKennelRecordDesk(){
+      const text=function(selector,fallback){
+        const node=document.querySelector(selector);
+        return node&&node.textContent.trim()?node.textContent.trim():fallback;
+      };
+      const overview=[
+        {label:"Location",value:text('[data-kennel-field="location"]',"Not provided"),sub:""},
+        {label:"Founded",value:text('[data-kennel-field="founded_year"]',"Not provided"),sub:""},
+        {label:"Registration prefix",value:text('[data-kennel-field="registration_prefix"]',"Not provided"),sub:""},
+        {label:"Registration authority",value:text('[data-kennel-field="registration_authority"]',"Not provided"),sub:""},
+        {label:"Breeding focus",value:text('[data-kennel-field="focus"]',"Not provided"),sub:""},
+        {label:"Indexed Dobermans",value:text('[data-system-metric="indexed_dobermans"]',"—"),sub:"Generated from linked records"},
+        {label:"Published litters",value:text('[data-system-metric="litters"]',"—"),sub:"Generated from linked records"},
+        {label:"Available puppies",value:text('[data-system-metric="available_puppies"]',"—"),sub:"Generated from linked records"}
+      ];
+      kennelDeskRows("kennelDeskOverview",overview);
+      kennelDeskRows("kennelDeskProgram",readKennelSurfaceCards("#kennelProgramRail"));
+      kennelDeskRows("kennelDeskHealth",readKennelSurfaceCards("#kennelHealthRail"));
+      kennelDeskRows("kennelDeskOutcomes",readKennelMetrics("#kennelPerformanceRail"));
+
+      const sourceLogo=document.querySelector(".kennel-logo-frame img");
+      const deskLogo=document.getElementById("kennelDeskLogo");
+      if(sourceLogo&&deskLogo){deskLogo.src=sourceLogo.src;deskLogo.alt=text('[data-kennel-field="name"]',"Kennel")+" — kennel record desk logo";}
+      document.getElementById("kennelDeskCode").textContent=(document.querySelector("[data-record-id]")?.textContent.trim()||"DI-K-000001")+" · KENNEL RECORD";
+      document.getElementById("kennelDeskName").textContent=text('[data-kennel-field="name"]',"Siempre Peligroso");
+      document.getElementById("kennelDeskMeta").textContent=[text('[data-kennel-field="country"]',""),text('[data-kennel-field="owner_or_founder"]',"")].filter(Boolean).join(" · ");
+      document.getElementById("kennelDeskRegistration").textContent="Registration · "+text('[data-kennel-field="registration_authority"]',"Not provided")+" / "+text('[data-kennel-field="registration_prefix"]',"Not provided");
+      document.getElementById("kennelDeskLocation").textContent="Location · "+text('[data-kennel-field="location"]',"Not provided");
+      document.getElementById("kennelDeskFounded").textContent="Founded · "+text('[data-kennel-field="founded_year"]',"Not provided");
+      installKennelRecordDesk();
+    }
 
     const KENNEL_ID='DI-K-000001';
     const NOT_PROVIDED='Not provided';
@@ -1750,6 +1973,12 @@
     }).finally(()=>{
       installHorizontalRailScrollbars();
     });
+
+    installKennelRecordDesk();
+    const kennelDeskObserver=new MutationObserver(function(){hydrateKennelRecordDesk();});
+    kennelDeskObserver.observe(document.querySelector(".kennel-profile-flow"),{subtree:true,childList:true,characterData:true});
+    requestAnimationFrame(function(){hydrateKennelRecordDesk();setTimeout(hydrateKennelRecordDesk,250);setTimeout(hydrateKennelRecordDesk,900);});
+
   </script>
 </body>
 </html>
