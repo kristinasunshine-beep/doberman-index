@@ -1140,3 +1140,218 @@
   #bloodline .bln-image-viewer-panel{grid-column:1!important;grid-row:2!important;position:static!important;max-width:360px!important;margin-top:14px!important;}
   #bloodline .bln-image-viewer-meta{margin-right:0!important;}
 }
+
+
+/* V29 — in-section stance viewer + dual active scroll systems */
+#bloodline .bln-image-viewer{
+  position:relative!important;
+  inset:auto!important;
+  z-index:12!important;
+  width:calc(100% + clamp(48px,8vw,128px))!important;
+  max-width:none!important;
+  min-height:clamp(680px,86svh,940px)!important;
+  margin:0 calc(clamp(24px,4vw,64px) * -1) clamp(34px,5vw,72px)!important;
+  padding:clamp(22px,2.7vw,42px)!important;
+  overflow:visible!important;
+  background:#0f0f0f!important;
+  color:#fff!important;
+  border:0!important;
+  box-shadow:none!important;
+  opacity:0;
+  transform:translateY(10px);
+  transition:opacity .28s var(--ease),transform .35s var(--ease)!important;
+}
+#bloodline .bln-image-viewer.is-open{
+  opacity:1!important;
+  transform:none!important;
+}
+#bloodline .bln-image-viewer::before{
+  top:48%!important;
+  left:-.025em!important;
+  right:-.025em!important;
+  font-size:clamp(86px,13vw,220px)!important;
+  opacity:.92;
+}
+#bloodline .bln-image-viewer-top{
+  position:relative!important;
+  top:auto!important;
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr) auto!important;
+  align-items:start!important;
+  gap:24px!important;
+  min-height:86px!important;
+  padding:0 0 18px!important;
+  background:transparent!important;
+  backdrop-filter:none!important;
+}
+#bloodline .bln-image-viewer-kicker{padding-top:6px!important}
+#bloodline .bln-image-viewer-name{
+  position:static!important;
+  justify-self:end!important;
+  max-width:min(60vw,920px)!important;
+  margin:0!important;
+  text-align:right!important;
+  font-size:clamp(30px,5vw,76px)!important;
+  line-height:.88!important;
+}
+#bloodline .bln-image-viewer-close{
+  position:relative!important;
+  right:auto!important;
+  top:auto!important;
+  flex:none!important;
+}
+#bloodline .bln-image-viewer-stage{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:minmax(170px,240px) minmax(0,1fr)!important;
+  grid-template-rows:minmax(520px,72svh)!important;
+  column-gap:clamp(26px,4vw,64px)!important;
+  align-items:center!important;
+  justify-items:stretch!important;
+  width:100%!important;
+  min-height:clamp(560px,72svh,820px)!important;
+  max-height:clamp(620px,76svh,860px)!important;
+  margin:0!important;
+  padding:24px 28px 28px!important;
+  overflow:auto!important;
+  overscroll-behavior:contain!important;
+  scrollbar-gutter:stable both-edges!important;
+  background:#111!important;
+  border:1px solid #2b2b2b!important;
+  touch-action:pan-x pan-y!important;
+}
+#bloodline .bln-image-viewer-stage::-webkit-scrollbar{
+  width:12px!important;
+  height:12px!important;
+}
+#bloodline .bln-image-viewer-stage::-webkit-scrollbar-track{
+  background:#181818!important;
+}
+#bloodline .bln-image-viewer-stage::-webkit-scrollbar-thumb{
+  background:#4b4b4b!important;
+  border:3px solid #181818!important;
+  border-radius:999px!important;
+}
+#bloodline .bln-image-viewer-stage::-webkit-scrollbar-thumb:hover{background:var(--acid)!important}
+#bloodline .bln-image-viewer-stage img{
+  grid-column:2!important;
+  grid-row:1!important;
+  place-self:center!important;
+  display:block!important;
+  width:auto!important;
+  height:auto!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  filter:none!important;
+  background:transparent!important;
+}
+#bloodline .bln-image-viewer-panel{
+  grid-column:1!important;
+  grid-row:1!important;
+  align-self:center!important;
+  justify-self:start!important;
+  position:relative!important;
+  left:auto!important;
+  top:auto!important;
+  width:100%!important;
+  max-width:240px!important;
+  margin:0!important;
+}
+#bloodline .bln-image-viewer-meta{
+  margin:14px 0 0!important;
+  padding-top:12px!important;
+  border-top:1px solid #2e2e2e!important;
+}
+#bloodline.bloodline-network.is-image-viewing .bln-toolbar{
+  opacity:1!important;
+  pointer-events:auto!important;
+}
+#bloodline .bln-desktop{
+  overflow:visible!important;
+}
+#bloodline .bln-stage-shell{
+  width:100%!important;
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  contain:layout paint!important;
+  overscroll-behavior-inline:contain!important;
+  scrollbar-width:none!important;
+  -ms-overflow-style:none!important;
+  touch-action:pan-x!important;
+}
+#bloodline .bln-stage-shell::-webkit-scrollbar{display:none!important}
+#bloodline .bln-stage-scrollbar{
+  position:relative;
+  width:100%;
+  height:28px;
+  margin:12px 0 4px;
+  display:flex;
+  align-items:center;
+  opacity:.94;
+}
+#bloodline .bln-stage-scrollbar.is-disabled{opacity:.25}
+#bloodline .bln-stage-scrollbar-track{
+  position:relative;
+  width:100%;
+  height:8px;
+  background:#d5d5cf;
+  cursor:pointer;
+}
+#bloodline .bln-stage-scrollbar-thumb{
+  position:absolute;
+  left:0;
+  top:0;
+  height:8px;
+  min-width:46px;
+  background:var(--ink);
+  cursor:grab;
+  will-change:transform,width;
+}
+#bloodline .bln-stage-scrollbar-thumb:active{cursor:grabbing;background:var(--acid)}
+#bloodline .bln-stage-scrollbar-thumb:focus-visible{
+  outline:2px solid var(--acid);
+  outline-offset:3px;
+}
+@media(max-width:820px){
+  #bloodline .bln-image-viewer{
+    width:calc(100% + 24px)!important;
+    min-height:auto!important;
+    margin:0 -12px 36px!important;
+    padding:16px!important;
+  }
+  #bloodline .bln-image-viewer-top{
+    grid-template-columns:1fr auto!important;
+    gap:14px!important;
+    min-height:0!important;
+  }
+  #bloodline .bln-image-viewer-kicker{grid-column:1!important}
+  #bloodline .bln-image-viewer-name{
+    grid-column:1!important;
+    grid-row:2!important;
+    justify-self:start!important;
+    max-width:100%!important;
+    text-align:left!important;
+    font-size:clamp(28px,9vw,48px)!important;
+  }
+  #bloodline .bln-image-viewer-close{grid-column:2!important;grid-row:1 / span 2!important}
+  #bloodline .bln-image-viewer-stage{
+    grid-template-columns:1fr!important;
+    grid-template-rows:minmax(440px,66svh) auto!important;
+    min-height:520px!important;
+    max-height:72svh!important;
+    padding:18px!important;
+  }
+  #bloodline .bln-image-viewer-stage img{
+    grid-column:1!important;
+    grid-row:1!important;
+  }
+  #bloodline .bln-image-viewer-panel{
+    grid-column:1!important;
+    grid-row:2!important;
+    max-width:100%!important;
+    margin-top:12px!important;
+  }
+  #bloodline .bln-stage-scrollbar{display:none!important}
+}
