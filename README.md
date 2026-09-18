@@ -79,7 +79,7 @@ Dante's two additional gallery images are presented in the approved reversed ord
 
 The production `main` repository remains the infrastructure baseline. The accepted Breed Intelligence product replaces the relevant presentation surfaces without removing the mature registry, lifecycle, SEO, litter, submission or IndexNow systems.
 
-Male and female cards are intentionally folder-based. Their Bloodline Network CSS/JS and media assets live beside each `index.html`; the profile router points to `profiles/male/` and `profiles/female/`. The previous `profiles/male.html` and `profiles/female.html` paths remain as `noindex,follow` redirects so old links do not break.
+Male and female cards are intentionally folder-based. Their Bloodline Network CSS/JS and media assets live beside each `index.html`; the profile router points directly to `profiles/male/` and `profiles/female/`. These folder routes are the only male/female digital-card templates.
 
 Bloodline Network canonical data lives in `data/pedigree-graph.json`; explicit selected/missing ancestor image provenance lives in `data/bloodline-images.json`. `scripts/validate_bloodline_network.py` locks this layer into CI.
 
