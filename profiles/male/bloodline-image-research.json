@@ -4,14 +4,14 @@
   "active_in_v5": [
     {
       "name": "Dion Dante",
-      "asset": "assets/profile_F7Le.png",
-      "status": "second_supplied_gallery_image"
+      "asset": "assets/hero_F7Le.png",
+      "status": "first_supplied_gallery_image"
     },
     {
       "name": "Cowboy Lucky Luck di Altobello",
-      "candidate": "https://altobellodobermann.com/images/stories/news2016/buctro.jpg",
-      "source": "https://altobellodobermann.com/shows/1599-bucharest-trophy-romania",
-      "status": "candidate_confirmed_by_user_buctro"
+      "candidate": "https://www.altobellodobermann.com/images/stories/news2019/lucky02.jpg",
+      "source": "https://www.altobellodobermann.com/news/2180-photo-of-cowboy-lucky-luck-di-altobello",
+      "status": "candidate_confirmed_by_user_lucky02"
     },
     {
       "name": "Maxim di Altobello",
