@@ -1,17 +1,18 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f1f1f1">
-  <meta name="description" content="Doberman Index — structured kennel profile with breeding program, indexed Dobermans, health evidence and results.">
-  <meta name="robots" content="noindex,follow">
-  <title>Doberman Index — Kennel Profile</title>
-<link rel="icon" href="../favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="#f1f1f1" name="theme-color"/>
+<meta content="Doberman Index — structured kennel profile with breeding program, indexed Dobermans, health evidence and results." name="description"/>
+<title>Doberman Index — Kennel Profile</title>
+<meta name="robots" content="noindex,follow">
+<link href="../favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&amp;family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<style>
     :root{
       --paper:#f1f1f1;
       --paper-deep:#e5e5e5;
@@ -799,8 +800,7 @@
     }
     .kennel-profile-flow .linked-record-list strong{color:#aaa;font-size:14px;font-weight:520}
     .kennel-profile-flow .linked-litter-links{display:flex;flex-wrap:wrap;gap:10px}
-    .kennel-profile-flow .linked-litter-links a{padding:10px 14px;border:1px solid #4a4a4a;border-radius:999px;color:var(--white);font-size:11px;text-decoration:none}
-    .kennel-profile-flow .linked-litter-links a:hover,.kennel-profile-flow .linked-litter-links a:focus-visible{border-color:var(--acid);color:var(--acid)}
+    .kennel-profile-flow .linked-litter-links span{padding:10px 14px;border:1px solid #4a4a4a;border-radius:999px;color:var(--white);font-size:11px}
 
     .kennel-profile-flow .visual-card{
       position:relative;
@@ -902,7 +902,7 @@
       text-transform:uppercase;
       letter-spacing:.05em;
     }
-    .kennel-profile-flow .pairing-kicker::before{content:"07";color:var(--white)}
+    .kennel-profile-flow .pairing-kicker::before{content:"05";color:var(--white)}
     .kennel-profile-flow .pairing-title{
       font-size:clamp(56px,8vw,120px);
       font-weight:700;
@@ -1242,250 +1242,253 @@
       *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
       .record-track{animation:none}
     }
-  </style>
+  
+/* REVIEW / DANTE METHOD — compact visual Record Desk. Original source sections remain in the DOM. */
+#kennelProgram,#kennelHealth,#kennelResults{display:none!important}
+.kennel-profile-flow .kennel-record-desk{position:relative;overflow:hidden;background:#111;color:#f5f5ef;padding-top:clamp(92px,8vw,132px)!important;padding-bottom:clamp(88px,7vw,118px)!important}.kennel-profile-flow .kennel-record-desk .record-desk-ghost{position:absolute;right:-.04em;top:70px;color:#1d1d1d;font-size:clamp(180px,23vw,360px);font-weight:900;line-height:.75;letter-spacing:-.09em;pointer-events:none}.kennel-profile-flow .kennel-record-desk .section-head{position:relative;z-index:2;margin-bottom:56px}.kennel-profile-flow .kennel-record-desk .section-index,.kennel-profile-flow .kennel-record-desk .section-title{color:#fff}.kennel-profile-flow .kennel-record-desk .section-note{color:#969696}.kennel-profile-flow .kennel-record-desk .section-note b{color:#fff}
+.kennel-profile-flow .kennel-record-desk .record-desk-shell{position:relative;z-index:2;display:grid;grid-template-columns:minmax(300px,34%) minmax(0,66%);margin:0 var(--pad);min-height:700px;border:1px solid #333;background:#161616}.kennel-profile-flow .kennel-record-desk .record-desk-visual{position:sticky;top:70px;align-self:start;min-height:698px;display:flex;flex-direction:column;border-right:1px solid #343434;background:#0e0e0e}.kennel-profile-flow .kennel-record-desk .record-desk-image{display:grid;place-items:center;height:350px;padding:34px;overflow:hidden;background:#f0f0ec}.kennel-profile-flow .kennel-record-desk .record-desk-image img{display:block;width:100%;height:100%;object-fit:contain;filter:grayscale(1) contrast(1.15)}.kennel-profile-flow .kennel-record-desk .record-desk-identity{padding:26px 26px 18px;border-top:5px solid var(--acid)}.kennel-profile-flow .kennel-record-desk .record-desk-identity span{font:800 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.1em;color:#9d9d9d;text-transform:uppercase}.kennel-profile-flow .kennel-record-desk .record-desk-identity h3{margin:13px 0 8px;color:#fff;font-size:clamp(34px,3.3vw,50px);line-height:.9;letter-spacing:-.06em}.kennel-profile-flow .kennel-record-desk .record-desk-identity p{margin:0;color:#bdbdbd;font-size:12px}.kennel-profile-flow .kennel-record-desk .record-desk-anchor{display:grid;gap:8px;margin-top:auto;padding:18px 26px 22px;border-top:1px solid #2e2e2e}.kennel-profile-flow .kennel-record-desk .record-desk-anchor span{color:#858585;font-size:10px}
+.kennel-profile-flow .kennel-record-desk .record-desk-workspace{min-width:0;padding:0 30px 30px}.kennel-profile-flow .kennel-record-desk .record-desk-tabs{display:flex;overflow-x:auto;border-bottom:1px solid #373737;scrollbar-width:none}.kennel-profile-flow .kennel-record-desk .record-desk-tabs::-webkit-scrollbar{display:none}.kennel-profile-flow .kennel-record-desk .record-desk-tabs button{flex:0 0 auto;padding:22px 15px 18px;border:0;border-bottom:3px solid transparent;background:none;color:#777;font:750 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.07em;text-transform:uppercase;cursor:pointer}.kennel-profile-flow .kennel-record-desk .record-desk-tabs button:first-child{padding-left:0}.kennel-profile-flow .kennel-record-desk .record-desk-tabs button.is-active{color:#fff;border-bottom-color:var(--acid)}.kennel-profile-flow .kennel-record-desk .record-desk-panel{padding-top:34px}.kennel-profile-flow .kennel-record-desk .record-desk-panel[hidden]{display:none!important}.kennel-profile-flow .kennel-record-desk .desk-panel-head{display:grid;grid-template-columns:112px minmax(0,1fr);gap:14px 26px;align-items:start;margin-bottom:26px}.kennel-profile-flow .kennel-record-desk .desk-panel-head>span{color:var(--acid);font:800 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.1em;text-transform:uppercase}.kennel-profile-flow .kennel-record-desk .desk-panel-head h3{margin:0;color:#fff;font-size:clamp(28px,2.7vw,42px);line-height:.94;letter-spacing:-.055em}.kennel-profile-flow .kennel-record-desk .desk-panel-head p{grid-column:2;margin:0;max-width:58ch;color:#929292;font-size:11px;line-height:1.5}.kennel-profile-flow .kennel-record-desk .desk-ledger{border-top:1px solid #3b3b3b}.kennel-profile-flow .kennel-record-desk .desk-ledger>div{display:grid;grid-template-columns:minmax(145px,.65fr) minmax(0,1.35fr);gap:22px;align-items:baseline;padding:14px 0;border-bottom:1px solid #303030}.kennel-profile-flow .kennel-record-desk .desk-ledger span{color:#858585;font-size:9px;font-weight:700;letter-spacing:.045em;text-transform:uppercase}.kennel-profile-flow .kennel-record-desk .desk-ledger strong{color:#fff;font-size:14px;font-weight:650;line-height:1.25}.kennel-profile-flow .kennel-record-desk .desk-ledger small{grid-column:2;color:#777;font-size:9px;line-height:1.4;margin-top:-6px}
+@media(max-width:900px){.kennel-profile-flow .kennel-record-desk .record-desk-shell{grid-template-columns:1fr}.kennel-profile-flow .kennel-record-desk .record-desk-visual{position:relative;top:auto;min-height:0;border-right:0;border-bottom:1px solid #343434;display:grid;grid-template-columns:40% 1fr}.kennel-profile-flow .kennel-record-desk .record-desk-image{height:300px;grid-row:1/3}.kennel-profile-flow .kennel-record-desk .record-desk-anchor{margin-top:0}}@media(max-width:680px){.kennel-profile-flow .kennel-record-desk .record-desk-visual{display:block}.kennel-profile-flow .kennel-record-desk .record-desk-image{height:250px}.kennel-profile-flow .kennel-record-desk .record-desk-workspace{padding:0 18px 22px}.kennel-profile-flow .kennel-record-desk .record-desk-tabs{margin:0 -18px;padding:0 18px}.kennel-profile-flow .kennel-record-desk .desk-panel-head{grid-template-columns:1fr;gap:12px}.kennel-profile-flow .kennel-record-desk .desk-panel-head p{grid-column:1}.kennel-profile-flow .kennel-record-desk .desk-ledger>div{grid-template-columns:1fr;gap:5px}.kennel-profile-flow .kennel-record-desk .desk-ledger small{grid-column:1;margin-top:0}}
+
+</style>
 </head>
 <body>
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-    <filter id="logoAlphaCut" color-interpolation-filters="sRGB">
-      <feComponentTransfer>
-        <feFuncA type="linear" slope="1.2" intercept="-.2"/>
-      </feComponentTransfer>
-    </filter>
-  </svg>
-  <nav class="float-nav" aria-label="Primary">
-    <a class="nav-brand" href="../index.html">DOBERMAN INDEX®</a>
-    <a class="nav-link" href="#recordDetails">Kennel record</a>
-    <a class="nav-cta" href="../index.html">Return to portal</a>
-  </nav>
-
-  <main>
-    <section class="hero" aria-labelledby="kennelName">
-      <p class="hero-meta left">Kennel profile<span>Concept / DI-K-XXXXXX</span></p>
-      <p class="hero-meta right">Example digital card<span>For an indexed kennel</span></p>
-      <div class="watermark" aria-hidden="true">KENNEL</div>
-
-      <h1 class="hero-title" id="kennelName"><span data-kennel-name-line="first">Siempre</span><span data-kennel-name-line="rest">Peligroso</span></h1>
-
-      <a class="dossier" href="#recordDetails" aria-label="Open Siempre Peligroso kennel record">
-        <span class="kennel-card-media" data-media-slot="cover">
-          <span class="kennel-logo-frame"><img class="is-siempre-peligroso-oversized" src="../work/kennel-concept/siempre-peligroso-logo-color.png" alt="Siempre Peligroso kennel logo"></span>
-          <span class="kennel-hero-facts">
-            <span class="kennel-hero-fact"><small>Country</small><strong data-kennel-field="country">Serbia</strong></span>
-            <span class="kennel-hero-fact"><small>Founder</small><strong data-kennel-field="owner_or_founder">Not provided</strong></span>
-          </span>
-        </span>
-        <span class="kennel-card-copy" aria-hidden="true"></span>
-      </a>
-
-      <a class="hero-jump" href="#recordDetails"><b aria-hidden="true">↓</b><span>Explore<br>program</span></a>
-    </section>
-
-    <section class="record-strip" id="recordDetails" aria-label="Kennel record facts">
-      <div class="record-track">
-        <article class="record-item"><span>Location</span><strong data-kennel-field="location">Not provided</strong></article>
-        <article class="record-item"><span>Founded</span><strong data-kennel-field="founded_year">Not provided</strong></article>
-        <article class="record-item"><span>Registration prefix</span><strong data-kennel-field="registration_prefix">Not provided</strong></article>
-        <article class="record-item"><span>Registration authority</span><strong data-kennel-field="registration_authority">Not provided</strong></article>
-        <article class="record-item is-wide"><span>Public contact email</span><strong data-kennel-field="contact_email">Not provided</strong></article>
-        <article class="record-item is-wide"><span>Website</span><strong data-kennel-field="website">Not provided</strong></article>
-        <article class="record-item is-wide"><span>Social links</span><strong data-kennel-field="social_links">Not provided</strong></article>
-        <article class="record-item is-wide"><span>Breeding focus</span><strong data-kennel-field="focus">Not provided</strong></article>
-        <article class="record-item is-wide"><span>Bloodline tags</span><strong data-kennel-field="bloodline_tags">Not provided</strong></article>
-        <article class="record-item"><span>Indexed Dobermans</span><strong data-system-metric="indexed_dobermans">—</strong><em>Generated from linked records</em></article>
-        <article class="record-item"><span>Published litters</span><strong data-system-metric="litters">—</strong><em>Generated from linked records</em></article>
-        <article class="record-item"><span>Active Dobermans</span><strong data-system-metric="active_dobermans">—</strong><em>Generated from linked records</em></article>
-        <article class="record-item"><span>Available puppies</span><strong data-system-metric="available_puppies">—</strong><em>Generated from linked records</em></article>
-        <article class="record-item" aria-hidden="true"><span>Location</span><strong data-kennel-field="location">Not provided</strong></article>
-        <article class="record-item" aria-hidden="true"><span>Founded</span><strong data-kennel-field="founded_year">Not provided</strong></article>
-        <article class="record-item" aria-hidden="true"><span>Registration prefix</span><strong data-kennel-field="registration_prefix">Not provided</strong></article>
-        <article class="record-item" aria-hidden="true"><span>Registration authority</span><strong data-kennel-field="registration_authority">Not provided</strong></article>
-        <article class="record-item is-wide" aria-hidden="true"><span>Public contact email</span><strong data-kennel-field="contact_email">Not provided</strong></article>
-        <article class="record-item is-wide" aria-hidden="true"><span>Website</span><strong data-kennel-field="website">Not provided</strong></article>
-        <article class="record-item is-wide" aria-hidden="true"><span>Social links</span><strong data-kennel-field="social_links">Not provided</strong></article>
-        <article class="record-item is-wide" aria-hidden="true"><span>Breeding focus</span><strong data-kennel-field="focus">Not provided</strong></article>
-        <article class="record-item is-wide" aria-hidden="true"><span>Bloodline tags</span><strong data-kennel-field="bloodline_tags">Not provided</strong></article>
-        <article class="record-item" aria-hidden="true"><span>Indexed Dobermans</span><strong data-system-metric="indexed_dobermans">—</strong><em>Generated from linked records</em></article>
-        <article class="record-item" aria-hidden="true"><span>Published litters</span><strong data-system-metric="litters">—</strong><em>Generated from linked records</em></article>
-        <article class="record-item" aria-hidden="true"><span>Active Dobermans</span><strong data-system-metric="active_dobermans">—</strong><em>Generated from linked records</em></article>
-        <article class="record-item" aria-hidden="true"><span>Available puppies</span><strong data-system-metric="available_puppies">—</strong><em>Generated from linked records</em></article>
-      </div>
-    </section>
-
-    <div class="kennel-profile-flow">
-      <section class="section" id="kennelProgram">
-        <div class="section-mark" aria-hidden="true">PROGRAM</div>
-        <header class="section-head">
-          <div>
-            <div class="section-index"><span>01</span><i></i><span>Kennel identity</span></div>
-            <h2 class="section-title">Breeding<br>program.</h2>
-          </div>
-          <p class="section-note"><b>The program layer</b>A kennel record connects breeding identity with every indexed Doberman, litter and documented result.</p>
-        </header>
-        <div class="section-content">
-          <div class="slider" id="kennelProgramRail">
-            <article class="surface-card" tabindex="0"><span class="key">Breeding focus</span><strong class="value">Owner supplied</strong><span class="sub">Program priorities and selection goals</span></article>
-            <article class="surface-card" tabindex="0"><span class="key">Bloodline view</span><strong class="value">System generated</strong><span class="sub">Built from connected pedigrees</span></article>
-            <article class="surface-card" tabindex="0"><span class="key">Record links</span><strong class="value">Stable identifiers</strong><span class="sub">Dobermans and litters remain connected</span></article>
-            <article class="surface-card" tabindex="0"><span class="key">Derived totals</span><strong class="value">Living output</strong><span class="sub">Recalculated from published records</span></article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section is-white" id="kennelDobermans">
-        <header class="section-head">
-          <div>
-            <div class="section-index"><span>02</span><i></i><span>Connected profiles</span></div>
-            <h2 class="section-title">Indexed<br>Dobermans.</h2>
-          </div>
-          <p class="section-note"><b>Living kennel network</b>Each published profile keeps its own evidence and contributes verified lineage, health and results to the kennel record.</p>
-        </header>
-        <div class="section-content">
-          <div class="slider" id="kennelDobermanRail" aria-live="polite">
-            <a class="related-card" href="male.html?id=DI-M-000001"><div class="related-card-top"><span>DI-M-000001</span><i></i><span class="related-arrow" aria-hidden="true">↗</span></div><div class="related-card-body"><span class="related-thumb"><img src="../media/dobermans/DI-M-000001/hero.png" alt="Dion Dante"></span><span class="related-copy"><strong>Dion Dante</strong><span>Male · Active stud</span></span></div></a>
-          </div>
-        </div>
-      </section>
-
-      <section class="section impact-showcase" id="kennelLitters">
-        <div class="section-mark" aria-hidden="true">LITTERS</div>
-        <header class="section-head">
-          <div>
-            <div class="section-index"><span>03</span><i></i><span>Breeding record</span></div>
-            <h2 class="section-title">Litters &<br>lineage.</h2>
-          </div>
-          <p class="section-note"><b>Stable record chain</b>Each litter connects sire, dam, kennel, puppies and availability through permanent identifiers.</p>
-        </header>
-        <div class="impact-content">
-          <p class="impact-copy">This section is generated only from published litter and offspring records. Missing information remains visibly unclaimed.</p>
-          <div class="metric-grid" id="kennelLitterRail">
-            <article class="metric" data-caption="Generated from linked litter IDs"><strong data-system-metric="litters">—</strong><em>Published litters</em></article>
-            <article class="metric" data-caption="Generated from published profiles"><strong data-system-metric="indexed_offspring">—</strong><em>Indexed offspring</em></article>
-            <article class="metric" data-caption="Generated from verified title records"><strong data-system-metric="champion_offspring">—</strong><em>Champion offspring</em></article>
-            <article class="metric" data-caption="Reported in connected Doberman profiles"><strong data-system-metric="export_countries">—</strong><em>Export countries</em></article>
-          </div>
-          <div class="linked-record-list" id="kennelLitterList" aria-live="polite"><span>Linked litter records</span><strong>No published litter records linked</strong></div>
-        </div>
-      </section>
-
-      <section class="section" id="kennelHealth">
-        <div class="section-mark" aria-hidden="true">HEALTH</div>
-        <header class="section-head">
-          <div>
-            <div class="section-index"><span>04</span><i></i><span>Evidence standard</span></div>
-            <h2 class="section-title">Health,<br>record by record.</h2>
-          </div>
-          <p class="section-note"><b>Profile-level evidence</b>The kennel view summarizes documented testing while every result remains attached to the individual Doberman.</p>
-        </header>
-        <div class="section-content">
-          <div class="slider" id="kennelHealthRail">
-            <article class="surface-card" tabindex="0"><span class="key">Cardiac</span><strong class="value">Echo + Holter</strong><span class="sub"><b data-system-metric="cardiac_records">—</b> linked · Date, issuer and attachment</span></article>
-            <article class="surface-card" tabindex="0"><span class="key">Genetics</span><strong class="value">DCM 1–5</strong><span class="sub"><b data-system-metric="genetic_results">—</b> linked · Submitted genetic markers</span></article>
-            <article class="surface-card" tabindex="0"><span class="key">Orthopedic</span><strong class="value">Hips + Elbows</strong><span class="sub"><b data-system-metric="orthopedic_results">—</b> linked · Original result preserved</span></article>
-            <article class="surface-card" tabindex="0"><span class="key">Clinical</span><strong class="value">Additional tests</strong><span class="sub"><b data-system-metric="clinical_results">—</b> linked · Where evidence is supplied</span></article>
-            <article class="surface-card" tabindex="0"><span class="key">Evidence</span><strong class="value">Source backed</strong><span class="sub"><b data-system-metric="evidence_files">—</b> files · Claim and document stay linked</span></article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section performance-showcase is-white" id="kennelResults">
-        <header class="section-head">
-          <div>
-            <div class="section-index"><span>05</span><i></i><span>Program outcomes</span></div>
-            <h2 class="section-title">Results &<br>reach.</h2>
-          </div>
-          <p class="section-note"><b>Generated from evidence</b>Titles and working results belong to the Doberman that earned them, then contribute to the kennel overview.</p>
-        </header>
-        <div class="section-content">
-          <div class="metric-grid" id="kennelPerformanceRail">
-            <article class="metric" data-initial="C" data-caption="Connected title records"><strong data-system-metric="champions">—</strong><em>Indexed champions</em></article>
-            <article class="metric highlight" data-initial="S" data-caption="Documented achievements"><strong data-system-metric="titles">—</strong><em>Show titles</em></article>
-            <article class="metric" data-initial="W" data-caption="Submitted exams and sports"><strong data-system-metric="working_results">—</strong><em>Working results</em></article>
-            <article class="metric" data-initial="R" data-caption="International kennel reach"><strong data-system-metric="countries_represented">—</strong><em>Countries represented</em></article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section is-white" id="kennelArchive">
-        <header class="section-head">
-          <div>
-            <div class="section-index"><span>06</span><i></i><span>Visual record</span></div>
-            <h2 class="section-title">Kennel<br>archive.</h2>
-          </div>
-          <p class="section-note"><b>Program + connected records</b>Each digital card opens the gallery and movement record of an indexed Doberman.</p>
-        </header>
-        <div class="section-content">
-          <div class="gallery-rail" id="kennelArchiveRail">
-            <a class="archive-profile-card" href="male.html?id=DI-M-000001&amp;view=gallery#gallery-movement"><span class="archive-profile-image"><img src="../media/dobermans/DI-M-000001/hero.png" alt="Dion Dante"></span><span class="archive-profile-copy"><small>DI-M-000001</small><strong>Dion Dante</strong><span>Siempre Peligroso · Serbia</span><em>Gallery & movement</em></span></a>
-          </div>
-        </div>
-      </section>
-
-      <section class="section pairing-section" id="kennelPuppies">
-        <div class="pairing-grid">
-          <div>
-            <div class="pairing-kicker">Living availability</div>
-            <h2 class="pairing-title">Available<br>puppies.</h2>
-          </div>
-          <div class="pairing-copy">
-            <p>Published availability appears here and in the global Puppies index from the same active litter record.</p>
-            <a class="pairing-link" href="#kennelLitters"><span>View litter record</span><i aria-hidden="true">↑</i></a>
-          </div>
-        </div>
-      </section>
-
-      <section class="section services-section is-white" id="kennelServices">
-        <header class="section-head">
-          <div>
-            <div class="section-index"><span>08</span><i></i><span>Profile action</span></div>
-            <h2 class="section-title">Focused<br>services.</h2>
-          </div>
-          <p class="section-note"><b>Index first</b>Run intelligence and exports from the kennel record, its connected Dobermans and documented evidence.</p>
-        </header>
-        <div class="section-content kennel-service-module" data-kennel-services>
-          <div class="service-selector" data-service-selector aria-label="Kennel profile actions">
-            <button class="service-option" type="button" aria-disabled="true" data-service-id="verified-kennel-record">
-              <span class="service-option-number">01</span>
-              <span class="service-option-copy"><strong>Kennel Record</strong></span>
-              <span class="service-option-description">An export-ready record of the kennel and its indexed Dobermans.</span>
-              <span class="service-option-pricing"><small class="service-fee-label">One-time fee</small><span class="service-option-price">€29</span></span>
-            </button>
-            <button class="service-option" type="button" aria-disabled="true" data-service-id="breeding-program-intelligence">
-              <span class="service-option-number">02</span>
-              <span class="service-option-copy"><strong>Breeding Program Intelligence</strong></span>
-              <span class="service-option-description">Reveals recurring patterns across lineage, health, temperament and results.</span>
-              <span class="service-option-pricing"><small class="service-fee-label">One-time fee</small><span class="service-option-price">€69</span></span>
-            </button>
-            <button class="service-option" type="button" aria-disabled="true" data-service-id="kennel-comparison-intelligence">
-              <span class="service-option-number">03</span>
-              <span class="service-option-copy"><strong>Kennel Comparison</strong></span>
-              <span class="service-option-description">Maps documented similarities and differences between two indexed kennels.</span>
-              <span class="service-option-pricing"><small class="service-fee-label">One-time fee</small><span class="service-option-price">€89</span></span>
-            </button>
-            <span class="services-ghost" aria-hidden="true">TOOLS</span>
-          </div>
-          <div class="services-monolith">
-            <div class="services-monolith-editorial">
-              <div class="services-monolith-infinity" aria-label="One to infinity"><strong>1</strong><i>→</i><strong>∞</strong></div>
-              <p class="services-monolith-message">One kennel. One verified record. A living network.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <footer class="footer">
-        <div class="footer-identity">
-          <div class="footer-brand">DOBERMAN INDEX®</div>
-          <div class="footer-descriptor"><span>//</span>Indexed kennel profile</div>
-        </div>
-        <div class="footer-record"><span>Record</span><strong data-record-id>DI-K-000001</strong><small data-record-status>Verification in progress</small></div>
-        <div class="footer-right"><span data-kennel-field="name">Siempre Peligroso</span> · <span data-kennel-field="country">Serbia</span><br>Connected through one living record.</div>
-      </footer>
-    </div>
-  </main>
-  <script src="../scripts/kennel-network.js?v=20260905-4"></script>
-  <script src="../scripts/kennel-services.js?v=20260905-9"></script>
-  <script src="../assets/js/seo-runtime.js"></script>
-  <script>
+<svg aria-hidden="true" focusable="false" height="0" style="position:absolute" width="0">
+<filter color-interpolation-filters="sRGB" id="logoAlphaCut">
+<fecomponenttransfer>
+<fefunca intercept="-.2" slope="1.2" type="linear"></fefunca>
+</fecomponenttransfer>
+</filter>
+</svg>
+<nav aria-label="Primary" class="float-nav">
+<a class="nav-brand" href="../index.html">DOBERMAN INDEX®</a>
+<a class="nav-link" href="#recordDetails">Kennel record</a>
+<a class="nav-cta" href="../index.html">Return to portal</a>
+</nav>
+<main>
+<section aria-labelledby="kennelName" class="hero">
+<p class="hero-meta left">Kennel Intelligence Record / DI-K-XXXXXX</p>
+<p class="hero-meta right">One breeding program, connected through records, litters and outcomes.</p>
+<div aria-hidden="true" class="watermark">KENNEL</div>
+<h1 class="hero-title" id="kennelName"><span data-kennel-name-line="first">Siempre</span><span data-kennel-name-line="rest">Peligroso</span></h1>
+<a aria-label="Open Siempre Peligroso kennel record" class="dossier" href="#recordDetails">
+<span class="kennel-card-media" data-media-slot="cover">
+<span class="kennel-logo-frame"><img alt="Siempre Peligroso kennel logo" class="is-siempre-peligroso-oversized" src="../work/kennel-concept/siempre-peligroso-logo-color.png"/></span>
+<span class="kennel-hero-facts">
+<span class="kennel-hero-fact"><small>Country</small><strong data-kennel-field="country">Serbia</strong></span>
+<span class="kennel-hero-fact"><small>Founder</small><strong data-kennel-field="owner_or_founder">Not provided</strong></span>
+</span>
+</span>
+<span aria-hidden="true" class="kennel-card-copy"></span>
+</a>
+<a class="hero-jump" href="#recordDetails"><b aria-hidden="true">↓</b><span>Explore<br/>program</span></a>
+</section>
+<section aria-label="Kennel record facts" class="record-strip" id="recordDetails">
+<div class="record-track">
+<article class="record-item"><span>Location</span><strong data-kennel-field="location">Not provided</strong></article>
+<article class="record-item"><span>Founded</span><strong data-kennel-field="founded_year">Not provided</strong></article>
+<article class="record-item"><span>Registration prefix</span><strong data-kennel-field="registration_prefix">Not provided</strong></article>
+<article class="record-item"><span>Registration authority</span><strong data-kennel-field="registration_authority">Not provided</strong></article>
+<article class="record-item is-wide"><span>Public contact email</span><strong data-kennel-field="contact_email">Not provided</strong></article>
+<article class="record-item is-wide"><span>Website</span><strong data-kennel-field="website">Not provided</strong></article>
+<article class="record-item is-wide"><span>Social links</span><strong data-kennel-field="social_links">Not provided</strong></article>
+<article class="record-item is-wide"><span>Breeding focus</span><strong data-kennel-field="focus">Not provided</strong></article>
+<article class="record-item is-wide"><span>Bloodline tags</span><strong data-kennel-field="bloodline_tags">Not provided</strong></article>
+<article class="record-item"><span>Indexed Dobermans</span><strong data-system-metric="indexed_dobermans">—</strong><em>Generated from linked records</em></article>
+<article class="record-item"><span>Published litters</span><strong data-system-metric="litters">—</strong><em>Generated from linked records</em></article>
+<article class="record-item"><span>Active Dobermans</span><strong data-system-metric="active_dobermans">—</strong><em>Generated from linked records</em></article>
+<article class="record-item"><span>Available puppies</span><strong data-system-metric="available_puppies">—</strong><em>Generated from linked records</em></article>
+<article aria-hidden="true" class="record-item"><span>Location</span><strong data-kennel-field="location">Not provided</strong></article>
+<article aria-hidden="true" class="record-item"><span>Founded</span><strong data-kennel-field="founded_year">Not provided</strong></article>
+<article aria-hidden="true" class="record-item"><span>Registration prefix</span><strong data-kennel-field="registration_prefix">Not provided</strong></article>
+<article aria-hidden="true" class="record-item"><span>Registration authority</span><strong data-kennel-field="registration_authority">Not provided</strong></article>
+<article aria-hidden="true" class="record-item is-wide"><span>Public contact email</span><strong data-kennel-field="contact_email">Not provided</strong></article>
+<article aria-hidden="true" class="record-item is-wide"><span>Website</span><strong data-kennel-field="website">Not provided</strong></article>
+<article aria-hidden="true" class="record-item is-wide"><span>Social links</span><strong data-kennel-field="social_links">Not provided</strong></article>
+<article aria-hidden="true" class="record-item is-wide"><span>Breeding focus</span><strong data-kennel-field="focus">Not provided</strong></article>
+<article aria-hidden="true" class="record-item is-wide"><span>Bloodline tags</span><strong data-kennel-field="bloodline_tags">Not provided</strong></article>
+<article aria-hidden="true" class="record-item"><span>Indexed Dobermans</span><strong data-system-metric="indexed_dobermans">—</strong><em>Generated from linked records</em></article>
+<article aria-hidden="true" class="record-item"><span>Published litters</span><strong data-system-metric="litters">—</strong><em>Generated from linked records</em></article>
+<article aria-hidden="true" class="record-item"><span>Active Dobermans</span><strong data-system-metric="active_dobermans">—</strong><em>Generated from linked records</em></article>
+<article aria-hidden="true" class="record-item"><span>Available puppies</span><strong data-system-metric="available_puppies">—</strong><em>Generated from linked records</em></article>
+</div>
+</section>
+<div class="kennel-profile-flow">
+<section class="section kennel-record-desk" id="kennelRecordDesk">
+  <div class="record-desk-ghost" aria-hidden="true">RECORD</div>
+  <header class="section-head"><div><div class="section-index"><span>01</span><i></i><span>Compact kennel intelligence</span></div><h2 class="section-title">Kennel<br>record desk.</h2></div><p class="section-note"><b>One program. Four views.</b> Identity, breeding focus, documented health coverage and program outcomes are brought into one persistent desk while every underlying Doberman and litter remains independently traceable.</p></header>
+  <div class="record-desk-shell"><aside class="record-desk-visual"><div class="record-desk-image"><img id="kennelDeskLogo" alt="Kennel record desk logo"></div><div class="record-desk-identity"><span id="kennelDeskCode">KENNEL RECORD</span><h3 id="kennelDeskName">—</h3><p id="kennelDeskMeta">—</p></div><div class="record-desk-anchor"><span id="kennelDeskRegistration">Registration · —</span><span id="kennelDeskLocation">Location · —</span><span id="kennelDeskFounded">Founded · —</span></div></aside>
+  <div class="record-desk-workspace"><div class="record-desk-tabs" role="tablist" aria-label="Kennel Record Desk views"><button class="is-active" role="tab" aria-selected="true" data-kennel-desk-tab="overview">Overview</button><button role="tab" aria-selected="false" data-kennel-desk-tab="program">Program</button><button role="tab" aria-selected="false" data-kennel-desk-tab="health">Health</button><button role="tab" aria-selected="false" data-kennel-desk-tab="outcomes">Outcomes</button></div>
+  <div class="record-desk-panel" data-kennel-desk-panel="overview"><div class="desk-panel-head"><span>01 / Overview</span><h3>Program identity at a glance.</h3><p>Stable kennel identity and current system-derived totals stay visible while deeper evidence remains one step away.</p></div><div class="desk-ledger" id="kennelDeskOverview"></div></div>
+  <div class="record-desk-panel" data-kennel-desk-panel="program" hidden><div class="desk-panel-head"><span>02 / Program</span><h3>Breeding identity, connected to records.</h3><p>Focus, bloodline view, stable record links and derived totals remain distinct instead of being flattened into promotional copy.</p></div><div class="desk-ledger" id="kennelDeskProgram"></div></div>
+  <div class="record-desk-panel" data-kennel-desk-panel="health" hidden><div class="desk-panel-head"><span>03 / Health</span><h3>Coverage without losing provenance.</h3><p>The kennel view summarizes documented testing while each result remains attached to the individual Doberman, date and source.</p></div><div class="desk-ledger" id="kennelDeskHealth"></div></div>
+  <div class="record-desk-panel" data-kennel-desk-panel="outcomes" hidden><div class="desk-panel-head"><span>04 / Outcomes</span><h3>Results stay attributable.</h3><p>Titles, working results and reach are summarized at program level without detaching them from the Dobermans that produced them.</p></div><div class="desk-ledger" id="kennelDeskOutcomes"></div></div></div></div>
+</section>
+<section class="section" id="kennelProgram">
+<div aria-hidden="true" class="section-mark">PROGRAM</div>
+<header class="section-head">
+<div>
+<div class="section-index"><span>01</span><i></i><span>Kennel identity</span></div>
+<h2 class="section-title">Breeding<br/>program.</h2>
+</div>
+<p class="section-note">Program record. Indexed Dobermans, litters, lineage and outcomes in one connected view.</p>
+</header>
+<div class="section-content">
+<div class="slider" id="kennelProgramRail">
+<article class="surface-card" tabindex="0"><span class="key">Breeding focus</span><strong class="value">Owner supplied</strong><span class="sub">Program priorities and selection goals</span></article>
+<article class="surface-card" tabindex="0"><span class="key">Bloodline view</span><strong class="value">System generated</strong><span class="sub">Built from connected pedigrees</span></article>
+<article class="surface-card" tabindex="0"><span class="key">Record links</span><strong class="value">Stable identifiers</strong><span class="sub">Dobermans and litters remain connected</span></article>
+<article class="surface-card" tabindex="0"><span class="key">Derived totals</span><strong class="value">Living output</strong><span class="sub">Recalculated from published records</span></article>
+</div>
+</div>
+</section>
+<section class="section is-white" id="kennelDobermans">
+<header class="section-head">
+<div>
+<div class="section-index"><span>02</span><i></i><span>Connected profiles</span></div>
+<h2 class="section-title">Indexed<br/>Dobermans.</h2>
+</div>
+<p class="section-note">Connected records. Individual profiles reveal the program through evidence, lineage and outcomes.</p>
+</header>
+<div class="section-content">
+<div aria-live="polite" class="slider" id="kennelDobermanRail">
+<a class="related-card" href="male.html?id=DI-M-000001"><div class="related-card-top"><span>DI-M-000001</span><i></i><span aria-hidden="true" class="related-arrow">↗</span></div><div class="related-card-body"><span class="related-thumb"><img alt="Dion Dante" src="../media/dobermans/DI-M-000001/hero.png"/></span><span class="related-copy"><strong>Dion Dante</strong><span>Male · Active stud</span></span></div></a>
+</div>
+</div>
+</section>
+<section class="section impact-showcase" id="kennelLitters">
+<div aria-hidden="true" class="section-mark">LITTERS</div>
+<header class="section-head">
+<div>
+<div class="section-index"><span>03</span><i></i><span>Breeding record</span></div>
+<h2 class="section-title">Litters &amp;<br/>lineage.</h2>
+</div>
+<p class="section-note">Connected lineage. Litters link sire, dam, puppies and recurring bloodline patterns.</p>
+</header>
+<div class="impact-content">
+<p class="impact-copy">Built from published litter and offspring records, with missing data kept explicit.</p>
+<div class="metric-grid" id="kennelLitterRail">
+<article class="metric" data-caption="Generated from linked litter IDs"><strong data-system-metric="litters">—</strong><em>Published litters</em></article>
+<article class="metric" data-caption="Generated from published profiles"><strong data-system-metric="indexed_offspring">—</strong><em>Indexed offspring</em></article>
+<article class="metric" data-caption="Generated from verified title records"><strong data-system-metric="champion_offspring">—</strong><em>Champion offspring</em></article>
+<article class="metric" data-caption="Reported in connected Doberman profiles"><strong data-system-metric="export_countries">—</strong><em>Export countries</em></article>
+</div>
+<div aria-live="polite" class="linked-record-list" id="kennelLitterList"><span>Linked litter records</span><strong>No published litter records linked</strong></div>
+</div>
+</section>
+<section class="section" id="kennelHealth">
+<div aria-hidden="true" class="section-mark">HEALTH</div>
+<header class="section-head">
+<div>
+<div class="section-index"><span>04</span><i></i><span>Evidence standard</span></div>
+<h2 class="section-title">Health,<br/>record by record.</h2>
+</div>
+<p class="section-note">Traceable health. Program context stays linked to each individual record, date and source.</p>
+</header>
+<div class="section-content">
+<div class="slider" id="kennelHealthRail">
+<article class="surface-card" tabindex="0"><span class="key">Cardiac</span><strong class="value">Echo + Holter</strong><span class="sub"><b data-system-metric="cardiac_records">—</b> linked · Date, issuer and attachment</span></article>
+<article class="surface-card" tabindex="0"><span class="key">Genetics</span><strong class="value">DCM 1–5</strong><span class="sub"><b data-system-metric="genetic_results">—</b> linked · Submitted genetic markers</span></article>
+<article class="surface-card" tabindex="0"><span class="key">Orthopedic</span><strong class="value">Hips + Elbows</strong><span class="sub"><b data-system-metric="orthopedic_results">—</b> linked · Original result preserved</span></article>
+<article class="surface-card" tabindex="0"><span class="key">Clinical</span><strong class="value">Additional tests</strong><span class="sub"><b data-system-metric="clinical_results">—</b> linked · Where evidence is supplied</span></article>
+<article class="surface-card" tabindex="0"><span class="key">Evidence</span><strong class="value">Source backed</strong><span class="sub"><b data-system-metric="evidence_files">—</b> files · Claim and document stay linked</span></article>
+</div>
+</div>
+</section>
+<section class="section performance-showcase is-white" id="kennelResults">
+<header class="section-head">
+<div>
+<div class="section-index"><span>05</span><i></i><span>Program outcomes</span></div>
+<h2 class="section-title">Results &amp;<br/>reach.</h2>
+</div>
+<p class="section-note">Attributed outcomes. Titles, working results and progeny evidence stay linked to their source record.</p>
+</header>
+<div class="section-content">
+<div class="metric-grid" id="kennelPerformanceRail">
+<article class="metric" data-caption="Connected title records" data-initial="C"><strong data-system-metric="champions">—</strong><em>Indexed champions</em></article>
+<article class="metric highlight" data-caption="Documented achievements" data-initial="S"><strong data-system-metric="titles">—</strong><em>Show titles</em></article>
+<article class="metric" data-caption="Submitted exams and sports" data-initial="W"><strong data-system-metric="working_results">—</strong><em>Working results</em></article>
+<article class="metric" data-caption="International kennel reach" data-initial="R"><strong data-system-metric="countries_represented">—</strong><em>Countries represented</em></article>
+</div>
+</div>
+</section>
+<section class="section is-white" id="kennelArchive">
+<header class="section-head">
+<div>
+<div class="section-index"><span>04</span><i></i><span>Visual record</span></div>
+<h2 class="section-title">Kennel<br/>archive.</h2>
+</div>
+<p class="section-note">Living archive. Each card opens the visual record, evidence and lineage context.</p>
+</header>
+<div class="section-content">
+<div class="gallery-rail" id="kennelArchiveRail">
+<a class="archive-profile-card" href="male.html?id=DI-M-000001&amp;view=gallery#gallery-movement"><span class="archive-profile-image"><img alt="Dion Dante" src="../media/dobermans/DI-M-000001/hero.png"/></span><span class="archive-profile-copy"><small>DI-M-000001</small><strong>Dion Dante</strong><span>Siempre Peligroso · Serbia</span><em>Gallery &amp; movement</em></span></a>
+</div>
+</div>
+</section>
+<section class="section pairing-section" id="kennelPuppies">
+<div class="pairing-grid">
+<div>
+<div class="pairing-kicker">Living availability</div>
+<h2 class="pairing-title">Available<br/>puppies.</h2>
+</div>
+<div class="pairing-copy">
+<p>Availability stays linked to the same litter, sire, dam and kennel record.</p>
+<a class="pairing-link" href="#kennelLitters"><span>View litter record</span><i aria-hidden="true">↑</i></a>
+</div>
+</div>
+</section>
+<section class="section services-section is-white" id="kennelServices">
+<header class="section-head">
+<div>
+<div class="section-index"><span>06</span><i></i><span>Profile action</span></div>
+<h2 class="section-title">Focused<br/>services.</h2>
+</div>
+<p class="section-note">Focused tools. Explore lineage, pairings and program evidence from the connected graph.</p>
+</header>
+<div class="section-content kennel-service-module" data-kennel-services="">
+<div aria-label="Kennel profile actions" class="service-selector" data-service-selector="">
+<button aria-disabled="true" class="service-option" data-service-id="verified-kennel-record" type="button">
+<span class="service-option-number">01</span>
+<span class="service-option-copy"><strong>Kennel Record</strong></span>
+<span class="service-option-description">An export-ready record of the kennel and its indexed Dobermans.</span>
+<span class="service-option-pricing"><small class="service-fee-label">One-time fee</small><span class="service-option-price">€29</span></span>
+</button>
+<button aria-disabled="true" class="service-option" data-service-id="breeding-program-intelligence" type="button">
+<span class="service-option-number">02</span>
+<span class="service-option-copy"><strong>Breeding Program Intelligence</strong></span>
+<span class="service-option-description">Reveals recurring patterns across lineage, health, temperament and results.</span>
+<span class="service-option-pricing"><small class="service-fee-label">One-time fee</small><span class="service-option-price">€69</span></span>
+</button>
+<button aria-disabled="true" class="service-option" data-service-id="kennel-comparison-intelligence" type="button">
+<span class="service-option-number">03</span>
+<span class="service-option-copy"><strong>Kennel Comparison</strong></span>
+<span class="service-option-description">Maps documented similarities and differences between two indexed kennels.</span>
+<span class="service-option-pricing"><small class="service-fee-label">One-time fee</small><span class="service-option-price">€89</span></span>
+</button>
+<span aria-hidden="true" class="services-ghost">TOOLS</span>
+</div>
+<div class="services-monolith">
+<div class="services-monolith-editorial">
+<div aria-label="One to infinity" class="services-monolith-infinity"><strong>1</strong><i>→</i><strong>∞</strong></div>
+<p class="services-monolith-message">One kennel. One connected breeding record.</p>
+</div>
+</div>
+</div>
+</section>
+<footer class="footer">
+<div class="footer-identity">
+<div class="footer-brand">DOBERMAN INDEX®</div>
+<div class="footer-descriptor"><span>//</span>Indexed kennel profile</div>
+</div>
+<div class="footer-record"><span>Record</span><strong data-record-id="">DI-K-000001</strong><small data-record-status="">Verification in progress</small></div>
+<div class="footer-right"><span data-kennel-field="name">Siempre Peligroso</span> · <span data-kennel-field="country">Serbia</span><br/>Connected through one living record.</div>
+</footer>
+</div>
+</main>
+<script src="../scripts/kennel-network.js?v=20260905-4"></script>
+<script src="../scripts/kennel-services.js?v=20260905-9"></script>
+<script>
     const recordStrip = document.querySelector('.record-strip');
     document.querySelectorAll('.record-logo-item').forEach((logoItem) => {
       const previousCard = logoItem.previousElementSibling;
@@ -1505,7 +1508,14 @@
     };
     requestAnimationFrame(syncLogoColour);
 
-    const KENNEL_ID='DI-K-000001';
+    
+function kennelDeskEscape(value){return String(value??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]))}
+function installKennelRecordDesk(){const root=document.getElementById("kennelRecordDesk");if(!root)return;root.querySelectorAll("[data-kennel-desk-tab]").forEach(button=>button.addEventListener("click",()=>{const key=button.dataset.kennelDeskTab;root.querySelectorAll("[data-kennel-desk-tab]").forEach(tab=>{const a=tab===button;tab.classList.toggle("is-active",a);tab.setAttribute("aria-selected",String(a))});root.querySelectorAll("[data-kennel-desk-panel]").forEach(panel=>panel.hidden=panel.dataset.kennelDeskPanel!==key)}))}
+function kennelDeskRows(target,rows){const host=document.getElementById(target);if(!host)return;host.innerHTML=rows.filter(r=>r&&r.label).map(r=>`<div><span>${kennelDeskEscape(r.label)}</span><strong>${kennelDeskEscape(r.value||"Not provided")}</strong>${r.sub?`<small>${kennelDeskEscape(r.sub)}</small>`:""}</div>`).join("")}
+function readKennelSurfaceCards(selector){return [...document.querySelectorAll(selector+" .surface-card")].map(card=>({label:card.querySelector(".key")?.textContent.trim()||"",value:card.querySelector(".value")?.textContent.trim()||"",sub:card.querySelector(".sub")?.textContent.trim()||""}))}
+function readKennelMetrics(selector){return [...document.querySelectorAll(selector+" .metric")].map(card=>({label:card.querySelector("em")?.textContent.trim()||"",value:card.querySelector("strong")?.textContent.trim()||"",sub:card.getAttribute("data-caption")||""}))}
+function hydrateKennelRecordDesk(){const text=(selector,fallback)=>document.querySelector(selector)?.textContent.trim()||fallback;kennelDeskRows("kennelDeskOverview",[{label:"Location",value:text('[data-kennel-field="location"]',"Not provided")},{label:"Founded",value:text('[data-kennel-field="founded_year"]',"Not provided")},{label:"Registration prefix",value:text('[data-kennel-field="registration_prefix"]',"Not provided")},{label:"Registration authority",value:text('[data-kennel-field="registration_authority"]',"Not provided")},{label:"Breeding focus",value:text('[data-kennel-field="focus"]',"Not provided")},{label:"Indexed Dobermans",value:text('[data-system-metric="indexed_dobermans"]',"—"),sub:"Generated from linked records"},{label:"Published litters",value:text('[data-system-metric="litters"]',"—"),sub:"Generated from linked records"},{label:"Available puppies",value:text('[data-system-metric="available_puppies"]',"—"),sub:"Generated from linked records"}]);kennelDeskRows("kennelDeskProgram",readKennelSurfaceCards("#kennelProgramRail"));kennelDeskRows("kennelDeskHealth",readKennelSurfaceCards("#kennelHealthRail"));kennelDeskRows("kennelDeskOutcomes",readKennelMetrics("#kennelPerformanceRail"));const src=document.querySelector(".kennel-logo-frame img,.kennel-card-media img"),dst=document.getElementById("kennelDeskLogo");if(src&&dst){dst.src=src.src;dst.alt=text('[data-kennel-field="name"]',"Kennel")+" — kennel record desk logo"}document.getElementById("kennelDeskCode").textContent=(document.querySelector("[data-record-id]")?.textContent.trim()||"DI-K-000001")+" · KENNEL RECORD";document.getElementById("kennelDeskName").textContent=text('[data-kennel-field="name"]',"Siempre Peligroso");document.getElementById("kennelDeskMeta").textContent=[text('[data-kennel-field="country"]',""),text('[data-kennel-field="owner_or_founder"]',"")].filter(Boolean).join(" · ");document.getElementById("kennelDeskRegistration").textContent="Registration · "+text('[data-kennel-field="registration_authority"]',"Not provided")+" / "+text('[data-kennel-field="registration_prefix"]',"Not provided");document.getElementById("kennelDeskLocation").textContent="Location · "+text('[data-kennel-field="location"]',"Not provided");document.getElementById("kennelDeskFounded").textContent="Founded · "+text('[data-kennel-field="founded_year"]',"Not provided");installKennelRecordDesk()}
+const KENNEL_ID='DI-K-000001';
     const NOT_PROVIDED='Not provided';
     const asList=value=>Array.isArray(value)?value.filter(Boolean):[];
     const hasValue=value=>value!==null&&value!==undefined&&value!==''&&(!Array.isArray(value)||value.length>0);
@@ -1607,7 +1617,6 @@
         fetchJson('../data/registry.json')
       ]);
       const kennel=record.kennel||{};
-      if(record.status==='published')await window.DISEO.applyRecord(record.record_id,new URL('../',document.baseURI));
       ['name','registration_prefix','registration_authority','country','location','founded_year','owner_or_founder','contact_email','website','social_links','focus','bloodline_tags'].forEach(name=>setField(name,kennel[name]));
       document.querySelectorAll('[data-record-id]').forEach(node=>{node.textContent=record.record_id});
       const nameParts=String(kennel.name||'Kennel').trim().split(/\s+/);
@@ -1618,7 +1627,7 @@
 
       const registryRecords=asList(registry.records);
       const dogIds=new Set([...asList(kennel.dog_ids),...registryRecords.filter(item=>item.entity_type==='doberman'&&item.kennel_id===KENNEL_ID).map(item=>item.record_id)]);
-      const dogRecords=KennelNetwork.publicRecords(record,(await Promise.all([...dogIds].filter(id=>/^DI-[MF]-\d+$/.test(id)).map(async id=>{
+      const dogRecords=KennelNetwork.publicRecords(record,(await Promise.all([...dogIds].filter(id=>/^DI-[MFP]-\d+$/.test(id)).map(async id=>{
         try{return await fetchJson(`../data/dobermans/${id}.json`)}catch{return null}
       }))).filter(Boolean));
       const dogSummaries=dogRecords.map(item=>({record_id:item.record_id,...item.doberman.identity,template:item.doberman.identity.sex==='female'?'female':'male',hero:item.doberman.media?.hero||item.doberman.media?.profile||item.doberman.media?.stack,availability:item.doberman.reproduction?.availability}));
@@ -1655,8 +1664,7 @@
         const links=document.createElement('div');
         links.className='linked-litter-links';
         litterRecords.forEach(item=>{
-          const chip=document.createElement('a');
-          chip.href=`../profile.html?id=${encodeURIComponent(item.record_id)}`;
+          const chip=document.createElement('span');
           chip.textContent=`${item.record_id} · ${item.litter?.name||'Published litter'}`;
           links.append(chip);
         });
@@ -1750,6 +1758,9 @@
     }).finally(()=>{
       installHorizontalRailScrollbars();
     });
-  </script>
+  
+installKennelRecordDesk();
+requestAnimationFrame(()=>{hydrateKennelRecordDesk();setTimeout(hydrateKennelRecordDesk,250);setTimeout(hydrateKennelRecordDesk,900);setTimeout(hydrateKennelRecordDesk,2200)});
+</script>
 </body>
 </html>

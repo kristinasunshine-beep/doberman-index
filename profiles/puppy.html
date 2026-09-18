@@ -1,17 +1,18 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#f1f1f1">
-  <meta name="description" content="Doberman Index — structured puppy profile prototype for growth, health, development, pedigree and movement data.">
-  <meta name="robots" content="noindex,follow">
-  <title>Doberman Index — Puppy Card Prototype</title>
-<link rel="icon" href="../favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="#f1f1f1" name="theme-color"/>
+<meta content="Doberman Index — structured puppy profile prototype for growth, health, development, pedigree and movement data." name="description"/>
+<title>Doberman Index — Puppy Card Prototype</title>
+<meta name="robots" content="noindex,follow">
+<link href="../favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<style>
     :root{
       --paper:#f1f1f1;
       --paper-2:#e5e5e5;
@@ -109,7 +110,7 @@
     .detail-panel span{font-family:"SFMono-Regular",Consolas,monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase}
     .detail-panel p{max-width:700px;font-size:17px;font-weight:500;line-height:1.45;letter-spacing:-.025em}
 
-    .link-card{flex:0 0 clamp(290px,27vw,380px);min-height:270px;padding:18px 20px 22px;border-top:2px solid var(--ink);background:transparent;color:inherit;text-decoration:none;display:flex;flex-direction:column;transition:.35s var(--ease)}
+    .link-card{flex:0 0 clamp(290px,27vw,380px);min-height:270px;padding:18px 20px 22px;border-top:2px solid var(--ink);background:transparent;display:flex;flex-direction:column;transition:.35s var(--ease)}
     .link-card:hover{padding-left:25px;background:var(--acid)}
     .link-card-top{display:flex;justify-content:space-between;color:var(--muted);font-size:9px;letter-spacing:.06em;text-transform:uppercase}
     .link-card-line{width:35px;height:8px;margin-top:auto;margin-bottom:20px;background:var(--acid)}
@@ -214,176 +215,183 @@
       .ticker-track{animation:none}
       .reveal{opacity:1;transform:none}
     }
-  </style>
+  
+/* REVIEW / DANTE METHOD — compact visual Record Desk. Original sections remain as data sources. */
+#health,#structure,#temperament,#performance{display:none!important}
+.puppy-record-desk{position:relative;overflow:hidden;background:#111;color:#f5f5ef;padding-top:clamp(92px,8vw,132px)!important;padding-bottom:clamp(88px,7vw,118px)!important}
+.puppy-record-desk .record-desk-ghost{position:absolute;right:-.04em;top:70px;color:#1d1d1d;font-size:clamp(180px,23vw,360px);font-weight:900;line-height:.75;letter-spacing:-.09em;pointer-events:none}
+.puppy-record-desk .section-head{position:relative;z-index:2;margin-bottom:56px}.puppy-record-desk .section-index,.puppy-record-desk .section-title{color:#fff}.puppy-record-desk .section-note{color:#969696}.puppy-record-desk .section-note b{color:#fff}
+.puppy-record-desk .record-desk-shell{position:relative;z-index:2;display:grid;grid-template-columns:minmax(300px,34%) minmax(0,66%);margin:0 var(--pad);min-height:690px;border:1px solid #333;background:#161616}
+.puppy-record-desk .record-desk-visual{position:sticky;top:70px;align-self:start;min-height:688px;display:flex;flex-direction:column;border-right:1px solid #343434;background:#0e0e0e}.puppy-record-desk .record-desk-image{height:360px;overflow:hidden;background:#1b1b1b}.puppy-record-desk .record-desk-image img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}
+.puppy-record-desk .record-desk-identity{padding:26px 26px 18px;border-top:5px solid var(--acid)}.puppy-record-desk .record-desk-identity span{font:800 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.1em;color:#9d9d9d;text-transform:uppercase}.puppy-record-desk .record-desk-identity h3{margin:13px 0 8px;color:#fff;font-size:clamp(34px,3.3vw,50px);line-height:.9;letter-spacing:-.06em}.puppy-record-desk .record-desk-identity p{margin:0;color:#bdbdbd;font-size:12px}.puppy-record-desk .record-desk-anchor{display:grid;gap:8px;margin-top:auto;padding:18px 26px 22px;border-top:1px solid #2e2e2e}.puppy-record-desk .record-desk-anchor span{color:#858585;font-size:10px}
+.puppy-record-desk .record-desk-workspace{min-width:0;padding:0 30px 30px}.puppy-record-desk .record-desk-tabs{display:flex;overflow-x:auto;border-bottom:1px solid #373737;scrollbar-width:none}.puppy-record-desk .record-desk-tabs::-webkit-scrollbar{display:none}.puppy-record-desk .record-desk-tabs button{flex:0 0 auto;padding:22px 15px 18px;border:0;border-bottom:3px solid transparent;background:none;color:#777;font:750 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.07em;text-transform:uppercase;cursor:pointer}.puppy-record-desk .record-desk-tabs button:first-child{padding-left:0}.puppy-record-desk .record-desk-tabs button.is-active{color:#fff;border-bottom-color:var(--acid)}
+.puppy-record-desk .record-desk-panel{padding-top:34px}.puppy-record-desk .record-desk-panel[hidden]{display:none!important}.puppy-record-desk .desk-panel-head{display:grid;grid-template-columns:112px minmax(0,1fr);gap:14px 26px;align-items:start;margin-bottom:26px}.puppy-record-desk .desk-panel-head>span{color:var(--acid);font:800 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.1em;text-transform:uppercase}.puppy-record-desk .desk-panel-head h3{margin:0;color:#fff;font-size:clamp(28px,2.7vw,42px);line-height:.94;letter-spacing:-.055em}.puppy-record-desk .desk-panel-head p{grid-column:2;margin:0;max-width:58ch;color:#929292;font-size:11px;line-height:1.5}.puppy-record-desk .desk-ledger{border-top:1px solid #3b3b3b}.puppy-record-desk .desk-ledger>div{display:grid;grid-template-columns:minmax(145px,.65fr) minmax(0,1.35fr);gap:22px;align-items:baseline;padding:14px 0;border-bottom:1px solid #303030}.puppy-record-desk .desk-ledger span{color:#858585;font-size:9px;font-weight:700;letter-spacing:.045em;text-transform:uppercase}.puppy-record-desk .desk-ledger strong{color:#fff;font-size:14px;font-weight:650;line-height:1.25}.puppy-record-desk .desk-ledger small{grid-column:2;color:#777;font-size:9px;line-height:1.4;margin-top:-6px}
+@media(max-width:900px){.puppy-record-desk .record-desk-shell{grid-template-columns:1fr}.puppy-record-desk .record-desk-visual{position:relative;top:auto;min-height:0;border-right:0;border-bottom:1px solid #343434;display:grid;grid-template-columns:40% 1fr}.puppy-record-desk .record-desk-image{height:300px;grid-row:1/3}.puppy-record-desk .record-desk-anchor{margin-top:0}}
+@media(max-width:680px){.puppy-record-desk .record-desk-visual{display:block}.puppy-record-desk .record-desk-image{height:280px}.puppy-record-desk .record-desk-workspace{padding:0 18px 22px}.puppy-record-desk .record-desk-tabs{margin:0 -18px;padding:0 18px}.puppy-record-desk .desk-panel-head{grid-template-columns:1fr;gap:12px}.puppy-record-desk .desk-panel-head p{grid-column:1}.puppy-record-desk .desk-ledger>div{grid-template-columns:1fr;gap:5px}.puppy-record-desk .desk-ledger small{grid-column:1;margin-top:0}}
+
+</style>
 </head>
 <body>
-  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
-
-  <nav class="float-nav" aria-label="Primary">
-    <a class="nav-brand" href="../index.html">DOBERMAN INDEX®</a>
-    <a class="nav-link" href="#development">Development</a>
-    <a class="nav-link" href="#family">Family</a>
-    <a class="nav-link" href="#gallery">Gallery</a>
-    <a class="nav-link" href="#health">Health</a>
-    <a class="nav-link" href="#structure">Traits</a>
-    <a class="nav-link" href="#performance">Results</a>
-    <span class="nav-status" id="navStatus">Puppy · Prototype</span>
-  </nav>
-
-  <main>
-    <section class="hero" id="profile">
-      <div class="hero-corner left"><span id="puppyRecordLabel">PUPPY RECORD · FEMALE</span><br><span id="profileId">DI-F-000000</span></div>
-      <div class="hero-corner right">Example digital card<br>not a published record.</div>
-
-      <h1 class="hero-title" id="profileName" aria-label="Astra von der Nacht"><span>Astra</span><span>von der Nacht.</span></h1>
-
-      <figure class="hero-photo">
-        <img id="heroImage" src="../media/prototypes/puppy/hero.webp" alt="Fictional example Doberman puppy">
-        <figcaption class="photo-label">Prototype image</figcaption>
-      </figure>
-
-      <article class="hero-dossier">
-        <div>
-          <strong class="dossier-brand">DOBERMAN INDEX®</strong>
-          <span class="dossier-id" id="dossierId">DI-F-000000 / puppy prototype</span>
-          <p class="dossier-identity" id="heroIdentity">Example kennel · Serbia</p>
-          <p class="dossier-statement">One living puppy record, designed to grow with every documented update.</p>
-        </div>
-        <div class="dossier-bottom">
-          <a href="#development">Details <span aria-hidden="true">→</span></a>
-          <span class="availability">Current availability<strong id="availability">Available</strong></span>
-        </div>
-      </article>
-
-      <a class="hero-jump" href="#development"><span class="round-arrow" aria-hidden="true">↓</span><span>Explore<br>record</span></a>
-    </section>
-
-    <section class="core-ticker" id="recordDetails" aria-label="Core puppy facts">
-      <div class="ticker-track" id="coreRail"></div>
-    </section>
-
-    <section class="section" id="development">
-      <div class="section-mark" aria-hidden="true">GROW</div>
-      <header class="section-head reveal">
-        <div>
-          <div class="section-index"><span>01</span><i></i><span>Puppy lifecycle</span></div>
-          <h2 class="section-title">Growth<br>record.</h2>
-        </div>
-        <p class="section-note"><b>A record in motion</b>Availability, development, training and ownership remain separate, dated fields. Select a card to read its current entry.</p>
-      </header>
-      <div class="section-content reveal">
-        <div class="card-rail slider" id="lifecycleRail"></div>
-        <div class="detail-panel" id="lifecycleDetail" aria-live="polite"></div>
-      </div>
-    </section>
-
-    <section class="section" id="family">
-      <div class="section-mark" aria-hidden="true">LINK</div>
-      <header class="section-head reveal">
-        <div>
-          <div class="section-index"><span>02</span><i></i><span>Connected origin</span></div>
-          <h2 class="section-title">Family<br>links.</h2>
-        </div>
-        <p class="section-note"><b>System connections</b>The litter is the connector between sire, dam, kennel and every indexed puppy. Unlinked records remain visibly unavailable.</p>
-      </header>
-      <div class="section-content family-grid slider reveal" id="familyRail"></div>
-    </section>
-
-    <section class="section gallery" id="gallery">
-      <span id="gallery-movement" aria-hidden="true" style="position:absolute;top:0;scroll-margin-top:70px"></span>
-      <div class="section-mark" aria-hidden="true">VIEW</div>
-      <header class="section-head reveal">
-        <div>
-          <div class="section-index"><span>03</span><i></i><span>Standardized media</span></div>
-          <h2 class="section-title">Gallery &<br>movement.</h2>
-        </div>
-        <p class="section-note"><b>Age-aware media</b>Each update can add the next comparable view without replacing the puppy’s earlier development record.</p>
-      </header>
-      <div class="section-content gallery-rail reveal" id="visualSlider"></div>
-    </section>
-
-    <section class="section" id="health">
-      <div class="section-mark" aria-hidden="true">CARE</div>
-      <header class="section-head reveal">
-        <div>
-          <div class="section-index"><span>04</span><i></i><span>Age-appropriate record</span></div>
-          <h2 class="section-title">Health<br>status.</h2>
-        </div>
-        <p class="section-note"><b>Submitted, never assumed</b>Unavailable fields stay visible as unavailable. Later results join the same permanent record.</p>
-      </header>
-      <div class="section-content record-grid slider reveal" id="healthRail"></div>
-    </section>
-
-    <section class="section" id="structure">
-      <div class="section-mark" aria-hidden="true">FORM</div>
-      <header class="section-head reveal">
-        <div>
-          <div class="section-index"><span>05</span><i></i><span>Standardized description</span></div>
-          <h2 class="section-title">Developing<br>structure.</h2>
-        </div>
-        <p class="section-note"><b>Controlled vocabulary</b>Type, head, body, angulation, movement and balance use the same comparable fields as the adult profiles.</p>
-      </header>
-      <div class="section-content record-grid slider reveal" id="structureRail"></div>
-    </section>
-
-    <section class="section" id="temperament">
-      <div class="section-mark" aria-hidden="true">MIND</div>
-      <header class="section-head reveal">
-        <div>
-          <div class="section-index"><span>06</span><i></i><span>Developmental observation</span></div>
-          <h2 class="section-title">Early<br>traits.</h2>
-        </div>
-        <p class="section-note"><b>Evaluation changes with age</b>Early observations are kept separate from adult temperament assessments and retain their source.</p>
-      </header>
-      <div class="section-content record-grid slider reveal" id="temperamentRail"></div>
-    </section>
-
-    <section class="section" id="performance">
-      <div class="section-mark" aria-hidden="true">RESULT</div>
-      <header class="section-head reveal">
-        <div>
-          <div class="section-index"><span>07</span><i></i><span>Documented results</span></div>
-          <h2 class="section-title">Early<br>results.</h2>
-        </div>
-        <p class="section-note"><b>One continuous record</b>Shows, titles, working exams, sports and puppy achievements remain separate and continue into the later profile stages.</p>
-      </header>
-      <div class="section-content record-grid slider reveal" id="performanceRail"></div>
-    </section>
-
-    <section class="section connections" id="connections">
-      <div class="section-mark" aria-hidden="true">INDEX</div>
-      <header class="section-head reveal">
-        <div>
-          <div class="section-index"><span>08</span><i></i><span>Permanent network</span></div>
-          <h2 class="section-title">One record.<br>Growing context.</h2>
-        </div>
-        <p class="section-note"><b>Not a ranking</b>The profile follows one Doberman from puppyhood while its links remain stable.</p>
-      </header>
-      <div class="section-content network-row slider reveal" id="networkRail">
-        <article class="network-node"><span>Origin</span><strong>Litter<br>not linked</strong></article>
-        <span class="network-arrow" aria-hidden="true">→</span>
-        <article class="network-node current"><span>Current record</span><strong id="networkName">Astra<br>prototype</strong></article>
-        <span class="network-arrow" aria-hidden="true">→</span>
-        <article class="network-node"><span>Future updates</span><strong>Junior<br>adult</strong></article>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div><div class="footer-brand">DOBERMAN INDEX®</div><div>Indexed puppy profile prototype</div></div>
-    <div class="footer-record"><span>Record</span><strong id="footerId">DI-F-000000</strong><small id="footerState">Example puppy digital card</small></div>
-    <div class="footer-right">Platform architecture by LIONSIGN<br>2019–2026 · All rights reserved</div>
-  </footer>
-
-  <script src="../assets/js/display-name.js"></script>
-  <script src="../assets/js/media-presentation.js"></script>
-  <script src="../assets/js/lifecycle.js"></script>
-  <script src="../assets/js/seo-runtime.js"></script>
-  <script>
+<div aria-hidden="true" class="scroll-progress" id="scrollProgress"></div>
+<nav aria-label="Primary" class="float-nav">
+<a class="nav-brand" href="../index.html">DOBERMAN INDEX®</a>
+<a class="nav-link" href="#development">Development</a>
+<a class="nav-link" href="#family">Family</a>
+<a class="nav-link" href="#gallery">Gallery</a>
+<a class="nav-link" href="#puppyRecordDesk">Record Desk</a>
+<span class="nav-status" id="navStatus">Puppy · Prototype</span>
+</nav>
+<main>
+<section class="hero" id="profile">
+<div class="hero-corner left"><span id="puppyRecordLabel">PUPPY RECORD · FEMALE</span><br/><span id="profileId">DI-F-000000</span></div>
+<div class="hero-corner right">Example digital card<br/>not a published record.</div>
+<h1 aria-label="Astra von der Nacht" class="hero-title" id="profileName"><span>Astra</span><span>von der Nacht.</span></h1>
+<figure class="hero-photo">
+<img alt="Fictional example Doberman puppy" id="heroImage" src="../media/prototypes/puppy/hero.webp"/>
+<figcaption class="photo-label">Prototype image</figcaption>
+</figure>
+<article class="hero-dossier">
+<div>
+<strong class="dossier-brand">DOBERMAN INDEX®</strong>
+<span class="dossier-id" id="dossierId">DI-F-000000 / puppy prototype</span>
+<p class="dossier-identity" id="heroIdentity">Example kennel · Serbia</p>
+<p class="dossier-statement">One permanent identity that grows with the evidence.</p>
+</div>
+<div class="dossier-bottom">
+<a href="#development">Details <span aria-hidden="true">→</span></a>
+<span class="availability">Current availability<strong id="availability">Available</strong></span>
+</div>
+</article>
+<a class="hero-jump" href="#development"><span aria-hidden="true" class="round-arrow">↓</span><span>Explore<br/>record</span></a>
+</section>
+<section aria-label="Core puppy facts" class="core-ticker" id="recordDetails">
+<div class="ticker-track" id="coreRail"></div>
+</section>
+<section class="section" id="development">
+<div aria-hidden="true" class="section-mark">GROW</div>
+<header class="section-head reveal">
+<div>
+<div class="section-index"><span>01</span><i></i><span>Puppy lifecycle</span></div>
+<h2 class="section-title">Growth<br/>record.</h2>
+</div>
+<p class="section-note">Living record. Development, training, ownership and availability remain dated and distinct.</p>
+</header>
+<div class="section-content reveal">
+<div class="card-rail slider" id="lifecycleRail"></div>
+<div aria-live="polite" class="detail-panel" id="lifecycleDetail"></div>
+</div>
+</section>
+<section class="section" id="family">
+<div aria-hidden="true" class="section-mark">LINK</div>
+<header class="section-head reveal">
+<div>
+<div class="section-index"><span>02</span><i></i><span>Connected origin</span></div>
+<h2 class="section-title">Family<br/>links.</h2>
+</div>
+<p class="section-note">Connected origin. Sire, dam, kennel and litter establish lineage context from the start.</p>
+</header>
+<div class="section-content family-grid slider reveal" id="familyRail"></div>
+</section>
+<section class="section gallery" id="gallery">
+<span aria-hidden="true" id="gallery-movement" style="position:absolute;top:0;scroll-margin-top:70px"></span>
+<div aria-hidden="true" class="section-mark">VIEW</div>
+<header class="section-head reveal">
+<div>
+<div class="section-index"><span>03</span><i></i><span>Standardized media</span></div>
+<h2 class="section-title">Gallery &amp;<br/>movement.</h2>
+</div>
+<p class="section-note">Comparable media. Each update adds a new visual stage while preserving earlier development.</p>
+</header>
+<div class="section-content gallery-rail reveal" id="visualSlider"></div>
+</section>
+<section class="section puppy-record-desk" id="puppyRecordDesk">
+  <div class="record-desk-ghost" aria-hidden="true">RECORD</div>
+  <header class="section-head reveal"><div><div class="section-index"><span>04</span><i></i><span>Compact record intelligence</span></div><h2 class="section-title">Puppy<br>record desk.</h2></div><p class="section-note"><b>One growing record. Five views.</b> Health, developing structure, early temperament and results stay together while every entry retains its age, source and developmental context.</p></header>
+  <div class="record-desk-shell reveal">
+    <aside class="record-desk-visual"><div class="record-desk-image"><img id="puppyDeskImage" alt="Puppy record desk view"></div><div class="record-desk-identity"><span id="puppyDeskCode">PUPPY RECORD</span><h3 id="puppyDeskName">—</h3><p id="puppyDeskMeta">—</p></div><div class="record-desk-anchor"><span id="puppyDeskRegistration">Registration · —</span><span id="puppyDeskKennel">Kennel · —</span><span id="puppyDeskBirth">Born · —</span></div></aside>
+    <div class="record-desk-workspace"><div class="record-desk-tabs" role="tablist" aria-label="Puppy Record Desk views"><button class="is-active" role="tab" aria-selected="true" data-puppy-desk-tab="overview">Overview</button><button role="tab" aria-selected="false" data-puppy-desk-tab="health">Health</button><button role="tab" aria-selected="false" data-puppy-desk-tab="structure">Structure</button><button role="tab" aria-selected="false" data-puppy-desk-tab="temperament">Temperament</button><button role="tab" aria-selected="false" data-puppy-desk-tab="performance">Results</button></div>
+      <div class="record-desk-panel" data-puppy-desk-panel="overview"><div class="desk-panel-head"><span>01 / Overview</span><h3>Permanent identity, current stage.</h3><p>The profile number stays stable while availability, ownership and developmental evidence continue to change.</p></div><div class="desk-ledger" id="puppyDeskOverview"></div></div>
+      <div class="record-desk-panel" data-puppy-desk-panel="health" hidden><div class="desk-panel-head"><span>02 / Health</span><h3>Submitted, never assumed.</h3><p>Age-appropriate results remain attributable to their source and later evidence joins the same permanent record.</p></div><div class="desk-ledger" id="puppyDeskHealth"></div></div>
+      <div class="record-desk-panel" data-puppy-desk-panel="structure" hidden><div class="desk-panel-head"><span>03 / Structure</span><h3>Development stays explicit.</h3><p>The adult controlled vocabulary remains comparable without presenting a growing puppy as a finished adult.</p></div><div class="desk-ledger" id="puppyDeskStructure"></div></div>
+      <div class="record-desk-panel" data-puppy-desk-panel="temperament" hidden><div class="desk-panel-head"><span>04 / Temperament</span><h3>Early traits keep their age and source.</h3><p>Developmental observations remain distinct from later adult temperament assessment.</p></div><div class="desk-ledger" id="puppyDeskTemperament"></div></div>
+      <div class="record-desk-panel" data-puppy-desk-panel="performance" hidden><div class="desk-panel-head"><span>05 / Results</span><h3>One evidence trail through every stage.</h3><p>Puppy achievements, shows, exams and sports remain separate entries that continue into later records.</p></div><div class="desk-ledger" id="puppyDeskPerformance"></div></div>
+    </div>
+  </div>
+</section>
+<section class="section" id="health">
+<div aria-hidden="true" class="section-mark">CARE</div>
+<header class="section-head reveal">
+<div>
+<div class="section-index"><span>04</span><i></i><span>Age-appropriate record</span></div>
+<h2 class="section-title">Health<br/>status.</h2>
+</div>
+<p class="section-note">Traceable health. Results keep their date and source while unknown fields remain explicit.</p>
+</header>
+<div class="section-content record-grid slider reveal" id="healthRail"></div>
+</section>
+<section class="section" id="structure">
+<div aria-hidden="true" class="section-mark">FORM</div>
+<header class="section-head reveal">
+<div>
+<div class="section-index"><span>05</span><i></i><span>Standardized description</span></div>
+<h2 class="section-title">Developing<br/>structure.</h2>
+</div>
+<p class="section-note">Developing phenotype. The same adult vocabulary is used with life stage kept explicit.</p>
+</header>
+<div class="section-content record-grid slider reveal" id="structureRail"></div>
+</section>
+<section class="section" id="temperament">
+<div aria-hidden="true" class="section-mark">MIND</div>
+<header class="section-head reveal">
+<div>
+<div class="section-index"><span>06</span><i></i><span>Developmental observation</span></div>
+<h2 class="section-title">Early<br/>traits.</h2>
+</div>
+<p class="section-note">Early observations. Temperament and drive keep their age, source and confidence.</p>
+</header>
+<div class="section-content record-grid slider reveal" id="temperamentRail"></div>
+</section>
+<section class="section" id="performance">
+<div aria-hidden="true" class="section-mark">RESULT</div>
+<header class="section-head reveal">
+<div>
+<div class="section-index"><span>07</span><i></i><span>Documented results</span></div>
+<h2 class="section-title">Early<br/>results.</h2>
+</div>
+<p class="section-note">Growing results. Puppy achievements remain distinct and continue into the adult record.</p>
+</header>
+<div class="section-content record-grid slider reveal" id="performanceRail"></div>
+</section>
+<section class="section connections" id="connections">
+<div aria-hidden="true" class="section-mark">INDEX</div>
+<header class="section-head reveal">
+<div>
+<div class="section-index"><span>05</span><i></i><span>Permanent network</span></div>
+<h2 class="section-title">One identity. <span>Growing intelligence.</span></h2>
+</div>
+<p class="section-note">Permanent identity. Lineage, provenance and evidence history stay connected through every life stage.</p>
+</header>
+<div class="section-content network-row slider reveal" id="networkRail">
+<article class="network-node"><span>Origin</span><strong>Litter<br/>not linked</strong></article>
+<span aria-hidden="true" class="network-arrow">→</span>
+<article class="network-node current"><span>Current record</span><strong id="networkName">Astra<br/>prototype</strong></article>
+<span aria-hidden="true" class="network-arrow">→</span>
+<article class="network-node"><span>Future updates</span><strong>Junior<br/>adult</strong></article>
+</div>
+</section>
+</main>
+<footer class="footer">
+<div><div class="footer-brand">DOBERMAN INDEX®</div><div>Indexed puppy profile prototype</div></div>
+<div class="footer-record"><span>Record</span><strong id="footerId">DI-F-000000</strong><small id="footerState">Example puppy digital card</small></div>
+<div class="footer-right">Platform architecture by LIONSIGN<br/>2019–2026 · All rights reserved</div>
+</footer>
+<script src="../assets/js/display-name.js"></script>
+<script src="../assets/js/media-presentation.js"></script>
+<script src="../assets/js/lifecycle.js"></script>
+<script>
     const PROTOTYPE_URL="../data/prototypes/puppy-card.json";
     const repoRoot=new URL("../",document.baseURI);
     const requestedId=(new URLSearchParams(location.search).get("id")||"").trim().toUpperCase();
-    let registryRecords=[];
     const byId=id=>document.getElementById(id);
     const array=value=>Array.isArray(value)?value:[];
     const safe=value=>Array.isArray(value)?(value.filter(Boolean).join(" / ")||"Not submitted"):(value===null||value===undefined||String(value).trim()===""?"Not submitted":String(value).trim());
@@ -435,18 +443,13 @@
 
     function renderFamily(identity,parentage){
       const items=[
-        ["Sire",displayRegisteredName(parentage.sire_name)||"Not submitted",parentage.sire_registration||parentage.sire_id||"Indexed record unavailable",parentage.sire_id],
-        ["Dam",displayRegisteredName(parentage.dam_name)||"Not submitted",parentage.dam_registration||parentage.dam_id||"Indexed record unavailable",parentage.dam_id],
-        ["Pedigree",parentage.pedigree_verified?"Reviewed":"Not submitted",parentage.pedigree_file||"Document unavailable",null],
-        ["Litter",parentage.litter_id||"Not linked",parentage.litter_id?"Open published litter record":"Connector record unavailable",parentage.litter_id],
-        ["Kennel",displayKennelName(identity.kennel_name),identity.kennel_id||"Indexed record unavailable",identity.kennel_id]
+        ["Sire",displayRegisteredName(parentage.sire_name)||"Not submitted",parentage.sire_registration||parentage.sire_id||"Indexed record unavailable"],
+        ["Dam",displayRegisteredName(parentage.dam_name)||"Not submitted",parentage.dam_registration||parentage.dam_id||"Indexed record unavailable"],
+        ["Pedigree",parentage.pedigree_verified?"Reviewed":"Not submitted",parentage.pedigree_file||"Document unavailable"],
+        ["Litter",parentage.litter_id||"Not linked","Connector record unavailable"],
+        ["Kennel",displayKennelName(identity.kennel_name),identity.kennel_id||"Indexed record unavailable"]
       ];
-      byId("familyRail").innerHTML=items.map(([label,value,state,linkedId],index)=>{
-        const published=linkedId&&registryRecords.some(record=>record.record_id===linkedId&&record.status==="published");
-        const tag=published?"a":"article";
-        const href=published?` href="../profile.html?id=${encodeURIComponent(linkedId)}"`:"";
-        return `<${tag}${href} class="link-card"><div class="link-card-top"><span>${escapeHTML(label)}</span><span>${String(index+1).padStart(2,"0")}</span></div><i class="link-card-line"></i><strong>${escapeHTML(safe(value))}</strong><small>${escapeHTML(state)}</small></${tag}>`;
-      }).join("");
+      byId("familyRail").innerHTML=items.map(([label,value,state],index)=>`<article class="link-card"><div class="link-card-top"><span>${escapeHTML(label)}</span><span>${String(index+1).padStart(2,"0")}</span></div><i class="link-card-line"></i><strong>${escapeHTML(safe(value))}</strong><small>${escapeHTML(state)}</small></article>`).join("");
     }
 
     function renderRecordGrid(target,items){
@@ -561,19 +564,32 @@
       if(!resizeObserver)addEventListener("resize",()=>updates.forEach(update=>update()));
     }
 
-    async function initialize(){
+    
+function installPuppyRecordDesk(){
+  const root=document.getElementById("puppyRecordDesk"); if(!root)return;
+  root.querySelectorAll("[data-puppy-desk-tab]").forEach(button=>button.addEventListener("click",()=>{
+    const key=button.dataset.puppyDeskTab;
+    root.querySelectorAll("[data-puppy-desk-tab]").forEach(tab=>{const a=tab===button;tab.classList.toggle("is-active",a);tab.setAttribute("aria-selected",String(a))});
+    root.querySelectorAll("[data-puppy-desk-panel]").forEach(panel=>panel.hidden=panel.dataset.puppyDeskPanel!==key);
+  }));
+}
+function puppyDeskRowsFrom(selector){return [...document.querySelectorAll(selector+" .record-card")].map(item=>({label:item.querySelector("span")?.textContent.trim()||"",value:item.querySelector("strong")?.textContent.trim()||"Not submitted",sub:item.querySelector("small")?.textContent.trim()||""})).filter(r=>r.label)}
+function renderPuppyDeskRows(target,rows){const host=document.getElementById(target);if(!host)return;host.innerHTML=rows.map(r=>`<div><span>${escapeHTML(r.label)}</span><strong>${escapeHTML(r.value)}</strong>${r.sub?`<small>${escapeHTML(r.sub)}</small>`:""}</div>`).join("")}
+function hydratePuppyRecordDesk(identity,lifecycle,recordId,name){
+  const overview=[],seen=new Set();document.querySelectorAll("#coreRail .core-chip").forEach(chip=>{const label=chip.querySelector("span")?.textContent.trim()||"",value=chip.querySelector("strong")?.textContent.trim()||"",key=label+"::"+value;if(label&&!seen.has(key)){seen.add(key);overview.push({label,value,sub:""})}});
+  renderPuppyDeskRows("puppyDeskOverview",overview);renderPuppyDeskRows("puppyDeskHealth",puppyDeskRowsFrom("#healthRail"));renderPuppyDeskRows("puppyDeskStructure",puppyDeskRowsFrom("#structureRail"));renderPuppyDeskRows("puppyDeskTemperament",puppyDeskRowsFrom("#temperamentRail"));renderPuppyDeskRows("puppyDeskPerformance",puppyDeskRowsFrom("#performanceRail"));
+  const hero=document.getElementById("heroImage"),desk=document.getElementById("puppyDeskImage");if(hero&&desk){desk.src=hero.src;desk.alt=name+" — puppy record desk view"}
+  document.getElementById("puppyDeskCode").textContent=recordId+" · "+String(lifecycle.current_status||"puppy").replace(/_/g," ").toUpperCase();document.getElementById("puppyDeskName").textContent=name;document.getElementById("puppyDeskMeta").textContent=[titleCase(identity.sex),"Puppy",identity.country].filter(Boolean).join(" · ");document.getElementById("puppyDeskRegistration").textContent="Registration · "+safe(identity.registration_authority)+" / "+safe(identity.registration_number);document.getElementById("puppyDeskKennel").textContent="Kennel · "+(displayKennelName(identity.kennel_name)||"Not submitted");document.getElementById("puppyDeskBirth").textContent="Born · "+formatDate(identity.date_of_birth);installPuppyRecordDesk();
+}
+async function initialize(){
       const isPublishedId=/^DI-[MF]-\d{6}$/.test(requestedId) && requestedId!=="DI-F-000000";
       const dataUrl=isPublishedId?`../data/dobermans/${encodeURIComponent(requestedId)}.json`:PROTOTYPE_URL;
-      const [response,policy,registry]=await Promise.all([
-        fetch(dataUrl,{cache:"no-store"}),
-        window.DILifecycle.loadPolicy(repoRoot),
-        fetch(new URL("data/registry.json",repoRoot),{cache:"no-store"}).then(result=>result.ok?result.json():{records:[]}).catch(()=>({records:[]}))
-      ]);
+      const response=await fetch(dataUrl,{cache:"no-store"});
       if(!response.ok)throw new Error(isPublishedId?"Published puppy record unavailable":"Prototype data unavailable");
       const record=await response.json();
-      registryRecords=Array.isArray(registry.records)?registry.records:[];
       const puppy=record.doberman||{},identity=puppy.identity||{},lifecycle=puppy.puppy_lifecycle||{};
       const flat={entity_type:"doberman",sex:identity.sex,life_stage:identity.life_stage,life_status:identity.life_status,date_of_birth:identity.date_of_birth,template:puppy.publication?.profile_template};
+      const policy=await window.DILifecycle.loadPolicy(repoRoot);
       const effectiveStage=window.DILifecycle.stageFor(flat,policy);
       if(isPublishedId && effectiveStage!=="puppy"){
         location.replace(`../profile.html?id=${encodeURIComponent(record.record_id)}`);
@@ -581,7 +597,6 @@
       }
       if(!isPublishedId && record.status!=="prototype")throw new Error("Invalid puppy prototype data");
       if(isPublishedId && record.status!=="published")throw new Error("Puppy record is not published");
-      if(isPublishedId)await window.DISEO.applyRecord(record.record_id,repoRoot);
       const name=displayRegisteredName(identity.registered_name)||"Name not submitted";
       const words=name.split(/\s+/); const heroLines=words.length>2?[words[0],words.slice(1).join(" ")]:[name];
       heroLines[heroLines.length-1]=`${heroLines.at(-1).replace(/[.!?]$/,"")}.`;
@@ -602,6 +617,7 @@
       byId("heroImage").alt=`${name} — puppy profile hero`;
       renderCore(identity,record.record_id); renderLifecycle(lifecycle); renderFamily(identity,puppy.parentage||{}); renderGallery(puppy.media||{},name);
       renderHealth(puppy.health||{}); renderStructure(puppy.structure||{}); renderTemperament(puppy.temperament||{}); renderPerformance(puppy.performance||{},lifecycle);
+      hydratePuppyRecordDesk(identity,lifecycle,record.record_id,name);
       installHorizontalRailScrollbars();
       document.title=`Doberman Index — ${name} / Puppy`;
     }

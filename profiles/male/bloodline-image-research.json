@@ -1,0 +1,154 @@
+{
+  "schema_version": "1.0",
+  "purpose": "Stance-image discovery research. Public review renders only separately activated candidates.",
+  "active_in_v5": [
+    {
+      "name": "Dion Dante",
+      "asset": "assets/profile_F7Le.png",
+      "status": "second_supplied_gallery_image"
+    },
+    {
+      "name": "Cowboy Lucky Luck di Altobello",
+      "candidate": "https://altobellodobermann.com/images/stories/news2016/buctro.jpg",
+      "source": "https://altobellodobermann.com/shows/1599-bucharest-trophy-romania",
+      "status": "candidate_confirmed_by_user_buctro"
+    },
+    {
+      "name": "Maxim di Altobello",
+      "candidate": "https://grandevinko.com/admin/images/uploads/products/9951_4531.jpg",
+      "status": "kept_owner_confirmed"
+    }
+  ],
+  "searched_candidates": [
+    {
+      "name": "Felicita Flair von Ashanti Legende",
+      "status": "searched_no_confident_stance_candidate"
+    },
+    {
+      "name": "Beowulf",
+      "source": "https://www.allevamentodobermann.it/SitoUfficiale/beowulf.htm",
+      "status": "exact_profile_source_found"
+    },
+    {
+      "name": "Freya Fleming di Altobello",
+      "status": "searched_no_confident_stance_candidate"
+    },
+    {
+      "name": "Tahi-Reme Max",
+      "source": "https://www.ariadobermans.com/DogSets/Details/229",
+      "status": "exact_profile_with_images_found_not_activated"
+    },
+    {
+      "name": "Veronika del Mediano",
+      "source": "https://www.kennelclub.pk/dogs/j4cwxa1fk6x000oks2h8gtji",
+      "status": "identity_context_found_no_confident_stance_candidate"
+    },
+    {
+      "name": "Birbakira di Villa Conte",
+      "status": "searched_no_confident_stance_candidate"
+    },
+    {
+      "name": "Macho di Altobello",
+      "source": "https://www.the-dobermann.com/news?id=2266",
+      "status": "exact_identity_event_source_found"
+    },
+    {
+      "name": "Zulu Lady di Altobello",
+      "status": "searched_no_confident_stance_candidate"
+    },
+    {
+      "name": "Pride of Russia Ferro",
+      "source": "https://www.ariadobermans.com/DogSets/Details/257",
+      "status": "exact_profile_with_images_found"
+    },
+    {
+      "name": "Tahi-Reme Giniti",
+      "source": "https://pakistankennelclub.com.pk/pedigree/tahi-reme-giniti",
+      "status": "exact_profile_gallery_found"
+    },
+    {
+      "name": "Teraline Midgard",
+      "source": "https://www.ariadobermans.com/DogSets/Details/64",
+      "status": "exact_profile_with_images_found"
+    },
+    {
+      "name": "Pandora del Mediano",
+      "source": "https://www.kennelclub.pk/dogs/j4cwxa1fk6x000oks2h8gtji",
+      "status": "identity_context_found_no_confident_stance_candidate"
+    },
+    {
+      "name": "Icarus di Altobello",
+      "candidate": "https://www.altobellodobermann.com/images/stories/gallery/males/icarus/icarus-athens08.jpg",
+      "source": "https://www.altobellodobermann.com/multimedia/altobello-males/1459-int-ch-icarus-di-altobello",
+      "status": "exact_direct_image_found"
+    },
+    {
+      "name": "Daria Deniz di Altobello",
+      "source": "https://www.dogsfiles.com/index.php?breed=120&did=41067&ind=dogsbase&nlang=en&op=view",
+      "status": "exact_profile_found"
+    },
+    {
+      "name": "Ramos Best of Island",
+      "source": "https://the-dobermann.com/shows/show-results-2016/6-reports-42089/882-22112009-club-show-croatia",
+      "status": "exact_identity_event_source_found"
+    },
+    {
+      "name": "Fey di Villa Conte",
+      "status": "searched_no_confident_stance_candidate"
+    },
+    {
+      "name": "Fedor del Nasi",
+      "candidate": "https://www.the-dobermann.com/images/Agiota/1/fedor7.JPG",
+      "source": "https://www.the-dobermann.com/shows/gallery/653-idc-by-giota-fedor-del-nasi",
+      "status": "exact_image_found_rejected_not_stance"
+    },
+    {
+      "name": "Ester di Altobello",
+      "source": "https://pakistankennelclub.com.pk/pedigree/malena-di-altobello",
+      "status": "identity_context_found_no_confident_stance_candidate"
+    },
+    {
+      "name": "Don Juan di Altobello",
+      "status": "searched_no_confident_stance_candidate"
+    },
+    {
+      "name": "Ombra Omega Sawages",
+      "status": "searched_no_confident_stance_candidate"
+    },
+    {
+      "name": "Urbano del Diamante Nero",
+      "source": "https://www.dogsfiles.com/index.php?breed=120&did=37092&ind=dogsbase&nlang=en&op=view",
+      "status": "exact_profile_found"
+    },
+    {
+      "name": "Sharon iz Zoosfery",
+      "source": "https://www.the-dobermann.com/females/41-a29/2975-sharon-iz-zoosfery?showall=1",
+      "status": "exact_profile_gallery_found"
+    },
+    {
+      "name": "Gino Gomez del Citone",
+      "source": "https://dogsfiles.com/index.php?breed=120&did=23665&ind=dogsbase&nlang=en&op=view",
+      "status": "exact_profile_with_photo_found"
+    },
+    {
+      "name": "Tahi-Reme Triniti",
+      "source": "https://pedigrees.dobermanns.cz/details.php/function.mysql-connect?id=5052",
+      "status": "exact_profile_reports_no_photo_available"
+    },
+    {
+      "name": "Pako Daker",
+      "source": "https://www.dogsfiles.com/index.php?breed=120&did=37671&ind=dogsbase&nlang=en&op=view",
+      "status": "exact_profile_found"
+    },
+    {
+      "name": "Teraline Aurora",
+      "source": "https://www.ariadobermans.com/DogSets/Details/64",
+      "status": "identity_context_found_no_confident_stance_candidate"
+    },
+    {
+      "name": "Come As You Are della Baronessa",
+      "source": "https://pedigrees.dobermanns.cz/details.php/pics/thumbs/1/pics/medium/1/med_61ecd6b8731a2.jpg?id=7906",
+      "status": "exact_profile_with_image_found"
+    }
+  ]
+}
