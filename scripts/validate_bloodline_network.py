@@ -63,6 +63,13 @@ for sex in ('male','female'):
         if not (base/rel).is_file():errors.append(f'{sex}: Bloodline Network asset missing: {rel}')
     for token in ('id="bloodlineRail"','window.DIBloodline.mount','assets/bloodline-network_v23.js','const repoRoot=new URL("../../",document.baseURI);'):
         if token not in page:errors.append(f'{sex}: profile missing Bloodline Network token: {token}')
+    js=(base/'assets/bloodline-network_v23.js').read_text(encoding='utf-8')
+    css=(base/'assets/bloodline-network_v23.css').read_text(encoding='utf-8')
+    for token in ('function fitViewerImage()', 'bln-stage-scrollbar', 'root.classList.add("is-image-viewing")', 'overflow-x:auto!important'):
+        source=js if token in ('function fitViewerImage()', 'bln-stage-scrollbar', 'root.classList.add("is-image-viewing")') else css
+        if token not in source:errors.append(f'{sex}: dual-scroll stance viewer token missing: {token}')
+    for token in ('V29 — in-section stance viewer + dual active scroll systems','bln-image-viewer-stage::-webkit-scrollbar','bln-stage-scrollbar-thumb'):
+        if token not in css:errors.append(f'{sex}: stance viewer CSS contract missing: {token}')
 # Male accepted offline snapshot should use canonical IDs represented in the graph.
 male=(ROOT/'profiles/male/index.html').read_text(encoding='utf-8')
 match=re.search(r'const offlineBloodlineNodes=(\[.*?\]);\s*window\.DIBloodline\.mount',male,re.S)
