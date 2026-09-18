@@ -24,7 +24,6 @@ for token in ['Shows:numberOrDash(performance.shows_count)','Titles:array(perfor
     if token not in profile: errors.append('male profile missing performance contract token: '+token)
 for token in ['lifeStage,lifeStatus,lifeSpan:lifespan||"—"','studServiceStatus,profileId:recordId','lifeStage:"Life stage",lifeStatus:"Life status",lifeSpan:"Life span"','studServiceStatus:"Stud service status"','id="lifeStatusBadge"','const isDeceased=lifecycleState==="deceased"','lifecycleState==="living"?""']:
     if token not in profile: errors.append('male profile missing Details contract token: '+token)
-# V27 replaced owner-entered aggregate breeding counters with graph-derived connections.
 for token in ['"Notable progeny": named.length?named.join(" · "):"—"','"Connected descendants":connected.length','"Connected litters":array(reproduction.litter_ids).length','"Source":connected.length?"Connected":"Owner entry"']:
     if token not in profile: errors.append('male profile missing connected-descendants contract token: '+token)
 if 'name="stud_service_status"' not in submit: errors.append('owner form is missing Stud service status in About')
