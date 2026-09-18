@@ -3755,6 +3755,29 @@ textarea {
   overflow:visible!important;
   z-index:30!important;
 }
+
+/* FINAL HOME SEARCH POSITIONING — neutralize stale relative/bottom cascade. */
+@media (min-width:721px){
+  .hero .hero-search{
+    position:absolute!important;
+    right:var(--pad)!important;
+    bottom:252px!important;
+    left:auto!important;
+    width:min(38vw,510px)!important;
+    margin:0!important;
+  }
+}
+@media (max-width:720px){
+  .hero .hero-search{
+    position:relative!important;
+    right:auto!important;
+    bottom:auto!important;
+    left:auto!important;
+    width:100%!important;
+    margin:58px 0 0!important;
+    order:3!important;
+  }
+}
 .hero-search::after{display:none!important}
 .hero-search-field{position:relative}
 .hero-search-submit{
