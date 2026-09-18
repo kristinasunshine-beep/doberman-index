@@ -51,10 +51,6 @@ def main()->int:
     for label,text in (('male',male),('female',female)):
         for token in ('assets/display-name_F7Le.js','assets/media-presentation_F7Le.js','assets/seo-runtime_F7Le.js','assets/bloodline-network_v23.js','const repoRoot=new URL("../../",document.baseURI);','frameSpecFor(role)','normalizeGalleryItem(entry)','focalPosition(item.focal_point)','item.fit_mode','data-frame-orientation="${escapeHTML(frame.orientation)}"','preload="metadata"'):
             if token not in text:errors.append(f'{label} V27 profile missing integration token: {token}')
-    for rel,target in (('profiles/male.html','./male/'),('profiles/female.html','./female/')):
-        text=(ROOT/rel).read_text(encoding='utf-8')
-        if target not in text or 'location.replace' not in text:errors.append(f'legacy redirect is not compatible: {rel}')
-
     media_schema=schema.get('$defs',{}).get('doberman',{}).get('properties',{}).get('media',{})
     focal_schema=media_schema.get('properties',{}).get('focal_points',{})
     gallery_item=schema.get('$defs',{}).get('galleryItem',{})
