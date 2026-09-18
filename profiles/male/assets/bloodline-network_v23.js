@@ -399,7 +399,6 @@
     const networkThumb = networkScrollbar.querySelector(".bln-stage-scrollbar-thumb");
     const viewerPanelMode = imageViewer.querySelector(".bln-image-viewer-panel-mode");
     const viewerPanelGrid = imageViewer.querySelector(".bln-image-viewer-panel-grid");
-    const viewerTop = imageViewer.querySelector(".bln-image-viewer-top");
     const viewerName = imageViewer.querySelector(".bln-image-viewer-name");
     const viewerData = imageViewer.querySelector(".bln-image-viewer-data");
     const viewerClose = imageViewer.querySelector("[data-bloodline-image-close]");
@@ -487,23 +486,6 @@
     });
     shell.addEventListener("scroll", syncNetworkScrollbar, { passive:true });
 
-    function fitViewerTitle() {
-      if (imageViewer.hidden) return;
-      viewerName.style.removeProperty("font-size");
-      const topWidth = viewerTop.clientWidth;
-      const kickerWidth = imageViewer.querySelector(".bln-image-viewer-kicker")?.getBoundingClientRect().width || 0;
-      const closeWidth = viewerClose.getBoundingClientRect().width || 52;
-      const gapBudget = 72;
-      const available = Math.max(260, topWidth - kickerWidth - closeWidth - gapBudget);
-      let size = Math.min(62, parseFloat(getComputedStyle(viewerName).fontSize) || 62);
-      viewerName.style.fontSize = `${size}px`;
-      while (viewerName.scrollWidth > available && size > 24) {
-        size -= 1;
-        viewerName.style.fontSize = `${size}px`;
-      }
-      viewerName.style.setProperty("--bln-title-size", `${size}px`);
-    }
-
     function fitViewerImage() {
       if (imageViewer.hidden || !viewerImage.naturalWidth || !viewerImage.naturalHeight) return;
       const stageRect = viewerStage.getBoundingClientRect();
@@ -511,16 +493,15 @@
       const padX = (parseFloat(stageStyle.paddingLeft) || 0) + (parseFloat(stageStyle.paddingRight) || 0);
       const padY = (parseFloat(stageStyle.paddingTop) || 0) + (parseFloat(stageStyle.paddingBottom) || 0);
       const desktopMode = typeof matchMedia === "function" && matchMedia("(min-width: 821px)").matches;
-      const panelWidth = desktopMode && !viewerPanel.hidden ? Math.min(240, viewerPanel.getBoundingClientRect().width || 240) : 0;
-      const panelGap = desktopMode && panelWidth ? 54 : 0;
+      const panelWidth = desktopMode && !viewerPanel.hidden ? Math.min(220, viewerPanel.getBoundingClientRect().width || 220) : 0;
+      const panelGap = desktopMode && panelWidth ? 48 : 0;
       const panelHeight = !desktopMode && !viewerPanel.hidden ? viewerPanel.getBoundingClientRect().height + 18 : 0;
-      const titleClearance = desktopMode ? 34 : 18;
       const availableWidth = Math.max(180, stageRect.width - padX - panelWidth - panelGap);
-      const availableHeight = Math.max(220, stageRect.height - padY - panelHeight - titleClearance);
+      const availableHeight = Math.max(220, stageRect.height - padY - panelHeight);
       const scale = Math.min(
         1,
         (availableWidth * .90) / viewerImage.naturalWidth,
-        (availableHeight * .84) / viewerImage.naturalHeight
+        (availableHeight * .88) / viewerImage.naturalHeight
       );
       viewerImage.style.width = `${Math.max(1, Math.floor(viewerImage.naturalWidth * scale))}px`;
       viewerImage.style.height = `${Math.max(1, Math.floor(viewerImage.naturalHeight * scale))}px`;
@@ -702,14 +683,11 @@
       viewerImage.alt = `${name} in stance`;
       viewerImage.style.opacity = "0";
       imageViewer.hidden = false;
-      imageViewer.appendChild(networkScrollbar);
       root.classList.add("is-image-viewing");
       raf(() => imageViewer.classList.add("is-open"));
       try { await viewerImage.decode(); } catch (_) {}
       await new Promise(resolve => raf(resolve));
-      fitViewerTitle();
       fitViewerImage();
-      syncNetworkScrollbar();
       viewerImage.style.opacity = "1";
       imageViewer.scrollIntoView({ behavior:"smooth", block:"nearest" });
       viewerClose.focus({ preventScroll:true });
@@ -721,8 +699,6 @@
       root.classList.remove("is-image-viewing");
       setTimeout(() => {
         imageViewer.hidden = true;
-        shell.insertAdjacentElement("afterend", networkScrollbar);
-        syncNetworkScrollbar();
         viewerImage.removeAttribute("src");
         viewerPanel.hidden = true;
         viewerPanelGrid.innerHTML = "";
@@ -815,10 +791,7 @@
     if (typeof window === "object") {
       window.addEventListener("resize", () => {
         syncNetworkScrollbar();
-        if (!imageViewer.hidden) {
-          fitViewerTitle();
-          fitViewerImage();
-        }
+        if (!imageViewer.hidden) fitViewerImage();
       }, { passive:true });
     }
 
