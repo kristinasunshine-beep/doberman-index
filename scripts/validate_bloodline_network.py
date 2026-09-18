@@ -65,10 +65,9 @@ for sex in ('male','female'):
         if token not in page:errors.append(f'{sex}: profile missing Bloodline Network token: {token}')
     js=(base/'assets/bloodline-network_v23.js').read_text(encoding='utf-8')
     css=(base/'assets/bloodline-network_v23.css').read_text(encoding='utf-8')
-    for token in ('function fitViewerTitle()', 'function fitViewerImage()', 'imageViewer.appendChild(networkScrollbar)', 'bln-stage-scrollbar', 'root.classList.add("is-image-viewing")', 'overflow-x:auto!important'):
-        source=js if token in ('function fitViewerTitle()', 'function fitViewerImage()', 'imageViewer.appendChild(networkScrollbar)', 'bln-stage-scrollbar', 'root.classList.add("is-image-viewing")') else css
-        if token not in source:errors.append(f'{sex}: dual-scroll stance viewer token missing: {token}')
-    for token in ('V29 — in-section stance viewer + dual active scroll systems','V30 — single-line stance title + visible dual slider layout','white-space:nowrap!important','bln-image-viewer-stage::-webkit-scrollbar','bln-stage-scrollbar-thumb'):
+    for token in ('function fitViewerImage()', 'style.setProperty("width"', 'bln-viewer-network-scrollbar', 'bln-viewer-network-thumb', 'bln-stage-scrollbar', 'root.classList.add("is-image-viewing")'):
+        if token not in js:errors.append(f'{sex}: stable stance viewer token missing: {token}')
+    for token in ('V29 — in-section stance viewer + dual active scroll systems','V31 — stable stance viewer + independent Bloodline proxy slider','bln-image-viewer-stage::-webkit-scrollbar','bln-viewer-network-thumb'):
         if token not in css:errors.append(f'{sex}: stance viewer CSS contract missing: {token}')
 # Male accepted offline snapshot should use canonical IDs represented in the graph.
 male=(ROOT/'profiles/male/index.html').read_text(encoding='utf-8')

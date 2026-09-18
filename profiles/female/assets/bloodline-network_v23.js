@@ -381,7 +381,7 @@
     let lastWidth = 0;
     let resizeFrame = 0;
 
-    root.innerHTML = `<div class="bln-toolbar"><div><span class="bln-count" aria-live="polite"></span><span class="bln-instruction">Use the yellow edge to unfold ancestry.</span></div><div class="bln-interaction-note"><span><b>YELLOW EDGE</b> unfold / refold parents</span><span><b>NAME →</b> open stance image</span></div><div class="bln-toolbar-actions"><button type="button" data-bloodline-action="all">Open full pedigree</button><button type="button" data-bloodline-action="back" aria-label="Back one pedigree step" hidden>Back one step</button><button type="button" data-bloodline-action="reset" hidden>Reset</button></div></div><div class="bln-image-viewer" role="region" aria-label="Stance image viewer" hidden><div class="bln-image-viewer-top"><div class="bln-image-viewer-kicker">Stance archive</div><strong class="bln-image-viewer-name"></strong><button type="button" class="bln-image-viewer-close" data-bloodline-image-close aria-label="Close full image">×</button></div><div class="bln-image-viewer-stage" tabindex="0" aria-label="Scrollable stance photograph"><img alt=""><aside class="bln-image-viewer-panel" hidden><div class="bln-image-viewer-panel-mode"></div><div class="bln-image-viewer-panel-grid"></div></aside></div><div class="bln-image-viewer-meta"><div class="bln-image-viewer-data"></div></div></div><div class="bln-desktop" aria-label="Interactive four-generation pedigree"><div class="bln-stage-shell" id="bloodlineStageScroll"><div class="bln-stage"><svg class="bln-connectors" aria-hidden="true"></svg><div class="bln-node-layer"></div></div></div><div class="bln-stage-scrollbar" role="group" aria-controls="bloodlineStageScroll" aria-label="Bloodline horizontal navigation"><div class="bln-stage-scrollbar-track"><div class="bln-stage-scrollbar-thumb" role="scrollbar" tabindex="0" aria-controls="bloodlineStageScroll" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div></div></div><div class="bln-mobile" aria-label="Interactive four-generation pedigree"></div>`;
+    root.innerHTML = `<div class="bln-toolbar"><div><span class="bln-count" aria-live="polite"></span><span class="bln-instruction">Use the yellow edge to unfold ancestry.</span></div><div class="bln-interaction-note"><span><b>YELLOW EDGE</b> unfold / refold parents</span><span><b>NAME →</b> open stance image</span></div><div class="bln-toolbar-actions"><button type="button" data-bloodline-action="all">Open full pedigree</button><button type="button" data-bloodline-action="back" aria-label="Back one pedigree step" hidden>Back one step</button><button type="button" data-bloodline-action="reset" hidden>Reset</button></div></div><div class="bln-image-viewer" role="region" aria-label="Stance image viewer" hidden><div class="bln-image-viewer-top"><div class="bln-image-viewer-kicker">Stance archive</div><strong class="bln-image-viewer-name"></strong><button type="button" class="bln-image-viewer-close" data-bloodline-image-close aria-label="Close full image">×</button></div><div class="bln-image-viewer-stage" tabindex="0" aria-label="Scrollable stance photograph"><img alt=""><aside class="bln-image-viewer-panel" hidden><div class="bln-image-viewer-panel-mode"></div><div class="bln-image-viewer-panel-grid"></div></aside></div><div class="bln-image-viewer-meta"><div class="bln-image-viewer-data"></div></div><div class="bln-viewer-network-scrollbar" role="group" aria-label="Bloodline horizontal navigation while viewing stance"><span>Bloodline</span><div class="bln-viewer-network-track"><div class="bln-viewer-network-thumb" role="scrollbar" tabindex="0" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div></div></div><div class="bln-desktop" aria-label="Interactive four-generation pedigree"><div class="bln-stage-shell" id="bloodlineStageScroll"><div class="bln-stage"><svg class="bln-connectors" aria-hidden="true"></svg><div class="bln-node-layer"></div></div></div><div class="bln-stage-scrollbar" role="group" aria-controls="bloodlineStageScroll" aria-label="Bloodline horizontal navigation"><div class="bln-stage-scrollbar-track"><div class="bln-stage-scrollbar-thumb" role="scrollbar" tabindex="0" aria-controls="bloodlineStageScroll" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div></div></div><div class="bln-mobile" aria-label="Interactive four-generation pedigree"></div>`;
 
     const count = root.querySelector(".bln-count");
     const desktop = root.querySelector(".bln-desktop");
@@ -399,10 +399,12 @@
     const networkThumb = networkScrollbar.querySelector(".bln-stage-scrollbar-thumb");
     const viewerPanelMode = imageViewer.querySelector(".bln-image-viewer-panel-mode");
     const viewerPanelGrid = imageViewer.querySelector(".bln-image-viewer-panel-grid");
-    const viewerTop = imageViewer.querySelector(".bln-image-viewer-top");
     const viewerName = imageViewer.querySelector(".bln-image-viewer-name");
     const viewerData = imageViewer.querySelector(".bln-image-viewer-data");
     const viewerClose = imageViewer.querySelector("[data-bloodline-image-close]");
+    const viewerNetworkScrollbar = imageViewer.querySelector(".bln-viewer-network-scrollbar");
+    const viewerNetworkTrack = imageViewer.querySelector(".bln-viewer-network-track");
+    const viewerNetworkThumb = imageViewer.querySelector(".bln-viewer-network-thumb");
     let imageTrigger = null;
     const reset = root.querySelector('[data-bloodline-action="reset"]');
     const back = root.querySelector('[data-bloodline-action="back"]');
@@ -437,6 +439,16 @@
       networkThumb.style.transform = `translate3d(${travel * progress}px,0,0)`;
       networkThumb.setAttribute("aria-valuenow", String(Math.round(progress * 100)));
       networkScrollbar.classList.toggle("is-disabled", maximum < 2);
+
+      const proxyTrackWidth = viewerNetworkTrack.clientWidth;
+      if (proxyTrackWidth) {
+        const proxyThumbWidth = Math.max(46, Math.min(proxyTrackWidth, proxyTrackWidth * (shell.clientWidth / Math.max(shell.scrollWidth, 1))));
+        const proxyTravel = Math.max(0, proxyTrackWidth - proxyThumbWidth);
+        viewerNetworkThumb.style.width = `${proxyThumbWidth}px`;
+        viewerNetworkThumb.style.transform = `translate3d(${proxyTravel * progress}px,0,0)`;
+        viewerNetworkThumb.setAttribute("aria-valuenow", String(Math.round(progress * 100)));
+        viewerNetworkScrollbar.classList.toggle("is-disabled", maximum < 2);
+      }
     }
 
     function scrollNetworkTo(target) {
@@ -487,22 +499,46 @@
     });
     shell.addEventListener("scroll", syncNetworkScrollbar, { passive:true });
 
-    function fitViewerTitle() {
-      if (imageViewer.hidden) return;
-      viewerName.style.removeProperty("font-size");
-      const topWidth = viewerTop.clientWidth;
-      const kickerWidth = imageViewer.querySelector(".bln-image-viewer-kicker")?.getBoundingClientRect().width || 0;
-      const closeWidth = viewerClose.getBoundingClientRect().width || 52;
-      const gapBudget = 72;
-      const available = Math.max(260, topWidth - kickerWidth - closeWidth - gapBudget);
-      let size = Math.min(62, parseFloat(getComputedStyle(viewerName).fontSize) || 62);
-      viewerName.style.fontSize = `${size}px`;
-      while (viewerName.scrollWidth > available && size > 24) {
-        size -= 1;
-        viewerName.style.fontSize = `${size}px`;
+    viewerNetworkThumb.addEventListener("pointerdown", event => {
+      event.preventDefault();
+      const maximum = Math.max(0, shell.scrollWidth - shell.clientWidth);
+      const startX = event.clientX;
+      const startScroll = shell.scrollLeft;
+      const trackWidth = viewerNetworkTrack.clientWidth;
+      const thumbWidth = viewerNetworkThumb.getBoundingClientRect().width;
+      const travel = Math.max(1, trackWidth - thumbWidth);
+      viewerNetworkThumb.setPointerCapture(event.pointerId);
+      const move = moveEvent => {
+        if (!viewerNetworkThumb.hasPointerCapture(moveEvent.pointerId)) return;
+        scrollNetworkTo(startScroll + ((moveEvent.clientX - startX) / travel) * maximum);
+      };
+      const finish = finishEvent => {
+        if (viewerNetworkThumb.hasPointerCapture(finishEvent.pointerId)) viewerNetworkThumb.releasePointerCapture(finishEvent.pointerId);
+        viewerNetworkThumb.removeEventListener("pointermove", move);
+        viewerNetworkThumb.removeEventListener("pointerup", finish);
+        viewerNetworkThumb.removeEventListener("pointercancel", finish);
+      };
+      viewerNetworkThumb.addEventListener("pointermove", move);
+      viewerNetworkThumb.addEventListener("pointerup", finish);
+      viewerNetworkThumb.addEventListener("pointercancel", finish);
+    });
+    viewerNetworkTrack.addEventListener("pointerdown", event => {
+      if (event.target === viewerNetworkThumb) return;
+      const rect = viewerNetworkTrack.getBoundingClientRect();
+      const maximum = Math.max(0, shell.scrollWidth - shell.clientWidth);
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / Math.max(rect.width, 1)));
+      scrollNetworkTo(maximum * ratio);
+    });
+    viewerNetworkThumb.addEventListener("keydown", event => {
+      const maximum = Math.max(0, shell.scrollWidth - shell.clientWidth);
+      if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        event.preventDefault();
+        scrollNetworkTo(shell.scrollLeft + (event.key === "ArrowLeft" ? -1 : 1) * Math.max(180, shell.clientWidth * .28));
+      } else if (event.key === "Home" || event.key === "End") {
+        event.preventDefault();
+        scrollNetworkTo(event.key === "Home" ? 0 : maximum);
       }
-      viewerName.style.setProperty("--bln-title-size", `${size}px`);
-    }
+    });
 
     function fitViewerImage() {
       if (imageViewer.hidden || !viewerImage.naturalWidth || !viewerImage.naturalHeight) return;
@@ -511,19 +547,20 @@
       const padX = (parseFloat(stageStyle.paddingLeft) || 0) + (parseFloat(stageStyle.paddingRight) || 0);
       const padY = (parseFloat(stageStyle.paddingTop) || 0) + (parseFloat(stageStyle.paddingBottom) || 0);
       const desktopMode = typeof matchMedia === "function" && matchMedia("(min-width: 821px)").matches;
-      const panelWidth = desktopMode && !viewerPanel.hidden ? Math.min(240, viewerPanel.getBoundingClientRect().width || 240) : 0;
-      const panelGap = desktopMode && panelWidth ? 54 : 0;
+      const panelWidth = desktopMode && !viewerPanel.hidden ? Math.min(220, viewerPanel.getBoundingClientRect().width || 220) : 0;
+      const panelGap = desktopMode && panelWidth ? 48 : 0;
       const panelHeight = !desktopMode && !viewerPanel.hidden ? viewerPanel.getBoundingClientRect().height + 18 : 0;
-      const titleClearance = desktopMode ? 34 : 18;
       const availableWidth = Math.max(180, stageRect.width - padX - panelWidth - panelGap);
-      const availableHeight = Math.max(220, stageRect.height - padY - panelHeight - titleClearance);
+      const availableHeight = Math.max(220, stageRect.height - padY - panelHeight);
       const scale = Math.min(
         1,
         (availableWidth * .90) / viewerImage.naturalWidth,
-        (availableHeight * .84) / viewerImage.naturalHeight
+        (availableHeight * .88) / viewerImage.naturalHeight
       );
-      viewerImage.style.width = `${Math.max(1, Math.floor(viewerImage.naturalWidth * scale))}px`;
-      viewerImage.style.height = `${Math.max(1, Math.floor(viewerImage.naturalHeight * scale))}px`;
+      viewerImage.style.setProperty("width", `${Math.max(1, Math.floor(viewerImage.naturalWidth * scale))}px`, "important");
+      viewerImage.style.setProperty("height", `${Math.max(1, Math.floor(viewerImage.naturalHeight * scale))}px`, "important");
+      viewerImage.style.setProperty("max-width", "none", "important");
+      viewerImage.style.setProperty("max-height", "none", "important");
     }
 
     function setNodePosition(element, position, prior) {
@@ -702,12 +739,10 @@
       viewerImage.alt = `${name} in stance`;
       viewerImage.style.opacity = "0";
       imageViewer.hidden = false;
-      imageViewer.appendChild(networkScrollbar);
       root.classList.add("is-image-viewing");
       raf(() => imageViewer.classList.add("is-open"));
       try { await viewerImage.decode(); } catch (_) {}
       await new Promise(resolve => raf(resolve));
-      fitViewerTitle();
       fitViewerImage();
       syncNetworkScrollbar();
       viewerImage.style.opacity = "1";
@@ -721,8 +756,6 @@
       root.classList.remove("is-image-viewing");
       setTimeout(() => {
         imageViewer.hidden = true;
-        shell.insertAdjacentElement("afterend", networkScrollbar);
-        syncNetworkScrollbar();
         viewerImage.removeAttribute("src");
         viewerPanel.hidden = true;
         viewerPanelGrid.innerHTML = "";
@@ -815,10 +848,7 @@
     if (typeof window === "object") {
       window.addEventListener("resize", () => {
         syncNetworkScrollbar();
-        if (!imageViewer.hidden) {
-          fitViewerTitle();
-          fitViewerImage();
-        }
+        if (!imageViewer.hidden) fitViewerImage();
       }, { passive:true });
     }
 
