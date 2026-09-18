@@ -391,7 +391,8 @@
     const layer = root.querySelector(".bln-node-layer");
     const mobile = root.querySelector(".bln-mobile");
     const imageViewer = root.querySelector(".bln-image-viewer");
-    const viewerImage = imageViewer.querySelector(".bln-image-viewer-stage img");
+    const viewerStage = imageViewer.querySelector(".bln-image-viewer-stage");
+    const viewerImage = viewerStage.querySelector("img");
     const viewerPanel = imageViewer.querySelector(".bln-image-viewer-panel");
     const viewerPanelMode = imageViewer.querySelector(".bln-image-viewer-panel-mode");
     const viewerPanelGrid = imageViewer.querySelector(".bln-image-viewer-panel-grid");
@@ -576,6 +577,26 @@
       viewerPanel.hidden = rows.length === 0;
     }
 
+    function syncViewerStageClearance() {
+      if (imageViewer.hidden) return;
+      const desktopMode = typeof matchMedia === "function" ? matchMedia("(min-width: 821px)").matches : true;
+      viewerStage.style.setProperty("margin-top", "0px", "important");
+      const stageTop = viewerStage.getBoundingClientRect().top;
+      const titleBottom = viewerName.getBoundingClientRect().bottom;
+      const closeBottom = viewerClose.getBoundingClientRect().bottom;
+      const topBottom = imageViewer.querySelector(".bln-image-viewer-top")?.getBoundingClientRect().bottom || 0;
+      const safeGap = desktopMode ? 32 : 20;
+      const desiredTop = Math.max(titleBottom, closeBottom, topBottom) + safeGap;
+      const shift = Math.max(0, Math.ceil(desiredTop - stageTop));
+      viewerStage.style.setProperty("margin-top", `${shift}px`, "important");
+      if (desktopMode && typeof window === "object") {
+        const available = Math.max(300, Math.floor(window.innerHeight - desiredTop - 74));
+        viewerStage.style.setProperty("max-height", `${available}px`, "important");
+      } else {
+        viewerStage.style.removeProperty("max-height");
+      }
+    }
+
     async function openImageViewer(action) {
       const imageSrc = action.dataset.imageSrc || "";
       if (!imageSrc) return;
@@ -598,6 +619,7 @@
       raf(() => imageViewer.classList.add("is-open"));
       try { await viewerImage.decode(); } catch (_) {}
       await new Promise(resolve => raf(resolve));
+      syncViewerStageClearance();
       viewerImage.style.opacity = "1";
       viewerClose.focus({ preventScroll:true });
     }
@@ -698,6 +720,11 @@
     document.addEventListener("keydown", event => {
       if (event.key === "Escape" && !imageViewer.hidden) closeImageViewer();
     });
+    if (typeof window === "object") {
+      window.addEventListener("resize", () => {
+        if (!imageViewer.hidden) raf(syncViewerStageClearance);
+      }, { passive:true });
+    }
 
     function highlightRepeated(target, state) {
       const node = target.closest("[data-canonical-id]");
