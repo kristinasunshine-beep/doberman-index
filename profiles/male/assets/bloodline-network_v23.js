@@ -381,7 +381,7 @@
     let lastWidth = 0;
     let resizeFrame = 0;
 
-    root.innerHTML = `<div class="bln-toolbar"><div><span class="bln-count" aria-live="polite"></span><span class="bln-instruction">Use the yellow edge to unfold ancestry.</span></div><div class="bln-interaction-note"><span><b>YELLOW EDGE</b> unfold / refold parents</span><span><b>NAME →</b> open stance image</span></div><div class="bln-toolbar-actions"><button type="button" data-bloodline-action="all">Open full pedigree</button><button type="button" data-bloodline-action="back" aria-label="Back one pedigree step" hidden>Back one step</button><button type="button" data-bloodline-action="reset" hidden>Reset</button></div></div><div class="bln-desktop" aria-label="Interactive four-generation pedigree"><div class="bln-stage-shell"><div class="bln-stage"><svg class="bln-connectors" aria-hidden="true"></svg><div class="bln-node-layer"></div></div></div></div><div class="bln-mobile" aria-label="Interactive four-generation pedigree"></div><div class="bln-image-viewer" role="dialog" aria-modal="true" aria-label="Full stance image" hidden><div class="bln-image-viewer-top"><div class="bln-image-viewer-kicker">Stance archive</div><strong class="bln-image-viewer-name"></strong><button type="button" class="bln-image-viewer-close" data-bloodline-image-close aria-label="Close full image">×</button></div><div class="bln-image-viewer-stage"><img alt=""><aside class="bln-image-viewer-panel" hidden><div class="bln-image-viewer-panel-mode"></div><div class="bln-image-viewer-panel-grid"></div></aside></div><div class="bln-image-viewer-meta"><div class="bln-image-viewer-data"></div></div></div>`;
+    root.innerHTML = `<div class="bln-toolbar"><div><span class="bln-count" aria-live="polite"></span><span class="bln-instruction">Use the yellow edge to unfold ancestry.</span></div><div class="bln-interaction-note"><span><b>YELLOW EDGE</b> unfold / refold parents</span><span><b>NAME →</b> open stance image</span></div><div class="bln-toolbar-actions"><button type="button" data-bloodline-action="all">Open full pedigree</button><button type="button" data-bloodline-action="back" aria-label="Back one pedigree step" hidden>Back one step</button><button type="button" data-bloodline-action="reset" hidden>Reset</button></div></div><div class="bln-image-viewer" role="region" aria-label="Stance image viewer" hidden><div class="bln-image-viewer-top"><div class="bln-image-viewer-kicker">Stance archive</div><strong class="bln-image-viewer-name"></strong><button type="button" class="bln-image-viewer-close" data-bloodline-image-close aria-label="Close full image">×</button></div><div class="bln-image-viewer-stage" tabindex="0" aria-label="Scrollable stance photograph"><img alt=""><aside class="bln-image-viewer-panel" hidden><div class="bln-image-viewer-panel-mode"></div><div class="bln-image-viewer-panel-grid"></div></aside></div><div class="bln-image-viewer-meta"><div class="bln-image-viewer-data"></div></div></div><div class="bln-desktop" aria-label="Interactive four-generation pedigree"><div class="bln-stage-shell" id="bloodlineStageScroll"><div class="bln-stage"><svg class="bln-connectors" aria-hidden="true"></svg><div class="bln-node-layer"></div></div></div><div class="bln-stage-scrollbar" role="group" aria-controls="bloodlineStageScroll" aria-label="Bloodline horizontal navigation"><div class="bln-stage-scrollbar-track"><div class="bln-stage-scrollbar-thumb" role="scrollbar" tabindex="0" aria-controls="bloodlineStageScroll" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div></div></div><div class="bln-mobile" aria-label="Interactive four-generation pedigree"></div>`;
 
     const count = root.querySelector(".bln-count");
     const desktop = root.querySelector(".bln-desktop");
@@ -391,8 +391,12 @@
     const layer = root.querySelector(".bln-node-layer");
     const mobile = root.querySelector(".bln-mobile");
     const imageViewer = root.querySelector(".bln-image-viewer");
-    const viewerImage = imageViewer.querySelector(".bln-image-viewer-stage img");
+    const viewerStage = imageViewer.querySelector(".bln-image-viewer-stage");
+    const viewerImage = viewerStage.querySelector("img");
     const viewerPanel = imageViewer.querySelector(".bln-image-viewer-panel");
+    const networkScrollbar = root.querySelector(".bln-stage-scrollbar");
+    const networkTrack = networkScrollbar.querySelector(".bln-stage-scrollbar-track");
+    const networkThumb = networkScrollbar.querySelector(".bln-stage-scrollbar-thumb");
     const viewerPanelMode = imageViewer.querySelector(".bln-image-viewer-panel-mode");
     const viewerPanelGrid = imageViewer.querySelector(".bln-image-viewer-panel-grid");
     const viewerName = imageViewer.querySelector(".bln-image-viewer-name");
@@ -421,6 +425,88 @@
       raf(() => root.closest(".section")?.scrollIntoView({ block: "start" }));
     }
 
+    function syncNetworkScrollbar() {
+      const maximum = Math.max(0, shell.scrollWidth - shell.clientWidth);
+      const trackWidth = networkTrack.clientWidth;
+      if (!trackWidth) return;
+      const thumbWidth = Math.max(46, Math.min(trackWidth, trackWidth * (shell.clientWidth / Math.max(shell.scrollWidth, 1))));
+      const travel = Math.max(0, trackWidth - thumbWidth);
+      const progress = maximum ? Math.min(1, Math.max(0, shell.scrollLeft / maximum)) : 0;
+      networkThumb.style.width = `${thumbWidth}px`;
+      networkThumb.style.transform = `translate3d(${travel * progress}px,0,0)`;
+      networkThumb.setAttribute("aria-valuenow", String(Math.round(progress * 100)));
+      networkScrollbar.classList.toggle("is-disabled", maximum < 2);
+    }
+
+    function scrollNetworkTo(target) {
+      const maximum = Math.max(0, shell.scrollWidth - shell.clientWidth);
+      shell.scrollLeft = Math.min(maximum, Math.max(0, target));
+      syncNetworkScrollbar();
+    }
+
+    networkThumb.addEventListener("pointerdown", event => {
+      event.preventDefault();
+      const maximum = Math.max(0, shell.scrollWidth - shell.clientWidth);
+      const startX = event.clientX;
+      const startScroll = shell.scrollLeft;
+      const trackWidth = networkTrack.clientWidth;
+      const thumbWidth = networkThumb.getBoundingClientRect().width;
+      const travel = Math.max(1, trackWidth - thumbWidth);
+      networkThumb.setPointerCapture(event.pointerId);
+      const move = moveEvent => {
+        if (!networkThumb.hasPointerCapture(moveEvent.pointerId)) return;
+        scrollNetworkTo(startScroll + ((moveEvent.clientX - startX) / travel) * maximum);
+      };
+      const finish = finishEvent => {
+        if (networkThumb.hasPointerCapture(finishEvent.pointerId)) networkThumb.releasePointerCapture(finishEvent.pointerId);
+        networkThumb.removeEventListener("pointermove", move);
+        networkThumb.removeEventListener("pointerup", finish);
+        networkThumb.removeEventListener("pointercancel", finish);
+      };
+      networkThumb.addEventListener("pointermove", move);
+      networkThumb.addEventListener("pointerup", finish);
+      networkThumb.addEventListener("pointercancel", finish);
+    });
+    networkTrack.addEventListener("pointerdown", event => {
+      if (event.target === networkThumb) return;
+      const rect = networkTrack.getBoundingClientRect();
+      const maximum = Math.max(0, shell.scrollWidth - shell.clientWidth);
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / Math.max(rect.width, 1)));
+      scrollNetworkTo(maximum * ratio);
+    });
+    networkThumb.addEventListener("keydown", event => {
+      const maximum = Math.max(0, shell.scrollWidth - shell.clientWidth);
+      if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        event.preventDefault();
+        scrollNetworkTo(shell.scrollLeft + (event.key === "ArrowLeft" ? -1 : 1) * Math.max(180, shell.clientWidth * .28));
+      } else if (event.key === "Home" || event.key === "End") {
+        event.preventDefault();
+        scrollNetworkTo(event.key === "Home" ? 0 : maximum);
+      }
+    });
+    shell.addEventListener("scroll", syncNetworkScrollbar, { passive:true });
+
+    function fitViewerImage() {
+      if (imageViewer.hidden || !viewerImage.naturalWidth || !viewerImage.naturalHeight) return;
+      const stageRect = viewerStage.getBoundingClientRect();
+      const stageStyle = getComputedStyle(viewerStage);
+      const padX = (parseFloat(stageStyle.paddingLeft) || 0) + (parseFloat(stageStyle.paddingRight) || 0);
+      const padY = (parseFloat(stageStyle.paddingTop) || 0) + (parseFloat(stageStyle.paddingBottom) || 0);
+      const desktopMode = typeof matchMedia === "function" && matchMedia("(min-width: 821px)").matches;
+      const panelWidth = desktopMode && !viewerPanel.hidden ? Math.min(220, viewerPanel.getBoundingClientRect().width || 220) : 0;
+      const panelGap = desktopMode && panelWidth ? 48 : 0;
+      const panelHeight = !desktopMode && !viewerPanel.hidden ? viewerPanel.getBoundingClientRect().height + 18 : 0;
+      const availableWidth = Math.max(180, stageRect.width - padX - panelWidth - panelGap);
+      const availableHeight = Math.max(220, stageRect.height - padY - panelHeight);
+      const scale = Math.min(
+        1,
+        (availableWidth * .90) / viewerImage.naturalWidth,
+        (availableHeight * .88) / viewerImage.naturalHeight
+      );
+      viewerImage.style.width = `${Math.max(1, Math.floor(viewerImage.naturalWidth * scale))}px`;
+      viewerImage.style.height = `${Math.max(1, Math.floor(viewerImage.naturalHeight * scale))}px`;
+    }
+
     function setNodePosition(element, position, prior) {
       const width = position.width;
       element.style.width = `${width}px`;
@@ -434,7 +520,10 @@
     }
 
     function renderDesktop(tree) {
-      const width = Math.max(280, Math.round(shell.clientWidth || root.clientWidth || 1200));
+      const viewportWidth = Math.max(280, Math.round(shell.clientWidth || root.clientWidth || 1200));
+      const minimumWidth = tree.maxGeneration >= 4 ? 1480 : tree.maxGeneration >= 3 ? 1260 : 1120;
+      const width = Math.max(minimumWidth, Math.round(viewportWidth * 1.14));
+      stage.style.width = `${width}px`;
       const layout = computeDesktopLayout(nodes, expanded, width, typeof window === "object" ? window.innerHeight : 0);
       stage.dataset.density = String(layout.density);
       stage.dataset.viewportFit = layout.compactHeight ? "compact" : "roomy";
@@ -472,6 +561,7 @@
       cursor += rowHeights.get("0:0") || 0;
       const height = Math.max(layout.tree.maxGeneration ? (layout.density >= 4 ? 520 : 430) : 360, cursor + (layout.density >= 3 ? 5 : 10));
       stage.style.height = `${height}px`;
+      syncNetworkScrollbar();
       svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
       svg.setAttribute("width", String(width));
       svg.setAttribute("height", String(height));
@@ -593,20 +683,20 @@
       viewerImage.alt = `${name} in stance`;
       viewerImage.style.opacity = "0";
       imageViewer.hidden = false;
-      document.documentElement.classList.add("bln-image-open");
-      document.body.classList.add("bln-image-open");
+      root.classList.add("is-image-viewing");
       raf(() => imageViewer.classList.add("is-open"));
       try { await viewerImage.decode(); } catch (_) {}
       await new Promise(resolve => raf(resolve));
+      fitViewerImage();
       viewerImage.style.opacity = "1";
+      imageViewer.scrollIntoView({ behavior:"smooth", block:"nearest" });
       viewerClose.focus({ preventScroll:true });
     }
 
     async function closeImageViewer() {
       if (imageViewer.hidden) return;
       imageViewer.classList.remove("is-open");
-      document.documentElement.classList.remove("bln-image-open");
-      document.body.classList.remove("bln-image-open");
+      root.classList.remove("is-image-viewing");
       setTimeout(() => {
         imageViewer.hidden = true;
         viewerImage.removeAttribute("src");
@@ -698,6 +788,12 @@
     document.addEventListener("keydown", event => {
       if (event.key === "Escape" && !imageViewer.hidden) closeImageViewer();
     });
+    if (typeof window === "object") {
+      window.addEventListener("resize", () => {
+        syncNetworkScrollbar();
+        if (!imageViewer.hidden) fitViewerImage();
+      }, { passive:true });
+    }
 
     function highlightRepeated(target, state) {
       const node = target.closest("[data-canonical-id]");
