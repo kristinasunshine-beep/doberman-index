@@ -71,8 +71,10 @@ for sex in ('male','female'):
         if token not in css:errors.append(f'{sex}: pre-V29 stance viewer CSS token missing: {token}')
     for forbidden in ('V29 — in-section stance viewer + dual active scroll systems','V31 — stable stance viewer + independent Bloodline proxy slider','bln-viewer-network-scrollbar','bln-viewer-network-thumb'):
         if forbidden in css or forbidden in js:errors.append(f'{sex}: retired experimental stance viewer token still present: {forbidden}')
-    for token in ('V28.1 — title clearance: move photo stage and its scrollbar below the registered name','V28.2 — registered name stays on one desktop line','white-space:nowrap!important','margin-top:clamp(48px,6vh,72px)!important'):
-        if token not in css:errors.append(f'{sex}: stance title-clearance token missing: {token}')
+    for token in ('V28.2 — registered name stays on one desktop line','white-space:nowrap!important'):
+        if token not in css:errors.append(f'{sex}: stance title-clearance CSS token missing: {token}')
+    for token in ('function syncViewerStageClearance()','const safeGap = desktopMode ? 32 : 20','viewerStage.style.setProperty("margin-top"','raf(syncViewerStageClearance)'):
+        if token not in js:errors.append(f'{sex}: dynamic stance title-clearance JS token missing: {token}')
 # Male accepted offline snapshot should use canonical IDs represented in the graph.
 male=(ROOT/'profiles/male/index.html').read_text(encoding='utf-8')
 match=re.search(r'const offlineBloodlineNodes=(\[.*?\]);\s*window\.DIBloodline\.mount',male,re.S)
