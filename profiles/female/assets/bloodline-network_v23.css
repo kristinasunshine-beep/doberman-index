@@ -1155,3 +1155,20 @@
     padding-top:104px!important;
   }
 }
+
+
+/* V28.2 — registered name stays on one desktop line */
+@media(min-width:821px){
+  #bloodline .bln-image-viewer-name{
+    left:clamp(250px,18vw,340px)!important;
+    right:72px!important;
+    width:auto!important;
+    max-width:none!important;
+    white-space:nowrap!important;
+    overflow:visible!important;
+    text-overflow:clip!important;
+    font-size:clamp(24px,3.35vw,58px)!important;
+    line-height:.9!important;
+    text-align:right!important;
+  }
+}
