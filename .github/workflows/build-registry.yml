@@ -2,7 +2,7 @@ name: Rebuild Doberman Index Registry
 
 on:
   push:
-    branches: [main]
+    branches: [main, fix/stance-title-clearance]
     paths:
       - "data/dobermans/**"
       - "data/kennels/**"
