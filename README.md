@@ -1,4 +1,4 @@
-# DOBERMAN INDEX — GITHUB READY · v6.5.1 PORTAL REFINEMENT · 2026-09-07
+# DOBERMAN INDEX — GITHUB READY · BREED INTELLIGENCE / V27 INTEGRATION · 2026-09-18
 
 This folder is the complete public web root. Copy its contents—not the enclosing `public` folder—into the root of the Doberman Index GitHub Pages repository.
 
@@ -6,23 +6,26 @@ This folder is the complete public web root. Copy its contents—not the enclosi
 
 - data-driven portal search and curated Explore the Index examples;
 - final About page;
-- male and female digital-card templates;
+- V27 folder-based male and female intelligence cards with Bloodline Network;
 - data-complete puppy-card prototype;
 - final kennel profile with connected-record panels, kennel archive and configured profile actions;
 - public DI-L litter digital card with kennel, parent, offspring, availability and media connections;
 - one generated clean canonical page under `records/DI-ID/` for every published registry record;
 - registry-driven sitemap, unique metadata, Open Graph/Twitter cards and conservative Schema.org JSON-LD;
 - canonical record schema, public registry builder and validation scripts;
-- reviewed owner-submission interface and media rules.
+- reviewed owner-submission interface and media rules;
+- canonical pedigree graph + sourced/missing ancestor-image manifest for Bloodline Network;
+- backward-compatible legacy redirects for the previous flat male/female template URLs.
 
 ## Primary routes
 
 - `index.html`
 - `about.html`
-- `profile.html?id=DI-M-000001`
+- `profile.html?id=DI-M-000001` (lifecycle-aware router)
 - `records/DI-M-000001/` (crawlable canonical summary)
-- `profiles/male.html?id=DI-M-000001`
-- `profiles/female.html?id=DI-F-…`
+- `male.html`, `female.html`, `kennel.html`, `puppy.html` (registry-backed category directories; noindex)
+- `profiles/male/?id=DI-M-000001` (V27 male card)
+- `profiles/female/?id=DI-F-…` (V27 female card)
 - `profiles/kennel-concept.html?id=DI-K-000001`
 - `profiles/puppy.html`
 - `profile.html?id=DI-L-######`
@@ -71,3 +74,19 @@ See `SEO-STRATEGY.md` for the URL, crawl and rollout contract.
 ## v6.5.1 portal refinement
 
 Dante's two additional gallery images are presented in the approved reversed order. The Profile Actions cards in both Doberman templates no longer render circular arrow controls. On the portal, the black arrow button in the Males route card is a direct, accessible link to Dante's example digital card.
+
+## 2026-09-18 Breed Intelligence / V27 integration
+
+The production `main` repository remains the infrastructure baseline. The accepted Breed Intelligence product replaces the relevant presentation surfaces without removing the mature registry, lifecycle, SEO, litter, submission or IndexNow systems.
+
+Male and female cards are intentionally folder-based. Their Bloodline Network CSS/JS and media assets live beside each `index.html`; the profile router points to `profiles/male/` and `profiles/female/`. The previous `profiles/male.html` and `profiles/female.html` paths remain as `noindex,follow` redirects so old links do not break.
+
+Bloodline Network canonical data lives in `data/pedigree-graph.json`; explicit selected/missing ancestor image provenance lives in `data/bloodline-images.json`. `scripts/validate_bloodline_network.py` locks this layer into CI.
+
+The public SEO model is unchanged: only clean `/records/DI-ID/` pages compete in search. Shared V27 cards, category directories, compatibility routes and prototypes remain `noindex,follow`.
+## IndexNow publishing
+
+`scripts/indexnow.py` is the single IndexNow publisher. `scripts/test_indexnow.py` is its offline smoke test. After a successful GitHub Pages deployment, `.github/workflows/indexnow.yml` checks out the deployed commit, runs the offline test and calls the publisher for changed canonical URLs. A manual workflow run submits the current sitemap instead.
+
+For local verification without network submission, run `python scripts/test_indexnow.py` and `python scripts/indexnow.py --mode all --dry-run`.
+

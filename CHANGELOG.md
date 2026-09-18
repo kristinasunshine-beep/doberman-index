@@ -1,5 +1,18 @@
 # Changelog
 
+## BREED INTELLIGENCE / V27 PRODUCT INTEGRATION — 2026-09-18
+
+- Integrated the accepted portal Index, About, Kennel and Puppy surfaces over the current production `main` infrastructure.
+- Promoted the accepted male/female V27 cards to folder routes at `profiles/male/` and `profiles/female/`, preserving their local Bloodline Network assets.
+- Added backward-compatible redirects from the legacy flat male/female template URLs and updated the lifecycle-aware router.
+- Added `data/pedigree-graph.json` and `data/bloodline-images.json` as the canonical Bloodline Network graph/provenance layer for the accepted Dante tree.
+- Restored registry-backed homepage search and added registry-backed category directory routes used by the accepted portal cards.
+- Corrected folder-relative data paths and female dynamic hydration guards (`DI-F`, female template/sex, male mate search) without changing the approved visual shell.
+- Kept clean `/records/DI-ID/` pages as the only indexable record pages; V27 cards, prototypes, category directories and compatibility routes are `noindex,follow`.
+- Updated lifecycle, profile, public-UI, litter, media, SEO and workflow contracts for the new product architecture.
+- Added a dedicated Bloodline Network CI validator and workflow path coverage for the new graph, image manifest, folder templates and category runtime.
+- Restored `scripts/indexnow.py` plus its offline smoke test and refactored `.github/workflows/indexnow.yml` to call the tested publisher instead of embedding duplicate Python logic.
+
 ## v6.5.1 PORTAL REFINEMENT — 2026-09-07
 
 - Reversed the two approved images in Dante's additional gallery and kept position-based `Gallery 01` / `Gallery 02` labels correct.
