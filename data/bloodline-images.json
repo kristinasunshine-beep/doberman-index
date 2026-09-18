@@ -6,9 +6,11 @@
         "DI-A-000001": {
           "status": "selected",
           "selected": {
-            "image_url": "https://altobellodobermann.com/images/stories/news2016/buctro.jpg",
-            "source_label": "Altobello · Bucharest Trophy Romania 2016 · Image buctro",
-            "source_url": "https://altobellodobermann.com/shows/1599-bucharest-trophy-romania"
+            "asset_path": "media/bloodline/DI-A-000001-cowboy-lucky-luck.jpg",
+            "image_url": "media/bloodline/DI-A-000001-cowboy-lucky-luck.jpg",
+            "source_label": "Altobello · Cowboy Lucky Luck di Altobello · user-confirmed stance image",
+            "source_url": "https://www.altobellodobermann.com/news/archive-2017/1830-photo-of-cowboy-lucky-luck-di-altobello-2",
+            "notes": "User-confirmed image supplied in chat; stored locally in the repository."
           }
         },
         "DI-A-000002": {
