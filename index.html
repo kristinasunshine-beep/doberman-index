@@ -4072,6 +4072,9 @@ textarea {
   opacity:1!important;
   z-index:9999!important;
   overflow:visible!important;
+  animation:none!important;
+  transform:none!important;
+  pointer-events:auto!important;
 }
 #recordSearchInput{
   display:block!important;
@@ -4093,7 +4096,7 @@ textarea {
 @media (min-width:721px){
   .hero #recordSearch{
     position:absolute!important;
-    top:58%!important;
+    top:clamp(420px,61svh,610px)!important;
     right:var(--pad)!important;
     bottom:auto!important;
     left:auto!important;
