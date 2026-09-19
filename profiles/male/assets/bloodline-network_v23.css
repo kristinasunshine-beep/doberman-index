@@ -1192,3 +1192,59 @@
     text-align:right!important;
   }
 }
+
+
+/* V28.4 — restore accepted Bloodline slider and keep stance ghost name visible */
+#bloodline .bln-stage-shell{
+  width:100%!important;
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  contain:layout paint!important;
+  overscroll-behavior-inline:contain!important;
+  scrollbar-width:none!important;
+  -ms-overflow-style:none!important;
+  touch-action:pan-x!important;
+}
+#bloodline .bln-stage-shell::-webkit-scrollbar{display:none!important}
+#bloodline .bln-stage-scrollbar{
+  position:relative;
+  width:100%;
+  height:28px;
+  margin:12px 0 4px;
+  display:flex;
+  align-items:center;
+  opacity:.94;
+}
+#bloodline .bln-stage-scrollbar.is-disabled{opacity:.25}
+#bloodline .bln-stage-scrollbar-track{
+  position:relative;
+  width:100%;
+  height:8px;
+  background:#d5d5cf;
+  cursor:pointer;
+}
+#bloodline .bln-stage-scrollbar-thumb{
+  position:absolute;
+  left:0;
+  top:0;
+  height:8px;
+  min-width:46px;
+  background:var(--ink);
+  cursor:grab;
+  will-change:transform,width;
+}
+#bloodline .bln-stage-scrollbar-thumb:active{cursor:grabbing;background:var(--acid)}
+#bloodline .bln-stage-scrollbar-thumb:focus-visible{
+  outline:2px solid var(--acid);
+  outline-offset:3px;
+}
+#bloodline .bln-image-viewer-stage{
+  background:transparent!important;
+}
+#bloodline .bln-image-viewer-stage::before{
+  display:none!important;
+  background:transparent!important;
+}
+@media(max-width:820px){
+  #bloodline .bln-stage-scrollbar{display:none!important}
+}
