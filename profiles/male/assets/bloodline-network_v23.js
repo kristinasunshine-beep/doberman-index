@@ -590,9 +590,13 @@
       const shift = Math.max(0, Math.ceil(desiredTop - stageTop));
       viewerStage.style.setProperty("margin-top", `${shift}px`, "important");
       if (desktopMode && typeof window === "object") {
+        const downwardExtension = 38; // ≈ 1 cm: extend only below the solved title/clearance zone.
         const available = Math.max(300, Math.floor(window.innerHeight - desiredTop - 74));
-        viewerStage.style.setProperty("max-height", `${available}px`, "important");
+        const extendedHeight = available + downwardExtension;
+        viewerStage.style.setProperty("height", `${extendedHeight}px`, "important");
+        viewerStage.style.setProperty("max-height", `${extendedHeight}px`, "important");
       } else {
+        viewerStage.style.removeProperty("height");
         viewerStage.style.removeProperty("max-height");
       }
     }
