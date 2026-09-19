@@ -500,9 +500,11 @@
 
     function renderDesktop(tree) {
       const viewportWidth = Math.max(280, Math.round(shell.clientWidth || root.clientWidth || 1200));
-      const minimumWidth = tree.maxGeneration >= 4 ? 1480 : tree.maxGeneration >= 3 ? 1260 : 1120;
-      const width = Math.max(minimumWidth, Math.round(viewportWidth * 1.14));
-      stage.style.width = `${width}px`;
+      // Keep the complete pedigree inside the visible desktop viewport.
+      // Density/width caps below handle compact cards; the stage itself never
+      // grows beyond its shell, so Bloodline Network needs no horizontal pan.
+      const width = viewportWidth;
+      stage.style.width = "100%";
       const layout = computeDesktopLayout(nodes, expanded, width, typeof window === "object" ? window.innerHeight : 0);
       stage.dataset.density = String(layout.density);
       stage.dataset.viewportFit = layout.compactHeight ? "compact" : "roomy";
