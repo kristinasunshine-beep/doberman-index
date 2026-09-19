@@ -38,8 +38,8 @@
         "DI-A-000005": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.ariadobermans.com/Photos/ImageGallery/Tahi-Reme%20Max.jpg",
-            "source_label": "Aria Dobermans · Tahi-Reme Max",
+            "asset_path": "profiles/male/assets/tahi-reme-max-stance.jpg",
+            "source_label": "Submitted stance image · Tahi-Reme Max · Photo by Giota",
             "source_url": "https://www.ariadobermans.com/DogSets/Details/229"
           }
         },
