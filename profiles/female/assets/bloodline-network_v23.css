@@ -1157,10 +1157,23 @@
 }
 
 
-/* V28.3 — extend stance photo viewport 1cm downward; preserve solved title clearance */
+/* V28.3 — physically extend stance background + photo container 1cm downward; top zone unchanged */
 @media(min-width:821px){
   #bloodline .bln-image-viewer-stage{
-    max-height:calc(100svh - 184px + 1cm)!important;
+    box-sizing:border-box!important;
+    padding-bottom:calc(24px + 1cm)!important;
+    background:#0f0f0f!important;
+  }
+  #bloodline .bln-image-viewer-stage::before{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    z-index:-1;
+    background:#0f0f0f;
+    pointer-events:none;
   }
 }
 
