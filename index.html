@@ -4082,6 +4082,15 @@ textarea {
   opacity:1!important;
   width:100%!important;
 }
+#recordSearch .search-result-thumb{
+  overflow:hidden!important;
+}
+#recordSearch .search-result-thumb img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+}
 #recordSearch .hero-search-field{
   display:block!important;
   visibility:visible!important;
@@ -4096,7 +4105,7 @@ textarea {
 @media (min-width:721px){
   .hero #recordSearch{
     position:absolute!important;
-    top:clamp(420px,61svh,610px)!important;
+    top:calc(clamp(420px,61svh,610px) + 22px)!important;
     right:var(--pad)!important;
     bottom:auto!important;
     left:auto!important;
@@ -4390,11 +4399,20 @@ const buildSearchResult=(record,index)=>{
 
   const thumb=document.createElement('span');
   thumb.className='search-result-thumb';
-  if(record.hero){
+  const searchImageSource=record.entity_type==='doberman'
+    ? `media/dobermans/${record.record_id}/stack.png`
+    : record.hero;
+  if(searchImageSource){
     const image=document.createElement('img');
-    image.src=new URL(record.hero,document.baseURI).href;
+    image.src=new URL(searchImageSource,document.baseURI).href;
     image.alt='';
     image.loading='lazy';
+    if(record.entity_type==='doberman'&&record.hero){
+      image.addEventListener('error',()=>{
+        const fallback=new URL(record.hero,document.baseURI).href;
+        if(image.src!==fallback)image.src=fallback;
+      },{once:true});
+    }
     thumb.append(image);
   }else{
     thumb.textContent=(record.entity_type||'DI').slice(0,2).toUpperCase();
@@ -4477,7 +4495,25 @@ const renderTypedSearch=()=>{
   renderSearchTray(searchPublishedRecords(query),'search');
 };
 
-heroSearchInput?.addEventListener('input',renderTypedSearch);
+const formatSearchNameInput=()=>{
+  if(!heroSearchInput)return;
+  const start=heroSearchInput.selectionStart;
+  const end=heroSearchInput.selectionEnd;
+  const raw=heroSearchInput.value;
+  const formatted=/^di-[a-z]-\d*$/i.test(raw.trim())
+    ? raw.toLocaleUpperCase()
+    : raw
+        .toLocaleLowerCase()
+        .replace(/(^|[\s\-–—'’])(\p{L})/gu,(_,separator,letter)=>separator+letter.toLocaleUpperCase());
+  if(formatted!==raw){
+    heroSearchInput.value=formatted;
+    if(start!==null&&end!==null)heroSearchInput.setSelectionRange(start,end);
+  }
+};
+heroSearchInput?.addEventListener('input',()=>{
+  formatSearchNameInput();
+  renderTypedSearch();
+});
 heroSearchInput?.addEventListener('keydown',event=>{
   if(event.key==='Escape'){setSearchOpen(false);return;}
   if(event.key==='Enter'){
