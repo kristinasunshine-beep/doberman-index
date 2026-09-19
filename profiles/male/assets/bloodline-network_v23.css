@@ -1263,3 +1263,14 @@
 #bloodline .bln-image-viewer-stage::-webkit-scrollbar{
   display:none!important;
 }
+
+
+/* V28.4 — keep registered name permanently visible while stance image scrolls */
+#bloodline .bln-image-viewer-top{
+  position:sticky!important;
+  top:0!important;
+  z-index:50!important;
+}
+#bloodline .bln-image-viewer-name{
+  z-index:51!important;
+}
