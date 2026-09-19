@@ -1125,7 +1125,7 @@
 #bloodline .bln-image-viewer-panel{
   grid-column:1!important;grid-row:1!important;align-self:center!important;justify-self:start!important;
   position:sticky!important;left:0!important;top:18px!important;width:100%!important;max-width:220px!important;
-  margin:0!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;
+  margin:0!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;transform:translateY(-8mm)!important;
 }
 #bloodline .bln-image-viewer-panel-mode{padding:0 0 8px!important;border:0!important;color:#8f8f8a!important;font-size:7px!important;}
 #bloodline .bln-image-viewer-panel-grid{gap:8px!important}
@@ -1157,11 +1157,11 @@
 }
 
 
-/* V28.3 — physically extend stance background + photo container 1cm downward; top zone unchanged */
+/* V28.3 — physically extend stance background + photo container 1.8cm downward; top zone unchanged */
 @media(min-width:821px){
   #bloodline .bln-image-viewer-stage{
     box-sizing:border-box!important;
-    padding-bottom:calc(24px + 1cm)!important;
+    padding-bottom:calc(24px + 1.8cm)!important;
     background:#0f0f0f!important;
   }
   #bloodline .bln-image-viewer-stage::before{
