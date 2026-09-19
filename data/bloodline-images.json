@@ -15,13 +15,23 @@
           "status": "missing"
         },
         "DI-A-000003": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.allevamentodobermann.it/ImmaginiMaschi/beowulf%281%29.jpg",
+            "source_label": "Orgoglio Nero · Beowulf official profile",
+            "source_url": "https://www.allevamentodobermann.it/SitoUfficiale/beowulf.htm"
+          }
         },
         "DI-A-000004": {
           "status": "missing"
         },
         "DI-A-000005": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.ariadobermans.com/Photos/ImageGallery/Tahi-Reme%20Max.jpg",
+            "source_label": "Aria Dobermans · Tahi-Reme Max",
+            "source_url": "https://www.ariadobermans.com/DogSets/Details/229"
+          }
         },
         "DI-A-000006": {
           "status": "missing"
@@ -44,13 +54,23 @@
           "status": "missing"
         },
         "DI-A-000011": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.dobermann-review.com/females/Sharon_iz_Zoosfery/progeny2/ferro.jpg",
+            "source_label": "Dobermann Review · Pride of Russia Ferro",
+            "source_url": "https://www.the-dobermann.com/females/41-a29/2975-sharon-iz-zoosfery?showall=1"
+          }
         },
         "DI-A-000012": {
           "status": "missing"
         },
         "DI-A-000013": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.the-dobermann.com/images/stories/A_PREZENTACJE/PAKO_progeny/pako_midgard1.jpg",
+            "source_label": "The-Dobermann · Teraline Midgard",
+            "source_url": "https://www.the-dobermann.com/males/40-a30/24-pako-daker?showall=1"
+          }
         },
         "DI-A-000014": {
           "status": "missing"
@@ -64,7 +84,12 @@
           }
         },
         "DI-A-000016": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.altobellodobermann.com/images/stories/dogsinkennel/daria.jpg",
+            "source_label": "Altobello · Daria Deniz di Altobello",
+            "source_url": "https://www.altobellodobermann.com/component/content/article/46-dogs-in-kennel/1502-dogs-in-kennel"
+          }
         },
         "DI-A-000017": {
           "status": "missing"
@@ -90,10 +115,20 @@
           "status": "missing"
         },
         "DI-A-000023": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://pedigrees.dobermanns.cz/pics/thumbs/1/th_5cca0d1b91962.jpg",
+            "source_label": "Dobermann Pedigrees · Urbano del Diamante Nero",
+            "source_url": "https://pedigrees.dobermanns.cz/details.php?id=7888"
+          }
         },
         "DI-A-000024": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.dobermann-review.com/females/Sharon_iz_Zoosfery/new/2.jpg",
+            "source_label": "Dobermann Review · Sharon iz Zoosfery",
+            "source_url": "https://www.the-dobermann.com/females/41-a29/2975-sharon-iz-zoosfery?showall=1"
+          }
         },
         "DI-A-000025": {
           "status": "missing"
@@ -102,13 +137,23 @@
           "status": "missing"
         },
         "DI-A-000027": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.the-dobermann.com/images/stories/A_PRESENTATIONS_2/17.07.11/pak1.jpg",
+            "source_label": "The-Dobermann · Pako Daker",
+            "source_url": "https://www.the-dobermann.com/males/40-a30/24-pako-daker?showall=1"
+          }
         },
         "DI-A-000028": {
           "status": "missing"
         },
         "DI-A-000029": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://pedigrees.dobermanns.cz/pics/medium/1/med_61ecd6b8731a2.jpg",
+            "source_label": "Dobermann Pedigrees · Come As You Are della Baronessa",
+            "source_url": "https://pedigrees.dobermanns.cz/details.php?id=7906"
+          }
         }
       }
     }
