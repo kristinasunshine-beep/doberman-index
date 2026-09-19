@@ -1326,3 +1326,18 @@ body.bln-image-open{
 #bloodline .bln-image-viewer-stage::-webkit-scrollbar-thumb:hover{
   background:#a5a59f!important;
 }
+
+
+/* V29 — viewport-fit pedigree: no horizontal navigation on desktop. */
+@media(min-width:721px){
+  #bloodline .bln-stage-shell{
+    overflow:hidden!important;
+  }
+  #bloodline .bln-stage{
+    width:100%!important;
+    max-width:100%!important;
+  }
+  #bloodline .bln-stage-scrollbar{
+    display:none!important;
+  }
+}
