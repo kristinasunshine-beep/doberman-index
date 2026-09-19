@@ -12,7 +12,12 @@
           }
         },
         "DI-A-000002": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.the-dobermann.com/images/stories/A_PRESENTATIONS_2/01.01.14/ask.jpg",
+            "source_label": "Unverified family-context · Dama Dorina von Ashanti (same parents as Felicita)",
+            "source_url": "https://www.the-dobermann.com/females/41-a29/5329-dama-dorina-von-ashanti"
+          }
         },
         "DI-A-000003": {
           "status": "selected",
@@ -39,7 +44,12 @@
           }
         },
         "DI-A-000006": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.the-dobermann.com/images/stories/A_S_H_O_W/HDK/veronika.jpg",
+            "source_label": "The-Dobermann · HDK Yearwinner 2010 · Veronika del Mediano",
+            "source_url": "https://www.the-dobermann.com/index.php?Itemid=109&id=2330&option=com_content&view=article"
+          }
         },
         "DI-A-000007": {
           "status": "selected",
@@ -50,7 +60,12 @@
           }
         },
         "DI-A-000008": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.allevamentodobermann.it/ImmaginiFemmine/Dobermann%20allevamento%20Pavia.jpg",
+            "source_label": "Orgoglio Nero · CH. Birbakira Di Villa Conte",
+            "source_url": "https://www.allevamentodobermann.it/SitoUfficiale/femmine.htm"
+          }
         },
         "DI-A-000009": {
           "status": "selected",
@@ -61,7 +76,12 @@
           }
         },
         "DI-A-000010": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.altobellodobermann.com/images/stories/foreign/denmark/first.jpg",
+            "source_label": "Unverified family-context · First di Altobello (daughter of Zulu Lady)",
+            "source_url": "https://www.altobellodobermann.com/multimedia/dogs-in-foreign-countries/1464-altobello-dogs-in-denmark"
+          }
         },
         "DI-A-000011": {
           "status": "selected",
@@ -120,7 +140,12 @@
           }
         },
         "DI-A-000018": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.villaconte.it/img/Femmine/Fey/fey.JPG",
+            "source_label": "Villa Conte · CH. Fey di Villa Conte",
+            "source_url": "https://www.villaconte.it/fey.htm"
+          }
         },
         "DI-A-000019": {
           "status": "selected",
@@ -139,10 +164,20 @@
           }
         },
         "DI-A-000021": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.altobellodobermann.com/images/stories/gallery/males/donjuan/don-18m-stand.jpg",
+            "source_label": "Altobello · Y. CH Don Juan di Altobello · don-18m-stand",
+            "source_url": "https://www.altobellodobermann.com/multimedia/altobello-males/1431-y-ch-don-juan-di-altobello"
+          }
         },
         "DI-A-000022": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.altobellodobermann.com/images/stories/gallery/females/zita/zita-4.jpg",
+            "source_label": "Unverified family-context · Zita di Altobello (daughter of Ombra Sawages)",
+            "source_url": "https://www.altobellodobermann.com/multimedia/altobello-females/1339-y-ch-zita-di-altobello"
+          }
         },
         "DI-A-000023": {
           "status": "selected",
