@@ -1157,6 +1157,13 @@
 }
 
 
+/* V28.3 — extend stance photo viewport 1cm downward; preserve solved title clearance */
+@media(min-width:821px){
+  #bloodline .bln-image-viewer-stage{
+    max-height:calc(100svh - 184px + 1cm)!important;
+  }
+}
+
 /* V28.2 — registered name stays on one desktop line */
 @media(min-width:821px){
   #bloodline .bln-image-viewer-name{
