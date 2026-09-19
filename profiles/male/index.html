@@ -4154,6 +4154,15 @@
       addEventListener("load",()=>updates.forEach(update=>update()),{once:true});
     }
 
+    function activateGalleryMovementScrollbar(){
+      const rail=byId("visualSlider");
+      if(!rail)return;
+      rail.removeAttribute("data-scrollbar-ready");
+      const stale=rail.nextElementSibling;
+      if(stale?.classList.contains("rail-scrollbar")&&stale.getAttribute("aria-controls")==="visualSlider")stale.remove();
+      installHorizontalRailScrollbars();
+    }
+
     async function initializeProfile(){
       profileData=await loadProfile();
       const nameParts=profileData.name.trim().split(/\s+/);
@@ -4175,13 +4184,13 @@
       byId("bloodlineDepthLabel").textContent=`${profileData.pedigreeDepth||4}-generation interactive pedigree`;
       window.DIBloodline.mount({root:byId("bloodlineRail"),subject:profileData.bloodlineSubject,nodes:profileData.bloodline,maxDepth:profileData.pedigreeDepth||4});
       pedigreeIntelligence();pedigreeRepeats();health();surfaces("structureRail",profileData.structure);surfaces("temperamentRail",profileData.temperament);metrics("performanceRail",profileData.performance,1);metrics("reproductionRail",profileData.reproduction,1);related();breedingLens();
-      installHorizontalRailScrollbars();
+      activateGalleryMovementScrollbar();
     }
 
     // Offline review snapshot: preserve the saved profile exactly as captured,
     // and remount only Bloodline Network from the canonical four-generation graph.
     profileData={performanceDetails:{Shows:[],Titles:["CHAMPION OF SERBIA IN BEAUTY"],"Working exams":["BH-VT","IGP 1"],Sports:[]}};
-    const offlineBloodlineSubject={"name":"Dion Dante","recordId":"DI-M-000001","registration":"JR 85729","country":"Serbia","image":"assets/hero_F7Le.png","imagePosition":"48.00001356336806% 41.46666802300347%","imageSource":"Submitted first gallery image","pedigreeRole":"Indexed Doberman · tree root","positionLabel":"Profile record","viewerMode":"basic","url":"#profile"};
+    const offlineBloodlineSubject={"name":"Dion Dante","recordId":"DI-M-000001","registration":"JR 85729","country":"Serbia","image":"assets/profile_F7Le.png","imagePosition":"48.888888888888886% 100%","imageSource":"Submitted profile image","pedigreeRole":"Indexed Doberman · tree root","positionLabel":"Profile record","viewerMode":"basic","url":"#profile"};
     const offlineBloodlineNodes=[
 {"path":"S","canonicalId":"DI-A-000001","name":"Cowboy Lucky Luck di Altobello","registration":"JR 708334 Dob","country":"Serbia","gen":1,"role":"Sire","repeatCount":1,"image":"https://www.altobellodobermann.com/images/stories/news2019/lucky02.jpg","imageSource":"Altobello · Photo of Cowboy Lucky Luck di Altobello · lucky02","imageSourceUrl":"https://www.altobellodobermann.com/news/2180-photo-of-cowboy-lucky-luck-di-altobello","viewerMode":"expanded","viewerNote":"Primary sire in Dante’s paternal entry point. Use this stance image as the main visual reference for Cowboy in the review build.","url":"#bloodline"},
 {"path":"D","canonicalId":"DI-A-000002","name":"Felicita Flair von Ashanti Legende","registration":"JR 713394 Dob","country":"","gen":1,"role":"Dam","repeatCount":1,"image":"","viewerMode":"expanded","url":"#bloodline"},
@@ -4239,6 +4248,7 @@
       initializeProfile().catch(error=>console.warn("Dynamic profile hydration failed; accepted review snapshot remains visible",error));
     }else{
       primeRegistry();
+      activateGalleryMovementScrollbar();
     }
 
     const dcmTrigger=byId("dcmTrigger");
