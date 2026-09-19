@@ -4216,6 +4216,16 @@
 ];
     window.DIBloodline.mount({root:byId("bloodlineRail"),subject:offlineBloodlineSubject,nodes:offlineBloodlineNodes,maxDepth:4});
 
+    // Activate only the saved Gallery & Movement rail. The saved HTML contains
+    // visual scrollbar markup, but no listeners until this rail is re-bound.
+    const savedGalleryRail=byId("visualSlider");
+    if(savedGalleryRail){
+      const staleGalleryScrollbar=savedGalleryRail.nextElementSibling;
+      if(staleGalleryScrollbar?.classList?.contains("rail-scrollbar")) staleGalleryScrollbar.remove();
+      savedGalleryRail.removeAttribute("data-scrollbar-ready");
+      installHorizontalRailScrollbars();
+    }
+
     async function primeRegistry(){
       try{
         const registry=await fetch(new URL("data/registry.json",repoRoot),{cache:"no-store"}).then(response=>{if(!response.ok)throw new Error("Registry unavailable");return response.json()});
