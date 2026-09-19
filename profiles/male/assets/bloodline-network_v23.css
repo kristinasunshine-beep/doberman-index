@@ -1248,3 +1248,18 @@
 @media(max-width:820px){
   #bloodline .bln-stage-scrollbar{display:none!important}
 }
+
+
+/* V28.5 — single stance scroll channel: outer viewer scrolls, stage does not */
+#bloodline .bln-image-viewer{
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+}
+#bloodline .bln-image-viewer-stage{
+  overflow:visible!important;
+  max-height:none!important;
+  scrollbar-gutter:auto!important;
+}
+#bloodline .bln-image-viewer-stage::-webkit-scrollbar{
+  display:none!important;
+}
