@@ -23,7 +23,12 @@
           }
         },
         "DI-A-000004": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.altobellodobermann.com/images/stories/pedigree/freya.jpg",
+            "source_label": "Candidate · Freya Fleming di Altobello",
+            "source_url": "https://www.altobellodobermann.com/component/content/article/27-old-litters/2513-pizzuco-giddy-blossom-x-queen-di-altobello-j-litter"
+          }
         },
         "DI-A-000005": {
           "status": "selected",
@@ -48,7 +53,12 @@
           "status": "missing"
         },
         "DI-A-000009": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.the-dobermann.com/images/stories/NIS/Philip/Macho-di-Altobello_8745.jpg",
+            "source_label": "Candidate · Macho di Altobello",
+            "source_url": "https://www.the-dobermann.com/shows/gallery/1795-doberman-cup-qcar-konstantinq-by-philip"
+          }
         },
         "DI-A-000010": {
           "status": "missing"
@@ -62,7 +72,12 @@
           }
         },
         "DI-A-000012": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.the-dobermann.com/images/stories/2012_WYSTAWY/HDK/giniti.jpg",
+            "source_label": "Candidate · Tahi-Reme Giniti",
+            "source_url": "https://www.the-dobermann.com/index.php?id=3556&option=com_content&view=article"
+          }
         },
         "DI-A-000013": {
           "status": "selected",
@@ -73,7 +88,12 @@
           }
         },
         "DI-A-000014": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://tera-line.narod.ru/images/matings/pandora.jpg",
+            "source_label": "Candidate · Pandora del Mediano",
+            "source_url": "https://tera-line.narod.ru/rus/matings.htm"
+          }
         },
         "DI-A-000015": {
           "status": "selected",
@@ -92,7 +112,12 @@
           }
         },
         "DI-A-000017": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.the-dobermann.com/images/males/f/prog/25_ramos.jpg",
+            "source_label": "Candidate · Ramos Best of Island",
+            "source_url": "https://www.the-dobermann.com/males/40-a30/20-fedor-del-nasi?showall=1"
+          }
         },
         "DI-A-000018": {
           "status": "missing"
@@ -106,7 +131,12 @@
           }
         },
         "DI-A-000020": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.altobellodobermann.com/images/stories/dogsinkennel/ester-stand.jpg",
+            "source_label": "Candidate · Ester di Altobello",
+            "source_url": "https://www.altobellodobermann.com/component/content/article/46-dogs-in-kennel/1502-dogs-in-kennel"
+          }
         },
         "DI-A-000021": {
           "status": "missing"
@@ -131,10 +161,20 @@
           }
         },
         "DI-A-000025": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.the-dobermann.com/images/columns/beyond/GinoGomez_01%281%29.jpg",
+            "source_label": "Candidate · Gino Gomez del Citone",
+            "source_url": "https://www.the-dobermann.com/columns/123-columns/463-beyond-the-atlantic-by-dk"
+          }
         },
         "DI-A-000026": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://grandevinko.com/admin/images/uploads/products/9385_1097.jpg",
+            "source_label": "Candidate · Tahi-Reme Triniti",
+            "source_url": "https://grandevinko.com/view-dog.php?id=26402"
+          }
         },
         "DI-A-000027": {
           "status": "selected",
@@ -145,7 +185,12 @@
           }
         },
         "DI-A-000028": {
-          "status": "missing"
+          "status": "selected",
+          "selected": {
+            "image_url": "https://www.the-dobermann.com/images/%21Kavaleva/%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21Connor/%21%21%21Cards/TeralineAurora_AIAD_Winner____2005_inter.jpg",
+            "source_label": "Candidate · Teraline Aurora",
+            "source_url": "https://www.the-dobermann.com/columns/123-columns/971-interview-with-natalia-fokht-italian"
+          }
         },
         "DI-A-000029": {
           "status": "selected",
