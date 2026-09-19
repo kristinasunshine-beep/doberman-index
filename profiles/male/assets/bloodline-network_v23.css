@@ -1274,3 +1274,29 @@
 #bloodline .bln-image-viewer-name{
   z-index:51!important;
 }
+
+
+/* V28.6 — keep the page scrollbar active while a stance image is open */
+html.bln-image-open,
+body.bln-image-open{
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+}
+
+#bloodline .bln-image-viewer{
+  position:absolute!important;
+  inset:auto!important;
+  top:0!important;
+  left:50%!important;
+  right:auto!important;
+  bottom:auto!important;
+  width:100vw!important;
+  min-height:100vh!important;
+  height:auto!important;
+  overflow:visible!important;
+  transform:translateX(-50%)!important;
+}
+
+#bloodline .bln-image-viewer.is-open{
+  transform:translateX(-50%)!important;
+}
