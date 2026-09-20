@@ -769,7 +769,7 @@
         const floatingNav = document.querySelector(".float-nav");
         const navBottom = floatingNav?.getBoundingClientRect().bottom || 0;
         const topTop = viewerTop?.getBoundingClientRect().top || imageViewer.getBoundingClientRect().top;
-        const clearance = Math.max(18, Math.ceil(navBottom - topTop + 26));
+        const clearance = Math.max(96, Math.ceil(navBottom - topTop + 118));
         viewerName.style.setProperty("margin-top", `${clearance}px`, "important");
         fitViewerImage();
         return;
@@ -868,6 +868,18 @@
       render(path, restoreFocus);
     }
 
+    let suppressPreviewClickUntil = 0;
+    root.addEventListener("pointerup", event => {
+      if (event.pointerType !== "touch" && event.pointerType !== "pen") return;
+      if (event.target.closest("[data-bloodline-image-close]")) return;
+      if (event.target.closest("[data-bloodline-path]")) return;
+      const imageAction = event.target.closest("[data-bloodline-image]");
+      if (!imageAction || !root.contains(imageAction)) return;
+      event.preventDefault();
+      suppressPreviewClickUntil = Date.now() + 700;
+      openImageViewer(imageAction);
+    }, { passive:false });
+
     root.addEventListener("click", event => {
       if (event.target.closest("[data-bloodline-image-close]")) {
         closeImageViewer();
@@ -884,6 +896,10 @@
 
       const imageAction = event.target.closest("[data-bloodline-image]");
       if (imageAction && root.contains(imageAction)) {
+        if (Date.now() < suppressPreviewClickUntil) {
+          suppressPreviewClickUntil = 0;
+          return;
+        }
         openImageViewer(imageAction);
         return;
       }
