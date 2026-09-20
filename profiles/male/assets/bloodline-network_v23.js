@@ -869,47 +869,44 @@
       render(path, restoreFocus);
     }
 
-    let suppressPreviewClickUntil = 0;
-    root.addEventListener("pointerdown", event => {
-      if (event.isPrimary === false) return;
-      if (event.target.closest("[data-bloodline-image-close]")) return;
-      if (event.target.closest("[data-bloodline-path]")) return;
-      if (event.target.closest("[data-bloodline-action]")) return;
-      if (event.target.closest(".bln-stage-scrollbar,.bln-image-viewer-photo-scrollbar")) return;
-      const previewCard = event.target.closest("[data-bloodline-card-preview]");
-      if (!previewCard || !root.contains(previewCard)) return;
-      event.preventDefault();
-      event.stopPropagation();
-      suppressPreviewClickUntil = Date.now() + 900;
-      openImageViewer(previewCard);
-    }, { capture:true, passive:false });
-
     root.addEventListener("click", event => {
       if (event.target.closest("[data-bloodline-image-close]")) {
+        event.preventDefault();
+        event.stopPropagation();
         closeImageViewer();
         return;
       }
 
-      // The yellow ancestry edge is the only control that unfolds/refolds a branch.
-      // Everything else on an image-bearing card opens the stance preview immediately.
       const treeTarget = event.target.closest("[data-bloodline-path]");
       if (treeTarget && root.contains(treeTarget)) {
+        event.preventDefault();
+        event.stopPropagation();
         toggle(treeTarget.dataset.bloodlinePath || "", event.detail === 0);
+        return;
+      }
+
+      // One completed click/tap anywhere on an image-bearing ancestor card
+      // opens the stance viewer. No pointerdown pre-open, no synthetic second step.
+      const previewCard = event.target.closest("[data-bloodline-card-preview]");
+      if (previewCard && root.contains(previewCard)) {
+        event.preventDefault();
+        event.stopPropagation();
+        openImageViewer(previewCard);
         return;
       }
 
       const imageAction = event.target.closest("[data-bloodline-image]");
       if (imageAction && root.contains(imageAction)) {
-        if (Date.now() < suppressPreviewClickUntil) {
-          suppressPreviewClickUntil = 0;
-          return;
-        }
+        event.preventDefault();
+        event.stopPropagation();
         openImageViewer(imageAction);
         return;
       }
+
       const actionTarget = event.target.closest("[data-bloodline-action]");
       const action = actionTarget?.dataset.bloodlineAction;
       if (action === "all") {
+        event.preventDefault();
         rememberState();
         allExpandablePaths(nodes).forEach(path => expanded.add(path));
         lastActionPath = "";
@@ -919,19 +916,19 @@
         return;
       }
       if (action === "back") {
+        event.preventDefault();
         restorePreviousState();
         return;
       }
       if (action === "reset") {
+        event.preventDefault();
         rememberState();
         expanded.clear();
         lastActionPath = "";
         activeFocusPath = "";
         render();
-        return;
       }
-
-    });
+    }, true);
 
     imageViewer.addEventListener("click", event => {
       if (event.target === imageViewer) closeImageViewer();
