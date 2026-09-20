@@ -49,8 +49,10 @@ def main()->int:
     for token in ('male:"./profiles/male/"','female:"./profiles/female/"'):
         if token not in profile:errors.append(f'profile router missing folder route: {token}')
     for label,text in (('male',male),('female',female)):
-        for token in ('assets/display-name_F7Le.js','assets/media-presentation_F7Le.js','assets/seo-runtime_F7Le.js','assets/bloodline-network_v23.js','const repoRoot=new URL("../../",document.baseURI);','frameSpecFor(role)','normalizeGalleryItem(entry)','focalPosition(item.focal_point)','item.fit_mode','data-frame-orientation="${escapeHTML(frame.orientation)}"','preload="metadata"'):
+        for token in ('assets/display-name_F7Le.js','assets/media-presentation_F7Le.js','assets/seo-runtime_F7Le.js','const repoRoot=new URL("../../",document.baseURI);','frameSpecFor(role)','normalizeGalleryItem(entry)','focalPosition(item.focal_point)','item.fit_mode','data-frame-orientation="${escapeHTML(frame.orientation)}"','preload="metadata"'):
             if token not in text:errors.append(f'{label} V27 profile missing integration token: {token}')
+        if not re.search(r'assets/bloodline-network_v\d+\.js(?:\?[^"\']*)?',text):
+            errors.append(f'{label} V27 profile missing integration token: active Bloodline runtime')
     media_schema=schema.get('$defs',{}).get('doberman',{}).get('properties',{}).get('media',{})
     focal_schema=media_schema.get('properties',{}).get('focal_points',{})
     gallery_item=schema.get('$defs',{}).get('galleryItem',{})
