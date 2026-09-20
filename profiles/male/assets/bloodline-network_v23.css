@@ -1446,11 +1446,11 @@ body.bln-image-open{
     align-items:center!important;
     justify-items:stretch!important;
     width:100%!important;
-    height:clamp(520px,72svh,820px)!important;
-    min-height:clamp(520px,72svh,820px)!important;
-    max-height:calc(100svh - 150px)!important;
+    height:clamp(600px,78svh,900px)!important;
+    min-height:clamp(600px,78svh,900px)!important;
+    max-height:calc(100svh - 112px)!important;
     margin-right:0!important;
-    padding:24px 28px 28px!important;
+    padding:24px 28px 44px!important;
     overflow-y:scroll!important;
     overflow-x:hidden!important;
     overscroll-behavior:contain!important;
