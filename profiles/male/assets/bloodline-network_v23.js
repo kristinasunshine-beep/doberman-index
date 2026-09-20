@@ -769,7 +769,7 @@
         const floatingNav = document.querySelector(".float-nav");
         const navBottom = floatingNav?.getBoundingClientRect().bottom || 0;
         const topTop = viewerTop?.getBoundingClientRect().top || imageViewer.getBoundingClientRect().top;
-        const clearance = Math.max(96, Math.ceil(navBottom - topTop + 118));
+        const clearance = Math.max(72, Math.ceil(navBottom - topTop + 92));
         viewerName.style.setProperty("margin-top", `${clearance}px`, "important");
         fitViewerImage();
         return;
@@ -807,6 +807,7 @@
       imageViewer.hidden = false;
       document.documentElement.classList.add("bln-image-open");
       document.body.classList.add("bln-image-open");
+      syncViewerStageClearance();
       raf(() => imageViewer.classList.add("is-open"));
       try { await viewerImage.decode(); } catch (_) {}
       await new Promise(resolve => raf(resolve));
@@ -869,16 +870,19 @@
     }
 
     let suppressPreviewClickUntil = 0;
-    root.addEventListener("pointerup", event => {
-      if (event.pointerType !== "touch" && event.pointerType !== "pen") return;
+    root.addEventListener("pointerdown", event => {
+      if (event.isPrimary === false) return;
       if (event.target.closest("[data-bloodline-image-close]")) return;
       if (event.target.closest("[data-bloodline-path]")) return;
-      const imageAction = event.target.closest("[data-bloodline-image]");
-      if (!imageAction || !root.contains(imageAction)) return;
+      if (event.target.closest("[data-bloodline-action]")) return;
+      if (event.target.closest(".bln-stage-scrollbar,.bln-image-viewer-photo-scrollbar")) return;
+      const previewCard = event.target.closest("[data-bloodline-card-preview]");
+      if (!previewCard || !root.contains(previewCard)) return;
       event.preventDefault();
-      suppressPreviewClickUntil = Date.now() + 700;
-      openImageViewer(imageAction);
-    }, { passive:false });
+      event.stopPropagation();
+      suppressPreviewClickUntil = Date.now() + 900;
+      openImageViewer(previewCard);
+    }, { capture:true, passive:false });
 
     root.addEventListener("click", event => {
       if (event.target.closest("[data-bloodline-image-close]")) {
