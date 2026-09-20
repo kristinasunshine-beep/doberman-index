@@ -1787,3 +1787,15 @@ body.bln-image-open{
     display:none!important;
   }
 }
+
+
+/* V29.8 — one-click Bloodline preview: card opens stance, yellow edge owns ancestry. */
+#bloodline .bln-node.has-image-preview{
+  cursor:zoom-in!important;
+}
+#bloodline .bln-node.has-image-preview .bln-copy{
+  cursor:zoom-in!important;
+}
+#bloodline .bln-node.has-image-preview .bln-tree-action{
+  cursor:pointer!important;
+}

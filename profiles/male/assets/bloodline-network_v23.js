@@ -275,7 +275,8 @@
       ? `<button type="button" class="bln-tree-action" data-bloodline-path="${escapeHTML(node.path)}" aria-expanded="${open ? "true" : "false"}" aria-label="${open ? "Show ancestry route through" : "Open parents of"} ${escapeHTML(node.name)}"></button>`
       : "";
     const label = expandable ? "" : ` aria-label="${escapeHTML(node.name)}, mapped pedigree boundary"`;
-    return `<article class="bln-node${expandable ? " is-expandable" : " is-boundary"}${repeated ? " is-repeat" : ""}" data-path="${escapeHTML(node.path)}" data-canonical-id="${escapeHTML(node.canonicalId || "")}"${expandable ? ` data-expanded="${open ? "true" : "false"}"` : ""}${label}>${pictureMarkup(node, node.gen, eager, view)}${nodeCopy(node)}${treeAction}</article>`;
+    const previewAttrs = node.image ? ` ${imageActionAttrs(node, `G${node.gen || ""}`)} data-bloodline-card-preview` : "";
+    return `<article class="bln-node${expandable ? " is-expandable" : " is-boundary"}${repeated ? " is-repeat" : ""}${node.image ? " has-image-preview" : ""}" data-path="${escapeHTML(node.path)}" data-canonical-id="${escapeHTML(node.canonicalId || "")}"${expandable ? ` data-expanded="${open ? "true" : "false"}"` : ""}${previewAttrs}${label}>${pictureMarkup(node, node.gen, eager, view)}${nodeCopy(node)}${treeAction}</article>`;
   }
 
   function subjectMarkup(subject, compact = false) {
@@ -284,7 +285,8 @@
     const nameMarkup = subject.image
       ? `<button type="button" class="bln-name-action" ${imageActionAttrs(subject, "DI")} aria-label="Open full stance image of ${label}"><span class="bln-name-text">${label}</span><span class="bln-name-arrow" aria-hidden="true">→</span></button>`
       : `<strong class="bln-name-static"><span class="bln-name-text">${label}</span></strong>`;
-    return `<article class="bln-node bln-subject${compact ? " is-compact" : ""}" data-path="" aria-label="${label}, focal Doberman and tree root"><div class="bln-photo is-textual" aria-hidden="true"><span class="bln-generation"><b>DI</b><i>${role}</i></span></div><div class="bln-copy">${nameMarkup}<span class="bln-identity">${escapeHTML([subject.registration, subject.country].filter(Boolean).join(" · ") || subject.recordId || "Doberman Index")}</span></div></article>`;
+    const previewAttrs = subject.image ? ` ${imageActionAttrs(subject, "DI")} data-bloodline-card-preview` : "";
+    return `<article class="bln-node bln-subject${compact ? " is-compact" : ""}${subject.image ? " has-image-preview" : ""}" data-path=""${previewAttrs} aria-label="${label}, focal Doberman and tree root"><div class="bln-photo is-textual" aria-hidden="true"><span class="bln-generation"><b>DI</b><i>${role}</i></span></div><div class="bln-copy">${nameMarkup}<span class="bln-identity">${escapeHTML([subject.registration, subject.country].filter(Boolean).join(" · ") || subject.recordId || "Doberman Index")}</span></div></article>`;
   }
 
   function mobileBranchRows(nodes, expandedPaths, activeFocusPath = "") {
@@ -867,13 +869,22 @@
     }
 
     root.addEventListener("click", event => {
+      if (event.target.closest("[data-bloodline-image-close]")) {
+        closeImageViewer();
+        return;
+      }
+
+      // The yellow ancestry edge is the only control that unfolds/refolds a branch.
+      // Everything else on an image-bearing card opens the stance preview immediately.
+      const treeTarget = event.target.closest("[data-bloodline-path]");
+      if (treeTarget && root.contains(treeTarget)) {
+        toggle(treeTarget.dataset.bloodlinePath || "", event.detail === 0);
+        return;
+      }
+
       const imageAction = event.target.closest("[data-bloodline-image]");
       if (imageAction && root.contains(imageAction)) {
         openImageViewer(imageAction);
-        return;
-      }
-      if (event.target.closest("[data-bloodline-image-close]")) {
-        closeImageViewer();
         return;
       }
       const actionTarget = event.target.closest("[data-bloodline-action]");
@@ -899,8 +910,7 @@
         render();
         return;
       }
-      const button = event.target.closest("[data-bloodline-path]");
-      if (button && root.contains(button)) toggle(button.dataset.bloodlinePath || "", event.detail === 0);
+
     });
 
     imageViewer.addEventListener("click", event => {
