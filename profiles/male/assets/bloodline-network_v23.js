@@ -381,7 +381,7 @@
     let lastWidth = 0;
     let resizeFrame = 0;
 
-    root.innerHTML = `<div class="bln-toolbar"><div><span class="bln-count" aria-live="polite"></span><span class="bln-instruction">Use the yellow edge to unfold ancestry.</span></div><div class="bln-interaction-note"><span><b>YELLOW EDGE</b> unfold / refold parents</span><span><b>NAME →</b> open stance image</span></div><div class="bln-toolbar-actions"><button type="button" data-bloodline-action="all">Open full pedigree</button><button type="button" data-bloodline-action="back" aria-label="Back one pedigree step" hidden>Back one step</button><button type="button" data-bloodline-action="reset" hidden>Reset</button></div></div><div class="bln-desktop" aria-label="Interactive four-generation pedigree"><div class="bln-stage-shell" id="bloodlineStageScroll"><div class="bln-stage"><svg class="bln-connectors" aria-hidden="true"></svg><div class="bln-node-layer"></div></div></div><div class="bln-stage-scrollbar" role="group" aria-controls="bloodlineStageScroll" aria-label="Bloodline horizontal navigation"><div class="bln-stage-scrollbar-track"><div class="bln-stage-scrollbar-thumb" role="scrollbar" tabindex="0" aria-controls="bloodlineStageScroll" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div></div></div><div class="bln-mobile" aria-label="Interactive four-generation pedigree"></div><div class="bln-image-viewer" role="dialog" aria-modal="true" aria-label="Full stance image" hidden><div class="bln-image-viewer-top"><strong class="bln-image-viewer-name"></strong><button type="button" class="bln-image-viewer-close" data-bloodline-image-close aria-label="Close full image">×</button></div><div class="bln-image-viewer-stage"><img alt=""><aside class="bln-image-viewer-panel" hidden><div class="bln-image-viewer-panel-mode"></div><div class="bln-image-viewer-panel-grid"></div></aside></div><div class="bln-image-viewer-meta"><div class="bln-image-viewer-data"></div></div></div>`;
+    root.innerHTML = `<div class="bln-toolbar"><div><span class="bln-count" aria-live="polite"></span><span class="bln-instruction">Use the yellow edge to unfold ancestry.</span></div><div class="bln-interaction-note"><span><b>YELLOW EDGE</b> unfold / refold parents</span><span><b>NAME →</b> open stance image</span></div><div class="bln-toolbar-actions"><button type="button" data-bloodline-action="all">Open full pedigree</button><button type="button" data-bloodline-action="back" aria-label="Back one pedigree step" hidden>Back one step</button><button type="button" data-bloodline-action="reset" hidden>Reset</button></div></div><div class="bln-desktop" aria-label="Interactive four-generation pedigree"><div class="bln-stage-shell" id="bloodlineStageScroll"><div class="bln-stage"><svg class="bln-connectors" aria-hidden="true"></svg><div class="bln-node-layer"></div></div></div><div class="bln-stage-scrollbar" role="group" aria-controls="bloodlineStageScroll" aria-label="Bloodline horizontal navigation"><div class="bln-stage-scrollbar-track"><div class="bln-stage-scrollbar-thumb" role="scrollbar" tabindex="0" aria-controls="bloodlineStageScroll" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div></div></div><div class="bln-mobile" aria-label="Interactive four-generation pedigree"></div><div class="bln-image-viewer" role="dialog" aria-modal="true" aria-label="Full stance image" hidden><div class="bln-image-viewer-top"><strong class="bln-image-viewer-name"></strong><button type="button" class="bln-image-viewer-close" data-bloodline-image-close aria-label="Close full image">×</button></div><div class="bln-image-viewer-stage"><aside class="bln-image-viewer-panel" hidden><div class="bln-image-viewer-panel-mode"></div><div class="bln-image-viewer-panel-grid"></div></aside><div class="bln-image-viewer-photo-frame"><img alt=""></div></div><div class="bln-image-viewer-meta"><div class="bln-image-viewer-data"></div></div></div>`;
 
     const count = root.querySelector(".bln-count");
     const desktop = root.querySelector(".bln-desktop");
@@ -392,7 +392,8 @@
     const mobile = root.querySelector(".bln-mobile");
     const imageViewer = root.querySelector(".bln-image-viewer");
     const viewerStage = imageViewer.querySelector(".bln-image-viewer-stage");
-    const viewerImage = viewerStage.querySelector("img");
+    const viewerPhotoFrame = imageViewer.querySelector(".bln-image-viewer-photo-frame");
+    const viewerImage = viewerPhotoFrame.querySelector("img");
     const viewerPanel = imageViewer.querySelector(".bln-image-viewer-panel");
     const networkScrollbar = root.querySelector(".bln-stage-scrollbar");
     const networkTrack = networkScrollbar.querySelector(".bln-stage-scrollbar-track");
@@ -648,6 +649,47 @@
       viewerPanel.hidden = rows.length === 0;
     }
 
+    function fitViewerImage() {
+      const desktopMode = typeof matchMedia === "function" ? matchMedia("(min-width: 821px)").matches : true;
+      viewerImage.style.removeProperty("width");
+      viewerImage.style.removeProperty("height");
+      viewerImage.style.removeProperty("max-width");
+      viewerImage.style.removeProperty("max-height");
+      viewerImage.style.removeProperty("margin-top");
+      viewerImage.style.removeProperty("margin-bottom");
+      if (!desktopMode || !viewerImage.naturalWidth || !viewerImage.naturalHeight) {
+        viewerPhotoFrame.scrollTop = 0;
+        return;
+      }
+
+      const frameStyle = getComputedStyle(viewerPhotoFrame);
+      const padX = (parseFloat(frameStyle.paddingLeft) || 0) + (parseFloat(frameStyle.paddingRight) || 0);
+      const padY = (parseFloat(frameStyle.paddingTop) || 0) + (parseFloat(frameStyle.paddingBottom) || 0);
+      const availableWidth = Math.max(160, viewerPhotoFrame.clientWidth - padX - 14);
+      const availableHeight = Math.max(240, viewerPhotoFrame.clientHeight - padY);
+
+      // Width always fits completely. Height is allowed at most ~4% oversize,
+      // leaving only a small vertical adjustment range for the stance slider.
+      const widthScale = availableWidth / viewerImage.naturalWidth;
+      const nearFitHeightScale = (availableHeight * 1.04) / viewerImage.naturalHeight;
+      const scale = Math.min(widthScale, nearFitHeightScale);
+      const targetWidth = Math.max(1, Math.round(viewerImage.naturalWidth * scale));
+      const targetHeight = Math.max(1, Math.round(viewerImage.naturalHeight * scale));
+      const verticalBreathing = Math.max(0, Math.floor((availableHeight - targetHeight) / 2));
+
+      viewerImage.style.setProperty("width", `${targetWidth}px`, "important");
+      viewerImage.style.setProperty("height", `${targetHeight}px`, "important");
+      viewerImage.style.setProperty("max-width", "none", "important");
+      viewerImage.style.setProperty("max-height", "none", "important");
+      viewerImage.style.setProperty("margin-top", `${verticalBreathing}px`, "important");
+      viewerImage.style.setProperty("margin-bottom", `${verticalBreathing}px`, "important");
+
+      raf(() => {
+        const fineRange = Math.max(0, viewerPhotoFrame.scrollHeight - viewerPhotoFrame.clientHeight);
+        viewerPhotoFrame.scrollTop = Math.round(fineRange / 2);
+      });
+    }
+
     function syncViewerStageClearance() {
       if (imageViewer.hidden) return;
       const desktopMode = typeof matchMedia === "function" ? matchMedia("(min-width: 821px)").matches : true;
@@ -656,16 +698,14 @@
       const titleBottom = viewerName.getBoundingClientRect().bottom;
       const closeBottom = viewerClose.getBoundingClientRect().bottom;
       const topBottom = imageViewer.querySelector(".bln-image-viewer-top")?.getBoundingClientRect().bottom || 0;
-      const safeGap = desktopMode ? 32 : 20;
+      const safeGap = desktopMode ? 30 : 20;
       const desiredTop = Math.max(titleBottom, closeBottom, topBottom) + safeGap;
       const shift = Math.max(0, Math.ceil(desiredTop - stageTop));
       viewerStage.style.setProperty("margin-top", `${shift}px`, "important");
-      // Desktop stage geometry is controlled by CSS and must stay consistent
-      // across ancestors regardless of title length or source-image dimensions.
-      // Mobile likewise owns its geometry through the mobile contain rules.
       viewerStage.style.removeProperty("height");
       viewerStage.style.removeProperty("max-height");
       viewerStage.style.removeProperty("min-height");
+      fitViewerImage();
     }
 
     async function openImageViewer(action) {
@@ -681,8 +721,8 @@
       viewerName.textContent = name;
       viewerData.textContent = [generation, registration].filter(Boolean).join(" · ");
       renderViewerPanel(action.dataset);
-      viewerStage.scrollTop = 0;
-      viewerStage.scrollLeft = 0;
+      viewerPhotoFrame.scrollTop = 0;
+      viewerPhotoFrame.scrollLeft = 0;
       viewerImage.src = imageSrc;
       viewerImage.alt = `${name} in stance`;
       viewerImage.style.opacity = "0";
