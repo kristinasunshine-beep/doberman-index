@@ -1433,3 +1433,58 @@ body.bln-image-open{
     text-align:left!important;
   }
 }
+
+
+/* V29.2 — stable desktop stance stage: identical container depth + persistent scroll lane. */
+@media(min-width:821px){
+  #bloodline .bln-image-viewer-stage{
+    box-sizing:border-box!important;
+    display:grid!important;
+    grid-template-columns:minmax(170px,240px) minmax(0,1fr)!important;
+    grid-template-rows:minmax(0,1fr)!important;
+    column-gap:clamp(26px,4vw,64px)!important;
+    align-items:center!important;
+    justify-items:stretch!important;
+    width:100%!important;
+    height:clamp(520px,72svh,820px)!important;
+    min-height:clamp(520px,72svh,820px)!important;
+    max-height:calc(100svh - 150px)!important;
+    margin-right:0!important;
+    padding:24px 28px 28px!important;
+    overflow-y:scroll!important;
+    overflow-x:hidden!important;
+    overscroll-behavior:contain!important;
+    scrollbar-gutter:stable both-edges!important;
+    scrollbar-width:auto!important;
+    scrollbar-color:#777772 #171717!important;
+    background:#111!important;
+    border:1px solid #2b2b2b!important;
+  }
+  #bloodline .bln-image-viewer-stage::-webkit-scrollbar{
+    display:block!important;
+    width:12px!important;
+  }
+  #bloodline .bln-image-viewer-stage::-webkit-scrollbar-track{
+    background:#171717!important;
+  }
+  #bloodline .bln-image-viewer-stage::-webkit-scrollbar-thumb{
+    background:#777772!important;
+    border:3px solid #171717!important;
+    border-radius:999px!important;
+  }
+  #bloodline .bln-image-viewer-stage::-webkit-scrollbar-thumb:hover{
+    background:#a5a59f!important;
+  }
+  #bloodline .bln-image-viewer-stage img{
+    grid-column:2!important;
+    grid-row:1!important;
+    place-self:center!important;
+    display:block!important;
+    width:auto!important;
+    height:auto!important;
+    max-width:100%!important;
+    max-height:none!important;
+    object-fit:contain!important;
+    object-position:center!important;
+  }
+}

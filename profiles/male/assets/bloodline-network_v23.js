@@ -660,16 +660,12 @@
       const desiredTop = Math.max(titleBottom, closeBottom, topBottom) + safeGap;
       const shift = Math.max(0, Math.ceil(desiredTop - stageTop));
       viewerStage.style.setProperty("margin-top", `${shift}px`, "important");
-      if (desktopMode && typeof window === "object") {
-        const downwardExtension = 38; // ≈ 1 cm: extend only below the solved title/clearance zone.
-        const available = Math.max(300, Math.floor(window.innerHeight - desiredTop - 74));
-        const extendedHeight = available + downwardExtension;
-        viewerStage.style.setProperty("height", `${extendedHeight}px`, "important");
-        viewerStage.style.setProperty("max-height", `${extendedHeight}px`, "important");
-      } else {
-        viewerStage.style.removeProperty("height");
-        viewerStage.style.removeProperty("max-height");
-      }
+      // Desktop stage geometry is controlled by CSS and must stay consistent
+      // across ancestors regardless of title length or source-image dimensions.
+      // Mobile likewise owns its geometry through the mobile contain rules.
+      viewerStage.style.removeProperty("height");
+      viewerStage.style.removeProperty("max-height");
+      viewerStage.style.removeProperty("min-height");
     }
 
     async function openImageViewer(action) {
@@ -685,6 +681,8 @@
       viewerName.textContent = name;
       viewerData.textContent = [generation, registration].filter(Boolean).join(" · ");
       renderViewerPanel(action.dataset);
+      viewerStage.scrollTop = 0;
+      viewerStage.scrollLeft = 0;
       viewerImage.src = imageSrc;
       viewerImage.alt = `${name} in stance`;
       viewerImage.style.opacity = "0";
