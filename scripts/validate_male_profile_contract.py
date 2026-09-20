@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import json,sys
+import json,re,sys
 ROOT=Path(__file__).resolve().parents[1]
 errors=[]
 profile=(ROOT/'profiles/male/index.html').read_text(encoding='utf-8')
@@ -36,8 +36,12 @@ if 'Balance:present(structure.balance),Evaluator:' in profile: errors.append('St
 if 'profileData.titles.slice(0,2)' in profile or 'hero-credentials' in profile.split('function heroMetadata(){',1)[1].split('function gallery(){',1)[0]: errors.append('hero identity block still renders titles')
 for token in ['id="performanceDetails"','performanceDetails:{Shows:array(performance.show_results),Titles:array(performance.titles)','function togglePerformanceListing(card)','data-metric-key="${escapeHTML(k)}"']:
     if token not in profile: errors.append('male performance listing contract missing: '+token)
-for token in ['assets/bloodline-network_v23.css','assets/bloodline-network_v23.js','window.DIBloodline.mount','data/pedigree-graph.json','data/bloodline-images.json']:
+for token in ['window.DIBloodline.mount','data/pedigree-graph.json','data/bloodline-images.json']:
     if token not in profile: errors.append('male bloodline contract missing: '+token)
+if not re.search(r'assets/bloodline-network_v\d+\.css(?:\?[^"\']*)?',profile):
+    errors.append('male bloodline contract missing: active Bloodline stylesheet')
+if not re.search(r'assets/bloodline-network_v\d+\.js(?:\?[^"\']*)?',profile):
+    errors.append('male bloodline contract missing: active Bloodline runtime')
 if errors:
     print('Male profile contract FAIL')
     for e in errors: print('-',e)
