@@ -59,22 +59,46 @@ for ancestor_id in nodes:
 for sex in ('male','female'):
     base=ROOT/'profiles'/sex
     page=(base/'index.html').read_text(encoding='utf-8')
-    for rel in ('assets/bloodline-network_v23.js','assets/bloodline-network_v23.css'):
-        if not (base/rel).is_file():errors.append(f'{sex}: Bloodline Network asset missing: {rel}')
-    for token in ('id="bloodlineRail"','window.DIBloodline.mount','assets/bloodline-network_v23.js','const repoRoot=new URL("../../",document.baseURI);'):
+
+    js_match=re.search(r'<script[^>]+src=["\'](assets/bloodline-network_v\d+\.js(?:\?[^"\']*)?)["\']',page,re.I)
+    css_match=re.search(r'<link[^>]+href=["\'](assets/bloodline-network_v\d+\.css(?:\?[^"\']*)?)["\']',page,re.I)
+    if not js_match:
+        errors.append(f'{sex}: profile does not reference an active Bloodline Network runtime')
+        js=''
+    else:
+        js_rel=js_match.group(1).split('?',1)[0]
+        js_path=base/js_rel
+        if not js_path.is_file():
+            errors.append(f'{sex}: Bloodline Network asset missing: {js_rel}')
+            js=''
+        else:
+            js=js_path.read_text(encoding='utf-8')
+    if not css_match:
+        errors.append(f'{sex}: profile does not reference an active Bloodline Network stylesheet')
+        css=''
+    else:
+        css_rel=css_match.group(1).split('?',1)[0]
+        css_path=base/css_rel
+        if not css_path.is_file():
+            errors.append(f'{sex}: Bloodline Network asset missing: {css_rel}')
+            css=''
+        else:
+            css=css_path.read_text(encoding='utf-8')
+
+    for token in ('id="bloodlineRail"','window.DIBloodline.mount','const repoRoot=new URL("../../",document.baseURI);'):
         if token not in page:errors.append(f'{sex}: profile missing Bloodline Network token: {token}')
-    js=(base/'assets/bloodline-network_v23.js').read_text(encoding='utf-8')
-    css=(base/'assets/bloodline-network_v23.css').read_text(encoding='utf-8')
     for token in ('document.documentElement.classList.add("bln-image-open")','document.body.classList.add("bln-image-open")','viewerImage.style.opacity = "1"'):
-        if token not in js:errors.append(f'{sex}: pre-V29 stance viewer JS token missing: {token}')
+        if token not in js:errors.append(f'{sex}: stance viewer JS token missing: {token}')
     for token in ('.bln-image-open{overflow:hidden!important}','bln-image-viewer::before','overflow-y:auto!important','max-height:min(60svh,680px)!important','bln-image-viewer-stage img'):
-        if token not in css:errors.append(f'{sex}: pre-V29 stance viewer CSS token missing: {token}')
+        if token not in css:errors.append(f'{sex}: stance viewer CSS token missing: {token}')
     for forbidden in ('V29 — in-section stance viewer + dual active scroll systems','V31 — stable stance viewer + independent Bloodline proxy slider','bln-viewer-network-scrollbar','bln-viewer-network-thumb'):
         if forbidden in css or forbidden in js:errors.append(f'{sex}: retired experimental stance viewer token still present: {forbidden}')
     for token in ('V28.2 — registered name stays on one desktop line','white-space:nowrap!important'):
         if token not in css:errors.append(f'{sex}: stance title-clearance CSS token missing: {token}')
-    for token in ('function syncViewerStageClearance()','const safeGap = desktopMode ? 32 : 20','viewerStage.style.setProperty("margin-top"','raf(syncViewerStageClearance)'):
+    for token in ('function syncViewerStageClearance()','viewerStage.style.setProperty("margin-top"','raf(syncViewerStageClearance)'):
         if token not in js:errors.append(f'{sex}: dynamic stance title-clearance JS token missing: {token}')
+    if 'const safeGap = desktopMode ? 32 : 20' not in js and 'const clearance = Math.max(' not in js:
+        errors.append(f'{sex}: dynamic stance title-clearance calculation missing')
 # Male accepted offline snapshot should use canonical IDs represented in the graph.
 male=(ROOT/'profiles/male/index.html').read_text(encoding='utf-8')
 match=re.search(r'const offlineBloodlineNodes=(\[.*?\]);\s*window\.DIBloodline\.mount',male,re.S)
