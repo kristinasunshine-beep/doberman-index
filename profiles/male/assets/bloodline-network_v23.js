@@ -668,10 +668,10 @@
       const availableWidth = Math.max(160, viewerPhotoFrame.clientWidth - padX - 14);
       const availableHeight = Math.max(240, viewerPhotoFrame.clientHeight - padY);
 
-      // Width always fits completely. Height is allowed at most ~4% oversize,
+      // Width always fits completely. Height is allowed at most ~2% oversize,
       // leaving only a small vertical adjustment range for the stance slider.
       const widthScale = availableWidth / viewerImage.naturalWidth;
-      const nearFitHeightScale = (availableHeight * 1.04) / viewerImage.naturalHeight;
+      const nearFitHeightScale = (availableHeight * 1.02) / viewerImage.naturalHeight;
       const scale = Math.min(widthScale, nearFitHeightScale);
       const targetWidth = Math.max(1, Math.round(viewerImage.naturalWidth * scale));
       const targetHeight = Math.max(1, Math.round(viewerImage.naturalHeight * scale));
@@ -693,13 +693,21 @@
     function syncViewerStageClearance() {
       if (imageViewer.hidden) return;
       const desktopMode = typeof matchMedia === "function" ? matchMedia("(min-width: 821px)").matches : true;
+      if (desktopMode) {
+        viewerStage.style.setProperty("margin-top", "0px", "important");
+        viewerStage.style.removeProperty("height");
+        viewerStage.style.removeProperty("max-height");
+        viewerStage.style.removeProperty("min-height");
+        fitViewerImage();
+        return;
+      }
+
       viewerStage.style.setProperty("margin-top", "0px", "important");
       const stageTop = viewerStage.getBoundingClientRect().top;
       const titleBottom = viewerName.getBoundingClientRect().bottom;
       const closeBottom = viewerClose.getBoundingClientRect().bottom;
       const topBottom = imageViewer.querySelector(".bln-image-viewer-top")?.getBoundingClientRect().bottom || 0;
-      const safeGap = desktopMode ? 30 : 20;
-      const desiredTop = Math.max(titleBottom, closeBottom, topBottom) + safeGap;
+      const desiredTop = Math.max(titleBottom, closeBottom, topBottom) + 20;
       const shift = Math.max(0, Math.ceil(desiredTop - stageTop));
       viewerStage.style.setProperty("margin-top", `${shift}px`, "important");
       viewerStage.style.removeProperty("height");
