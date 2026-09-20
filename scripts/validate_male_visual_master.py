@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import sys
+import re,sys
 ROOT=Path(__file__).resolve().parents[1]
 text=(ROOT/'profiles'/'male'/'index.html').read_text(encoding='utf-8')
 checks={
@@ -21,8 +21,6 @@ checks={
 'title listing panel':'id="performanceDetails"',
 'video support':'.visual-card img,.visual-card video',
 'portal navigation':'href="../../index.html"',
-'bloodline stylesheet':'assets/bloodline-network_v23.css',
-'bloodline runtime':'assets/bloodline-network_v23.js',
 'correct repository root':'const repoRoot=new URL("../../",document.baseURI);',
 'pedigree intelligence':'id="pedigree-intelligence"',
 'breeding lens':'id="breeding-lens"',
@@ -31,6 +29,10 @@ checks={
 'offline bloodline graph':'const offlineBloodlineNodes=[',
 }
 missing=[name for name,token in checks.items() if token not in text]
+if not re.search(r'assets/bloodline-network_v\d+\.css(?:\?[^"\']*)?',text):
+    missing.append('active bloodline stylesheet')
+if not re.search(r'assets/bloodline-network_v\d+\.js(?:\?[^"\']*)?',text):
+    missing.append('active bloodline runtime')
 if 'href="#profile">DOBERMAN INDEX®</a>' in text:
     missing.append('legacy self-link still replaces portal navigation')
 if missing:
