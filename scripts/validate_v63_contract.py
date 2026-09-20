@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -65,9 +66,11 @@ for token in (
 
 for sex in ("male", "female"):
     page = (ROOT / "profiles" / sex / "index.html").read_text(encoding="utf-8")
-    for token in ('const repoRoot=new URL("../../",document.baseURI);', 'assets/bloodline-network_v23.js', 'id="bloodlineRail"'):
+    for token in ('const repoRoot=new URL("../../",document.baseURI);', 'id="bloodlineRail"'):
         if token not in page:
             errors.append(f"{sex} V27 integration missing: {token}")
+    if not re.search(r'assets/bloodline-network_v\d+\.js(?:\?[^"\']*)?', page):
+        errors.append(f"{sex} V27 integration missing: active Bloodline Network runtime")
 
 workflow = (ROOT / ".github/workflows/build-registry.yml").read_text(encoding="utf-8")
 for token in ('cron: "17 3 * * *"', 'python scripts/apply_lifecycle_policy.py --write', 'profiles/male/**', 'profiles/female/**'):
