@@ -501,11 +501,10 @@
 
     function renderDesktop(tree) {
       const viewportWidth = Math.max(280, Math.round(shell.clientWidth || root.clientWidth || 1200));
-      // Keep the complete pedigree inside the visible desktop viewport.
-      // Density/width caps below handle compact cards; the stage itself never
-      // grows beyond its shell, so Bloodline Network needs no horizontal pan.
-      const width = viewportWidth;
-      stage.style.width = "100%";
+      // Keep the pedigree compact, but retain a small horizontal working lane
+      // so the Bloodline proxy slider remains functional on desktop.
+      const width = Math.max(viewportWidth, Math.round(viewportWidth * 1.08));
+      stage.style.width = `${width}px`;
       const layout = computeDesktopLayout(nodes, expanded, width, typeof window === "object" ? window.innerHeight : 0);
       stage.dataset.density = String(layout.density);
       stage.dataset.viewportFit = layout.compactHeight ? "compact" : "roomy";

@@ -1328,17 +1328,21 @@ body.bln-image-open{
 }
 
 
-/* V29 — viewport-fit pedigree: no horizontal navigation on desktop. */
+/* V29.5 — compact desktop pedigree with visible horizontal navigation. */
 @media(min-width:721px){
   #bloodline .bln-stage-shell{
-    overflow:hidden!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
   }
   #bloodline .bln-stage{
-    width:100%!important;
-    max-width:100%!important;
+    max-width:none!important;
   }
   #bloodline .bln-stage-scrollbar{
-    display:none!important;
+    display:flex!important;
+    opacity:.94!important;
+  }
+  #bloodline .bln-stage-scrollbar.is-disabled{
+    opacity:.94!important;
   }
 }
 
@@ -1675,5 +1679,16 @@ body.bln-image-open{
     border:0!important;
     outline:0!important;
     box-shadow:none!important;
+  }
+}
+
+
+/* V29.6 — desktop stance title clears the persistent site header. */
+@media(min-width:821px){
+  #bloodline .bln-image-viewer-top{
+    min-height:118px!important;
+  }
+  #bloodline .bln-image-viewer-name{
+    margin-top:58px!important;
   }
 }
