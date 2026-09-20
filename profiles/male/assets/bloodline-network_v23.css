@@ -1683,12 +1683,107 @@ body.bln-image-open{
 }
 
 
-/* V29.6 — desktop stance title clears the persistent site header. */
+
+
+
+/* V29.7 — explicit Bloodline + stance slider controls and runtime header clearance. */
 @media(min-width:821px){
+  #bloodline .bln-stage-scrollbar{
+    position:relative!important;
+    z-index:30!important;
+    display:flex!important;
+    width:100%!important;
+    height:36px!important;
+    margin:16px 0 8px!important;
+    padding:11px 0!important;
+    opacity:1!important;
+    visibility:visible!important;
+  }
+  #bloodline .bln-stage-scrollbar-track{
+    width:100%!important;
+    height:10px!important;
+    background:#c7c7c1!important;
+  }
+  #bloodline .bln-stage-scrollbar-thumb{
+    height:10px!important;
+    min-width:72px!important;
+    background:#111!important;
+  }
+  #bloodline .bln-stage-scrollbar.is-disabled{
+    opacity:1!important;
+  }
+
   #bloodline .bln-image-viewer-top{
-    min-height:118px!important;
+    min-height:0!important;
   }
   #bloodline .bln-image-viewer-name{
-    margin-top:58px!important;
+    margin-top:0;
+  }
+
+  #bloodline .bln-image-viewer-photo-frame{
+    position:relative!important;
+    padding:18px 34px 20px 12px!important;
+    overflow-y:auto!important;
+    scrollbar-width:none!important;
+  }
+  #bloodline .bln-image-viewer-photo-frame::-webkit-scrollbar{
+    display:none!important;
+  }
+  #bloodline .bln-image-viewer-photo-canvas{
+    width:100%!important;
+    min-height:calc(100% + 44px)!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    box-sizing:border-box!important;
+    padding:10px 0!important;
+  }
+  #bloodline .bln-image-viewer-photo-scrollbar{
+    position:absolute!important;
+    z-index:20!important;
+    top:22px!important;
+    right:8px!important;
+    bottom:24px!important;
+    width:12px!important;
+    display:block!important;
+  }
+  #bloodline .bln-image-viewer-photo-scrollbar-track{
+    position:relative!important;
+    width:10px!important;
+    height:100%!important;
+    margin:0 auto!important;
+    background:#2b2b29!important;
+    border-radius:999px!important;
+    cursor:pointer!important;
+  }
+  #bloodline .bln-image-viewer-photo-scrollbar-thumb{
+    position:absolute!important;
+    left:0!important;
+    top:0!important;
+    width:10px!important;
+    min-height:54px!important;
+    background:#8a8a84!important;
+    border-radius:999px!important;
+    cursor:grab!important;
+    will-change:transform,height!important;
+  }
+  #bloodline .bln-image-viewer-photo-scrollbar-thumb:active{
+    cursor:grabbing!important;
+    background:var(--acid)!important;
+  }
+  #bloodline .bln-image-viewer-photo-scrollbar-thumb:focus-visible{
+    outline:2px solid var(--acid)!important;
+    outline-offset:3px!important;
+  }
+}
+
+@media(max-width:820px){
+  #bloodline .bln-image-viewer-photo-canvas{
+    min-height:0!important;
+    display:block!important;
+    padding:0!important;
+  }
+  #bloodline .bln-image-viewer-photo-scrollbar{
+    display:none!important;
   }
 }

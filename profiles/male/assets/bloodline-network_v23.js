@@ -381,7 +381,7 @@
     let lastWidth = 0;
     let resizeFrame = 0;
 
-    root.innerHTML = `<div class="bln-toolbar"><div><span class="bln-count" aria-live="polite"></span><span class="bln-instruction">Use the yellow edge to unfold ancestry.</span></div><div class="bln-interaction-note"><span><b>YELLOW EDGE</b> unfold / refold parents</span><span><b>NAME →</b> open stance image</span></div><div class="bln-toolbar-actions"><button type="button" data-bloodline-action="all">Open full pedigree</button><button type="button" data-bloodline-action="back" aria-label="Back one pedigree step" hidden>Back one step</button><button type="button" data-bloodline-action="reset" hidden>Reset</button></div></div><div class="bln-desktop" aria-label="Interactive four-generation pedigree"><div class="bln-stage-shell" id="bloodlineStageScroll"><div class="bln-stage"><svg class="bln-connectors" aria-hidden="true"></svg><div class="bln-node-layer"></div></div></div><div class="bln-stage-scrollbar" role="group" aria-controls="bloodlineStageScroll" aria-label="Bloodline horizontal navigation"><div class="bln-stage-scrollbar-track"><div class="bln-stage-scrollbar-thumb" role="scrollbar" tabindex="0" aria-controls="bloodlineStageScroll" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div></div></div><div class="bln-mobile" aria-label="Interactive four-generation pedigree"></div><div class="bln-image-viewer" role="dialog" aria-modal="true" aria-label="Full stance image" hidden><div class="bln-image-viewer-top"><strong class="bln-image-viewer-name"></strong><button type="button" class="bln-image-viewer-close" data-bloodline-image-close aria-label="Close full image">×</button></div><div class="bln-image-viewer-stage"><aside class="bln-image-viewer-panel" hidden><div class="bln-image-viewer-panel-mode"></div><div class="bln-image-viewer-panel-grid"></div></aside><div class="bln-image-viewer-photo-frame"><img alt=""></div></div><div class="bln-image-viewer-meta"><div class="bln-image-viewer-data"></div></div></div>`;
+    root.innerHTML = `<div class="bln-toolbar"><div><span class="bln-count" aria-live="polite"></span><span class="bln-instruction">Use the yellow edge to unfold ancestry.</span></div><div class="bln-interaction-note"><span><b>YELLOW EDGE</b> unfold / refold parents</span><span><b>NAME →</b> open stance image</span></div><div class="bln-toolbar-actions"><button type="button" data-bloodline-action="all">Open full pedigree</button><button type="button" data-bloodline-action="back" aria-label="Back one pedigree step" hidden>Back one step</button><button type="button" data-bloodline-action="reset" hidden>Reset</button></div></div><div class="bln-desktop" aria-label="Interactive four-generation pedigree"><div class="bln-stage-shell" id="bloodlineStageScroll"><div class="bln-stage"><svg class="bln-connectors" aria-hidden="true"></svg><div class="bln-node-layer"></div></div></div><div class="bln-stage-scrollbar" role="group" aria-controls="bloodlineStageScroll" aria-label="Bloodline horizontal navigation"><div class="bln-stage-scrollbar-track"><div class="bln-stage-scrollbar-thumb" role="scrollbar" tabindex="0" aria-controls="bloodlineStageScroll" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div></div></div><div class="bln-mobile" aria-label="Interactive four-generation pedigree"></div><div class="bln-image-viewer" role="dialog" aria-modal="true" aria-label="Full stance image" hidden><div class="bln-image-viewer-top"><strong class="bln-image-viewer-name"></strong><button type="button" class="bln-image-viewer-close" data-bloodline-image-close aria-label="Close full image">×</button></div><div class="bln-image-viewer-stage"><aside class="bln-image-viewer-panel" hidden><div class="bln-image-viewer-panel-mode"></div><div class="bln-image-viewer-panel-grid"></div></aside><div class="bln-image-viewer-photo-frame"><div class="bln-image-viewer-photo-canvas"><img alt=""></div><div class="bln-image-viewer-photo-scrollbar" role="group" aria-label="Stance image vertical adjustment"><div class="bln-image-viewer-photo-scrollbar-track"><div class="bln-image-viewer-photo-scrollbar-thumb" role="scrollbar" tabindex="0" aria-orientation="vertical" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"></div></div></div></div></div><div class="bln-image-viewer-meta"><div class="bln-image-viewer-data"></div></div></div>`;
 
     const count = root.querySelector(".bln-count");
     const desktop = root.querySelector(".bln-desktop");
@@ -393,7 +393,11 @@
     const imageViewer = root.querySelector(".bln-image-viewer");
     const viewerStage = imageViewer.querySelector(".bln-image-viewer-stage");
     const viewerPhotoFrame = imageViewer.querySelector(".bln-image-viewer-photo-frame");
-    const viewerImage = viewerPhotoFrame.querySelector("img");
+    const viewerPhotoCanvas = imageViewer.querySelector(".bln-image-viewer-photo-canvas");
+    const viewerImage = viewerPhotoCanvas.querySelector("img");
+    const viewerPhotoScrollbar = imageViewer.querySelector(".bln-image-viewer-photo-scrollbar");
+    const viewerPhotoTrack = imageViewer.querySelector(".bln-image-viewer-photo-scrollbar-track");
+    const viewerPhotoThumb = imageViewer.querySelector(".bln-image-viewer-photo-scrollbar-thumb");
     const viewerPanel = imageViewer.querySelector(".bln-image-viewer-panel");
     const networkScrollbar = root.querySelector(".bln-stage-scrollbar");
     const networkTrack = networkScrollbar.querySelector(".bln-stage-scrollbar-track");
@@ -430,7 +434,7 @@
       const maximum = Math.max(0, shell.scrollWidth - shell.clientWidth);
       const trackWidth = networkTrack.clientWidth;
       if (!trackWidth) return;
-      const thumbWidth = Math.max(46, Math.min(trackWidth, trackWidth * (shell.clientWidth / Math.max(shell.scrollWidth, 1))));
+      const thumbWidth = Math.max(72, Math.min(trackWidth * .28, 220));
       const travel = Math.max(0, trackWidth - thumbWidth);
       const progress = maximum ? Math.min(1, Math.max(0, shell.scrollLeft / maximum)) : 0;
       networkThumb.style.width = `${thumbWidth}px`;
@@ -503,7 +507,7 @@
       const viewportWidth = Math.max(280, Math.round(shell.clientWidth || root.clientWidth || 1200));
       // Keep the pedigree compact, but retain a small horizontal working lane
       // so the Bloodline proxy slider remains functional on desktop.
-      const width = Math.max(viewportWidth, Math.round(viewportWidth * 1.08));
+      const width = Math.max(viewportWidth, Math.round(viewportWidth * 1.12));
       stage.style.width = `${width}px`;
       const layout = computeDesktopLayout(nodes, expanded, width, typeof window === "object" ? window.innerHeight : 0);
       stage.dataset.density = String(layout.density);
@@ -648,6 +652,68 @@
       viewerPanel.hidden = rows.length === 0;
     }
 
+    function syncViewerPhotoScrollbar() {
+      const maximum = Math.max(0, viewerPhotoFrame.scrollHeight - viewerPhotoFrame.clientHeight);
+      const trackHeight = viewerPhotoTrack.clientHeight;
+      if (!trackHeight) return;
+      const thumbHeight = Math.max(54, Math.min(110, trackHeight * .28));
+      const travel = Math.max(0, trackHeight - thumbHeight);
+      const progress = maximum ? Math.min(1, Math.max(0, viewerPhotoFrame.scrollTop / maximum)) : .5;
+      viewerPhotoThumb.style.height = `${thumbHeight}px`;
+      viewerPhotoThumb.style.transform = `translate3d(0,${travel * progress}px,0)`;
+      viewerPhotoThumb.setAttribute("aria-valuenow", String(Math.round(progress * 100)));
+    }
+
+    function scrollViewerPhotoTo(target) {
+      const maximum = Math.max(0, viewerPhotoFrame.scrollHeight - viewerPhotoFrame.clientHeight);
+      viewerPhotoFrame.scrollTop = Math.min(maximum, Math.max(0, target));
+      syncViewerPhotoScrollbar();
+    }
+
+    viewerPhotoThumb.addEventListener("pointerdown", event => {
+      event.preventDefault();
+      const maximum = Math.max(0, viewerPhotoFrame.scrollHeight - viewerPhotoFrame.clientHeight);
+      const startY = event.clientY;
+      const startScroll = viewerPhotoFrame.scrollTop;
+      const trackHeight = viewerPhotoTrack.clientHeight;
+      const thumbHeight = viewerPhotoThumb.getBoundingClientRect().height;
+      const travel = Math.max(1, trackHeight - thumbHeight);
+      viewerPhotoThumb.setPointerCapture(event.pointerId);
+      const move = moveEvent => {
+        if (!viewerPhotoThumb.hasPointerCapture(moveEvent.pointerId)) return;
+        scrollViewerPhotoTo(startScroll + ((moveEvent.clientY - startY) / travel) * maximum);
+      };
+      const finish = finishEvent => {
+        if (viewerPhotoThumb.hasPointerCapture(finishEvent.pointerId)) viewerPhotoThumb.releasePointerCapture(finishEvent.pointerId);
+        viewerPhotoThumb.removeEventListener("pointermove", move);
+        viewerPhotoThumb.removeEventListener("pointerup", finish);
+        viewerPhotoThumb.removeEventListener("pointercancel", finish);
+      };
+      viewerPhotoThumb.addEventListener("pointermove", move);
+      viewerPhotoThumb.addEventListener("pointerup", finish);
+      viewerPhotoThumb.addEventListener("pointercancel", finish);
+    });
+
+    viewerPhotoTrack.addEventListener("pointerdown", event => {
+      if (event.target === viewerPhotoThumb) return;
+      const rect = viewerPhotoTrack.getBoundingClientRect();
+      const maximum = Math.max(0, viewerPhotoFrame.scrollHeight - viewerPhotoFrame.clientHeight);
+      const ratio = Math.min(1, Math.max(0, (event.clientY - rect.top) / Math.max(rect.height, 1)));
+      scrollViewerPhotoTo(maximum * ratio);
+    });
+
+    viewerPhotoThumb.addEventListener("keydown", event => {
+      const maximum = Math.max(0, viewerPhotoFrame.scrollHeight - viewerPhotoFrame.clientHeight);
+      if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+        event.preventDefault();
+        scrollViewerPhotoTo(viewerPhotoFrame.scrollTop + (event.key === "ArrowUp" ? -1 : 1) * Math.max(8, maximum * .2));
+      } else if (event.key === "Home" || event.key === "End") {
+        event.preventDefault();
+        scrollViewerPhotoTo(event.key === "Home" ? 0 : maximum);
+      }
+    });
+    viewerPhotoFrame.addEventListener("scroll", syncViewerPhotoScrollbar, { passive:true });
+
     function fitViewerImage() {
       const desktopMode = typeof matchMedia === "function" ? matchMedia("(min-width: 821px)").matches : true;
       viewerImage.style.removeProperty("width");
@@ -658,60 +724,63 @@
       viewerImage.style.removeProperty("margin-bottom");
       if (!desktopMode || !viewerImage.naturalWidth || !viewerImage.naturalHeight) {
         viewerPhotoFrame.scrollTop = 0;
+        syncViewerPhotoScrollbar();
         return;
       }
 
       const frameStyle = getComputedStyle(viewerPhotoFrame);
       const padX = (parseFloat(frameStyle.paddingLeft) || 0) + (parseFloat(frameStyle.paddingRight) || 0);
       const padY = (parseFloat(frameStyle.paddingTop) || 0) + (parseFloat(frameStyle.paddingBottom) || 0);
-      const availableWidth = Math.max(160, viewerPhotoFrame.clientWidth - padX - 14);
+      const availableWidth = Math.max(160, viewerPhotoFrame.clientWidth - padX - 28);
       const availableHeight = Math.max(240, viewerPhotoFrame.clientHeight - padY);
 
-      // Width always fits completely. Height is allowed at most ~2% oversize,
-      // leaving only a small vertical adjustment range for the stance slider.
+      // Start with the complete stance visible. The canvas itself carries a small
+      // extra vertical range so the dedicated slider only performs fine adjustment.
       const widthScale = availableWidth / viewerImage.naturalWidth;
-      const nearFitHeightScale = (availableHeight * 1.02) / viewerImage.naturalHeight;
-      const scale = Math.min(widthScale, nearFitHeightScale);
+      const heightScale = (availableHeight * .94) / viewerImage.naturalHeight;
+      const scale = Math.min(widthScale, heightScale);
       const targetWidth = Math.max(1, Math.round(viewerImage.naturalWidth * scale));
       const targetHeight = Math.max(1, Math.round(viewerImage.naturalHeight * scale));
-      const verticalBreathing = Math.max(0, Math.floor((availableHeight - targetHeight) / 2));
 
       viewerImage.style.setProperty("width", `${targetWidth}px`, "important");
       viewerImage.style.setProperty("height", `${targetHeight}px`, "important");
       viewerImage.style.setProperty("max-width", "none", "important");
       viewerImage.style.setProperty("max-height", "none", "important");
-      viewerImage.style.setProperty("margin-top", `${verticalBreathing}px`, "important");
-      viewerImage.style.setProperty("margin-bottom", `${verticalBreathing}px`, "important");
 
       raf(() => {
-        const fineRange = Math.max(0, viewerPhotoFrame.scrollHeight - viewerPhotoFrame.clientHeight);
-        viewerPhotoFrame.scrollTop = Math.round(fineRange / 2);
+        const maximum = Math.max(0, viewerPhotoFrame.scrollHeight - viewerPhotoFrame.clientHeight);
+        viewerPhotoFrame.scrollTop = Math.round(maximum / 2);
+        syncViewerPhotoScrollbar();
       });
     }
 
     function syncViewerStageClearance() {
       if (imageViewer.hidden) return;
       const desktopMode = typeof matchMedia === "function" ? matchMedia("(min-width: 821px)").matches : true;
+      const viewerTop = imageViewer.querySelector(".bln-image-viewer-top");
+      viewerStage.style.setProperty("margin-top", "0px", "important");
+      viewerStage.style.removeProperty("height");
+      viewerStage.style.removeProperty("max-height");
+      viewerStage.style.removeProperty("min-height");
+
       if (desktopMode) {
-        viewerStage.style.setProperty("margin-top", "0px", "important");
-        viewerStage.style.removeProperty("height");
-        viewerStage.style.removeProperty("max-height");
-        viewerStage.style.removeProperty("min-height");
+        const floatingNav = document.querySelector(".float-nav");
+        const navBottom = floatingNav?.getBoundingClientRect().bottom || 0;
+        const topTop = viewerTop?.getBoundingClientRect().top || imageViewer.getBoundingClientRect().top;
+        const clearance = Math.max(18, Math.ceil(navBottom - topTop + 26));
+        viewerName.style.setProperty("margin-top", `${clearance}px`, "important");
         fitViewerImage();
         return;
       }
 
-      viewerStage.style.setProperty("margin-top", "0px", "important");
+      viewerName.style.removeProperty("margin-top");
       const stageTop = viewerStage.getBoundingClientRect().top;
       const titleBottom = viewerName.getBoundingClientRect().bottom;
       const closeBottom = viewerClose.getBoundingClientRect().bottom;
-      const topBottom = imageViewer.querySelector(".bln-image-viewer-top")?.getBoundingClientRect().bottom || 0;
+      const topBottom = viewerTop?.getBoundingClientRect().bottom || 0;
       const desiredTop = Math.max(titleBottom, closeBottom, topBottom) + 20;
       const shift = Math.max(0, Math.ceil(desiredTop - stageTop));
       viewerStage.style.setProperty("margin-top", `${shift}px`, "important");
-      viewerStage.style.removeProperty("height");
-      viewerStage.style.removeProperty("max-height");
-      viewerStage.style.removeProperty("min-height");
       fitViewerImage();
     }
 
