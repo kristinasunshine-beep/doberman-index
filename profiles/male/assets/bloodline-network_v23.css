@@ -1799,3 +1799,47 @@ body.bln-image-open{
 #bloodline .bln-node.has-image-preview .bln-tree-action{
   cursor:pointer!important;
 }
+
+
+/* V31.1 — single physical preview hit-area; yellow ancestry edge remains separate. */
+#bloodline .bln-node{
+  isolation:isolate!important;
+}
+#bloodline .bln-preview-action{
+  position:absolute!important;
+  z-index:12!important;
+  left:9px!important;
+  top:0!important;
+  right:0!important;
+  bottom:0!important;
+  width:auto!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  appearance:none!important;
+  background:transparent!important;
+  cursor:zoom-in!important;
+}
+#bloodline .bln-tree-action{
+  z-index:20!important;
+  left:0!important;
+  right:auto!important;
+  top:0!important;
+  bottom:0!important;
+  width:8px!important;
+  height:100%!important;
+}
+#bloodline .bln-copy,
+#bloodline .bln-photo,
+#bloodline .bln-generation,
+#bloodline .bln-name-static,
+#bloodline .bln-name-text,
+#bloodline .bln-name-arrow,
+#bloodline .bln-identity{
+  pointer-events:none!important;
+}
+#bloodline .bln-preview-action:focus-visible{
+  outline:2px solid var(--acid)!important;
+  outline-offset:-3px!important;
+}
