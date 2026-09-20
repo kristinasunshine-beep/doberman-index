@@ -9,7 +9,13 @@ const female = read("profiles/female/index.html");
 const index = read("index.html");
 const router = read("profile.html");
 const DIName = require("../assets/js/display-name.js");
-const DIBloodline = require("../profiles/male/assets/bloodline-network_v23.js");
+
+const bloodlineRuntimeMatch = male.match(/<script[^>]+src=["'](assets\/bloodline-network_v\d+\.js(?:\?[^"']*)?)["']/i);
+assert.ok(bloodlineRuntimeMatch, "male V27 missing active Bloodline runtime");
+const bloodlineRuntimeRel = bloodlineRuntimeMatch[1].split("?")[0];
+const bloodlineRuntimePath = path.join(root, "profiles/male", bloodlineRuntimeRel);
+assert.ok(fs.existsSync(bloodlineRuntimePath), `male Bloodline runtime asset missing: ${bloodlineRuntimeRel}`);
+const DIBloodline = require(bloodlineRuntimePath);
 
 function assertTokens(source, tokens, label) {
   for (const token of tokens) assert.ok(source.includes(token), `${label} missing: ${token}`);
@@ -32,12 +38,13 @@ for (const [label, html] of [["male", male], ["female", female]]) {
   assertTokens(html, [
     'const repoRoot=new URL("../../",document.baseURI);',
     'href="../../index.html"',
-    'assets/bloodline-network_v23.css', 'assets/bloodline-network_v23.js',
     'async function loadProfile()', 'async function initializeProfile()',
     'window.DIBloodline.mount', 'id="bloodlineRail"',
     'id="structureRail"', 'id="temperamentRail"', 'id="performanceRail"', 'id="relatedRail"',
     'preload="metadata"', 'loading="${index?"lazy":"eager"}"'
   ], `${label} V27`);
+  assert.match(html, /<link[^>]+href=["']assets\/bloodline-network_v\d+\.css(?:\?[^"']*)?["']/i, `${label} V27 missing active Bloodline stylesheet`);
+  assert.match(html, /<script[^>]+src=["']assets\/bloodline-network_v\d+\.js(?:\?[^"']*)?["']/i, `${label} V27 missing active Bloodline runtime`);
   assert.match(html, /<meta[^>]+name=["']robots["'][^>]+content=["']noindex,follow["']/i);
 }
 
