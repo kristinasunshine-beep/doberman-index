@@ -2487,3 +2487,31 @@ body.bln-image-open{
     touch-action:none!important;
   }
 }
+
+
+/* v43.11 — G4 boundary cards: full-card stance preview on mobile. */
+@media(max-width:820px){
+  #bloodline .bln-mobile .bln-node.is-boundary.has-image-preview{
+    position:relative!important;
+    cursor:pointer!important;
+  }
+  #bloodline .bln-mobile .bln-node.is-boundary.has-image-preview .bln-preview-action{
+    position:absolute!important;
+    left:0!important;
+    right:0!important;
+    top:0!important;
+    bottom:0!important;
+    width:100%!important;
+    height:100%!important;
+    z-index:32!important;
+    pointer-events:auto!important;
+    touch-action:manipulation!important;
+    background:transparent!important;
+  }
+  #bloodline .bln-mobile .bln-node.is-boundary.has-image-preview .bln-copy,
+  #bloodline .bln-mobile .bln-node.is-boundary.has-image-preview .bln-name-static,
+  #bloodline .bln-mobile .bln-node.is-boundary.has-image-preview .bln-name-text,
+  #bloodline .bln-mobile .bln-node.is-boundary.has-image-preview .bln-name-arrow{
+    pointer-events:none!important;
+  }
+}
