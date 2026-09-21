@@ -464,7 +464,7 @@
 
     function isMobileViewerDragTarget(target) {
       if (!(target instanceof Element)) return true;
-      return !target.closest("button,a,input,select,textarea,[contenteditable='true'],[role='scrollbar'],.bln-image-viewer-photo-scrollbar");
+      return !target.closest("[data-bloodline-image-close]");
     }
 
     function beginMobileViewerDrag(clientY, pointerId = null, source = "touch") {
@@ -936,30 +936,27 @@
     function syncViewerStageClearance() {
       if (imageViewer.hidden) return;
       const desktopMode = typeof matchMedia === "function" ? matchMedia("(min-width: 821px)").matches : true;
+
+      if (!desktopMode) {
+        viewerName.style.removeProperty("margin-top");
+        viewerStage.style.removeProperty("margin-top");
+        viewerStage.style.removeProperty("height");
+        viewerStage.style.removeProperty("max-height");
+        viewerStage.style.removeProperty("min-height");
+        return;
+      }
+
       const viewerTop = imageViewer.querySelector(".bln-image-viewer-top");
       viewerStage.style.setProperty("margin-top", "0px", "important");
       viewerStage.style.removeProperty("height");
       viewerStage.style.removeProperty("max-height");
       viewerStage.style.removeProperty("min-height");
 
-      if (desktopMode) {
-        const floatingNav = document.querySelector(".float-nav");
-        const navBottom = floatingNav?.getBoundingClientRect().bottom || 0;
-        const topTop = viewerTop?.getBoundingClientRect().top || imageViewer.getBoundingClientRect().top;
-        const clearance = Math.max(28, Math.ceil(navBottom - topTop + 18));
-        viewerName.style.setProperty("margin-top", `${clearance}px`, "important");
-        fitViewerImage();
-        return;
-      }
-
-      viewerName.style.removeProperty("margin-top");
-      const stageTop = viewerStage.getBoundingClientRect().top;
-      const titleBottom = viewerName.getBoundingClientRect().bottom;
-      const closeBottom = viewerClose.getBoundingClientRect().bottom;
-      const topBottom = viewerTop?.getBoundingClientRect().bottom || 0;
-      const desiredTop = Math.max(titleBottom, closeBottom, topBottom) + 20;
-      const shift = Math.max(0, Math.ceil(desiredTop - stageTop));
-      viewerStage.style.setProperty("margin-top", `${shift}px`, "important");
+      const floatingNav = document.querySelector(".float-nav");
+      const navBottom = floatingNav?.getBoundingClientRect().bottom || 0;
+      const topTop = viewerTop?.getBoundingClientRect().top || imageViewer.getBoundingClientRect().top;
+      const clearance = Math.max(28, Math.ceil(navBottom - topTop + 18));
+      viewerName.style.setProperty("margin-top", `${clearance}px`, "important");
       fitViewerImage();
     }
 
@@ -1009,7 +1006,9 @@
       imageViewer.hidden = false;
       document.documentElement.classList.add("bln-image-open");
       document.body.classList.add("bln-image-open");
-      syncViewerStageClearance();
+      if (!(typeof matchMedia === "function" && matchMedia("(max-width: 820px)").matches)) {
+        syncViewerStageClearance();
+      }
       imageViewer.classList.add("is-open");
       if (imageSrc) {
         viewerImage.onerror = () => {
@@ -1019,9 +1018,7 @@
         viewerImage.onload = () => {
           viewerPhotoCanvas.classList.remove("is-image-error");
           viewerImage.hidden = false;
-          raf(syncViewerStageClearance);
         };
-        viewerImage.decode().then(() => raf(syncViewerStageClearance)).catch(() => {});
       }
       viewerClose.focus({ preventScroll:true });
     }
