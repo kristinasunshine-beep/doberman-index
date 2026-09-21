@@ -2210,14 +2210,14 @@ body.bln-image-open{
   #bloodline .bln-image-viewer{
     position:fixed!important;
     inset:auto!important;
-    top:50dvh!important;
+    top:50%!important;
     left:14px!important;
     right:14px!important;
     bottom:auto!important;
     width:auto!important;
-    height:min(68dvh,560px)!important;
-    min-height:0!important;
-    max-height:calc(100dvh - 28px)!important;
+    height:min(64svh,540px)!important;
+    min-height:420px!important;
+    max-height:calc(100svh - 28px)!important;
     transform:translateY(-50%)!important;
     display:grid!important;
     grid-template-rows:auto minmax(0,1fr) auto!important;
@@ -2229,6 +2229,13 @@ body.bln-image-open{
     touch-action:none!important;
     cursor:grab!important;
     will-change:top!important;
+    transition:none!important;
+    animation:none!important;
+  }
+  #bloodline .bln-image-viewer *,
+  #bloodline .bln-image-viewer *::before,
+  #bloodline .bln-image-viewer *::after{
+    transition:none!important;
   }
 
   /* The instant a finger touches the viewer, freeze its current visual top.
@@ -2327,6 +2334,7 @@ body.bln-image-open{
     user-select:none!important;
     -webkit-user-drag:none!important;
     touch-action:none!important;
+    pointer-events:auto!important;
   }
   #bloodline .bln-image-viewer-panel{
     grid-column:1!important;
