@@ -469,12 +469,61 @@
       return Math.min(maxOffset, Math.max(minOffset, value));
     }
 
+    // Mobile: one native touch path only. Touch start never changes position;
+    // only actual finger movement changes the existing transform offset.
+    imageViewer.addEventListener("touchstart", event => {
+      if (!(typeof matchMedia === "function" && matchMedia("(max-width: 820px)").matches)) return;
+      if (!isMobileViewerDragTarget(event.target)) return;
+      if (event.touches.length !== 1) return;
+
+      const touch = event.touches[0];
+      mobileViewerDrag = {
+        source:"touch",
+        pointerId:touch.identifier,
+        startY:touch.clientY,
+        startOffset:currentMobileDragOffset(),
+        moved:false
+      };
+
+      imageViewer.classList.add("is-mobile-dragging");
+      event.preventDefault();
+    }, { passive:false });
+
+    document.addEventListener("touchmove", event => {
+      if (!mobileViewerDrag || mobileViewerDrag.source !== "touch") return;
+      const touch = Array.from(event.touches).find(item => item.identifier === mobileViewerDrag.pointerId);
+      if (!touch) return;
+
+      const deltaY = touch.clientY - mobileViewerDrag.startY;
+      if (deltaY !== 0) mobileViewerDrag.moved = true;
+      const nextOffset = clampMobileDragOffset(mobileViewerDrag.startOffset + deltaY);
+      imageViewer.style.setProperty("--bln-mobile-drag-y", `${Math.round(nextOffset)}px`);
+      event.preventDefault();
+    }, { passive:false, capture:true });
+
+    const finishMobileTouchDrag = event => {
+      if (!mobileViewerDrag || mobileViewerDrag.source !== "touch") return;
+      const stillActive = Array.from(event.touches || []).some(item => item.identifier === mobileViewerDrag.pointerId);
+      if (stillActive) return;
+
+      const moved = mobileViewerDrag.moved;
+      mobileViewerDrag = null;
+      imageViewer.classList.remove("is-mobile-dragging");
+      if (moved) suppressViewerBackdropUntil = Date.now() + 400;
+    };
+
+    document.addEventListener("touchend", finishMobileTouchDrag, { passive:false, capture:true });
+    document.addEventListener("touchcancel", finishMobileTouchDrag, { passive:false, capture:true });
+
+    // Non-touch fallback for responsive-mode testing, mouse and pen.
     imageViewer.addEventListener("pointerdown", event => {
       if (!(typeof matchMedia === "function" && matchMedia("(max-width: 820px)").matches)) return;
+      if (event.pointerType === "touch") return;
       if (event.pointerType === "mouse" && event.button !== 0) return;
       if (!isMobileViewerDragTarget(event.target)) return;
 
       mobileViewerDrag = {
+        source:"pointer",
         pointerId:event.pointerId,
         startY:event.clientY,
         startOffset:currentMobileDragOffset(),
@@ -487,28 +536,25 @@
     });
 
     imageViewer.addEventListener("pointermove", event => {
-      if (!mobileViewerDrag || mobileViewerDrag.pointerId !== event.pointerId) return;
+      if (!mobileViewerDrag || mobileViewerDrag.source !== "pointer" || mobileViewerDrag.pointerId !== event.pointerId) return;
       const deltaY = event.clientY - mobileViewerDrag.startY;
-      if (Math.abs(deltaY) <= 2 && !mobileViewerDrag.moved) return;
-      mobileViewerDrag.moved = true;
+      if (deltaY !== 0) mobileViewerDrag.moved = true;
       const nextOffset = clampMobileDragOffset(mobileViewerDrag.startOffset + deltaY);
       imageViewer.style.setProperty("--bln-mobile-drag-y", `${Math.round(nextOffset)}px`);
       event.preventDefault();
     });
 
-    const finishMobileViewerDrag = event => {
-      if (!mobileViewerDrag || mobileViewerDrag.pointerId !== event.pointerId) return;
+    const finishMobilePointerDrag = event => {
+      if (!mobileViewerDrag || mobileViewerDrag.source !== "pointer" || mobileViewerDrag.pointerId !== event.pointerId) return;
       const moved = mobileViewerDrag.moved;
-      if (imageViewer.hasPointerCapture?.(event.pointerId)) {
-        imageViewer.releasePointerCapture(event.pointerId);
-      }
+      if (imageViewer.hasPointerCapture?.(event.pointerId)) imageViewer.releasePointerCapture(event.pointerId);
       mobileViewerDrag = null;
       imageViewer.classList.remove("is-mobile-dragging");
       if (moved) suppressViewerBackdropUntil = Date.now() + 400;
     };
 
-    imageViewer.addEventListener("pointerup", finishMobileViewerDrag);
-    imageViewer.addEventListener("pointercancel", finishMobileViewerDrag);
+    imageViewer.addEventListener("pointerup", finishMobilePointerDrag);
+    imageViewer.addEventListener("pointercancel", finishMobilePointerDrag);
 
     function rememberState() {
       history.push({ expanded: [...expanded], activeFocusPath });
