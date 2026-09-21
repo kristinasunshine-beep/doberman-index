@@ -432,6 +432,8 @@
     const viewerData = imageViewer.querySelector(".bln-image-viewer-data");
     const viewerClose = imageViewer.querySelector("[data-bloodline-image-close]");
     const viewerTop = imageViewer.querySelector(".bln-image-viewer-top");
+    const viewerHome = imageViewer.parentNode;
+    const viewerHomeNext = imageViewer.nextSibling;
     let imageTrigger = null;
     let mobileViewerReturnState = null;
     let mobileViewerDrag = null;
@@ -448,6 +450,22 @@
       imageViewer.style.removeProperty("top");
       mobileViewerOffsetY = 0;
       mobileViewerDrag = null;
+    }
+
+    function mountMobileViewerPortal() {
+      if (!(typeof matchMedia === "function" && matchMedia("(max-width: 820px)").matches)) return;
+      if (imageViewer.parentNode !== document.body) document.body.appendChild(imageViewer);
+      imageViewer.classList.add("is-mobile-portal");
+    }
+
+    function restoreViewerHome() {
+      imageViewer.classList.remove("is-mobile-portal");
+      if (!viewerHome || imageViewer.parentNode === viewerHome) return;
+      if (viewerHomeNext && viewerHomeNext.parentNode === viewerHome) {
+        viewerHome.insertBefore(imageViewer, viewerHomeNext);
+      } else {
+        viewerHome.appendChild(imageViewer);
+      }
     }
 
     function isMobileViewerDragTarget(target) {
@@ -993,6 +1011,7 @@
         viewerImage.alt = "";
       }
       suppressViewerBackdropUntil = Date.now() + 1000;
+      mountMobileViewerPortal();
       resetMobileViewerPosition();
       imageViewer.hidden = false;
       document.documentElement.classList.add("bln-image-open");
@@ -1025,6 +1044,7 @@
         if (imageViewer.classList.contains("is-open")) return;
         imageViewer.hidden = true;
         resetMobileViewerPosition();
+        restoreViewerHome();
         viewerImage.removeAttribute("src");
         viewerImage.hidden = false;
         viewerPhotoCanvas.classList.remove("is-empty-slot");
@@ -1126,6 +1146,12 @@
         activeFocusPath = "";
         render();
       }
+    });
+
+    viewerClose.addEventListener("click", event => {
+      event.preventDefault();
+      event.stopPropagation();
+      closeImageViewer();
     });
 
     imageViewer.addEventListener("click", event => {
