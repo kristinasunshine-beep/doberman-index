@@ -464,13 +464,8 @@
     function centerMobileViewer() {
       if (imageViewer.hidden || mobileViewerUserMoved) return;
       if (!(typeof matchMedia === "function" && matchMedia("(max-width: 820px)").matches)) return;
-      const rect = imageViewer.getBoundingClientRect();
-      const height = Math.max(120, rect.height || imageViewer.offsetHeight || 0);
-      const viewport = window.visualViewport;
-      const viewportHeight = Math.max(1, viewport?.height || window.innerHeight);
-      const viewportTop = Math.max(0, viewport?.offsetTop || 0);
-      const centeredTop = Math.round(viewportTop + ((viewportHeight - height) / 2));
-      setMobileViewerTop(centeredTop);
+      imageViewer.classList.remove("is-mobile-manual");
+      imageViewer.style.removeProperty("--bln-mobile-viewer-top");
     }
 
     function settleMobileViewerCenter() {
@@ -488,7 +483,10 @@
     }
 
     function beginMobileViewerDrag(clientY, pointerId = null, source = "touch") {
-      const currentTop = parseFloat(getComputedStyle(imageViewer).top) || mobileViewerMinTop();
+      const rect = imageViewer.getBoundingClientRect();
+      const currentTop = Number.isFinite(rect.top) ? rect.top : mobileViewerMinTop();
+      imageViewer.classList.add("is-mobile-manual");
+      imageViewer.style.setProperty("--bln-mobile-viewer-top", `${currentTop}px`);
       mobileViewerDrag = {
         pointerId,
         source,
@@ -1046,9 +1044,8 @@
       suppressViewerBackdropUntil = Date.now() + 1000;
       mobileViewerUserMoved = false;
       imageViewer.hidden = false;
-      if (typeof matchMedia === "function" && matchMedia("(max-width: 820px)").matches) {
-        setMobileViewerTop(mobileViewerMinTop());
-      }
+      imageViewer.classList.remove("is-mobile-manual");
+      imageViewer.style.removeProperty("--bln-mobile-viewer-top");
       document.documentElement.classList.add("bln-image-open");
       document.body.classList.add("bln-image-open");
       syncViewerStageClearance();
@@ -1089,6 +1086,8 @@
         if (imageViewer.classList.contains("is-open")) return;
         imageViewer.hidden = true;
         imageViewer.classList.remove("is-mobile-dragging");
+        imageViewer.classList.remove("is-mobile-manual");
+        imageViewer.style.removeProperty("--bln-mobile-viewer-top");
         mobileViewerDrag = null;
         mobileViewerUserMoved = false;
         viewerImage.removeAttribute("src");
