@@ -2199,44 +2199,56 @@ body.bln-image-open{
   }
 }
 
-
-/* v43.4 — compact mobile stance viewer + stable return context. */
+/* v43.14 — single mobile Bloodline interaction system. */
 @media(max-width:820px){
   html.bln-image-open,
   body.bln-image-open{
     overflow:hidden!important;
   }
 
+  /* One stable viewer size and one stable center. No runtime recentering. */
   #bloodline .bln-image-viewer{
     position:fixed!important;
     inset:auto!important;
-    top:max(68px,env(safe-area-inset-top))!important;
+    top:50dvh!important;
     left:14px!important;
     right:14px!important;
     bottom:auto!important;
     width:auto!important;
-    height:auto!important;
+    height:min(68dvh,560px)!important;
     min-height:0!important;
-    max-height:calc(100svh - 86px)!important;
+    max-height:calc(100dvh - 28px)!important;
+    transform:translateY(-50%)!important;
     display:grid!important;
-    grid-template-rows:auto auto auto!important;
-    align-content:start!important;
+    grid-template-rows:auto minmax(0,1fr) auto!important;
+    align-content:stretch!important;
     padding:14px 14px 16px!important;
-    overflow-y:auto!important;
-    overflow-x:hidden!important;
-    overscroll-behavior:contain!important;
+    overflow:hidden!important;
+    overscroll-behavior:none!important;
     background:#0f0f0f!important;
+    touch-action:none!important;
+    cursor:grab!important;
+    will-change:top!important;
+  }
+
+  /* The instant a finger touches the viewer, freeze its current visual top.
+     Drag then changes only this one pixel value. */
+  #bloodline .bln-image-viewer.is-mobile-manual{
+    top:var(--bln-mobile-viewer-top)!important;
+    transform:none!important;
+  }
+  #bloodline .bln-image-viewer.is-mobile-dragging{
+    cursor:grabbing!important;
   }
 
   #bloodline .bln-image-viewer-top{
     position:relative!important;
-    top:auto!important;
-    min-height:54px!important;
+    min-height:50px!important;
     padding:0 48px 0 0!important;
-    background:transparent!important;
-    backdrop-filter:none!important;
+    cursor:inherit!important;
+    touch-action:none!important;
+    user-select:none!important;
   }
-
   #bloodline .bln-image-viewer-name{
     position:static!important;
     transform:none!important;
@@ -2248,7 +2260,6 @@ body.bln-image-open{
     font-size:clamp(25px,7.3vw,36px)!important;
     line-height:.92!important;
   }
-
   #bloodline .bln-image-viewer-close{
     position:absolute!important;
     top:0!important;
@@ -2258,175 +2269,112 @@ body.bln-image-open{
     width:40px!important;
     height:40px!important;
     margin:0!important;
+    touch-action:manipulation!important;
   }
 
   #bloodline .bln-image-viewer-stage{
     position:relative!important;
     display:grid!important;
     grid-template-columns:1fr!important;
-    grid-template-rows:auto auto!important;
-    align-content:start!important;
+    grid-template-rows:minmax(0,1fr) auto!important;
+    align-content:stretch!important;
     justify-items:center!important;
     width:100%!important;
-    height:auto!important;
+    height:100%!important;
     min-height:0!important;
     max-height:none!important;
-    margin:10px 0 0!important;
-    padding:0 0 12px!important;
-    overflow:visible!important;
+    margin:8px 0 0!important;
+    padding:0 0 10px!important;
+    overflow:hidden!important;
+    touch-action:none!important;
   }
-
   #bloodline .bln-image-viewer-photo-frame{
     grid-column:1!important;
     grid-row:1!important;
     display:grid!important;
     place-items:center!important;
     width:100%!important;
-    height:auto!important;
+    height:100%!important;
     min-height:0!important;
-    max-height:min(42svh,360px)!important;
+    max-height:none!important;
     margin:0!important;
     padding:0!important;
     overflow:hidden!important;
+    touch-action:none!important;
   }
-
   #bloodline .bln-image-viewer-photo-canvas{
     display:flex!important;
     align-items:center!important;
     justify-content:center!important;
     width:100%!important;
-    height:auto!important;
+    height:100%!important;
     min-height:0!important;
-    max-height:min(42svh,360px)!important;
+    max-height:none!important;
     padding:0!important;
     overflow:hidden!important;
+    touch-action:none!important;
   }
-
   #bloodline .bln-image-viewer-photo-frame img,
   #bloodline .bln-image-viewer-stage img{
     display:block!important;
     width:auto!important;
     height:auto!important;
     max-width:100%!important;
-    max-height:min(42svh,360px)!important;
+    max-height:100%!important;
     margin:0 auto!important;
     object-fit:contain!important;
     object-position:center!important;
+    user-select:none!important;
+    -webkit-user-drag:none!important;
+    touch-action:none!important;
   }
-
   #bloodline .bln-image-viewer-panel{
     grid-column:1!important;
     grid-row:2!important;
     position:static!important;
     width:100%!important;
     max-width:none!important;
-    margin:12px 0 0!important;
+    margin:8px 0 0!important;
     padding:0!important;
     transform:none!important;
+    touch-action:none!important;
   }
-
   #bloodline .bln-image-viewer-panel-grid{
     gap:8px!important;
   }
-
   #bloodline .bln-image-viewer-meta{
     margin:0!important;
-    padding:10px 0 0!important;
+    padding:8px 0 0!important;
   }
-
   #bloodline .bln-image-viewer::after{
     display:none!important;
     content:none!important;
   }
-
   #bloodline .bln-image-viewer-photo-scrollbar{
     display:none!important;
   }
-}
 
-
-/* v43.5 — draggable mobile stance panel below live header. */
-@media(max-width:820px){
-  #bloodline .bln-image-viewer{
-    top:var(--bln-mobile-viewer-top,72px)!important;
-    bottom:auto!important;
-    touch-action:none!important;
-  }
-  #bloodline .bln-image-viewer-top{
-    cursor:grab!important;
-    touch-action:none!important;
-    user-select:none!important;
-  }
-  #bloodline .bln-image-viewer.is-mobile-dragging .bln-image-viewer-top{
-    cursor:grabbing!important;
-  }
-  #bloodline .bln-image-viewer-stage,
-  #bloodline .bln-image-viewer-panel,
-  #bloodline .bln-image-viewer-photo-frame{
-    touch-action:pan-y!important;
-  }
-}
-
-
-/* v43.7 — mobile touch ergonomics: whole viewer drag + separated ancestry/photo hit zones. */
-@media(max-width:820px){
-  /* The complete compact stance viewer can be grabbed from any non-interactive surface. */
-  #bloodline .bln-image-viewer{
-    top:var(--bln-mobile-viewer-top,72px)!important;
-    bottom:auto!important;
-    touch-action:none!important;
-    cursor:grab!important;
-    will-change:top!important;
-  }
-  #bloodline .bln-image-viewer-top,
-  #bloodline .bln-image-viewer-stage,
-  #bloodline .bln-image-viewer-panel,
-  #bloodline .bln-image-viewer-photo-frame,
-  #bloodline .bln-image-viewer-photo-canvas,
-  #bloodline .bln-image-viewer-stage img{
-    touch-action:none!important;
-    user-select:none!important;
-    -webkit-user-drag:none!important;
-  }
-  #bloodline .bln-image-viewer.is-mobile-dragging{
-    cursor:grabbing!important;
-  }
-  #bloodline .bln-image-viewer button,
-  #bloodline .bln-image-viewer a,
-  #bloodline .bln-image-viewer input,
-  #bloodline .bln-image-viewer select,
-  #bloodline .bln-image-viewer textarea,
-  #bloodline .bln-image-viewer [role="scrollbar"]{
-    touch-action:manipulation!important;
-  }
-
-  /*
-   * Mobile card actions are deliberately separated:
-   * 0–40px = ancestry action hit target;
-   * 40–44px = neutral buffer;
-   * 44px→ = stance/photo preview action.
-   * The visible yellow edge stays 8px wide.
-   */
+  /* Separate ancestry and image actions without pushing names too far right. */
   #bloodline .bln-mobile .bln-node.is-expandable{
-    --bln-mobile-edge-hit:40px;
-    --bln-mobile-preview-start:44px;
+    --bln-mobile-edge-hit:40px!important;
+    --bln-mobile-preview-start:44px!important;
   }
   #bloodline .bln-mobile .bln-node.is-expandable .bln-tree-action{
     left:0!important;
     right:auto!important;
     top:0!important;
     bottom:0!important;
-    width:var(--bln-mobile-edge-hit)!important;
+    width:40px!important;
+    min-width:40px!important;
     height:100%!important;
-    min-width:44px!important;
     margin:0!important;
     padding:0!important;
     border:0!important;
     background:transparent!important;
     box-shadow:none!important;
     filter:none!important;
-    touch-action:manipulation!important;
     z-index:24!important;
+    touch-action:manipulation!important;
   }
   #bloodline .bln-mobile .bln-node.is-expandable .bln-tree-action::before{
     content:""!important;
@@ -2444,63 +2392,26 @@ body.bln-image-open{
     box-shadow:none!important;
   }
   #bloodline .bln-mobile .bln-node.is-expandable .bln-preview-action{
-    left:var(--bln-mobile-preview-start)!important;
+    left:44px!important;
     right:0!important;
     z-index:18!important;
   }
   #bloodline .bln-mobile .bln-node.is-expandable .bln-copy{
-    padding-left:var(--bln-mobile-preview-start)!important;
+    padding-left:44px!important;
   }
   #bloodline .bln-mobile .bln-node.is-expandable .bln-generation{
-    left:var(--bln-mobile-preview-start)!important;
-    max-width:calc(100% - var(--bln-mobile-preview-start) - 6px)!important;
+    left:44px!important;
+    max-width:calc(100% - 50px)!important;
   }
-  #bloodline .bln-mobile .bln-node.is-expandable .bln-name-action,
-  #bloodline .bln-mobile .bln-node.is-expandable .bln-name-static,
-  #bloodline .bln-mobile .bln-node.is-expandable .bln-name-text{
-    max-width:100%!important;
-  }
-}
 
-
-/* v43.8 — hard mobile drag override: browser scrolling cannot capture the stance panel gesture. */
-@media(max-width:820px){
-  #bloodline .bln-image-viewer{
-    overflow:hidden!important;
-    overscroll-behavior:none!important;
-    -webkit-overflow-scrolling:auto!important;
-    touch-action:none!important;
-  }
-  #bloodline .bln-image-viewer,
-  #bloodline .bln-image-viewer *,
-  #bloodline .bln-image-viewer-stage,
-  #bloodline .bln-image-viewer-photo-frame,
-  #bloodline .bln-image-viewer-photo-canvas,
-  #bloodline .bln-image-viewer-stage img{
-    -webkit-user-select:none!important;
-    user-select:none!important;
-  }
-  #bloodline .bln-image-viewer-stage,
-  #bloodline .bln-image-viewer-photo-frame,
-  #bloodline .bln-image-viewer-photo-canvas,
-  #bloodline .bln-image-viewer-stage img{
-    touch-action:none!important;
-  }
-}
-
-
-/* v43.11 — G4 boundary cards: full-card stance preview on mobile. */
-@media(max-width:820px){
+  /* G4 boundary cards have no ancestry action; the whole card opens the image. */
   #bloodline .bln-mobile .bln-node.is-boundary.has-image-preview{
     position:relative!important;
     cursor:pointer!important;
   }
   #bloodline .bln-mobile .bln-node.is-boundary.has-image-preview .bln-preview-action{
     position:absolute!important;
-    left:0!important;
-    right:0!important;
-    top:0!important;
-    bottom:0!important;
+    inset:0!important;
     width:100%!important;
     height:100%!important;
     z-index:32!important;
@@ -2513,36 +2424,5 @@ body.bln-image-open{
   #bloodline .bln-mobile .bln-node.is-boundary.has-image-preview .bln-name-text,
   #bloodline .bln-mobile .bln-node.is-boundary.has-image-preview .bln-name-arrow{
     pointer-events:none!important;
-  }
-}
-
-
-/* v43.13 — one positioning system: exact pixel top, no transforms. */
-@media(max-width:820px){
-  #bloodline .bln-image-viewer,
-  #bloodline .bln-image-viewer.is-mobile-manual{
-    top:var(--bln-mobile-viewer-top,24px)!important;
-    bottom:auto!important;
-    transform:none!important;
-  }
-
-  /* Names closer to the yellow edge, while preserving two separate actions. */
-  #bloodline .bln-mobile .bln-node.is-expandable{
-    --bln-mobile-edge-hit:40px!important;
-    --bln-mobile-preview-start:44px!important;
-  }
-  #bloodline .bln-mobile .bln-node.is-expandable .bln-tree-action{
-    width:40px!important;
-    min-width:40px!important;
-  }
-  #bloodline .bln-mobile .bln-node.is-expandable .bln-preview-action{
-    left:44px!important;
-  }
-  #bloodline .bln-mobile .bln-node.is-expandable .bln-copy{
-    padding-left:44px!important;
-  }
-  #bloodline .bln-mobile .bln-node.is-expandable .bln-generation{
-    left:44px!important;
-    max-width:calc(100% - 50px)!important;
   }
 }
