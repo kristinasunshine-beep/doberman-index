@@ -4245,11 +4245,29 @@
         console.warn("Doberman Index registry preview unavailable",error);
       }
     }
+
+    async function hydrateDanteBloodline(){
+      const [graph,imageManifest,photoBindings]=await Promise.all([
+        fetch(new URL("data/pedigree-graph.json",repoRoot),{cache:"no-store"}).then(response=>{if(!response.ok)throw new Error("Pedigree graph unavailable");return response.json()}),
+        fetch(new URL("data/bloodline-images.json",repoRoot),{cache:"no-store"}).then(response=>response.ok?response.json():{}).catch(()=>({})),
+        fetch(new URL("data/bloodline-photo-bindings.json",repoRoot),{cache:"no-store"}).then(response=>response.ok?response.json():{photos:{}}).catch(()=>({photos:{}}))
+      ]);
+      const nodes=buildCanonicalBloodline("DI-M-000001",graph,imageManifest,photoBindings,4);
+      if(!nodes.length)throw new Error("Dante Bloodline graph unavailable");
+      window.DIBloodline.mount({
+        root:byId("bloodlineRail"),
+        subject:offlineBloodlineSubject,
+        nodes,
+        maxDepth:4
+      });
+    }
+
     const requestedRecordId=(new URLSearchParams(location.search).get("id")||"").trim().toUpperCase();
     if(requestedRecordId && requestedRecordId!=="DI-M-000001" && requestedRecordId.startsWith("DI-M-")){
       initializeProfile().catch(error=>console.warn("Dynamic profile hydration failed; accepted review snapshot remains visible",error));
     }else{
       primeRegistry();
+      hydrateDanteBloodline().catch(error=>console.warn("Dante Bloodline hydration failed; accepted review snapshot remains visible",error));
       activateGalleryMovementScrollbar();
     }
 
