@@ -2198,3 +2198,148 @@ body.bln-image-open{
     outline-offset:3px!important;
   }
 }
+
+
+/* v43.4 — compact mobile stance viewer + stable return context. */
+@media(max-width:820px){
+  html.bln-image-open,
+  body.bln-image-open{
+    overflow:hidden!important;
+  }
+
+  #bloodline .bln-image-viewer{
+    position:fixed!important;
+    inset:auto!important;
+    top:max(68px,env(safe-area-inset-top))!important;
+    left:14px!important;
+    right:14px!important;
+    bottom:auto!important;
+    width:auto!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:calc(100svh - 86px)!important;
+    display:grid!important;
+    grid-template-rows:auto auto auto!important;
+    align-content:start!important;
+    padding:14px 14px 16px!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    overscroll-behavior:contain!important;
+    background:#0f0f0f!important;
+  }
+
+  #bloodline .bln-image-viewer-top{
+    position:relative!important;
+    top:auto!important;
+    min-height:54px!important;
+    padding:0 48px 0 0!important;
+    background:transparent!important;
+    backdrop-filter:none!important;
+  }
+
+  #bloodline .bln-image-viewer-name{
+    position:static!important;
+    transform:none!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:0!important;
+    text-align:left!important;
+    font-size:clamp(25px,7.3vw,36px)!important;
+    line-height:.92!important;
+  }
+
+  #bloodline .bln-image-viewer-close{
+    position:absolute!important;
+    top:0!important;
+    right:0!important;
+    left:auto!important;
+    bottom:auto!important;
+    width:40px!important;
+    height:40px!important;
+    margin:0!important;
+  }
+
+  #bloodline .bln-image-viewer-stage{
+    position:relative!important;
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto auto!important;
+    align-content:start!important;
+    justify-items:center!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    margin:10px 0 0!important;
+    padding:0 0 12px!important;
+    overflow:visible!important;
+  }
+
+  #bloodline .bln-image-viewer-photo-frame{
+    grid-column:1!important;
+    grid-row:1!important;
+    display:grid!important;
+    place-items:center!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:min(42svh,360px)!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+  }
+
+  #bloodline .bln-image-viewer-photo-canvas{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:min(42svh,360px)!important;
+    padding:0!important;
+    overflow:hidden!important;
+  }
+
+  #bloodline .bln-image-viewer-photo-frame img,
+  #bloodline .bln-image-viewer-stage img{
+    display:block!important;
+    width:auto!important;
+    height:auto!important;
+    max-width:100%!important;
+    max-height:min(42svh,360px)!important;
+    margin:0 auto!important;
+    object-fit:contain!important;
+    object-position:center!important;
+  }
+
+  #bloodline .bln-image-viewer-panel{
+    grid-column:1!important;
+    grid-row:2!important;
+    position:static!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:12px 0 0!important;
+    padding:0!important;
+    transform:none!important;
+  }
+
+  #bloodline .bln-image-viewer-panel-grid{
+    gap:8px!important;
+  }
+
+  #bloodline .bln-image-viewer-meta{
+    margin:0!important;
+    padding:10px 0 0!important;
+  }
+
+  #bloodline .bln-image-viewer::after{
+    display:none!important;
+    content:none!important;
+  }
+
+  #bloodline .bln-image-viewer-photo-scrollbar{
+    display:none!important;
+  }
+}
