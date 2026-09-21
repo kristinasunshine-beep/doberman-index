@@ -2343,3 +2343,26 @@ body.bln-image-open{
     display:none!important;
   }
 }
+
+
+/* v43.5 — draggable mobile stance panel below live header. */
+@media(max-width:820px){
+  #bloodline .bln-image-viewer{
+    top:var(--bln-mobile-viewer-top,72px)!important;
+    bottom:auto!important;
+    touch-action:none!important;
+  }
+  #bloodline .bln-image-viewer-top{
+    cursor:grab!important;
+    touch-action:none!important;
+    user-select:none!important;
+  }
+  #bloodline .bln-image-viewer.is-mobile-dragging .bln-image-viewer-top{
+    cursor:grabbing!important;
+  }
+  #bloodline .bln-image-viewer-stage,
+  #bloodline .bln-image-viewer-panel,
+  #bloodline .bln-image-viewer-photo-frame{
+    touch-action:pan-y!important;
+  }
+}
