@@ -2208,7 +2208,6 @@ body.bln-image-open{
 
   /* One stable center and one transform offset for the entire touch lifecycle. */
   #bloodline .bln-image-viewer{
-    --bln-mobile-drag-y:0px;
     position:fixed!important;
     inset:auto!important;
     top:50%!important;
@@ -2219,7 +2218,7 @@ body.bln-image-open{
     height:min(64svh,540px)!important;
     min-height:420px!important;
     max-height:calc(100svh - 28px)!important;
-    transform:translate3d(0,calc(-50% + var(--bln-mobile-drag-y)),0)!important;
+    transform:translate3d(0,-50%,0)!important;
     display:grid!important;
     grid-template-rows:auto minmax(0,1fr) auto!important;
     align-content:stretch!important;
@@ -2237,6 +2236,14 @@ body.bln-image-open{
   #bloodline .bln-image-viewer *::before,
   #bloodline .bln-image-viewer *::after{
     transition:none!important;
+  }
+
+  /* The viewer owns the gesture everywhere. Only the close button remains interactive. */
+  #bloodline .bln-image-viewer *{
+    pointer-events:none!important;
+  }
+  #bloodline .bln-image-viewer [data-bloodline-image-close]{
+    pointer-events:auto!important;
   }
 
   #bloodline .bln-image-viewer.is-mobile-dragging{
@@ -2330,7 +2337,6 @@ body.bln-image-open{
     user-select:none!important;
     -webkit-user-drag:none!important;
     touch-action:none!important;
-    pointer-events:auto!important;
   }
   #bloodline .bln-image-viewer-panel{
     grid-column:1!important;

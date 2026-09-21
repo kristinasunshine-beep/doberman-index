@@ -444,8 +444,16 @@
 
     function resetMobileViewerPosition() {
       imageViewer.classList.remove("is-mobile-dragging");
-      imageViewer.style.setProperty("--bln-mobile-drag-y", "0px");
+      imageViewer.style.removeProperty("transform");
       mobileViewerDrag = null;
+    }
+
+    function mobileViewerTransform(offsetY) {
+      return `translate3d(0, calc(-50% + ${Math.round(offsetY)}px), 0)`;
+    }
+
+    function applyMobileViewerOffset(offsetY) {
+      imageViewer.style.setProperty("transform", mobileViewerTransform(offsetY), "important");
     }
 
     function isMobileViewerDragTarget(target) {
@@ -453,24 +461,8 @@
       return !target.closest("[data-bloodline-image-close]");
     }
 
-    function currentMobileDragOffset() {
-      const raw = imageViewer.style.getPropertyValue("--bln-mobile-drag-y");
-      const value = parseFloat(raw);
-      return Number.isFinite(value) ? value : 0;
-    }
-
-    function clampMobileDragOffset(value) {
-      const viewportHeight = Math.max(1, window.visualViewport?.height || window.innerHeight);
-      const viewerHeight = Math.max(120, imageViewer.getBoundingClientRect().height || 0);
-      const visibleGrip = 72;
-      const centeredTop = (viewportHeight - viewerHeight) / 2;
-      const minOffset = -centeredTop - viewerHeight + visibleGrip;
-      const maxOffset = viewportHeight - visibleGrip - centeredTop;
-      return Math.min(maxOffset, Math.max(minOffset, value));
-    }
-
-    // Mobile: one native touch path only. Touch start never changes position;
-    // only actual finger movement changes the existing transform offset.
+    // Native mobile touch: touching does nothing visually; moving the finger
+    // directly moves the already-centered viewer.
     imageViewer.addEventListener("touchstart", event => {
       if (!(typeof matchMedia === "function" && matchMedia("(max-width: 820px)").matches)) return;
       if (!isMobileViewerDragTarget(event.target)) return;
@@ -479,33 +471,31 @@
       const touch = event.touches[0];
       mobileViewerDrag = {
         source:"touch",
-        pointerId:touch.identifier,
+        id:touch.identifier,
         startY:touch.clientY,
-        startOffset:currentMobileDragOffset(),
+        offsetY:0,
         moved:false
       };
-
       imageViewer.classList.add("is-mobile-dragging");
       event.preventDefault();
-    }, { passive:false });
+    }, { passive:false, capture:true });
 
     document.addEventListener("touchmove", event => {
       if (!mobileViewerDrag || mobileViewerDrag.source !== "touch") return;
-      const touch = Array.from(event.touches).find(item => item.identifier === mobileViewerDrag.pointerId);
+      const touch = Array.from(event.touches).find(item => item.identifier === mobileViewerDrag.id);
       if (!touch) return;
 
       const deltaY = touch.clientY - mobileViewerDrag.startY;
       if (deltaY !== 0) mobileViewerDrag.moved = true;
-      const nextOffset = clampMobileDragOffset(mobileViewerDrag.startOffset + deltaY);
-      imageViewer.style.setProperty("--bln-mobile-drag-y", `${Math.round(nextOffset)}px`);
+      mobileViewerDrag.offsetY = deltaY;
+      applyMobileViewerOffset(deltaY);
       event.preventDefault();
     }, { passive:false, capture:true });
 
     const finishMobileTouchDrag = event => {
       if (!mobileViewerDrag || mobileViewerDrag.source !== "touch") return;
-      const stillActive = Array.from(event.touches || []).some(item => item.identifier === mobileViewerDrag.pointerId);
+      const stillActive = Array.from(event.touches || []).some(item => item.identifier === mobileViewerDrag.id);
       if (stillActive) return;
-
       const moved = mobileViewerDrag.moved;
       mobileViewerDrag = null;
       imageViewer.classList.remove("is-mobile-dragging");
@@ -515,7 +505,7 @@
     document.addEventListener("touchend", finishMobileTouchDrag, { passive:false, capture:true });
     document.addEventListener("touchcancel", finishMobileTouchDrag, { passive:false, capture:true });
 
-    // Non-touch fallback for responsive-mode testing, mouse and pen.
+    // Mouse/pen fallback for desktop responsive testing.
     imageViewer.addEventListener("pointerdown", event => {
       if (!(typeof matchMedia === "function" && matchMedia("(max-width: 820px)").matches)) return;
       if (event.pointerType === "touch") return;
@@ -524,28 +514,27 @@
 
       mobileViewerDrag = {
         source:"pointer",
-        pointerId:event.pointerId,
+        id:event.pointerId,
         startY:event.clientY,
-        startOffset:currentMobileDragOffset(),
+        offsetY:0,
         moved:false
       };
-
       imageViewer.setPointerCapture?.(event.pointerId);
       imageViewer.classList.add("is-mobile-dragging");
       event.preventDefault();
     });
 
     imageViewer.addEventListener("pointermove", event => {
-      if (!mobileViewerDrag || mobileViewerDrag.source !== "pointer" || mobileViewerDrag.pointerId !== event.pointerId) return;
+      if (!mobileViewerDrag || mobileViewerDrag.source !== "pointer" || mobileViewerDrag.id !== event.pointerId) return;
       const deltaY = event.clientY - mobileViewerDrag.startY;
       if (deltaY !== 0) mobileViewerDrag.moved = true;
-      const nextOffset = clampMobileDragOffset(mobileViewerDrag.startOffset + deltaY);
-      imageViewer.style.setProperty("--bln-mobile-drag-y", `${Math.round(nextOffset)}px`);
+      mobileViewerDrag.offsetY = deltaY;
+      applyMobileViewerOffset(deltaY);
       event.preventDefault();
     });
 
     const finishMobilePointerDrag = event => {
-      if (!mobileViewerDrag || mobileViewerDrag.source !== "pointer" || mobileViewerDrag.pointerId !== event.pointerId) return;
+      if (!mobileViewerDrag || mobileViewerDrag.source !== "pointer" || mobileViewerDrag.id !== event.pointerId) return;
       const moved = mobileViewerDrag.moved;
       if (imageViewer.hasPointerCapture?.(event.pointerId)) imageViewer.releasePointerCapture(event.pointerId);
       mobileViewerDrag = null;
