@@ -1919,3 +1919,82 @@ body.bln-image-open{
     box-sizing:border-box!important;
   }
 }
+
+/* v43-photo-visibility-hotfix */
+#bloodline .bln-node,
+#bloodline .bln-subject{
+  grid-template-columns:1fr!important;
+  grid-template-rows:96px auto!important;
+  height:auto!important;
+  min-height:172px!important;
+}
+#bloodline .bln-photo{
+  display:grid!important;
+  position:relative!important;
+  width:100%!important;
+  height:96px!important;
+  min-height:96px!important;
+  aspect-ratio:auto!important;
+  overflow:hidden!important;
+  background:#ecece7!important;
+  color:var(--white)!important;
+}
+#bloodline .bln-photo.has-image img{
+  display:block!important;
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  padding:0!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  opacity:1!important;
+  visibility:visible!important;
+}
+#bloodline .bln-photo.has-image .bln-fallback{display:none!important}
+#bloodline .bln-photo:not(.has-image) .bln-fallback{
+  display:grid!important;
+  place-items:center!important;
+  height:100%!important;
+}
+#bloodline .bln-copy{
+  height:auto!important;
+  min-height:76px!important;
+}
+#bloodline .bln-subject .bln-copy{
+  height:auto!important;
+  min-height:94px!important;
+}
+#bloodline .bln-stage[data-density] .bln-node,
+#bloodline .bln-stage[data-density] .bln-subject{
+  height:auto!important;
+  min-height:172px!important;
+}
+#bloodline .bln-stage[data-density] .bln-copy,
+#bloodline .bln-stage[data-density] .bln-subject .bln-copy{
+  height:auto!important;
+}
+@media(max-width:720px){
+  #bloodline .bln-mobile .bln-node,
+  #bloodline .bln-mobile>.bln-subject{
+    grid-template-rows:112px auto!important;
+    height:auto!important;
+    min-height:190px!important;
+  }
+  #bloodline .bln-mobile .bln-photo,
+  #bloodline .bln-mobile>.bln-subject .bln-photo{
+    display:grid!important;
+    height:112px!important;
+    min-height:112px!important;
+    aspect-ratio:auto!important;
+    overflow:hidden!important;
+  }
+  #bloodline .bln-mobile .bln-photo.has-image img{
+    display:block!important;
+    width:100%!important;
+    height:100%!important;
+    object-fit:contain!important;
+    opacity:1!important;
+    visibility:visible!important;
+  }
+}
