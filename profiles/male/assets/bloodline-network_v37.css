@@ -2366,3 +2366,98 @@ body.bln-image-open{
     touch-action:pan-y!important;
   }
 }
+
+
+/* v43.7 — mobile touch ergonomics: whole viewer drag + separated ancestry/photo hit zones. */
+@media(max-width:820px){
+  /* The complete compact stance viewer can be grabbed from any non-interactive surface. */
+  #bloodline .bln-image-viewer{
+    top:var(--bln-mobile-viewer-top,72px)!important;
+    bottom:auto!important;
+    touch-action:none!important;
+    cursor:grab!important;
+    will-change:top!important;
+  }
+  #bloodline .bln-image-viewer-top,
+  #bloodline .bln-image-viewer-stage,
+  #bloodline .bln-image-viewer-panel,
+  #bloodline .bln-image-viewer-photo-frame,
+  #bloodline .bln-image-viewer-photo-canvas,
+  #bloodline .bln-image-viewer-stage img{
+    touch-action:none!important;
+    user-select:none!important;
+    -webkit-user-drag:none!important;
+  }
+  #bloodline .bln-image-viewer.is-mobile-dragging{
+    cursor:grabbing!important;
+  }
+  #bloodline .bln-image-viewer button,
+  #bloodline .bln-image-viewer a,
+  #bloodline .bln-image-viewer input,
+  #bloodline .bln-image-viewer select,
+  #bloodline .bln-image-viewer textarea,
+  #bloodline .bln-image-viewer [role="scrollbar"]{
+    touch-action:manipulation!important;
+  }
+
+  /*
+   * Mobile card actions are deliberately separated:
+   * 0–48px = ancestry action hit target;
+   * 48–62px = neutral buffer;
+   * 62px→ = stance/photo preview action.
+   * The visible yellow edge stays 8px wide.
+   */
+  #bloodline .bln-mobile .bln-node.is-expandable{
+    --bln-mobile-edge-hit:48px;
+    --bln-mobile-preview-start:62px;
+  }
+  #bloodline .bln-mobile .bln-node.is-expandable .bln-tree-action{
+    left:0!important;
+    right:auto!important;
+    top:0!important;
+    bottom:0!important;
+    width:var(--bln-mobile-edge-hit)!important;
+    height:100%!important;
+    min-width:44px!important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    filter:none!important;
+    touch-action:manipulation!important;
+    z-index:24!important;
+  }
+  #bloodline .bln-mobile .bln-node.is-expandable .bln-tree-action::before{
+    content:""!important;
+    position:absolute!important;
+    left:0!important;
+    top:0!important;
+    bottom:0!important;
+    width:8px!important;
+    background:var(--acid)!important;
+    box-shadow:0 0 8px rgba(243,254,25,.4)!important;
+    pointer-events:none!important;
+  }
+  #bloodline .bln-mobile .bln-node.is-repeat .bln-tree-action::before{
+    background:var(--ink)!important;
+    box-shadow:none!important;
+  }
+  #bloodline .bln-mobile .bln-node.is-expandable .bln-preview-action{
+    left:var(--bln-mobile-preview-start)!important;
+    right:0!important;
+    z-index:18!important;
+  }
+  #bloodline .bln-mobile .bln-node.is-expandable .bln-copy{
+    padding-left:var(--bln-mobile-preview-start)!important;
+  }
+  #bloodline .bln-mobile .bln-node.is-expandable .bln-generation{
+    left:var(--bln-mobile-preview-start)!important;
+    max-width:calc(100% - var(--bln-mobile-preview-start) - 6px)!important;
+  }
+  #bloodline .bln-mobile .bln-node.is-expandable .bln-name-action,
+  #bloodline .bln-mobile .bln-node.is-expandable .bln-name-static,
+  #bloodline .bln-mobile .bln-node.is-expandable .bln-name-text{
+    max-width:100%!important;
+  }
+}
