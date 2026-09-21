@@ -100,8 +100,9 @@ for sex in ('male','female'):
     if 'const safeGap = desktopMode ? 32 : 20' not in js and 'const clearance = Math.max(' not in js:
         errors.append(f'{sex}: dynamic stance title-clearance calculation missing')
 # Male accepted offline snapshot should use canonical IDs represented in the graph.
+# Photo overrides may now be applied synchronously between the literal snapshot and mount().
 male=(ROOT/'profiles/male/index.html').read_text(encoding='utf-8')
-match=re.search(r'const offlineBloodlineNodes=(\[.*?\]);\s*window\.DIBloodline\.mount',male,re.S)
+match=re.search(r'const offlineBloodlineNodes=(\[.*?\]);\s*(?:(?!window\.DIBloodline\.mount).)*window\.DIBloodline\.mount',male,re.S)
 if not match:errors.append('male accepted offline Bloodline Network snapshot is missing')
 else:
     try:offline=json.loads(match.group(1))
