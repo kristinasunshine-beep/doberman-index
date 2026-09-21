@@ -1446,7 +1446,7 @@
 
 
   </style>
-  <link rel="stylesheet" href="assets/bloodline-network_v36.css">
+  <link rel="stylesheet" href="assets/bloodline-network_v37.css">
   <script>
     if(new URLSearchParams(location.search).get("view")==="gallery")document.documentElement.classList.add("gallery-only-view");
   </script>
@@ -3782,7 +3782,7 @@
     }
 
 
-    function buildCanonicalBloodline(recordId,graph,imageManifest={},depth=4){
+    function buildCanonicalBloodline(recordId,graph,imageManifest={},photoBindings={},depth=4){
       const nodes=graph?.nodes||{};
       if(!nodes[recordId])return [];
       const imageEntries=imageManifest?.records?.[recordId]?.ancestors||{};
@@ -3799,12 +3799,15 @@
             const path=item.path+side;
             const role=gen===1?(side==="S"?"Sire":"Dam"):(path[0]==="S"?"Paternal line":"Maternal line");
             const imageEntry=imageEntries[id]||{};
-            const imageChoice=imageEntry.selected||imageEntry.suggested||{};
-            let image=mediaUrl(imageChoice.asset_path||imageChoice.image_url||"");
-            const imageSource=imageChoice.source_label||"";
+            const legacyChoice=imageEntry.selected||imageEntry.suggested||{};
+            const manualChoice=photoBindings?.photos?.[id]||{};
+            const manualSource=manualChoice.asset_path||manualChoice.image_url||manualChoice.src||"";
+            const imageChoice=manualSource?manualChoice:legacyChoice;
+            let image=mediaUrl(imageChoice.asset_path||imageChoice.image_url||imageChoice.src||"");
+            const imageSource=imageChoice.source_label||imageChoice.label||"";
             const imageSourceUrl=imageChoice.source_url||"";
             const hasParents=Boolean((ancestor.sire_id&&nodes[ancestor.sire_id])||(ancestor.dam_id&&nodes[ancestor.dam_id]));
-            out.push({gen,role,name:displayRegisteredName(ancestor.registered_name||id),registration:array(ancestor.registration_numbers)[0]||"",country:ancestor.country||"",sex:ancestor.sex||"",url:ancestor.source_record_id?profileUrl(ancestor.source_record_id):"#bloodline",image,imageSource,imageSourceUrl,discoveryStatus:imageEntry.status||"missing",canonicalId:id,path,hasParents});
+            out.push({gen,role,name:displayRegisteredName(ancestor.registered_name||id),registration:array(ancestor.registration_numbers)[0]||"",country:ancestor.country||"",sex:ancestor.sex||"",url:ancestor.source_record_id?profileUrl(ancestor.source_record_id):"#bloodline",image,imageSource,imageSourceUrl,discoveryStatus:manualSource?"submitted":(imageEntry.status||"missing"),canonicalId:id,path,hasParents});
             next.push({id,path});
           });
         });
@@ -3820,7 +3823,7 @@
       return array(intelligence.repeated_ancestors).map(item=>({name:item.name||graph?.nodes?.[item.record_id]?.registered_name||item.record_id,occurrences:item.occurrences||0}));
     }
 
-    function canonicalToProfile(record,recordId,parentIdentities=new Map(),graph=null,imageManifest={}){
+    function canonicalToProfile(record,recordId,parentIdentities=new Map(),graph=null,imageManifest={},photoBindings={}){
       const dog=record.doberman||{};
       const identity=dog.identity||{};
       const parentage=dog.parentage||{};
@@ -3871,7 +3874,7 @@
           boundary:"This single record can support shortlisting. Final pairing analysis requires a specific female because projected COI, shared ancestry, genetic combinations and phenotype complementarity are pair-specific."
         },
         bloodlineSubject:{name:registeredDisplayName,recordId,registration:identity.registration_number||"",country:identity.country||"",image:mediaUrl(media.stack||media.profile||media.hero)||placeholderImage,imagePosition:focalPosition(focalPointFor(media,media.stack?"stack":media.profile?"profile":"hero"))},
-        bloodline:buildCanonicalBloodline(recordId,graph,imageManifest,Number(pedigreeIntelligence.generation_depth)||4),pedigreeDepth:Number(pedigreeIntelligence.generation_depth)||4,repeatedAncestors:repeatedAncestorView(record,graph),gallery:buildGallery(media),related:buildRelated(recordId,parentage,reproduction).filter(item=>!["Sire","Dam"].includes(item.type)),
+        bloodline:buildCanonicalBloodline(recordId,graph,imageManifest,photoBindings,Number(pedigreeIntelligence.generation_depth)||4),pedigreeDepth:Number(pedigreeIntelligence.generation_depth)||4,repeatedAncestors:repeatedAncestorView(record,graph),gallery:buildGallery(media),related:buildRelated(recordId,parentage,reproduction).filter(item=>!["Sire","Dam"].includes(item.type)),
         lastUpdated:present(publication.last_updated_label,formatDate(record.updated_at))
       };
     }
@@ -3888,11 +3891,12 @@
       const record=await fetch(new URL(item.path,repoRoot),{cache:"no-store"}).then(response=>{if(!response.ok)throw new Error("Profile data unavailable");return response.json()});
       if(record.record_id!==recordId||record.entity_type!=="doberman"||record.status!=="published"||record.doberman?.identity?.sex!=="male"||record.doberman?.identity?.life_stage==="puppy")throw new Error("Profile data does not match this male record");
       const parentIdentities=await loadPedigreeIdentities(record.doberman?.parentage||{});
-      const [graph,imageManifest]=await Promise.all([
+      const [graph,imageManifest,photoBindings]=await Promise.all([
         fetch(new URL("data/pedigree-graph.json",repoRoot),{cache:"no-store"}).then(response=>{if(!response.ok)throw new Error("Pedigree graph unavailable");return response.json()}),
-        fetch(new URL("data/bloodline-images.json",repoRoot),{cache:"no-store"}).then(response=>response.ok?response.json():{}).catch(()=>({}))
+        fetch(new URL("data/bloodline-images.json",repoRoot),{cache:"no-store"}).then(response=>response.ok?response.json():{}).catch(()=>({})),
+        fetch(new URL("data/bloodline-photo-bindings.json",repoRoot),{cache:"no-store"}).then(response=>response.ok?response.json():{photos:{}}).catch(()=>({photos:{}}))
       ]);
-      return canonicalToProfile(record,recordId,parentIdentities,graph,imageManifest);
+      return canonicalToProfile(record,recordId,parentIdentities,graph,imageManifest,photoBindings);
     }
 
     const byId=id=>document.getElementById(id);
