@@ -431,13 +431,57 @@
     const viewerName = imageViewer.querySelector(".bln-image-viewer-name");
     const viewerData = imageViewer.querySelector(".bln-image-viewer-data");
     const viewerClose = imageViewer.querySelector("[data-bloodline-image-close]");
+    const viewerTop = imageViewer.querySelector(".bln-image-viewer-top");
     let imageTrigger = null;
     let mobileViewerReturnState = null;
+    let mobileViewerDrag = null;
     let suppressViewerBackdropUntil = 0;
     let viewerCloseTimer = 0;
     const reset = root.querySelector('[data-bloodline-action="reset"]');
     const back = root.querySelector('[data-bloodline-action="back"]');
     const openAll = root.querySelector('[data-bloodline-action="all"]');
+
+    function mobileViewerMinTop() {
+      const nav = document.querySelector(".float-nav");
+      const navBottom = nav?.getBoundingClientRect().bottom || 0;
+      return Math.max(10, Math.ceil(navBottom + 8));
+    }
+
+    function setMobileViewerTop(value) {
+      const minTop = mobileViewerMinTop();
+      const maxTop = Math.max(minTop, window.innerHeight - 150);
+      const next = Math.min(maxTop, Math.max(minTop, Number(value) || minTop));
+      imageViewer.style.setProperty("--bln-mobile-viewer-top", `${next}px`);
+      return next;
+    }
+
+    if (viewerTop) {
+      viewerTop.addEventListener("pointerdown", event => {
+        if (!(typeof matchMedia === "function" && matchMedia("(max-width: 820px)").matches)) return;
+        if (event.target.closest("[data-bloodline-image-close]")) return;
+        const currentTop = parseFloat(getComputedStyle(imageViewer).top) || mobileViewerMinTop();
+        mobileViewerDrag = { pointerId:event.pointerId, startY:event.clientY, startTop:currentTop };
+        viewerTop.setPointerCapture?.(event.pointerId);
+        imageViewer.classList.add("is-mobile-dragging");
+        event.preventDefault();
+      });
+
+      viewerTop.addEventListener("pointermove", event => {
+        if (!mobileViewerDrag || mobileViewerDrag.pointerId !== event.pointerId) return;
+        setMobileViewerTop(mobileViewerDrag.startTop + (event.clientY - mobileViewerDrag.startY));
+        event.preventDefault();
+      });
+
+      const finishMobileViewerDrag = event => {
+        if (!mobileViewerDrag || mobileViewerDrag.pointerId !== event.pointerId) return;
+        if (viewerTop.hasPointerCapture?.(event.pointerId)) viewerTop.releasePointerCapture(event.pointerId);
+        mobileViewerDrag = null;
+        imageViewer.classList.remove("is-mobile-dragging");
+      };
+      viewerTop.addEventListener("pointerup", finishMobileViewerDrag);
+      viewerTop.addEventListener("pointercancel", finishMobileViewerDrag);
+    }
+
     function rememberState() {
       history.push({ expanded: [...expanded], activeFocusPath });
       if (history.length > 64) history.shift();
@@ -878,6 +922,9 @@
       }
       suppressViewerBackdropUntil = Date.now() + 1000;
       imageViewer.hidden = false;
+      if (typeof matchMedia === "function" && matchMedia("(max-width: 820px)").matches) {
+        setMobileViewerTop(mobileViewerMinTop());
+      }
       document.documentElement.classList.add("bln-image-open");
       document.body.classList.add("bln-image-open");
       syncViewerStageClearance();
@@ -908,6 +955,8 @@
         viewerCloseTimer = 0;
         if (imageViewer.classList.contains("is-open")) return;
         imageViewer.hidden = true;
+        imageViewer.classList.remove("is-mobile-dragging");
+        mobileViewerDrag = null;
         viewerImage.removeAttribute("src");
         viewerImage.hidden = false;
         viewerPhotoCanvas.classList.remove("is-empty-slot");
