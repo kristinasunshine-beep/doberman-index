@@ -435,7 +435,6 @@
     let imageTrigger = null;
     let mobileViewerReturnState = null;
     let mobileViewerDrag = null;
-    let mobileViewerUserMoved = false;
     let suppressViewerBackdropUntil = 0;
     let suppressPreviewClickUntil = 0;
     let viewerCloseTimer = 0;
@@ -443,18 +442,12 @@
     const back = root.querySelector('[data-bloodline-action="back"]');
     const openAll = root.querySelector('[data-bloodline-action="all"]');
 
-    function mobileViewerMinTop() {
-      const nav = document.querySelector(".float-nav");
-      const navBottom = nav?.getBoundingClientRect().bottom || 0;
-      return Math.max(10, Math.ceil(navBottom + 8));
-    }
-
     function setMobileViewerTop(value) {
       const viewport = window.visualViewport;
       const viewportTop = Math.max(0, viewport?.offsetTop || 0);
       const viewportHeight = Math.max(1, viewport?.height || window.innerHeight);
       const viewerHeight = Math.max(120, imageViewer.getBoundingClientRect().height || 0);
-      const visibleGrip = 88;
+      const visibleGrip = 72;
       const minTop = viewportTop - Math.max(0, viewerHeight - visibleGrip);
       const maxTop = viewportTop + viewportHeight - visibleGrip;
       const numeric = Number(value);
@@ -463,27 +456,10 @@
       return next;
     }
 
-    function centerMobileViewer() {
-      if (imageViewer.hidden || mobileViewerUserMoved) return;
-      if (!(typeof matchMedia === "function" && matchMedia("(max-width: 820px)").matches)) return;
-      const viewport = window.visualViewport;
-      const viewportTop = Math.max(0, viewport?.offsetTop || 0);
-      const viewportHeight = Math.max(1, viewport?.height || window.innerHeight);
-      const rect = imageViewer.getBoundingClientRect();
-      const viewerHeight = Math.min(Math.max(120, rect.height || imageViewer.offsetHeight || 0), viewportHeight - 24);
-      const centeredTop = viewportTop + Math.max(12, (viewportHeight - viewerHeight) / 2);
-      imageViewer.classList.add("is-mobile-manual");
-      setMobileViewerTop(centeredTop);
-    }
-
-    function settleMobileViewerCenter() {
-      if (mobileViewerUserMoved) return;
-      centerMobileViewer();
-      raf(centerMobileViewer);
-      setTimeout(centerMobileViewer, 60);
-      setTimeout(centerMobileViewer, 160);
-      setTimeout(centerMobileViewer, 360);
-      setTimeout(centerMobileViewer, 700);
+    function resetMobileViewerPosition() {
+      imageViewer.classList.remove("is-mobile-manual", "is-mobile-dragging");
+      imageViewer.style.removeProperty("--bln-mobile-viewer-top");
+      mobileViewerDrag = null;
     }
 
     function isMobileViewerDragTarget(target) {
@@ -492,10 +468,9 @@
     }
 
     function beginMobileViewerDrag(clientY, pointerId = null, source = "touch") {
-      const rect = imageViewer.getBoundingClientRect();
-      const currentTop = Number.isFinite(rect.top) ? rect.top : mobileViewerMinTop();
-      imageViewer.classList.add("is-mobile-manual");
-      imageViewer.style.setProperty("--bln-mobile-viewer-top", `${currentTop}px`);
+      const currentTop = imageViewer.getBoundingClientRect().top;
+      imageViewer.classList.add("is-mobile-manual", "is-mobile-dragging");
+      imageViewer.style.setProperty("--bln-mobile-viewer-top", `${Math.round(currentTop)}px`);
       mobileViewerDrag = {
         pointerId,
         source,
@@ -503,16 +478,12 @@
         startTop:currentTop,
         moved:false
       };
-      imageViewer.classList.add("is-mobile-dragging");
     }
 
     function moveMobileViewerDrag(clientY) {
       if (!mobileViewerDrag) return;
       const deltaY = clientY - mobileViewerDrag.startY;
-      if (Math.abs(deltaY) > 3) {
-        mobileViewerDrag.moved = true;
-        mobileViewerUserMoved = true;
-      }
+      if (Math.abs(deltaY) > 3) mobileViewerDrag.moved = true;
       setMobileViewerTop(mobileViewerDrag.startTop + deltaY);
     }
 
@@ -582,23 +553,6 @@
     };
     imageViewer.addEventListener("pointerup", finishPointerDrag);
     imageViewer.addEventListener("pointercancel", finishPointerDrag);
-
-    if (typeof ResizeObserver === "function") {
-      const mobileViewerLayoutObserver = new ResizeObserver(() => {
-        if (imageViewer.hidden || mobileViewerUserMoved) return;
-        settleMobileViewerCenter();
-      });
-      mobileViewerLayoutObserver.observe(imageViewer);
-      mobileViewerLayoutObserver.observe(viewerStage);
-      mobileViewerLayoutObserver.observe(viewerPhotoFrame);
-      mobileViewerLayoutObserver.observe(viewerPanel);
-    }
-
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener("resize", () => {
-        if (!imageViewer.hidden && !mobileViewerUserMoved) settleMobileViewerCenter();
-      }, { passive:true });
-    }
 
     function rememberState() {
       history.push({ expanded: [...expanded], activeFocusPath });
@@ -1051,18 +1005,12 @@
         viewerImage.alt = "";
       }
       suppressViewerBackdropUntil = Date.now() + 1000;
-      mobileViewerUserMoved = false;
+      resetMobileViewerPosition();
       imageViewer.hidden = false;
-      imageViewer.classList.add("is-mobile-manual");
-      imageViewer.style.removeProperty("--bln-mobile-viewer-top");
       document.documentElement.classList.add("bln-image-open");
       document.body.classList.add("bln-image-open");
       syncViewerStageClearance();
       imageViewer.classList.add("is-open");
-      raf(() => {
-        syncViewerStageClearance();
-        settleMobileViewerCenter();
-      });
       if (imageSrc) {
         viewerImage.onerror = () => {
           viewerPhotoCanvas.classList.add("is-image-error");
@@ -1071,15 +1019,9 @@
         viewerImage.onload = () => {
           viewerPhotoCanvas.classList.remove("is-image-error");
           viewerImage.hidden = false;
-          raf(() => {
-            syncViewerStageClearance();
-            settleMobileViewerCenter();
-          });
+          raf(syncViewerStageClearance);
         };
-        viewerImage.decode().then(() => raf(() => {
-          syncViewerStageClearance();
-          settleMobileViewerCenter();
-        })).catch(() => {});
+        viewerImage.decode().then(() => raf(syncViewerStageClearance)).catch(() => {});
       }
       viewerClose.focus({ preventScroll:true });
     }
@@ -1094,11 +1036,7 @@
         viewerCloseTimer = 0;
         if (imageViewer.classList.contains("is-open")) return;
         imageViewer.hidden = true;
-        imageViewer.classList.remove("is-mobile-dragging");
-        imageViewer.classList.remove("is-mobile-manual");
-        imageViewer.style.removeProperty("--bln-mobile-viewer-top");
-        mobileViewerDrag = null;
-        mobileViewerUserMoved = false;
+        resetMobileViewerPosition();
         viewerImage.removeAttribute("src");
         viewerImage.hidden = false;
         viewerPhotoCanvas.classList.remove("is-empty-slot");
