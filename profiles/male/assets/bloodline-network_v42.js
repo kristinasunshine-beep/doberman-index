@@ -450,31 +450,40 @@
     }
 
     function setMobileViewerTop(value) {
-      const openTop = mobileViewerMinTop();
+      const viewport = window.visualViewport;
+      const viewportTop = Math.max(0, viewport?.offsetTop || 0);
+      const viewportHeight = Math.max(1, viewport?.height || window.innerHeight);
       const viewerHeight = Math.max(120, imageViewer.getBoundingClientRect().height || 0);
       const visibleGrip = 88;
-      const minTop = Math.min(openTop, visibleGrip - viewerHeight);
-      const maxTop = Math.max(openTop, window.innerHeight - visibleGrip);
+      const minTop = viewportTop - Math.max(0, viewerHeight - visibleGrip);
+      const maxTop = viewportTop + viewportHeight - visibleGrip;
       const numeric = Number(value);
-      const next = Math.min(maxTop, Math.max(minTop, Number.isFinite(numeric) ? numeric : openTop));
-      imageViewer.style.setProperty("--bln-mobile-viewer-top", `${next}px`);
+      const next = Math.min(maxTop, Math.max(minTop, Number.isFinite(numeric) ? numeric : viewportTop));
+      imageViewer.style.setProperty("--bln-mobile-viewer-top", `${Math.round(next)}px`);
       return next;
     }
 
     function centerMobileViewer() {
       if (imageViewer.hidden || mobileViewerUserMoved) return;
       if (!(typeof matchMedia === "function" && matchMedia("(max-width: 820px)").matches)) return;
-      imageViewer.classList.remove("is-mobile-manual");
-      imageViewer.style.removeProperty("--bln-mobile-viewer-top");
+      const viewport = window.visualViewport;
+      const viewportTop = Math.max(0, viewport?.offsetTop || 0);
+      const viewportHeight = Math.max(1, viewport?.height || window.innerHeight);
+      const rect = imageViewer.getBoundingClientRect();
+      const viewerHeight = Math.min(Math.max(120, rect.height || imageViewer.offsetHeight || 0), viewportHeight - 24);
+      const centeredTop = viewportTop + Math.max(12, (viewportHeight - viewerHeight) / 2);
+      imageViewer.classList.add("is-mobile-manual");
+      setMobileViewerTop(centeredTop);
     }
 
     function settleMobileViewerCenter() {
       if (mobileViewerUserMoved) return;
       centerMobileViewer();
       raf(centerMobileViewer);
-      setTimeout(centerMobileViewer, 80);
-      setTimeout(centerMobileViewer, 220);
-      setTimeout(centerMobileViewer, 520);
+      setTimeout(centerMobileViewer, 60);
+      setTimeout(centerMobileViewer, 160);
+      setTimeout(centerMobileViewer, 360);
+      setTimeout(centerMobileViewer, 700);
     }
 
     function isMobileViewerDragTarget(target) {
@@ -1044,7 +1053,7 @@
       suppressViewerBackdropUntil = Date.now() + 1000;
       mobileViewerUserMoved = false;
       imageViewer.hidden = false;
-      imageViewer.classList.remove("is-mobile-manual");
+      imageViewer.classList.add("is-mobile-manual");
       imageViewer.style.removeProperty("--bln-mobile-viewer-top");
       document.documentElement.classList.add("bln-image-open");
       document.body.classList.add("bln-image-open");
