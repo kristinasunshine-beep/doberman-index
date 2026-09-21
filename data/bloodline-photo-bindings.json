@@ -12,52 +12,52 @@
   },
   "photos": {
     "DI-A-000003": {
-      "label": "Submitted stance photo · Beowulf",
+      "label": "Bloodline stance photo · Beowulf",
       "asset_path": "profiles/male/assets/bloodline-submitted/beowulf.webp"
     },
     "DI-A-000004": {
-      "label": "Submitted stance photo · Freya Fleming di Altobello",
+      "label": "Bloodline stance photo · Freya Fleming di Altobello",
       "asset_path": "profiles/male/assets/bloodline-submitted/freya-fleming-di-altobello.webp"
     },
     "DI-A-000005": {
-      "label": "Submitted stance photo · Tahi-Reme Max · Photo by Giota",
-      "asset_path": "profiles/male/assets/tahi-reme-max-stance.jpg"
+      "label": "Bloodline stance photo · Tahi-Reme Max · Photo by Giota",
+      "asset_path": "profiles/male/assets/bloodline-submitted/tahi-reme-max.webp"
     },
     "DI-A-000006": {
-      "image_url": "https://www.the-dobermann.com/images/stories/A_S_H_O_W/HDK/veronika.jpg",
-      "label": "Curated stance photo · Veronika del Mediano"
+      "label": "Bloodline stance photo · Veronika del Mediano",
+      "asset_path": "profiles/male/assets/bloodline-submitted/veronika-del-mediano.webp"
     },
     "DI-A-000011": {
-      "label": "Submitted stance photo · Pride of Russia Ferro",
+      "label": "Bloodline stance photo · Pride of Russia Ferro",
       "asset_path": "profiles/male/assets/bloodline-submitted/pride-of-russia-ferro.webp"
     },
     "DI-A-000012": {
-      "image_url": "https://www.the-dobermann.com/images/stories/2012_WYSTAWY/HDK/giniti.jpg",
-      "label": "Curated stance photo · Tahi-Reme Giniti"
+      "label": "Bloodline stance photo · Tahi-Reme Giniti",
+      "asset_path": "profiles/male/assets/bloodline-submitted/tahi-reme-giniti.webp"
     },
     "DI-A-000013": {
-      "image_url": "https://www.the-dobermann.com/images/stories/A_PREZENTACJE/PAKO_progeny/pako_midgard1.jpg",
-      "label": "Curated stance photo · Teraline Midgard"
+      "label": "Bloodline stance photo · Teraline Midgard",
+      "asset_path": "profiles/male/assets/bloodline-submitted/teraline-midgard.webp"
     },
     "DI-A-000014": {
-      "image_url": "https://tera-line.narod.ru/images/matings/pandora.jpg",
-      "label": "Curated stance photo · Pandora del Mediano"
+      "label": "Bloodline stance photo · Pandora del Mediano",
+      "asset_path": "profiles/male/assets/bloodline-submitted/pandora-del-mediano.webp"
     },
     "DI-A-000016": {
-      "image_url": "https://www.altobellodobermann.com/images/stories/dogsinkennel/daria.jpg",
-      "label": "Curated stance photo · Daria Deniz di Altobello"
+      "label": "Bloodline stance photo · Daria Deniz di Altobello",
+      "asset_path": "profiles/male/assets/bloodline-submitted/daria-deniz-di-altobello.webp"
     },
     "DI-A-000018": {
-      "image_url": "https://www.villaconte.it/img/Femmine/Fey/fey.JPG",
-      "label": "Curated stance photo · Fey di Villa Conte"
+      "label": "Bloodline stance photo · Fey di Villa Conte",
+      "asset_path": "profiles/male/assets/bloodline-submitted/fey-di-villa-conte.webp"
     },
     "DI-A-000024": {
-      "image_url": "https://www.dobermann-review.com/females/Sharon_iz_Zoosfery/new/2.jpg",
-      "label": "Curated stance photo · Sharon iz Zoosfery"
+      "label": "Bloodline stance photo · Sharon iz Zoosfery",
+      "asset_path": "profiles/male/assets/bloodline-submitted/sharon-iz-zoosfery.webp"
     },
     "DI-A-000023": {
-      "image_url": "https://pedigrees.dobermanns.cz/pics/thumbs/1/th_5cca0d1b91962.jpg",
-      "label": "Curated stance photo · Urbano del Diamante Nero"
+      "label": "Bloodline stance photo · Urbano del Diamante Nero",
+      "asset_path": "profiles/male/assets/bloodline-submitted/urbano-del-diamante-nero.webp"
     }
   }
 }
