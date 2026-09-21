@@ -455,32 +455,45 @@
       return next;
     }
 
-    if (viewerTop) {
-      viewerTop.addEventListener("pointerdown", event => {
-        if (!(typeof matchMedia === "function" && matchMedia("(max-width: 820px)").matches)) return;
-        if (event.target.closest("[data-bloodline-image-close]")) return;
-        const currentTop = parseFloat(getComputedStyle(imageViewer).top) || mobileViewerMinTop();
-        mobileViewerDrag = { pointerId:event.pointerId, startY:event.clientY, startTop:currentTop };
-        viewerTop.setPointerCapture?.(event.pointerId);
-        imageViewer.classList.add("is-mobile-dragging");
-        event.preventDefault();
-      });
-
-      viewerTop.addEventListener("pointermove", event => {
-        if (!mobileViewerDrag || mobileViewerDrag.pointerId !== event.pointerId) return;
-        setMobileViewerTop(mobileViewerDrag.startTop + (event.clientY - mobileViewerDrag.startY));
-        event.preventDefault();
-      });
-
-      const finishMobileViewerDrag = event => {
-        if (!mobileViewerDrag || mobileViewerDrag.pointerId !== event.pointerId) return;
-        if (viewerTop.hasPointerCapture?.(event.pointerId)) viewerTop.releasePointerCapture(event.pointerId);
-        mobileViewerDrag = null;
-        imageViewer.classList.remove("is-mobile-dragging");
-      };
-      viewerTop.addEventListener("pointerup", finishMobileViewerDrag);
-      viewerTop.addEventListener("pointercancel", finishMobileViewerDrag);
+    function isMobileViewerDragTarget(target) {
+      if (!(target instanceof Element)) return true;
+      return !target.closest("button,a,input,select,textarea,[contenteditable='true'],[role='scrollbar'],.bln-image-viewer-photo-scrollbar");
     }
+
+    imageViewer.addEventListener("pointerdown", event => {
+      if (!(typeof matchMedia === "function" && matchMedia("(max-width: 820px)").matches)) return;
+      if (event.pointerType === "mouse" && event.button !== 0) return;
+      if (!isMobileViewerDragTarget(event.target)) return;
+      const currentTop = parseFloat(getComputedStyle(imageViewer).top) || mobileViewerMinTop();
+      mobileViewerDrag = {
+        pointerId:event.pointerId,
+        startY:event.clientY,
+        startTop:currentTop,
+        moved:false
+      };
+      imageViewer.setPointerCapture?.(event.pointerId);
+      imageViewer.classList.add("is-mobile-dragging");
+      event.preventDefault();
+    });
+
+    imageViewer.addEventListener("pointermove", event => {
+      if (!mobileViewerDrag || mobileViewerDrag.pointerId !== event.pointerId) return;
+      const deltaY = event.clientY - mobileViewerDrag.startY;
+      if (Math.abs(deltaY) > 3) mobileViewerDrag.moved = true;
+      setMobileViewerTop(mobileViewerDrag.startTop + deltaY);
+      event.preventDefault();
+    });
+
+    const finishMobileViewerDrag = event => {
+      if (!mobileViewerDrag || mobileViewerDrag.pointerId !== event.pointerId) return;
+      const moved = mobileViewerDrag.moved;
+      if (imageViewer.hasPointerCapture?.(event.pointerId)) imageViewer.releasePointerCapture(event.pointerId);
+      mobileViewerDrag = null;
+      imageViewer.classList.remove("is-mobile-dragging");
+      if (moved) suppressViewerBackdropUntil = Date.now() + 350;
+    };
+    imageViewer.addEventListener("pointerup", finishMobileViewerDrag);
+    imageViewer.addEventListener("pointercancel", finishMobileViewerDrag);
 
     function rememberState() {
       history.push({ expanded: [...expanded], activeFocusPath });
