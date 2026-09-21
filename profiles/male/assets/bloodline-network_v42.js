@@ -437,6 +437,7 @@
     let mobileViewerDrag = null;
     let mobileViewerUserMoved = false;
     let suppressViewerBackdropUntil = 0;
+    let suppressPreviewClickUntil = 0;
     let viewerCloseTimer = 0;
     const reset = root.querySelector('[data-bloodline-action="reset"]');
     const back = root.querySelector('[data-bloodline-action="back"]');
@@ -694,9 +695,21 @@
       });
 
       container.querySelectorAll(".bln-preview-action[data-bloodline-image]").forEach(button => {
-        // One interaction path for every device: browser-native click.
-        // A mobile tap produces one click; desktop needs one click; keyboard activation works too.
+        // One interaction path for every device, including G4 boundary cards.
         button.addEventListener("click", event => {
+          if (Date.now() < suppressPreviewClickUntil) {
+            event.preventDefault();
+            event.stopPropagation();
+            return;
+          }
+          suppressPreviewClickUntil = Date.now() + 450;
+          event.preventDefault();
+          event.stopPropagation();
+          openImageViewer(button);
+        });
+        button.addEventListener("pointerup", event => {
+          if (!(typeof matchMedia === "function" && matchMedia("(max-width: 820px)").matches)) return;
+          if (event.pointerType === "mouse") return;
           event.preventDefault();
           event.stopPropagation();
           openImageViewer(button);
