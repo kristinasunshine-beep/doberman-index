@@ -12,24 +12,24 @@
   },
   "photos": {
     "DI-A-000003": {
-      "asset_path": "profiles/male/assets/bloodline-submitted/beowulf.webp",
-      "label": "Submitted stance photo · Beowulf"
+      "label": "Submitted stance photo · Beowulf",
+      "image_url": "https://raw.githubusercontent.com/kristinasunshine-beep/doberman-index/main/profiles/male/assets/bloodline-submitted/beowulf.webp"
     },
     "DI-A-000004": {
-      "asset_path": "profiles/male/assets/bloodline-submitted/freya-fleming-di-altobello.webp",
-      "label": "Submitted stance photo · Freya Fleming di Altobello"
+      "label": "Submitted stance photo · Freya Fleming di Altobello",
+      "image_url": "https://raw.githubusercontent.com/kristinasunshine-beep/doberman-index/main/profiles/male/assets/bloodline-submitted/freya-fleming-di-altobello.webp"
     },
     "DI-A-000005": {
-      "asset_path": "profiles/male/assets/tahi-reme-max-stance.jpg",
-      "label": "Submitted stance photo · Tahi-Reme Max · Photo by Giota"
+      "label": "Submitted stance photo · Tahi-Reme Max · Photo by Giota",
+      "image_url": "https://raw.githubusercontent.com/kristinasunshine-beep/doberman-index/main/profiles/male/assets/tahi-reme-max-stance.jpg"
     },
     "DI-A-000006": {
       "image_url": "https://www.the-dobermann.com/images/stories/A_S_H_O_W/HDK/veronika.jpg",
       "label": "Curated stance photo · Veronika del Mediano"
     },
     "DI-A-000011": {
-      "asset_path": "profiles/male/assets/bloodline-submitted/pride-of-russia-ferro.webp",
-      "label": "Submitted stance photo · Pride of Russia Ferro"
+      "label": "Submitted stance photo · Pride of Russia Ferro",
+      "image_url": "https://raw.githubusercontent.com/kristinasunshine-beep/doberman-index/main/profiles/male/assets/bloodline-submitted/pride-of-russia-ferro.webp"
     },
     "DI-A-000012": {
       "image_url": "https://www.the-dobermann.com/images/stories/2012_WYSTAWY/HDK/giniti.jpg",
