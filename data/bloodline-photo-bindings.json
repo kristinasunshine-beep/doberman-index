@@ -10,5 +10,50 @@
       "source_url"
     ]
   },
-  "photos": {}
+  "photos": {
+    "DI-A-000003": {
+      "asset_path": "profiles/male/assets/bloodline-submitted/beowulf.webp",
+      "label": "Submitted stance photo · Beowulf"
+    },
+    "DI-A-000004": {
+      "asset_path": "profiles/male/assets/bloodline-submitted/freya-fleming-di-altobello.webp",
+      "label": "Submitted stance photo · Freya Fleming di Altobello"
+    },
+    "DI-A-000005": {
+      "asset_path": "profiles/male/assets/tahi-reme-max-stance.jpg",
+      "label": "Submitted stance photo · Tahi-Reme Max · Photo by Giota"
+    },
+    "DI-A-000006": {
+      "image_url": "https://www.the-dobermann.com/images/stories/A_S_H_O_W/HDK/veronika.jpg",
+      "label": "Curated stance photo · Veronika del Mediano"
+    },
+    "DI-A-000011": {
+      "asset_path": "profiles/male/assets/bloodline-submitted/pride-of-russia-ferro.webp",
+      "label": "Submitted stance photo · Pride of Russia Ferro"
+    },
+    "DI-A-000012": {
+      "image_url": "https://www.the-dobermann.com/images/stories/2012_WYSTAWY/HDK/giniti.jpg",
+      "label": "Curated stance photo · Tahi-Reme Giniti"
+    },
+    "DI-A-000013": {
+      "image_url": "https://www.the-dobermann.com/images/stories/A_PREZENTACJE/PAKO_progeny/pako_midgard1.jpg",
+      "label": "Curated stance photo · Teraline Midgard"
+    },
+    "DI-A-000014": {
+      "image_url": "https://tera-line.narod.ru/images/matings/pandora.jpg",
+      "label": "Curated stance photo · Pandora del Mediano"
+    },
+    "DI-A-000016": {
+      "image_url": "https://www.altobellodobermann.com/images/stories/dogsinkennel/daria.jpg",
+      "label": "Curated stance photo · Daria Deniz di Altobello"
+    },
+    "DI-A-000018": {
+      "image_url": "https://www.villaconte.it/img/Femmine/Fey/fey.JPG",
+      "label": "Curated stance photo · Fey di Villa Conte"
+    },
+    "DI-A-000024": {
+      "image_url": "https://www.dobermann-review.com/females/Sharon_iz_Zoosfery/new/2.jpg",
+      "label": "Curated stance photo · Sharon iz Zoosfery"
+    }
+  }
 }
