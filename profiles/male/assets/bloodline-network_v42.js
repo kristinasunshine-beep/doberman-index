@@ -820,7 +820,7 @@
 
     function viewerRow(label, value) {
       if (!value) return "";
-      return `<div class="bln-image-viewer-row"><span>${escapeHTML(label)}</span><strong>${escapeHTML(value)}</strong></div>`;
+      return `<div class="bln-image-viewer-row" style="display:block!important;width:100%!important;margin:0!important;"><span style="display:block!important;margin:0 0 2px!important;color:#73736f!important;font-family:SFMono-Regular,Consolas,Liberation Mono,monospace!important;font-size:6.5px!important;font-weight:700!important;line-height:1.2!important;letter-spacing:.08em!important;text-transform:uppercase!important;">${escapeHTML(label)}</span><strong style="display:block!important;margin:0!important;color:#edede8!important;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif!important;font-size:10.5px!important;font-weight:600!important;line-height:1.28!important;letter-spacing:0!important;text-transform:none!important;">${escapeHTML(value)}</strong></div>`;
     }
 
     function renderViewerPanel(dataset) {
@@ -837,6 +837,8 @@
       viewerPanelMode.textContent = "";
       viewerPanelMode.hidden = true;
       viewerPanelGrid.innerHTML = rows.slice(0, 3).map(([label, value]) => viewerRow(label, value)).join("");
+      viewerPanelGrid.style.setProperty("font-size", "10.5px", "important");
+      viewerPanel.style.setProperty("font-size", "10.5px", "important");
       viewerPanel.hidden = rows.length === 0;
     }
 
@@ -997,6 +999,11 @@
       imageViewer.dataset.name = name;
       viewerName.textContent = name;
       viewerData.textContent = [generation, registration].filter(Boolean).join(" · ");
+      viewerData.style.setProperty("font-size", "8px", "important");
+      viewerData.style.setProperty("line-height", "1.5", "important");
+      viewerData.style.setProperty("font-weight", "700", "important");
+      viewerData.style.setProperty("letter-spacing", ".07em", "important");
+      viewerData.style.setProperty("text-transform", "uppercase", "important");
       renderViewerPanel(action.dataset);
       viewerPhotoFrame.scrollTop = 0;
       viewerPhotoFrame.scrollLeft = 0;
