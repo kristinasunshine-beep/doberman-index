@@ -1998,3 +1998,124 @@ body.bln-image-open{
     visibility:visible!important;
   }
 }
+
+
+/* v43.2 — Bloodline cards stay text-only; stance photos open on card click. */
+#bloodline .bln-node,
+#bloodline .bln-subject,
+#bloodline .bln-stage[data-density] .bln-node,
+#bloodline .bln-stage[data-density] .bln-subject{
+  grid-template-columns:1fr!important;
+  grid-template-rows:auto 1fr!important;
+  height:auto!important;
+  min-height:96px!important;
+}
+#bloodline .bln-photo,
+#bloodline .bln-stage[data-density] .bln-photo{
+  display:block!important;
+  height:0!important;
+  min-height:0!important;
+  aspect-ratio:auto!important;
+  overflow:visible!important;
+  background:transparent!important;
+}
+#bloodline .bln-photo img,
+#bloodline .bln-photo.has-image img,
+#bloodline .bln-fallback,
+#bloodline .bln-photo-action{
+  display:none!important;
+}
+#bloodline .bln-copy,
+#bloodline .bln-stage[data-density] .bln-copy{
+  height:auto!important;
+  min-height:96px!important;
+}
+#bloodline .bln-subject .bln-copy,
+#bloodline .bln-stage[data-density] .bln-subject .bln-copy{
+  height:auto!important;
+  min-height:132px!important;
+}
+@media(max-width:720px){
+  #bloodline .bln-mobile .bln-node,
+  #bloodline .bln-mobile>.bln-subject{
+    grid-template-columns:1fr!important;
+    grid-template-rows:1fr!important;
+    height:auto!important;
+    min-height:102px!important;
+  }
+  #bloodline .bln-mobile .bln-photo,
+  #bloodline .bln-mobile>.bln-subject .bln-photo{
+    display:block!important;
+    height:0!important;
+    min-height:0!important;
+    aspect-ratio:auto!important;
+    overflow:visible!important;
+  }
+  #bloodline .bln-mobile .bln-copy{min-height:102px!important}
+  #bloodline .bln-mobile>.bln-subject .bln-copy{min-height:132px!important}
+}
+
+/* Full-stance viewer: always fit the complete Doberman inside the available frame. */
+#bloodline .bln-image-viewer-stage{
+  height:100%!important;
+  min-height:0!important;
+  max-height:100%!important;
+  overflow:hidden!important;
+}
+#bloodline .bln-image-viewer-photo-frame{
+  height:100%!important;
+  min-height:0!important;
+  max-height:100%!important;
+  overflow:hidden!important;
+  display:grid!important;
+  place-items:center!important;
+  padding:18px 24px!important;
+  scrollbar-width:none!important;
+}
+#bloodline .bln-image-viewer-photo-frame::-webkit-scrollbar{display:none!important}
+#bloodline .bln-image-viewer-photo-canvas{
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  max-height:100%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:0!important;
+  overflow:hidden!important;
+}
+#bloodline .bln-image-viewer-photo-frame img,
+#bloodline .bln-image-viewer-stage img{
+  display:block!important;
+  width:auto!important;
+  height:auto!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  margin:auto!important;
+  object-fit:contain!important;
+  object-position:center!important;
+}
+#bloodline .bln-image-viewer-photo-scrollbar{display:none!important}
+@media(max-width:820px){
+  #bloodline .bln-image-viewer-stage{
+    height:100%!important;
+    min-height:0!important;
+    max-height:100%!important;
+  }
+  #bloodline .bln-image-viewer-photo-frame{
+    height:100%!important;
+    min-height:0!important;
+    max-height:100%!important;
+    padding:12px!important;
+  }
+  #bloodline .bln-image-viewer-photo-canvas{
+    height:100%!important;
+    min-height:0!important;
+    display:flex!important;
+  }
+  #bloodline .bln-image-viewer-photo-frame img,
+  #bloodline .bln-image-viewer-stage img{
+    max-width:100%!important;
+    max-height:100%!important;
+  }
+}
