@@ -2402,14 +2402,14 @@ body.bln-image-open{
 
   /*
    * Mobile card actions are deliberately separated:
-   * 0–44px = ancestry action hit target;
-   * 44–48px = neutral buffer;
-   * 48px→ = stance/photo preview action.
+   * 0–40px = ancestry action hit target;
+   * 40–44px = neutral buffer;
+   * 44px→ = stance/photo preview action.
    * The visible yellow edge stays 8px wide.
    */
   #bloodline .bln-mobile .bln-node.is-expandable{
-    --bln-mobile-edge-hit:44px;
-    --bln-mobile-preview-start:48px;
+    --bln-mobile-edge-hit:40px;
+    --bln-mobile-preview-start:44px;
   }
   #bloodline .bln-mobile .bln-node.is-expandable .bln-tree-action{
     left:0!important;
@@ -2517,25 +2517,32 @@ body.bln-image-open{
 }
 
 
-/* v43.12 — deterministic mobile viewer center for every generation. */
+/* v43.13 — one positioning system: exact pixel top, no transforms. */
 @media(max-width:820px){
-  #bloodline .bln-image-viewer{
-    top:50svh!important;
-    bottom:auto!important;
-    transform:translateY(-50%)!important;
-  }
+  #bloodline .bln-image-viewer,
   #bloodline .bln-image-viewer.is-mobile-manual{
-    top:var(--bln-mobile-viewer-top,50svh)!important;
+    top:var(--bln-mobile-viewer-top,24px)!important;
+    bottom:auto!important;
     transform:none!important;
   }
 
-  /* Keep ancestry tap target finger-safe while bringing names closer. */
+  /* Names closer to the yellow edge, while preserving two separate actions. */
   #bloodline .bln-mobile .bln-node.is-expandable{
-    --bln-mobile-edge-hit:44px!important;
-    --bln-mobile-preview-start:48px!important;
+    --bln-mobile-edge-hit:40px!important;
+    --bln-mobile-preview-start:44px!important;
   }
   #bloodline .bln-mobile .bln-node.is-expandable .bln-tree-action{
-    width:44px!important;
-    min-width:44px!important;
+    width:40px!important;
+    min-width:40px!important;
+  }
+  #bloodline .bln-mobile .bln-node.is-expandable .bln-preview-action{
+    left:44px!important;
+  }
+  #bloodline .bln-mobile .bln-node.is-expandable .bln-copy{
+    padding-left:44px!important;
+  }
+  #bloodline .bln-mobile .bln-node.is-expandable .bln-generation{
+    left:44px!important;
+    max-width:calc(100% - 50px)!important;
   }
 }
