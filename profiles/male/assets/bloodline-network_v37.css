@@ -2403,13 +2403,13 @@ body.bln-image-open{
   /*
    * Mobile card actions are deliberately separated:
    * 0–48px = ancestry action hit target;
-   * 48–62px = neutral buffer;
-   * 62px→ = stance/photo preview action.
+   * 48–56px = neutral buffer;
+   * 56px→ = stance/photo preview action.
    * The visible yellow edge stays 8px wide.
    */
   #bloodline .bln-mobile .bln-node.is-expandable{
     --bln-mobile-edge-hit:48px;
-    --bln-mobile-preview-start:62px;
+    --bln-mobile-preview-start:56px;
   }
   #bloodline .bln-mobile .bln-node.is-expandable .bln-tree-action{
     left:0!important;
