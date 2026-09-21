@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "purpose": "Manual Bloodline photo overrides. Entries here take priority over legacy bloodline-images.json.",
+  "instructions": {
+    "file_folder": "profiles/male/assets/bloodline-submitted/",
+    "key": "Use the canonical ancestor ID, e.g. DI-A-000004.",
+    "asset_path": "Set the repository-relative image path only.",
+    "optional_fields": [
+      "label",
+      "source_url"
+    ]
+  },
+  "photos": {}
+}
