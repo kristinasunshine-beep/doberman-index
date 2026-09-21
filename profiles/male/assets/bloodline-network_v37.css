@@ -2461,3 +2461,29 @@ body.bln-image-open{
     max-width:100%!important;
   }
 }
+
+
+/* v43.8 — hard mobile drag override: browser scrolling cannot capture the stance panel gesture. */
+@media(max-width:820px){
+  #bloodline .bln-image-viewer{
+    overflow:hidden!important;
+    overscroll-behavior:none!important;
+    -webkit-overflow-scrolling:auto!important;
+    touch-action:none!important;
+  }
+  #bloodline .bln-image-viewer,
+  #bloodline .bln-image-viewer *,
+  #bloodline .bln-image-viewer-stage,
+  #bloodline .bln-image-viewer-photo-frame,
+  #bloodline .bln-image-viewer-photo-canvas,
+  #bloodline .bln-image-viewer-stage img{
+    -webkit-user-select:none!important;
+    user-select:none!important;
+  }
+  #bloodline .bln-image-viewer-stage,
+  #bloodline .bln-image-viewer-photo-frame,
+  #bloodline .bln-image-viewer-photo-canvas,
+  #bloodline .bln-image-viewer-stage img{
+    touch-action:none!important;
+  }
+}
