@@ -432,6 +432,7 @@
     const viewerData = imageViewer.querySelector(".bln-image-viewer-data");
     const viewerClose = imageViewer.querySelector("[data-bloodline-image-close]");
     let imageTrigger = null;
+    let mobileViewerReturnState = null;
     let suppressViewerBackdropUntil = 0;
     let viewerCloseTimer = 0;
     const reset = root.querySelector('[data-bloodline-action="reset"]');
@@ -843,6 +844,17 @@
       const reservedSlot = action.dataset.imageSlot === "true";
       if (!imageSrc && !reservedSlot) return;
       imageTrigger = action;
+      if (typeof matchMedia === "function" && matchMedia("(max-width: 820px)").matches) {
+        const card = action.closest(".bln-node");
+        const rect = card?.getBoundingClientRect();
+        mobileViewerReturnState = {
+          scrollY: window.scrollY,
+          cardPath: card?.dataset?.path || "",
+          cardTop: rect ? rect.top : null
+        };
+      } else {
+        mobileViewerReturnState = null;
+      }
       const name = action.dataset.imageName || "Doberman";
       const registration = action.dataset.imageRegistration || "";
       const generation = action.dataset.imageGeneration || "";
@@ -902,8 +914,27 @@
         viewerPhotoCanvas.classList.remove("is-image-error");
         viewerPanel.hidden = true;
         viewerPanelGrid.innerHTML = "";
-        imageTrigger?.focus({ preventScroll:true });
+        const returnTrigger = imageTrigger;
+        const returnState = mobileViewerReturnState;
         imageTrigger = null;
+        mobileViewerReturnState = null;
+
+        if (returnState && typeof matchMedia === "function" && matchMedia("(max-width: 820px)").matches) {
+          requestAnimationFrame(() => {
+            const target = returnState.cardPath
+              ? mobile.querySelector(`.bln-node[data-path="${returnState.cardPath}"]`)
+              : returnTrigger?.closest(".bln-node");
+            if (target && returnState.cardTop !== null) {
+              const currentTop = target.getBoundingClientRect().top;
+              window.scrollBy({ top: currentTop - returnState.cardTop, behavior:"auto" });
+            } else {
+              window.scrollTo({ top:returnState.scrollY, behavior:"auto" });
+            }
+            returnTrigger?.focus({ preventScroll:true });
+          });
+        } else {
+          returnTrigger?.focus({ preventScroll:true });
+        }
       }, matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 260);
     }
 
