@@ -435,6 +435,7 @@
     let imageTrigger = null;
     let mobileViewerReturnState = null;
     let mobileViewerDrag = null;
+    let mobileViewerOffsetY = 0;
     let suppressViewerBackdropUntil = 0;
     let suppressPreviewClickUntil = 0;
     let viewerCloseTimer = 0;
@@ -444,16 +445,9 @@
 
     function resetMobileViewerPosition() {
       imageViewer.classList.remove("is-mobile-dragging");
-      imageViewer.style.removeProperty("transform");
+      imageViewer.style.removeProperty("top");
+      mobileViewerOffsetY = 0;
       mobileViewerDrag = null;
-    }
-
-    function mobileViewerTransform(offsetY) {
-      return `translate3d(0, calc(-50% + ${Math.round(offsetY)}px), 0)`;
-    }
-
-    function applyMobileViewerOffset(offsetY) {
-      imageViewer.style.setProperty("transform", mobileViewerTransform(offsetY), "important");
     }
 
     function isMobileViewerDragTarget(target) {
@@ -461,11 +455,14 @@
       return !target.closest("[data-bloodline-image-close]");
     }
 
-    // Native mobile touch: touching does nothing visually; moving the finger
-    // directly moves the already-centered viewer.
-    imageViewer.addEventListener("touchstart", event => {
+    // The mobile viewer is centered by top:18svh. Touching it changes nothing.
+    // Only finger movement changes top, so there is no coordinate-system switch.
+    document.addEventListener("touchstart", event => {
       if (!(typeof matchMedia === "function" && matchMedia("(max-width: 820px)").matches)) return;
-      if (!isMobileViewerDragTarget(event.target)) return;
+      if (imageViewer.hidden || !imageViewer.classList.contains("is-open")) return;
+      const target = event.target;
+      if (!(target instanceof Node) || !(target === imageViewer || imageViewer.contains(target))) return;
+      if (!isMobileViewerDragTarget(target)) return;
       if (event.touches.length !== 1) return;
 
       const touch = event.touches[0];
@@ -473,7 +470,7 @@
         source:"touch",
         id:touch.identifier,
         startY:touch.clientY,
-        offsetY:0,
+        startOffset:mobileViewerOffsetY,
         moved:false
       };
       imageViewer.classList.add("is-mobile-dragging");
@@ -486,9 +483,10 @@
       if (!touch) return;
 
       const deltaY = touch.clientY - mobileViewerDrag.startY;
-      if (deltaY !== 0) mobileViewerDrag.moved = true;
-      mobileViewerDrag.offsetY = deltaY;
-      applyMobileViewerOffset(deltaY);
+      const next = mobileViewerDrag.startOffset + deltaY;
+      mobileViewerOffsetY = next;
+      mobileViewerDrag.moved = mobileViewerDrag.moved || deltaY !== 0;
+      imageViewer.style.setProperty("top", `calc(18svh + ${Math.round(next)}px)`, "important");
       event.preventDefault();
     }, { passive:false, capture:true });
 
@@ -496,6 +494,7 @@
       if (!mobileViewerDrag || mobileViewerDrag.source !== "touch") return;
       const stillActive = Array.from(event.touches || []).some(item => item.identifier === mobileViewerDrag.id);
       if (stillActive) return;
+
       const moved = mobileViewerDrag.moved;
       mobileViewerDrag = null;
       imageViewer.classList.remove("is-mobile-dragging");
@@ -505,7 +504,7 @@
     document.addEventListener("touchend", finishMobileTouchDrag, { passive:false, capture:true });
     document.addEventListener("touchcancel", finishMobileTouchDrag, { passive:false, capture:true });
 
-    // Mouse/pen fallback for desktop responsive testing.
+    // Mouse/pen fallback for responsive testing only.
     imageViewer.addEventListener("pointerdown", event => {
       if (!(typeof matchMedia === "function" && matchMedia("(max-width: 820px)").matches)) return;
       if (event.pointerType === "touch") return;
@@ -516,7 +515,7 @@
         source:"pointer",
         id:event.pointerId,
         startY:event.clientY,
-        offsetY:0,
+        startOffset:mobileViewerOffsetY,
         moved:false
       };
       imageViewer.setPointerCapture?.(event.pointerId);
@@ -527,9 +526,10 @@
     imageViewer.addEventListener("pointermove", event => {
       if (!mobileViewerDrag || mobileViewerDrag.source !== "pointer" || mobileViewerDrag.id !== event.pointerId) return;
       const deltaY = event.clientY - mobileViewerDrag.startY;
-      if (deltaY !== 0) mobileViewerDrag.moved = true;
-      mobileViewerDrag.offsetY = deltaY;
-      applyMobileViewerOffset(deltaY);
+      const next = mobileViewerDrag.startOffset + deltaY;
+      mobileViewerOffsetY = next;
+      mobileViewerDrag.moved = mobileViewerDrag.moved || deltaY !== 0;
+      imageViewer.style.setProperty("top", `calc(18svh + ${Math.round(next)}px)`, "important");
       event.preventDefault();
     });
 

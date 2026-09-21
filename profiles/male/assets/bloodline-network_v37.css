@@ -1295,10 +1295,6 @@ body.bln-image-open{
   transform:none!important;
 }
 
-#bloodline .bln-image-viewer.is-open{
-  transform:none!important;
-}
-
 #bloodline .bln-image-viewer-stage{
   overflow-y:scroll!important;
   overflow-x:hidden!important;
@@ -2206,11 +2202,11 @@ body.bln-image-open{
     overflow:hidden!important;
   }
 
-  /* One stable center and one transform offset for the entire touch lifecycle. */
+  /* Fixed 64svh viewer: 18svh top centers it exactly. Drag changes only top. */
   #bloodline .bln-image-viewer{
     position:fixed!important;
     inset:auto!important;
-    top:50%!important;
+    top:18svh!important;
     left:14px!important;
     right:14px!important;
     bottom:auto!important;
@@ -2218,7 +2214,7 @@ body.bln-image-open{
     height:min(64svh,540px)!important;
     min-height:420px!important;
     max-height:calc(100svh - 28px)!important;
-    transform:translate3d(0,-50%,0)!important;
+    transform:none!important;
     display:grid!important;
     grid-template-rows:auto minmax(0,1fr) auto!important;
     align-content:stretch!important;
@@ -2228,7 +2224,7 @@ body.bln-image-open{
     background:#0f0f0f!important;
     touch-action:none!important;
     cursor:grab!important;
-    will-change:transform!important;
+    will-change:top!important;
     transition:none!important;
     animation:none!important;
   }
