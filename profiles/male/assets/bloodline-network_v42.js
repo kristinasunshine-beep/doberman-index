@@ -465,8 +465,20 @@
       if (!(typeof matchMedia === "function" && matchMedia("(max-width: 820px)").matches)) return;
       const rect = imageViewer.getBoundingClientRect();
       const height = Math.max(120, rect.height || imageViewer.offsetHeight || 0);
-      const centeredTop = Math.round((window.innerHeight - height) / 2);
+      const viewport = window.visualViewport;
+      const viewportHeight = Math.max(1, viewport?.height || window.innerHeight);
+      const viewportTop = Math.max(0, viewport?.offsetTop || 0);
+      const centeredTop = Math.round(viewportTop + ((viewportHeight - height) / 2));
       setMobileViewerTop(centeredTop);
+    }
+
+    function settleMobileViewerCenter() {
+      if (mobileViewerUserMoved) return;
+      centerMobileViewer();
+      raf(centerMobileViewer);
+      setTimeout(centerMobileViewer, 80);
+      setTimeout(centerMobileViewer, 220);
+      setTimeout(centerMobileViewer, 520);
     }
 
     function isMobileViewerDragTarget(target) {
@@ -562,6 +574,23 @@
     };
     imageViewer.addEventListener("pointerup", finishPointerDrag);
     imageViewer.addEventListener("pointercancel", finishPointerDrag);
+
+    if (typeof ResizeObserver === "function") {
+      const mobileViewerLayoutObserver = new ResizeObserver(() => {
+        if (imageViewer.hidden || mobileViewerUserMoved) return;
+        settleMobileViewerCenter();
+      });
+      mobileViewerLayoutObserver.observe(imageViewer);
+      mobileViewerLayoutObserver.observe(viewerStage);
+      mobileViewerLayoutObserver.observe(viewerPhotoFrame);
+      mobileViewerLayoutObserver.observe(viewerPanel);
+    }
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", () => {
+        if (!imageViewer.hidden && !mobileViewerUserMoved) settleMobileViewerCenter();
+      }, { passive:true });
+    }
 
     function rememberState() {
       history.push({ expanded: [...expanded], activeFocusPath });
@@ -1013,7 +1042,7 @@
       imageViewer.classList.add("is-open");
       raf(() => {
         syncViewerStageClearance();
-        centerMobileViewer();
+        settleMobileViewerCenter();
       });
       if (imageSrc) {
         viewerImage.onerror = () => {
@@ -1025,12 +1054,12 @@
           viewerImage.hidden = false;
           raf(() => {
             syncViewerStageClearance();
-            centerMobileViewer();
+            settleMobileViewerCenter();
           });
         };
         viewerImage.decode().then(() => raf(() => {
           syncViewerStageClearance();
-          centerMobileViewer();
+          settleMobileViewerCenter();
         })).catch(() => {});
       }
       viewerClose.focus({ preventScroll:true });
