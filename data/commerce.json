@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0.0",
+  "provider": "dodo_payments",
+  "integration": "checkout_session",
+  "environment": "live_mode",
+  "api_base": "https://doberman-index-commerce.dobermanindex-records.workers.dev",
+  "currency": "EUR",
+  "tax_inclusive": true,
+  "products": {
+    "doberman-intelligence-record": {
+      "name": "Doberman Intelligence Record",
+      "price_eur": 149,
+      "billing": "one_time",
+      "descriptor": "Evidence. Lineage. Context.",
+      "dodo_product_id": null,
+      "fulfillment": {
+        "type": "owner_submission",
+        "path": "submit.html"
+      }
+    },
+    "kennel-promotion-service": {
+      "name": "Kennel Promotion Service",
+      "price_eur": 149,
+      "billing": "one_time",
+      "term_months": 12,
+      "descriptor": "Program. Proof. Reach.",
+      "dodo_product_id": null,
+      "fulfillment": {
+        "type": "promotion_activation",
+        "existing_kennel_record_preferred": true,
+        "fallback_path": "submit-kennel.html"
+      }
+    }
+  }
+}
