@@ -12,7 +12,7 @@
       "price_eur": 149,
       "billing": "one_time",
       "descriptor": "Evidence. Lineage. Context.",
-      "dodo_product_id": null,
+      "dodo_product_id": "pdt_0NoA1RN8WXSqih1g1kXpT",
       "fulfillment": {
         "type": "owner_submission",
         "path": "submit.html"
