@@ -205,7 +205,15 @@ export default {
     if (url.pathname === "/v1/commerce/checkout" && request.method === "POST") return createCheckout(request, env);
     if (url.pathname === "/v1/commerce/status" && request.method === "GET") return paymentStatus(url, env);
     if (url.pathname === "/v1/commerce/webhook" && request.method === "POST") return webhook(request, env);
-    if (url.pathname === "/health") return json({ ok: true, provider: "dodo_payments" });
-    return json({ error: "Not found." }, 404);
+    const path = url.pathname.replace(/\/+$/, "") || "/";
+    if (path === "/" || path === "/health") {
+      return json({
+        ok: true,
+        service: "doberman-index-commerce",
+        provider: "dodo_payments",
+        environment: env.DODO_PAYMENTS_ENVIRONMENT || "live_mode"
+      });
+    }
+    return json({ error: "Not found.", path: url.pathname }, 404);
   }
 };
