@@ -37,27 +37,36 @@ a.secondary{background:transparent;color:var(--ink);border:1px solid #bdbdb7}
   const panel=document.getElementById("panel"),title=document.getElementById("title"),message=document.getElementById("message"),
         serviceName=document.getElementById("serviceName"),orderMeta=document.getElementById("orderMeta"),next=document.getElementById("nextAction");
   const params=new URLSearchParams(location.search);
-  const paymentId=params.get("payment_id")||params.get("paymentId");
+  const orderReference=params.get("order_reference")||"";
   const serviceKey=params.get("service")||"";
   try{
     const cfg=await fetch("data/commerce.json",{cache:"no-store"}).then(r=>r.json());
     const product=cfg.products?.[serviceKey];
     if(product) serviceName.textContent=product.name;
-    if(!paymentId) throw new Error("Payment reference is missing from the return URL.");
-    const response=await fetch(`${cfg.api_base}/v1/commerce/status?payment_id=${encodeURIComponent(paymentId)}&service=${encodeURIComponent(serviceKey)}`,{cache:"no-store"});
-    const state=await response.json();
-    if(!response.ok||state.status!=="succeeded") throw new Error(state.error||"Payment is not confirmed yet.");
+    if(!orderReference) throw new Error("Order reference is missing from the return URL.");
+
+    let state=null;
+    for(let attempt=0;attempt<10;attempt+=1){
+      const response=await fetch(`${cfg.api_base}/v1/commerce/status?order_reference=${encodeURIComponent(orderReference)}&service=${encodeURIComponent(serviceKey)}`,{cache:"no-store"});
+      state=await response.json().catch(()=>({}));
+      if(response.ok&&state.status==="succeeded") break;
+      if(state.status!=="pending") throw new Error(state.error||"Payment could not be verified.");
+      await new Promise(resolve=>setTimeout(resolve,1200));
+    }
+    if(!state||state.status!=="succeeded") throw new Error("Payment confirmation is still arriving. Refresh this page in a few seconds.");
+
     panel.dataset.state="ready";
     title.textContent="Payment confirmed.";
-    orderMeta.textContent=`Payment ${paymentId} · verified by Doberman Index commerce`;
+    orderMeta.textContent=`Order ${orderReference} · verified by Doberman Index commerce`;
+
     if(serviceKey==="doberman-intelligence-record"){
-      message.textContent="Your Doberman Intelligence Record build is unlocked. Continue to the owner submission and send the evidence package for review.";
-      next.href="submit.html?order="+encodeURIComponent(paymentId);
-      next.textContent="Start Intelligence Record submission";
+      message.textContent="Your Doberman Intelligence Record build is unlocked. Continue to the owner questionnaire and send the evidence package for review.";
+      next.href="submit.html?order_reference="+encodeURIComponent(orderReference);
+      next.textContent="Start Intelligence Record questionnaire";
     }else if(serviceKey==="kennel-promotion-service"){
-      message.textContent="Your 12-month Kennel Promotion order is confirmed. If the kennel already has an approved DI-K record and logo, no duplicate submission is needed. If not, complete the kennel record submission so the placement can be activated.";
-      next.href="submit-kennel.html?order="+encodeURIComponent(paymentId);
-      next.textContent="Open kennel submission";
+      message.textContent="Your 12-month Kennel Promotion order is confirmed. We will match the kennel reference from checkout with the approved DI-K record and logo. If anything is missing, Doberman Index will contact you.";
+      next.href="index.html";
+      next.textContent="Return to Doberman Index";
     }else{
       next.href="index.html";
       next.textContent="Return to Doberman Index";
@@ -65,8 +74,8 @@ a.secondary{background:transparent;color:var(--ink);border:1px solid #bdbdb7}
   }catch(error){
     panel.dataset.state="failed";
     title.textContent="Verification pending.";
-    message.textContent=error.message+" If you have just paid, wait a moment and refresh this page. Your Dodo receipt remains your payment record.";
-    orderMeta.textContent=paymentId?("Payment reference: "+paymentId):"No payment reference received.";
+    message.textContent=error.message+" Your Dodo receipt remains your payment record.";
+    orderMeta.textContent=orderReference?("Order reference: "+orderReference):"No order reference received.";
   }
 })();
 </script>
