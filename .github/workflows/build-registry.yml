@@ -8,6 +8,7 @@ on:
       - "data/kennels/**"
       - "data/litters/**"
       - "data/homepage.json"
+      - "data/commerce.json"
       - "data/assessment-standard.json"
       - "data/promotion-belt.json"
       - "data/seo-manifest.json"
@@ -27,6 +28,8 @@ on:
       - "profiles/litter.html"
       - "profiles/kennel-concept.html"
       - "assets/js/display-name.js"
+      - "assets/js/commerce.js"
+      - "checkout-success.html"
       - "assets/js/media-presentation.js"
       - "assets/css/submit-v3.css"
       - "assets/js/submit-v3.js"
@@ -43,6 +46,7 @@ on:
       - "scripts/migrate_lifecycle_v1_1.py"
       - "scripts/validate_lifecycle_contract.py"
       - "scripts/validate_homepage.py"
+      - "scripts/validate_commerce.py"
       - "scripts/validate_assessment_standard.py"
       - "scripts/validate_male_profile_contract.py"
       - "scripts/validate_male_visual_master.py"
@@ -129,6 +133,9 @@ jobs:
 
       - name: Validate paid kennel promotion belt
         run: python scripts/validate_promotion_belt.py
+
+      - name: Validate Dodo commerce contract
+        run: python scripts/validate_commerce.py
 
       - name: Validate controlled profile standard
         run: python scripts/validate_assessment_standard.py
