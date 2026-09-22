@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#f1f1f1">
+<title>Private Invitation · Doberman Index</title>
+<style>
+:root{--paper:#f1f1f1;--ink:#121212;--muted:#696966;--acid:#f3fe19;--blue:#0c01e6;--white:#fff;--line:#d0d0cb}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:var(--paper);color:var(--ink);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:28px}
+main{width:min(900px,100%);margin:4vh auto;background:#fff;padding:clamp(30px,6vw,72px);border-top:10px solid var(--acid)}
+.eyebrow{font:800 10px/1.2 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--blue)}
+h1{max-width:760px;margin:20px 0 18px;font-size:clamp(48px,8vw,92px);line-height:.86;letter-spacing:-.07em}
+.lede{max-width:65ch;color:var(--muted);font-size:18px;line-height:1.55}
+.note{margin:32px 0;padding:20px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-weight:700}
+h2{margin:38px 0 12px;font-size:18px}ul{margin:0;padding-left:20px;color:var(--muted);line-height:1.7}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+a{display:inline-flex;align-items:center;min-height:52px;padding:0 22px;border-radius:999px;background:var(--ink);color:#fff;text-decoration:none;font-weight:800}
+a.secondary{background:transparent;color:var(--ink);border:1px solid #bdbdb8}
+.meta{margin-top:28px;font-size:12px;color:#7a7a76}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main id="panel">
+<div class="eyebrow">Private invitation / Doberman Index</div>
+<h1 id="title">Checking your invitation.</h1>
+<p class="lede" id="intro">This private link is being verified before the questionnaire opens.</p>
+<div id="content" hidden>
+<div class="note" id="waiver"></div>
+<section id="recordPrep" hidden>
+<h2>Before you start</h2>
+<ul>
+<li>Registered name, date of birth, sex, country and registration details.</li>
+<li>Pedigree document or reliable sire and dam information.</li>
+<li>Available health and genetic results with supporting files where possible.</li>
+<li>Titles, working exams, sports or other documented results.</li>
+<li>Selected media: main, head, side profile, standing pose, movement image and a 3–15 second movement video where available.</li>
+</ul>
+</section>
+<section id="kennelPrep" hidden>
+<h2>Before you start</h2>
+<ul>
+<li>Registered kennel name, country, registration prefix/authority and founder or representative details.</li>
+<li>Breeding-program focus and public website/social links.</li>
+<li>Known Dobermans and litters that should connect to the kennel record.</li>
+<li>Approved kennel logo and selected public media.</li>
+</ul>
+</section>
+<div class="actions">
+<a id="continue" href="#">Open questionnaire</a>
+<a class="secondary" href="index.html">Back to Doberman Index</a>
+</div>
+<p class="meta" id="expiry"></p>
+</div>
+</main>
+<script>
+(async function(){
+ const params=new URLSearchParams(location.search),token=params.get("token")||"";
+ const title=document.getElementById("title"),intro=document.getElementById("intro"),content=document.getElementById("content"),
+       waiver=document.getElementById("waiver"),recordPrep=document.getElementById("recordPrep"),kennelPrep=document.getElementById("kennelPrep"),
+       next=document.getElementById("continue"),expiry=document.getElementById("expiry");
+ try{
+   if(!token) throw new Error("Invitation token is missing.");
+   const cfg=await fetch("data/commerce.json",{cache:"no-store"}).then(r=>r.json());
+   const r=await fetch(cfg.api_base+"/v1/invitations/resolve?token="+encodeURIComponent(token),{cache:"no-store"});
+   const state=await r.json();
+   if(!r.ok||!state.valid) throw new Error(state.error||"Invitation is unavailable.");
+   title.textContent=state.recipient_name?("Welcome, "+state.recipient_name+"."):"Your private invitation is ready.";
+   intro.textContent="You have been invited to use a Doberman Index service without payment. The service standard is identical to the paid version.";
+   waiver.textContent=state.service_name+" · service fee waived by private invitation.";
+   if(state.service_key==="doberman-intelligence-record"){
+     recordPrep.hidden=false;
+     next.href="submit.html?invite="+encodeURIComponent(token);
+     next.textContent="Open Intelligence Record questionnaire";
+   }else{
+     kennelPrep.hidden=false;
+     next.href="submit-kennel.html?invite="+encodeURIComponent(token);
+     next.textContent="Open Kennel Promotion questionnaire";
+   }
+   if(state.expires_at) expiry.textContent="Invitation valid until "+new Date(state.expires_at).toLocaleDateString()+".";
+   content.hidden=false;
+ }catch(error){
+   title.textContent="Invitation unavailable.";
+   intro.textContent=error.message||"This invitation cannot be used.";
+ }
+})();
+</script>
+</body>
+</html>
