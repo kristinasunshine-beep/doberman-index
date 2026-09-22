@@ -29,6 +29,16 @@ Create exactly two launch products in Dodo Payments:
 
 The promotion checkout collects one required custom field: kennel DI-K ID or registered kennel name.
 
+## Required D1 binding
+
+Create a D1 database named `doberman-index-commerce` and bind it to this Worker as:
+
+`COMMERCE_DB`
+
+Apply `schema.sql` before enabling production webhooks.
+
+The database stores payment state, webhook idempotency, entitlements and invitation/waiver state.
+
 ## Required secrets
 
 - `DODO_PAYMENTS_API_KEY`
@@ -50,7 +60,7 @@ Subscribe at minimum to:
 - `refund.succeeded`
 - `dispute.opened`
 
-The worker currently persists successful payment state. Additional refund/dispute operational handling can be added before automated revocation workflows are introduced.
+The worker persists successful payment state and idempotency in D1. Additional refund/dispute operational handling can be added before automated revocation workflows are introduced.
 
 ## Fulfillment
 
