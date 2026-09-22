@@ -24,7 +24,7 @@
       "billing": "one_time",
       "term_months": 12,
       "descriptor": "Program. Proof. Reach.",
-      "dodo_product_id": null,
+      "dodo_product_id": "pdt_0NoA7GPj2xZ1kOx8WDeoR",
       "fulfillment": {
         "type": "promotion_activation",
         "existing_kennel_record_preferred": true,
