@@ -99,16 +99,17 @@ async function createCheckout(request, env) {
   const payload = {
     product_cart: [{ product_id: productId, quantity: 1 }],
     customer: { email: customerEmail },
-    billing_currency: "EUR",
     return_url: product.returnUrl,
     metadata: {
       order_reference: orderReference,
       service_key: serviceKey,
       source: "doberman-index.com"
     },
+    cancel_url: SITE_ORIGIN + "/#tiers",
     feature_flags: {
       redirect_immediately: true,
-      allow_tax_id: true
+      allow_tax_id: true,
+      allow_discount_code: false
     }
   };
   if (product.customFields) payload.custom_fields = product.customFields;
