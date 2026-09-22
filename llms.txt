@@ -1,6 +1,6 @@
 # Doberman Index
 
-> Structured public registry connecting Doberman records, kennels, litters, pedigrees and bloodline relationships through stable record identifiers.
+> Breed intelligence system connecting evidence, lineage, Doberman records, kennels, litters and bloodline relationships through stable record identifiers.
 
 Canonical site: https://doberman-index.com/
 Primary language: English
@@ -8,7 +8,7 @@ Public catalog: https://doberman-index.com/records/
 
 ## Canonical pages
 
-- [Doberman Index](https://doberman-index.com/): registry portal and search entry point.
+- [Doberman Index](https://doberman-index.com/): breed intelligence portal and search entry point.
 - [About](https://doberman-index.com/about.html): purpose, methodology, record types and evidence-first principles.
 - [Published Records](https://doberman-index.com/records/): canonical catalog of published records.
 
