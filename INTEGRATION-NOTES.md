@@ -36,3 +36,14 @@ The accepted visible product was preserved. Technical fixes were limited to repo
 - `.github/workflows/indexnow.yml` runs only after a successful Pages deployment (or manually), tests the publisher, and then calls the script. It contains no duplicate inline IndexNow implementation.
 - Automatic deploy runs submit only canonical URLs affected by the deployed commit; manual runs submit the current sitemap.
 
+
+## Dodo commerce boundary — 2026-09-22
+
+- Dodo Payments is the only launch commerce provider.
+- Public launch products: Doberman Intelligence Record (€149 one time) and Kennel Promotion Service (€149 / 12 months).
+- The static site never stores API keys or webhook secrets.
+- Frontend checkout requests go to the commerce Worker, which creates a fresh single-use Dodo Checkout Session.
+- Successful payment is verified server-side before fulfillment guidance is shown.
+- Intelligence Record fulfillment opens the existing reviewed owner-submission flow.
+- Kennel Promotion uses the existing DI-K record when available; a kennel submission is only needed when the public kennel record is missing.
+- Founding Network waivers remain invite-only and do not change the public €149 value anchor.
