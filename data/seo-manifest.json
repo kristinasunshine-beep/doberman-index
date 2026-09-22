@@ -5,12 +5,12 @@
   "static_pages": {
     "/": {
       "title": "Doberman Index",
-      "description": "A global registry that organizes Dobermans, pedigrees, and kennels into standardized, searchable profiles.",
+      "description": "A breed intelligence system that transforms evidence, pedigree and connected records into structured intelligence for breeding decisions.",
       "canonical": "https://doberman-index.com/"
     },
     "/about.html": {
       "title": "About · Doberman Index",
-      "description": "Why Doberman Index exists: a structured, searchable registry for Dobermans, kennels, litters and bloodlines.",
+      "description": "Why Doberman Index exists: a breed intelligence system for evidence, lineage, connected records and breeding decisions.",
       "canonical": "https://doberman-index.com/about.html"
     },
     "/records/": {
@@ -34,7 +34,7 @@
             "@id": "https://doberman-index.com/#website",
             "url": "https://doberman-index.com/",
             "name": "Doberman Index",
-            "description": "A structured, searchable registry connecting Dobermans, pedigrees, kennels, litters and bloodlines.",
+            "description": "A breed intelligence system connecting Doberman evidence, pedigrees, kennels, litters and bloodlines for informed breeding decisions.",
             "publisher": {
               "@id": "https://doberman-index.com/#organization"
             },
@@ -45,7 +45,7 @@
             "@id": "https://doberman-index.com/#organization",
             "name": "Doberman Index",
             "url": "https://doberman-index.com/",
-            "description": "A structured, searchable registry connecting Dobermans, pedigrees, kennels, litters and bloodlines."
+            "description": "A breed intelligence system connecting Doberman evidence, pedigrees, kennels, litters and bloodlines for informed breeding decisions."
           },
           {
             "@type": "DataCatalog",
