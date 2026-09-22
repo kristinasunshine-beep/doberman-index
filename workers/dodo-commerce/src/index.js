@@ -5,13 +5,11 @@ const DODO_TEST_API = "https://test.dodopayments.com";
 const PRODUCTS = {
   "doberman-intelligence-record": {
     env: "DODO_PRODUCT_INTELLIGENCE_RECORD",
-    name: "Doberman Intelligence Record",
-    returnUrl: SITE_ORIGIN + "/checkout-success.html?service=doberman-intelligence-record"
+    name: "Doberman Intelligence Record"
   },
   "kennel-promotion-service": {
     env: "DODO_PRODUCT_KENNEL_PROMOTION",
     name: "Kennel Promotion Service",
-    returnUrl: SITE_ORIGIN + "/checkout-success.html?service=kennel-promotion-service",
     customFields: [
       {
         key: "kennel_reference",
@@ -88,6 +86,13 @@ async function readStoredPayment(env, paymentId) {
   return env.COMMERCE_DB.prepare(
     "SELECT payment_id, service_key, order_reference, customer_email, custom_fields_json, status, succeeded_at, updated_at FROM payments WHERE payment_id = ?"
   ).bind(paymentId).first();
+}
+
+async function readPaymentByOrderReference(env, orderReference) {
+  if (!env.COMMERCE_DB || !orderReference) return null;
+  return env.COMMERCE_DB.prepare(
+    "SELECT payment_id, service_key, order_reference, customer_email, custom_fields_json, status, succeeded_at, updated_at FROM payments WHERE order_reference = ?"
+  ).bind(orderReference).first();
 }
 
 async function rememberWebhook(env, webhookId, eventType) {
@@ -298,7 +303,8 @@ async function redeemInvitation(request, env) {
 
 async function verifyAccess(url, env) {
   const serviceKey = url.searchParams.get("service") || "";
-  const paymentId = url.searchParams.get("payment_id") || url.searchParams.get("order") || "";
+  const paymentId = url.searchParams.get("payment_id") || "";
+  const orderReference = url.searchParams.get("order_reference") || url.searchParams.get("order") || "";
   const inviteToken = url.searchParams.get("invite") || "";
 
   if (!PRODUCTS[serviceKey]) return json({ valid: false, error: "Unknown service." }, 400);
@@ -318,28 +324,25 @@ async function verifyAccess(url, env) {
     });
   }
 
-  if (paymentId) {
-    const payment = await readStoredPayment(env, paymentId);
-    const entitlement = env.COMMERCE_DB ? await env.COMMERCE_DB.prepare(`
-      SELECT entitlement_id, status FROM entitlements
-      WHERE source_type = 'paid_dodo' AND source_reference = ? AND service_key = ?
-    `).bind(paymentId, serviceKey).first() : null;
+  if (paymentId || orderReference) {
+    const payment = paymentId
+      ? await readStoredPayment(env, paymentId)
+      : await readPaymentByOrderReference(env, orderReference);
+    if (payment) {
+      const entitlement = env.COMMERCE_DB ? await env.COMMERCE_DB.prepare(`
+        SELECT entitlement_id, status FROM entitlements
+        WHERE source_type = 'paid_dodo' AND source_reference = ? AND service_key = ?
+      `).bind(payment.payment_id, serviceKey).first() : null;
 
-    if (payment?.status === "succeeded" && entitlement?.status === "available") {
-      return json({
-        valid: true,
-        source_type: "paid_dodo",
-        source_reference: paymentId,
-        service_key: serviceKey,
-        customer_email: payment.customer_email || null
-      });
-    }
-
-    const live = await paymentStatus(new URL(SITE_ORIGIN + "/?payment_id=" + encodeURIComponent(paymentId) + "&service=" + encodeURIComponent(serviceKey)), env);
-    if (live.status === 200) {
-      const body = await live.clone().json().catch(() => ({}));
-      if (body.status === "succeeded") {
-        return json({ valid: true, source_type: "paid_dodo", source_reference: paymentId, service_key: serviceKey });
+      if (payment.status === "succeeded" && entitlement?.status === "available" && payment.service_key === serviceKey) {
+        return json({
+          valid: true,
+          source_type: "paid_dodo",
+          source_reference: payment.payment_id,
+          order_reference: payment.order_reference,
+          service_key: serviceKey,
+          customer_email: payment.customer_email || null
+        });
       }
     }
   }
@@ -350,11 +353,14 @@ async function verifyAccess(url, env) {
 async function consumePaidEntitlement(request, env) {
   if (!env.COMMERCE_DB) return json({ error: "Commerce database is unavailable." }, 503);
   const input = await request.json().catch(() => ({}));
-  const paymentId = String(input.payment_id || input.order || "");
+  const paymentId = String(input.payment_id || "");
+  const orderReference = String(input.order_reference || input.order || "");
   const serviceKey = String(input.service_key || "");
-  if (!paymentId || !PRODUCTS[serviceKey]) return json({ error: "Payment and service are required." }, 400);
+  if ((!paymentId && !orderReference) || !PRODUCTS[serviceKey]) return json({ error: "Order and service are required." }, 400);
 
-  const payment = await readStoredPayment(env, paymentId);
+  const payment = paymentId
+    ? await readStoredPayment(env, paymentId)
+    : await readPaymentByOrderReference(env, orderReference);
   if (!payment || payment.status !== "succeeded" || payment.service_key !== serviceKey) {
     return json({ error: "Confirmed payment not found." }, 403);
   }
@@ -384,7 +390,7 @@ async function createCheckout(request, env) {
   const payload = {
     product_cart: [{ product_id: productId, quantity: 1 }],
     customer: { email: customerEmail },
-    return_url: product.returnUrl,
+    return_url: SITE_ORIGIN + "/checkout-success.html?service=" + encodeURIComponent(serviceKey) + "&order_reference=" + encodeURIComponent(orderReference),
     metadata: {
       order_reference: orderReference,
       service_key: serviceKey,
@@ -420,13 +426,31 @@ async function createCheckout(request, env) {
 }
 
 async function paymentStatus(url, env) {
-  const paymentId = url.searchParams.get("payment_id");
+  const paymentId = url.searchParams.get("payment_id") || "";
+  const orderReference = url.searchParams.get("order_reference") || "";
   const serviceKey = url.searchParams.get("service") || "";
-  if (!paymentId) return json({ error: "payment_id is required." }, 400);
+
+  if (orderReference && env.COMMERCE_DB) {
+    const stored = await env.COMMERCE_DB.prepare(
+      "SELECT payment_id, service_key, order_reference, customer_email, status FROM payments WHERE order_reference = ?"
+    ).bind(orderReference).first();
+    if (stored) {
+      if (serviceKey && stored.service_key !== serviceKey) return json({ error: "Service mismatch." }, 409);
+      return json({
+        status: stored.status,
+        payment_id: stored.payment_id,
+        order_reference: stored.order_reference,
+        service_key: stored.service_key
+      });
+    }
+    return json({ status: "pending", order_reference: orderReference, service_key: serviceKey }, 202);
+  }
+
+  if (!paymentId) return json({ error: "payment_id or order_reference is required." }, 400);
 
   const stored = await readStoredPayment(env, paymentId);
-  if (stored && stored.status === "succeeded" && (!serviceKey || stored.service_key === serviceKey)) {
-    return json({ status: "succeeded", payment_id: paymentId, service_key: stored.service_key });
+  if (stored && (!serviceKey || stored.service_key === serviceKey)) {
+    return json({ status: stored.status, payment_id: paymentId, service_key: stored.service_key });
   }
 
   const response = await fetch(apiBase(env) + "/payments/" + encodeURIComponent(paymentId), {
