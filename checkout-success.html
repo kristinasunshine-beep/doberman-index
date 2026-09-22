@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#f1f1f1">
+<title>Payment received · Doberman Index</title>
+<style>
+:root{--paper:#f1f1f1;--ink:#121212;--muted:#6d6d68;--acid:#f3fe19;--blue:#0c01e6;--white:#fff}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:var(--paper);color:var(--ink);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;display:grid;place-items:center;padding:28px}
+main{width:min(760px,100%);background:var(--white);padding:clamp(30px,6vw,72px);border-top:10px solid var(--acid)}
+.eyebrow{font:800 10px/1.2 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+h1{margin:18px 0 20px;font-size:clamp(52px,9vw,100px);line-height:.82;letter-spacing:-.075em}
+p{max-width:58ch;color:var(--muted);line-height:1.65}
+.order{margin:34px 0;padding:20px 0;border-top:1px solid #d4d4cf;border-bottom:1px solid #d4d4cf;display:grid;gap:8px}
+.order strong{font-size:18px}.order span{font-size:13px;color:var(--muted)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+a{display:inline-flex;align-items:center;min-height:50px;padding:0 20px;border-radius:999px;background:var(--ink);color:#fff;text-decoration:none;font-weight:750}
+a.secondary{background:transparent;color:var(--ink);border:1px solid #bdbdb7}
+[data-state="checking"] .actions,[data-state="failed"] .primary-action{display:none}
+</style>
+</head>
+<body>
+<main id="panel" data-state="checking">
+<div class="eyebrow">Dodo Payments / order return</div>
+<h1 id="title">Checking payment.</h1>
+<p id="message">Your checkout has returned to Doberman Index. We are verifying the payment before opening the next step.</p>
+<div class="order"><strong id="serviceName">Order</strong><span id="orderMeta">Secure verification in progress.</span></div>
+<div class="actions">
+<a class="primary-action" id="nextAction" href="index.html">Continue</a>
+<a class="secondary" href="index.html">Back to Doberman Index</a>
+</div>
+</main>
+<script>
+(async function(){
+  const panel=document.getElementById("panel"),title=document.getElementById("title"),message=document.getElementById("message"),
+        serviceName=document.getElementById("serviceName"),orderMeta=document.getElementById("orderMeta"),next=document.getElementById("nextAction");
+  const params=new URLSearchParams(location.search);
+  const paymentId=params.get("payment_id")||params.get("paymentId");
+  const serviceKey=params.get("service")||"";
+  try{
+    const cfg=await fetch("data/commerce.json",{cache:"no-store"}).then(r=>r.json());
+    const product=cfg.products?.[serviceKey];
+    if(product) serviceName.textContent=product.name;
+    if(!paymentId) throw new Error("Payment reference is missing from the return URL.");
+    const response=await fetch(`${cfg.api_base}/v1/commerce/status?payment_id=${encodeURIComponent(paymentId)}&service=${encodeURIComponent(serviceKey)}`,{cache:"no-store"});
+    const state=await response.json();
+    if(!response.ok||state.status!=="succeeded") throw new Error(state.error||"Payment is not confirmed yet.");
+    panel.dataset.state="ready";
+    title.textContent="Payment confirmed.";
+    orderMeta.textContent=`Payment ${paymentId} · verified by Doberman Index commerce`;
+    if(serviceKey==="doberman-intelligence-record"){
+      message.textContent="Your Doberman Intelligence Record build is unlocked. Continue to the owner submission and send the evidence package for review.";
+      next.href="submit.html?order="+encodeURIComponent(paymentId);
+      next.textContent="Start Intelligence Record submission";
+    }else if(serviceKey==="kennel-promotion-service"){
+      message.textContent="Your 12-month Kennel Promotion order is confirmed. If the kennel already has an approved DI-K record and logo, no duplicate submission is needed. If not, complete the kennel record submission so the placement can be activated.";
+      next.href="submit-kennel.html?order="+encodeURIComponent(paymentId);
+      next.textContent="Open kennel submission";
+    }else{
+      next.href="index.html";
+      next.textContent="Return to Doberman Index";
+    }
+  }catch(error){
+    panel.dataset.state="failed";
+    title.textContent="Verification pending.";
+    message.textContent=error.message+" If you have just paid, wait a moment and refresh this page. Your Dodo receipt remains your payment record.";
+    orderMeta.textContent=paymentId?("Payment reference: "+paymentId):"No payment reference received.";
+  }
+})();
+</script>
+</body>
+</html>
