@@ -83,6 +83,77 @@ async function verifyWebhook(request, rawBody, env) {
     .some(value => constantTimeEqual(value, expected));
 }
 
+async function readStoredPayment(env, paymentId) {
+  if (!env.COMMERCE_DB) return null;
+  return env.COMMERCE_DB.prepare(
+    "SELECT payment_id, service_key, order_reference, customer_email, custom_fields_json, status, succeeded_at, updated_at FROM payments WHERE payment_id = ?"
+  ).bind(paymentId).first();
+}
+
+async function rememberWebhook(env, webhookId, eventType) {
+  if (!env.COMMERCE_DB || !webhookId) return { duplicate: false };
+  try {
+    await env.COMMERCE_DB.prepare(
+      "INSERT INTO webhook_events (webhook_id, event_type, received_at) VALUES (?, ?, ?)"
+    ).bind(webhookId, eventType || "unknown", new Date().toISOString()).run();
+    return { duplicate: false };
+  } catch (error) {
+    const message = String(error?.message || error);
+    if (/unique|constraint/i.test(message)) return { duplicate: true };
+    throw error;
+  }
+}
+
+async function upsertPayment(env, payment, eventTimestamp) {
+  if (!env.COMMERCE_DB) return;
+  const paymentId = payment.payment_id || payment.id;
+  if (!paymentId) return;
+  const serviceKey = payment.metadata?.service_key || "";
+  const orderReference = payment.metadata?.order_reference || null;
+  const customerEmail = payment.customer?.email || null;
+  const customFieldsJson = payment.custom_fields ? JSON.stringify(payment.custom_fields) : null;
+  const status = String(payment.status || "succeeded").toLowerCase();
+  const now = new Date().toISOString();
+  const succeededAt = eventTimestamp || now;
+
+  await env.COMMERCE_DB.prepare(`
+    INSERT INTO payments (
+      payment_id, service_key, order_reference, customer_email,
+      custom_fields_json, status, succeeded_at, updated_at
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    ON CONFLICT(payment_id) DO UPDATE SET
+      service_key = excluded.service_key,
+      order_reference = excluded.order_reference,
+      customer_email = excluded.customer_email,
+      custom_fields_json = excluded.custom_fields_json,
+      status = excluded.status,
+      succeeded_at = COALESCE(payments.succeeded_at, excluded.succeeded_at),
+      updated_at = excluded.updated_at
+  `).bind(
+    paymentId, serviceKey, orderReference, customerEmail,
+    customFieldsJson, status, succeededAt, now
+  ).run();
+
+  const entitlementId = "ent_" + paymentId;
+  await env.COMMERCE_DB.prepare(`
+    INSERT INTO entitlements (
+      entitlement_id, source_type, service_key, source_reference,
+      customer_email, kennel_reference, status, created_at, expires_at, consumed_at
+    ) VALUES (?, 'paid_dodo', ?, ?, ?, ?, 'available', ?, ?, NULL)
+    ON CONFLICT(source_type, source_reference, service_key) DO NOTHING
+  `).bind(
+    entitlementId,
+    serviceKey,
+    paymentId,
+    customerEmail,
+    null,
+    now,
+    serviceKey === "kennel-promotion-service"
+      ? new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()
+      : null
+  ).run();
+}
+
 async function createCheckout(request, env) {
   const input = await request.json().catch(() => ({}));
   const serviceKey = String(input.service_key || "");
@@ -127,15 +198,6 @@ async function createCheckout(request, env) {
     return json({ error: body.message || body.error || "Dodo checkout session could not be created." }, 502);
   }
 
-  if (env.COMMERCE_STATE && body.session_id) {
-    await env.COMMERCE_STATE.put("session:" + body.session_id, JSON.stringify({
-      service_key: serviceKey,
-      order_reference: orderReference,
-      customer_email: customerEmail,
-      created_at: new Date().toISOString()
-    }), { expirationTtl: 60 * 60 * 30 });
-  }
-
   return json({
     checkout_url: body.checkout_url,
     session_id: body.session_id,
@@ -148,11 +210,9 @@ async function paymentStatus(url, env) {
   const serviceKey = url.searchParams.get("service") || "";
   if (!paymentId) return json({ error: "payment_id is required." }, 400);
 
-  if (env.COMMERCE_STATE) {
-    const stored = await env.COMMERCE_STATE.get("payment:" + paymentId, "json");
-    if (stored && (!serviceKey || stored.service_key === serviceKey)) {
-      return json({ status: "succeeded", payment_id: paymentId, service_key: stored.service_key });
-    }
+  const stored = await readStoredPayment(env, paymentId);
+  if (stored && stored.status === "succeeded" && (!serviceKey || stored.service_key === serviceKey)) {
+    return json({ status: "succeeded", payment_id: paymentId, service_key: stored.service_key });
   }
 
   const response = await fetch(apiBase(env) + "/payments/" + encodeURIComponent(paymentId), {
@@ -173,26 +233,12 @@ async function webhook(request, env) {
   if (!valid) return json({ error: "Invalid webhook signature." }, 401);
 
   const webhookId = request.headers.get("webhook-id");
-  if (env.COMMERCE_STATE && webhookId) {
-    const duplicate = await env.COMMERCE_STATE.get("webhook:" + webhookId);
-    if (duplicate) return json({ received: true, duplicate: true });
-    await env.COMMERCE_STATE.put("webhook:" + webhookId, "1", { expirationTtl: 60 * 60 * 24 * 30 });
-  }
-
   const event = JSON.parse(rawBody);
+  const eventMemory = await rememberWebhook(env, webhookId, event.type);
+  if (eventMemory.duplicate) return json({ received: true, duplicate: true });
+
   if (event.type === "payment.succeeded") {
-    const payment = event.data || {};
-    const paymentId = payment.payment_id || payment.id;
-    const serviceKey = payment.metadata?.service_key || "";
-    if (paymentId && env.COMMERCE_STATE) {
-      await env.COMMERCE_STATE.put("payment:" + paymentId, JSON.stringify({
-        service_key: serviceKey,
-        order_reference: payment.metadata?.order_reference || null,
-        customer_email: payment.customer?.email || null,
-        custom_fields: payment.custom_fields || null,
-        succeeded_at: event.timestamp || new Date().toISOString()
-      }), { expirationTtl: 60 * 60 * 24 * 400 });
-    }
+    await upsertPayment(env, event.data || {}, event.timestamp || null);
   }
 
   return json({ received: true });
