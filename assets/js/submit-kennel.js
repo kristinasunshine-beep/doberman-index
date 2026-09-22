@@ -26,12 +26,15 @@
     if(!validStep(4))return;
     prepare.disabled=true; setError(); prepare.firstChild.textContent="Preparing… ";
     try{
+      if(!window.DIAccess) throw new Error("Submission access verification is unavailable.");
+      await window.DIAccess.ready;
       if(!window.DISubmissionUpload) throw new Error("Secure submission service is unavailable.");
       const {uploads,entries}=packageFiles();
-      const data={package_version:"2.2",package_type:"kennel_owner_submission",submission_kind:"initial",record_id:null,supersedes_submission_reference:null,submission_reference:globalThis.crypto?.randomUUID?.()||`submission-${Date.now()}`,created_at:new Date().toISOString(),canonical_record:record(),private_contact:{name:value("contact_name"),email:value("contact_email"),phone:value("contact_phone"),relationship:value("relationship")||"kennel_representative"},network_candidates:{dobermans:lines("network_dobermans"),litters:lines("network_litters")},consent:{accuracy_confirmed:true,publication_understood:true,asset_rights_confirmed:true,confirmed_at:new Date().toISOString()},uploads};
+      const data={package_version:"2.2",package_type:"kennel_owner_submission",submission_kind:"initial",record_id:null,supersedes_submission_reference:null,submission_reference:globalThis.crypto?.randomUUID?.()||`submission-${Date.now()}`,created_at:new Date().toISOString(),canonical_record:record(),private_contact:{name:value("contact_name"),email:value("contact_email"),phone:value("contact_phone"),relationship:value("relationship")||"kennel_representative"},network_candidates:{dobermans:lines("network_dobermans"),litters:lines("network_litters")},consent:{accuracy_confirmed:true,publication_understood:true,asset_rights_confirmed:true,confirmed_at:new Date().toISOString()},uploads,access:window.DIAccess.context()};
       entries.unshift({name:"submission.json",data:`${JSON.stringify(data,null,2)}\n`});
       const archive=await window.DIZip.create(entries),filename=`DOBERMAN-INDEX-${safe(value("kennel_name"))}-KENNEL-SUBMISSION.zip`;
       const result=await window.DISubmissionUpload.send({archive,filename,submission:data,entityName:value("kennel_name"),packageType:"kennel",onProgress:({phase,percent})=>{prepare.firstChild.textContent=phase==="finalizing"?"Finalizing… ":`Sending… ${percent}% `}});
+      await window.DIAccess.consume(result.submissionReference||data.submission_reference);
       success.innerHTML=`<strong>Submission received.</strong><span>Your kennel package was sent securely to Doberman Index Records. Reference: ${esc(result.submissionReference||data.submission_reference)}</span>`;
       success.hidden=false; localStorage.removeItem(storageKey); saveStatus.textContent="Submission received"; prepare.firstChild.textContent="Submitted ";
     }catch(e){setError(`We could not send the submission. Your answers and selected files are still here. Check the connection and try again. ${e.message||""}`.trim());prepare.disabled=false;prepare.firstChild.textContent="Submit kennel ";}
