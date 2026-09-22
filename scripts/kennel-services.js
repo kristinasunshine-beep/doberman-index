@@ -126,7 +126,7 @@
 
   function checkoutReady(service) {
     const checkout = object(service.checkout);
-    return Boolean(checkout.product_id && checkout.variant_id && safeCheckoutUrl(checkout.checkout_url));
+    return checkout.provider === 'dodo_payments' && Boolean(checkout.product_id);
   }
 
   async function mount({ fetchJson }) {
@@ -136,11 +136,13 @@
     const services = list(configuration.services);
     const selector = module.querySelector('[data-service-selector]');
     const cards = services.map(service => {
-        const checkoutUrl = checkoutReady(service) ? safeCheckoutUrl(service.checkout.checkout_url) : null;
-        const button = node(checkoutUrl ? 'a' : 'button', 'service-option');
-        if (checkoutUrl) button.href = checkoutUrl;
-        else {
-          button.type = 'button';
+        const commerceReady = checkoutReady(service);
+        const button = node('button', 'service-option');
+        button.type = 'button';
+        if (commerceReady) {
+          button.dataset.commerceProductId = service.checkout.product_id;
+          button.dataset.commerceServiceId = service.id;
+        } else {
           button.setAttribute('aria-disabled', 'true');
         }
         button.dataset.serviceId = service.id;
