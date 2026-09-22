@@ -154,6 +154,220 @@ async function upsertPayment(env, payment, eventTimestamp) {
   ).run();
 }
 
+
+function tokenBytes(length = 32) {
+  const bytes = new Uint8Array(length);
+  crypto.getRandomValues(bytes);
+  let binary = "";
+  bytes.forEach(byte => { binary += String.fromCharCode(byte); });
+  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+}
+
+async function sha256Hex(value) {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
+  return Array.from(new Uint8Array(digest)).map(byte => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function invitationAdminAuthorized(request, env) {
+  const auth = request.headers.get("Authorization") || "";
+  const expected = env.INVITATION_ADMIN_KEY ? "Bearer " + env.INVITATION_ADMIN_KEY : "";
+  return Boolean(expected) && constantTimeEqual(auth, expected);
+}
+
+async function issueInvitations(request, env) {
+  if (!invitationAdminAuthorized(request, env)) return json({ error: "Unauthorized." }, 401);
+  if (!env.COMMERCE_DB) return json({ error: "Commerce database is unavailable." }, 503);
+
+  const input = await request.json().catch(() => ({}));
+  const serviceKey = String(input.service_key || "");
+  if (!PRODUCTS[serviceKey]) return json({ error: "Unknown service." }, 400);
+
+  const quantity = Math.max(1, Math.min(100, Number(input.quantity) || 1));
+  const expiresInDays = Math.max(1, Math.min(365, Number(input.expires_in_days) || 30));
+  const now = new Date();
+  const expiresAt = new Date(now.getTime() + expiresInDays * 86400000).toISOString();
+  const issued = [];
+
+  for (let index = 0; index < quantity; index += 1) {
+    const invitationId = crypto.randomUUID();
+    const token = tokenBytes();
+    const tokenHash = await sha256Hex(token);
+    const recipientName = quantity === 1 ? String(input.recipient_name || "").trim() || null : null;
+    const recipientEmail = quantity === 1 ? String(input.recipient_email || "").trim() || null : null;
+    const note = String(input.note || "").trim() || null;
+
+    await env.COMMERCE_DB.prepare(`
+      INSERT INTO invitations (
+        invitation_id, token_hash, service_key, recipient_name, recipient_email,
+        status, note, created_at, expires_at
+      ) VALUES (?, ?, ?, ?, ?, 'issued', ?, ?, ?)
+    `).bind(
+      invitationId, tokenHash, serviceKey, recipientName, recipientEmail,
+      note, now.toISOString(), expiresAt
+    ).run();
+
+    await env.COMMERCE_DB.prepare(`
+      INSERT INTO entitlements (
+        entitlement_id, source_type, service_key, source_reference,
+        customer_email, status, created_at, expires_at
+      ) VALUES (?, 'invitation_waiver', ?, ?, ?, 'available', ?, ?)
+    `).bind(
+      "ent_inv_" + invitationId,
+      serviceKey,
+      invitationId,
+      recipientEmail,
+      now.toISOString(),
+      expiresAt
+    ).run();
+
+    issued.push({
+      invitation_id: invitationId,
+      service_key: serviceKey,
+      token,
+      invite_url: SITE_ORIGIN + "/invite.html?token=" + encodeURIComponent(token),
+      expires_at: expiresAt
+    });
+  }
+
+  return json({ invitations: issued });
+}
+
+async function invitationFromToken(env, token) {
+  if (!env.COMMERCE_DB || !token) return null;
+  const tokenHash = await sha256Hex(token);
+  return env.COMMERCE_DB.prepare(`
+    SELECT invitation_id, service_key, recipient_name, recipient_email,
+           status, note, created_at, expires_at, opened_at, redeemed_at, revoked_at
+    FROM invitations WHERE token_hash = ?
+  `).bind(tokenHash).first();
+}
+
+function invitationUsable(record) {
+  if (!record) return false;
+  if (record.status === "revoked" || record.status === "redeemed") return false;
+  if (record.revoked_at || record.redeemed_at) return false;
+  if (record.expires_at && Date.parse(record.expires_at) < Date.now()) return false;
+  return record.status === "issued" || record.status === "opened";
+}
+
+async function resolveInvitation(url, env) {
+  const token = url.searchParams.get("token") || "";
+  const requestedService = url.searchParams.get("service") || "";
+  const invitation = await invitationFromToken(env, token);
+  if (!invitationUsable(invitation)) return json({ valid: false, error: "Invitation is invalid, expired or already used." }, 404);
+  if (requestedService && invitation.service_key !== requestedService) return json({ valid: false, error: "Invitation service mismatch." }, 409);
+
+  const now = new Date().toISOString();
+  if (!invitation.opened_at) {
+    await env.COMMERCE_DB.prepare(
+      "UPDATE invitations SET status = 'opened', opened_at = ? WHERE invitation_id = ? AND status = 'issued'"
+    ).bind(now, invitation.invitation_id).run();
+  }
+
+  return json({
+    valid: true,
+    invitation_id: invitation.invitation_id,
+    service_key: invitation.service_key,
+    service_name: PRODUCTS[invitation.service_key]?.name || invitation.service_key,
+    recipient_name: invitation.recipient_name,
+    expires_at: invitation.expires_at
+  });
+}
+
+async function redeemInvitation(request, env) {
+  if (!env.COMMERCE_DB) return json({ error: "Commerce database is unavailable." }, 503);
+  const input = await request.json().catch(() => ({}));
+  const token = String(input.token || "");
+  const serviceKey = String(input.service_key || "");
+  const invitation = await invitationFromToken(env, token);
+  if (!invitationUsable(invitation)) return json({ error: "Invitation is invalid, expired or already used." }, 409);
+  if (serviceKey && invitation.service_key !== serviceKey) return json({ error: "Invitation service mismatch." }, 409);
+
+  const now = new Date().toISOString();
+  await env.COMMERCE_DB.batch([
+    env.COMMERCE_DB.prepare(
+      "UPDATE invitations SET status = 'redeemed', redeemed_at = ? WHERE invitation_id = ?"
+    ).bind(now, invitation.invitation_id),
+    env.COMMERCE_DB.prepare(
+      "UPDATE entitlements SET status = 'consumed', consumed_at = ? WHERE source_type = 'invitation_waiver' AND source_reference = ? AND service_key = ?"
+    ).bind(now, invitation.invitation_id, invitation.service_key)
+  ]);
+
+  return json({ redeemed: true, invitation_id: invitation.invitation_id, service_key: invitation.service_key });
+}
+
+async function verifyAccess(url, env) {
+  const serviceKey = url.searchParams.get("service") || "";
+  const paymentId = url.searchParams.get("payment_id") || url.searchParams.get("order") || "";
+  const inviteToken = url.searchParams.get("invite") || "";
+
+  if (!PRODUCTS[serviceKey]) return json({ valid: false, error: "Unknown service." }, 400);
+
+  if (inviteToken) {
+    const invitation = await invitationFromToken(env, inviteToken);
+    if (!invitationUsable(invitation) || invitation.service_key !== serviceKey) {
+      return json({ valid: false, error: "Invitation is unavailable." }, 403);
+    }
+    return json({
+      valid: true,
+      source_type: "invitation_waiver",
+      source_reference: invitation.invitation_id,
+      invitation_id: invitation.invitation_id,
+      service_key: serviceKey,
+      recipient_name: invitation.recipient_name
+    });
+  }
+
+  if (paymentId) {
+    const payment = await readStoredPayment(env, paymentId);
+    const entitlement = env.COMMERCE_DB ? await env.COMMERCE_DB.prepare(`
+      SELECT entitlement_id, status FROM entitlements
+      WHERE source_type = 'paid_dodo' AND source_reference = ? AND service_key = ?
+    `).bind(paymentId, serviceKey).first() : null;
+
+    if (payment?.status === "succeeded" && entitlement?.status === "available") {
+      return json({
+        valid: true,
+        source_type: "paid_dodo",
+        source_reference: paymentId,
+        service_key: serviceKey,
+        customer_email: payment.customer_email || null
+      });
+    }
+
+    const live = await paymentStatus(new URL(SITE_ORIGIN + "/?payment_id=" + encodeURIComponent(paymentId) + "&service=" + encodeURIComponent(serviceKey)), env);
+    if (live.status === 200) {
+      const body = await live.clone().json().catch(() => ({}));
+      if (body.status === "succeeded") {
+        return json({ valid: true, source_type: "paid_dodo", source_reference: paymentId, service_key: serviceKey });
+      }
+    }
+  }
+
+  return json({ valid: false, error: "A confirmed order or private invitation is required." }, 403);
+}
+
+async function consumePaidEntitlement(request, env) {
+  if (!env.COMMERCE_DB) return json({ error: "Commerce database is unavailable." }, 503);
+  const input = await request.json().catch(() => ({}));
+  const paymentId = String(input.payment_id || input.order || "");
+  const serviceKey = String(input.service_key || "");
+  if (!paymentId || !PRODUCTS[serviceKey]) return json({ error: "Payment and service are required." }, 400);
+
+  const payment = await readStoredPayment(env, paymentId);
+  if (!payment || payment.status !== "succeeded" || payment.service_key !== serviceKey) {
+    return json({ error: "Confirmed payment not found." }, 403);
+  }
+
+  const now = new Date().toISOString();
+  const result = await env.COMMERCE_DB.prepare(`
+    UPDATE entitlements SET status = 'consumed', consumed_at = ?
+    WHERE source_type = 'paid_dodo' AND source_reference = ? AND service_key = ? AND status = 'available'
+  `).bind(now, paymentId, serviceKey).run();
+
+  return json({ consumed: Boolean(result.meta?.changes), payment_id: paymentId, service_key: serviceKey });
+}
+
 async function createCheckout(request, env) {
   const input = await request.json().catch(() => ({}));
   const serviceKey = String(input.service_key || "");
@@ -295,6 +509,11 @@ export default {
     if (url.pathname === "/v1/commerce/checkout" && request.method === "POST") return createCheckout(request, env);
     if (url.pathname === "/v1/commerce/status" && request.method === "GET") return paymentStatus(url, env);
     if (url.pathname === "/v1/commerce/webhook" && request.method === "POST") return webhook(request, env);
+    if (url.pathname === "/v1/commerce/access" && request.method === "GET") return verifyAccess(url, env);
+    if (url.pathname === "/v1/commerce/consume" && request.method === "POST") return consumePaidEntitlement(request, env);
+    if (url.pathname === "/v1/invitations/issue" && request.method === "POST") return issueInvitations(request, env);
+    if (url.pathname === "/v1/invitations/resolve" && request.method === "GET") return resolveInvitation(url, env);
+    if (url.pathname === "/v1/invitations/redeem" && request.method === "POST") return redeemInvitation(request, env);
     const path = url.pathname.replace(/\/+$/, "") || "/";
     if (path === "/" || path === "/health") {
       return json({
