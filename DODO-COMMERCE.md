@@ -33,6 +33,17 @@ Homepage service selection
 
 GitHub Pages never receives the Dodo API key or webhook secret.
 
+## State and entitlement model
+
+Commerce state is stored in Cloudflare D1, not KV. D1 is used for:
+- webhook idempotency;
+- verified Dodo payment state;
+- paid entitlements;
+- invitation / waived entitlements;
+- 12-month promotion expiry state.
+
+The public invitation system remains outside Dodo. A free invitation creates an `invitation_waiver` entitlement that unlocks the same questionnaire and review pipeline without creating a zero-price Dodo order.
+
 ## Founding Network
 
 Founding / waived Intelligence Records are invitation-only. They do not use a public discount and do not change the €149 public value anchor. They enter the same review, canonical record and publication workflow.
