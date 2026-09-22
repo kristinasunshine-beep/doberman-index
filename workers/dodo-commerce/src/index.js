@@ -227,6 +227,24 @@ async function paymentStatus(url, env) {
   return json({ status, payment_id: paymentId, service_key: actualService });
 }
 
+
+async function updatePaymentLifecycle(env, paymentId, status) {
+  if (!env.COMMERCE_DB || !paymentId) return;
+  const now = new Date().toISOString();
+  await env.COMMERCE_DB.prepare(
+    "UPDATE payments SET status = ?, updated_at = ? WHERE payment_id = ?"
+  ).bind(status, now, paymentId).run();
+  if (["refunded", "disputed"].includes(status)) {
+    await env.COMMERCE_DB.prepare(
+      "UPDATE entitlements SET status = ? WHERE source_type = 'paid_dodo' AND source_reference = ?"
+    ).bind(status, paymentId).run();
+  }
+}
+
+function eventPaymentId(data) {
+  return data?.payment_id || data?.payment?.payment_id || data?.payment?.id || null;
+}
+
 async function webhook(request, env) {
   const rawBody = await request.text();
   const valid = await verifyWebhook(request, rawBody, env);
@@ -239,6 +257,32 @@ async function webhook(request, env) {
 
   if (event.type === "payment.succeeded") {
     await upsertPayment(env, event.data || {}, event.timestamp || null);
+  } else if (event.type === "payment.failed") {
+    const payment = event.data || {};
+    const paymentId = payment.payment_id || payment.id || null;
+    if (paymentId && env.COMMERCE_DB) {
+      const now = new Date().toISOString();
+      await env.COMMERCE_DB.prepare(`
+        INSERT INTO payments (
+          payment_id, service_key, order_reference, customer_email,
+          custom_fields_json, status, succeeded_at, updated_at
+        ) VALUES (?, ?, ?, ?, ?, 'failed', NULL, ?)
+        ON CONFLICT(payment_id) DO UPDATE SET
+          status = 'failed',
+          updated_at = excluded.updated_at
+      `).bind(
+        paymentId,
+        payment.metadata?.service_key || "",
+        payment.metadata?.order_reference || null,
+        payment.customer?.email || null,
+        payment.custom_fields ? JSON.stringify(payment.custom_fields) : null,
+        now
+      ).run();
+    }
+  } else if (event.type === "refund.succeeded") {
+    await updatePaymentLifecycle(env, eventPaymentId(event.data || {}), "refunded");
+  } else if (event.type === "dispute.opened") {
+    await updatePaymentLifecycle(env, eventPaymentId(event.data || {}), "disputed");
   }
 
   return json({ received: true });
