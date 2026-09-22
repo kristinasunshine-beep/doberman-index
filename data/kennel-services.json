@@ -20,10 +20,9 @@
         "Performance and results"
       ],
       "checkout": {
-        "provider": "lemon_squeezy",
-        "product_id": null,
-        "variant_id": null,
-        "checkout_url": null
+        "provider": "dodo_payments",
+        "integration": "checkout_session",
+        "product_id": null
       }
     },
     {
@@ -47,10 +46,9 @@
         "Program trajectory"
       ],
       "checkout": {
-        "provider": "lemon_squeezy",
-        "product_id": null,
-        "variant_id": null,
-        "checkout_url": null
+        "provider": "dodo_payments",
+        "integration": "checkout_session",
+        "product_id": null
       }
     },
     {
@@ -74,10 +72,9 @@
         "Data gaps"
       ],
       "checkout": {
-        "provider": "lemon_squeezy",
-        "product_id": null,
-        "variant_id": null,
-        "checkout_url": null
+        "provider": "dodo_payments",
+        "integration": "checkout_session",
+        "product_id": null
       }
     }
   ]
