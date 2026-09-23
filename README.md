@@ -90,3 +90,17 @@ The public SEO model is unchanged: only clean `/records/DI-ID/` pages compete in
 
 For local verification without network submission, run `python scripts/test_indexnow.py` and `python scripts/indexnow.py --mode all --dry-run`.
 
+
+## 2026-09-22 Dodo commerce launch
+
+The public paid record product is **Doberman Intelligence Record · €149 one time**. The second launch service is **Kennel Promotion Service · €149 / 12 months**. Legacy "Indexing Service" naming is retired from the purchase path.
+
+Commerce is separated from the GitHub Pages frontend:
+
+- `data/commerce.json`: public product contract only;
+- `assets/js/commerce.js`: frontend session request/redirect;
+- `checkout-success.html`: server-verified return/fulfillment route;
+- `workers/dodo-commerce/`: server-side Dodo Checkout Session + webhook boundary;
+- `DODO-COMMERCE.md`: deployment and launch contract.
+
+Dodo API keys, webhook keys and product IDs are secrets and must never be committed. Founding/waived records use the same record standard outside the public checkout.
