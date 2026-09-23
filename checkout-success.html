@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#f1f1f1">
+<title>Payment received · Doberman Index</title>
+<style>
+:root{--paper:#f1f1f1;--ink:#121212;--muted:#6d6d68;--acid:#f3fe19;--blue:#0c01e6;--white:#fff}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  display:grid;
+  place-items:center;
+  padding:28px
+}
+main{
+  width:min(760px,100%);
+  background:var(--white);
+  padding:clamp(30px,6vw,72px);
+  border-top:10px solid var(--acid)
+}
+.eyebrow{
+  font:800 10px/1.2 ui-monospace,SFMono-Regular,Consolas,monospace;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--blue)
+}
+h1{
+  margin:18px 0 20px;
+  font-size:clamp(52px,9vw,100px);
+  line-height:.82;
+  letter-spacing:-.075em
+}
+p{
+  max-width:58ch;
+  color:var(--muted);
+  line-height:1.65
+}
+.order{
+  margin:34px 0;
+  padding:20px 0;
+  border-top:1px solid #d4d4cf;
+  border-bottom:1px solid #d4d4cf;
+  display:grid;
+  gap:8px
+}
+.order strong{font-size:18px}
+.order span{font-size:13px;color:var(--muted)}
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:30px
+}
+a{
+  display:inline-flex;
+  align-items:center;
+  min-height:50px;
+  padding:0 20px;
+  border-radius:999px;
+  background:var(--ink);
+  color:#fff;
+  text-decoration:none;
+  font-weight:750
+}
+a.secondary{
+  background:transparent;
+  color:var(--ink);
+  border:1px solid #bdbdb7
+}
+[data-state="checking"] .actions,
+[data-state="failed"] .primary-action{
+  display:none
+}
+</style>
+</head>
+
+<body>
+
+<main id="panel" data-state="checking">
+
+<div class="eyebrow">Dodo Payments / order return</div>
+
+<h1 id="title">Checking payment.</h1>
+
+<p id="message">
+Your checkout has returned to Doberman Index. We are verifying the payment before opening the next step.
+</p>
+
+<div class="order">
+<strong id="serviceName">Order</strong>
+<span id="orderMeta">Secure verification in progress.</span>
+</div>
+
+<div class="actions">
+<a class="primary-action" id="nextAction" href="index.html">Continue</a>
+<a class="secondary" href="index.html">Back to Doberman Index</a>
+</div>
+
+</main>
+
+<script>
+(async function(){
+
+  const panel=document.getElementById("panel");
+  const title=document.getElementById("title");
+  const message=document.getElementById("message");
+  const serviceName=document.getElementById("serviceName");
+  const orderMeta=document.getElementById("orderMeta");
+  const next=document.getElementById("nextAction");
+
+  const params=new URLSearchParams(location.search);
+
+  const orderReference=params.get("order_reference")||"";
+  const serviceKey=params.get("service")||"";
+
+  try{
+
+    const cfg=await fetch("data/commerce.json",{
+      cache:"no-store"
+    }).then(r=>r.json());
+
+    const product=cfg.products?.[serviceKey];
+
+    if(product){
+      serviceName.textContent=product.name;
+    }
+
+    if(!orderReference){
+      throw new Error(
+        "Order reference is missing from the return URL."
+      );
+    }
+
+    let state=null;
+
+    for(let attempt=0;attempt<10;attempt+=1){
+
+      const response=await fetch(
+        `${cfg.api_base}/v1/commerce/status?order_reference=${encodeURIComponent(orderReference)}&service=${encodeURIComponent(serviceKey)}`,
+        {cache:"no-store"}
+      );
+
+      state=await response.json().catch(()=>({}));
+
+      if(response.ok && state.status==="succeeded"){
+        break;
+      }
+
+      if(state.status!=="pending"){
+        throw new Error(
+          state.error||"Payment could not be verified."
+        );
+      }
+
+      await new Promise(
+        resolve=>setTimeout(resolve,1200)
+      );
+    }
+
+    if(!state || state.status!=="succeeded"){
+      throw new Error(
+        "Payment confirmation is still arriving. Refresh this page in a few seconds."
+      );
+    }
+
+    panel.dataset.state="ready";
+
+    title.textContent="Payment confirmed.";
+
+    orderMeta.textContent=
+      `Order ${orderReference} · verified by Doberman Index commerce`;
+
+    if(serviceKey==="doberman-intelligence-record"){
+
+      message.textContent=
+        "Your Doberman Intelligence Record build is unlocked. Continue to the owner questionnaire and send the evidence package for review.";
+
+      next.href=
+        "submit.html?order_reference="+
+        encodeURIComponent(orderReference);
+
+      next.textContent=
+        "Start Intelligence Record questionnaire";
+
+    }else if(serviceKey==="kennel-promotion-service"){
+
+      message.textContent=
+        "Your 12-month Kennel Promotion order is confirmed. Continue with the kennel information required to activate the promotion.";
+
+      next.href=
+        "submit-kennel.html?order_reference="+
+        encodeURIComponent(orderReference);
+
+      next.textContent=
+        "Start Kennel Promotion submission";
+
+    }else{
+
+      next.href="index.html";
+      next.textContent="Return to Doberman Index";
+
+    }
+
+  }catch(error){
+
+    panel.dataset.state="failed";
+
+    title.textContent="Verification pending.";
+
+    message.textContent=
+      error.message+
+      " Your Dodo receipt remains your payment record.";
+
+    orderMeta.textContent=
+      orderReference
+        ?("Order reference: "+orderReference)
+        :"No order reference received.";
+
+  }
+
+})();
+</script>
+
+</body>
+</html>
