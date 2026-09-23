@@ -4233,7 +4233,7 @@ textarea {
 <p class="pricing-note">One submission becomes a permanent record, pedigree analysis and breeding-intelligence foundation.</p>
 </div>
 <div class="tiers-grid">
-<article class="tier-card">
+<article class="tier-card" data-commerce-select="doberman-intelligence-record" tabindex="0" role="button" aria-label="Select Doberman Intelligence Record">
 <div class="tier-num">01</div>
 <div class="tier-copy"><h3 class="tier-title">Doberman Intelligence Record</h3><div class="tier-sub">EVIDENCE. LINEAGE. CONTEXT.</div></div>
 <p class="tier-desc">One Doberman transformed into a structured, evidence-graded intelligence record — built for comparison, lineage analysis and future breeding decisions.</p>
@@ -4243,7 +4243,7 @@ textarea {
 </div>
 <span aria-hidden="true" class="tier-arrow">↗</span>
 </article>
-<article class="tier-card">
+<article class="tier-card" data-commerce-select="kennel-promotion-service" tabindex="0" role="button" aria-label="Select Kennel Promotion Service">
 <div class="tier-num">02</div>
 <div class="tier-copy"><h3 class="tier-title">Kennel Promotion Service</h3><div class="tier-sub">PROGRAM. PROOF. REACH.</div></div>
 <p class="tier-desc">A reviewed kennel receives year-round visibility linked to its program record, connected Dobermans, litters and documented evidence.</p>
@@ -4282,21 +4282,21 @@ textarea {
 </div>
 </section>
 <section class="form-section" id="contact">
-<div class="section-label">Start Indexing</div>
+<div class="section-label">Start here</div>
 <h2 class="section-title">Every new record strengthens the network.</h2>
 <div class="form-wrap">
-<input placeholder="Your email address" type="email"/>
+<input id="commerceEmail" placeholder="Your email address" type="email" autocomplete="email"/>
 <div class="pkg-select" id="pkgSelect">
 <input name="package" type="hidden" value=""/>
-<button aria-expanded="false" aria-haspopup="listbox" class="pkg-select-trigger" type="button">Select a tier</button>
+<button aria-expanded="false" aria-haspopup="listbox" class="pkg-select-trigger" type="button">Select a service</button>
 <div class="pkg-select-options" role="listbox">
-<button class="pkg-option" data-value="Indexing Service" type="button">Indexing Service</button>
-<button class="pkg-option" data-value="Kennel Promotion" type="button">Kennel Promotion</button>
+<button class="pkg-option" data-value="doberman-intelligence-record" data-product-key="doberman-intelligence-record" type="button">Doberman Intelligence Record — €149</button>
+<button class="pkg-option" data-value="kennel-promotion-service" data-product-key="kennel-promotion-service" type="button">Kennel Promotion Service — €149 / 12 months</button>
 </div>
 </div>
-<button class="form-submit" type="button">Start indexing</button>
+<button class="form-submit" id="commerceCheckoutButton" type="button">Continue to secure checkout</button>
 </div>
-<p class="section-microcopy">Submission instructions follow purchase.</p>
+<p class="section-microcopy" id="commerceStatus" aria-live="polite">Secure checkout by Dodo Payments. Submission or promotion activation follows purchase.</p>
 </section>
 </main>
 <footer>
@@ -4602,5 +4602,7 @@ document.querySelectorAll('.objects .card[data-search-anchor]').forEach(card=>{
   card.addEventListener('click',go);
   card.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();go();}});
 });
-</script></body>
+</script>
+<script src="assets/js/commerce.js"></script>
+</body>
 </html>
