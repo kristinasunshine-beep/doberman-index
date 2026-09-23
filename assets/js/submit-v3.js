@@ -487,6 +487,8 @@
     prepareButton.disabled = true;
     prepareButton.firstChild.textContent = "Preparing… ";
     try {
+      if (!window.DIAccess) throw new Error("Submission access verification is unavailable.");
+      await window.DIAccess.ready;
       if (!window.DISubmissionUpload) throw new Error("Secure submission service is unavailable.");
       const { uploads, entries } = manifestAndEntries();
       const submission = {
@@ -506,6 +508,7 @@
           confirmed_at: new Date().toISOString(),
         },
         uploads,
+        access: window.DIAccess.context(),
       };
       entries.unshift({ name: "submission.json", data: `${JSON.stringify(submission, null, 2)}\n` });
       const archive = await window.DIZip.create(entries);
@@ -520,6 +523,7 @@
           prepareButton.firstChild.textContent = phase === "finalizing" ? "Finalizing… " : `Sending… ${percent}% `;
         },
       });
+      await window.DIAccess.consume(result.submissionReference || submission.submission_reference);
       const ref = escapeHtml(result.submissionReference || submission.submission_reference);
       successPanel.innerHTML = `<strong>Submission received.</strong><span>Your package was sent securely to Doberman Index Records. Reference: ${ref}</span>`;
       successPanel.hidden = false;
