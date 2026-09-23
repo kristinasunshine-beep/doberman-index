@@ -17,7 +17,7 @@ from xml.etree import ElementTree as ET
 
 ID_RE = re.compile(r"^DI-(M|F|K|L)-\d{6}$")
 SITE_NAME = "Doberman Index"
-SITE_DESCRIPTION = "A structured, searchable registry connecting Dobermans, pedigrees, kennels, litters and bloodlines."
+SITE_DESCRIPTION = "A breed intelligence system connecting Doberman evidence, pedigrees, kennels, litters and bloodlines for informed breeding decisions."
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -690,8 +690,8 @@ def build(root: Path) -> tuple[int, int]:
         "site_origin": origin,
         "generated_from_registry": registry.get("generated_at"),
         "static_pages": {
-            "/": {"title": "Doberman Index", "description": "A global registry that organizes Dobermans, pedigrees, and kennels into standardized, searchable profiles.", "canonical": f"{origin}/"},
-            "/about.html": {"title": "About · Doberman Index", "description": "Why Doberman Index exists: a structured, searchable registry for Dobermans, kennels, litters and bloodlines.", "canonical": f"{origin}/about.html"},
+            "/": {"title": "Doberman Index", "description": "A breed intelligence system that transforms evidence, pedigree and connected records into structured intelligence for breeding decisions.", "canonical": f"{origin}/"},
+            "/about.html": {"title": "About · Doberman Index", "description": "Why Doberman Index exists: a breed intelligence system for evidence, lineage, connected records and breeding decisions.", "canonical": f"{origin}/about.html"},
             "/records/": {key: value for key, value in directory_meta.items() if key != "image_dimensions"},
         },
         "records": manifest_records,
