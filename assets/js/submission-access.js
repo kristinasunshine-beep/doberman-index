@@ -6,7 +6,8 @@
 
   const service=document.body.dataset.accessService||"";
   const params=new URLSearchParams(location.search);
-  const paymentId=params.get("payment_id")||"";\n  const orderReference=params.get("order_reference")||params.get("order")||"";
+  const paymentId=params.get("payment_id")||"";
+  const orderReference=params.get("order_reference")||params.get("order")||"";
   const invite=params.get("invite")||"";
   const controls=[...form.querySelectorAll("input,select,textarea,button")];
   controls.forEach(el=>{el.disabled=true});
@@ -21,7 +22,8 @@
   async function verify(){
     const q=new URLSearchParams({service});
     if(invite)q.set("invite",invite);
-    else if(paymentId)q.set("payment_id",paymentId);\n    else if(orderReference)q.set("order_reference",orderReference);
+    else if(paymentId)q.set("payment_id",paymentId);
+    else if(orderReference)q.set("order_reference",orderReference);
     else throw new Error("Open this questionnaire from a confirmed purchase or private invitation.");
 
     const response=await fetch(API+"/v1/commerce/access?"+q.toString(),{cache:"no-store"});
