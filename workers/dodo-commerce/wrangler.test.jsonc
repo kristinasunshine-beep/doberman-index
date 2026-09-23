@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "doberman-index-commerce-test",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-01",
+  "vars": {
+    "DODO_PAYMENTS_ENVIRONMENT": "test_mode",
+    "DODO_PRODUCT_INTELLIGENCE_RECORD": "pdt_0NoEX1fxk41VZDYbXuztq",
+    "DODO_PRODUCT_KENNEL_PROMOTION": "pdt_0NoEXWvooGHIL5DHDrPBe"
+  },
+  "d1_databases": [
+    {
+      "binding": "COMMERCE_DB",
+      "database_name": "doberman-index-commerce-test",
+      "database_id": "af3dd2c5-54ae-465c-a004-ee9416b7eabf"
+    }
+  ]
+}
