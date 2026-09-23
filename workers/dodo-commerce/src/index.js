@@ -116,7 +116,11 @@ async function upsertPayment(env, payment, eventTimestamp) {
   const serviceKey = payment.metadata?.service_key || "";
   const orderReference = payment.metadata?.order_reference || null;
   const customerEmail = payment.customer?.email || null;
-  const customFieldsJson = payment.custom_fields ? JSON.stringify(payment.custom_fields) : null;
+  const customFieldResponses = payment.custom_field_responses || payment.custom_fields || null;
+  const customFieldsJson = customFieldResponses ? JSON.stringify(customFieldResponses) : null;
+  const kennelReference = Array.isArray(customFieldResponses)
+    ? customFieldResponses.find(field => field?.key === "kennel_reference")?.value || null
+    : null;
   const status = String(payment.status || "succeeded").toLowerCase();
   const now = new Date().toISOString();
   const succeededAt = eventTimestamp || now;
@@ -151,7 +155,7 @@ async function upsertPayment(env, payment, eventTimestamp) {
     serviceKey,
     paymentId,
     customerEmail,
-    null,
+    kennelReference,
     now,
     serviceKey === "kennel-promotion-service"
       ? new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()
@@ -612,7 +616,9 @@ async function webhook(request, env) {
         payment.metadata?.service_key || "",
         payment.metadata?.order_reference || null,
         payment.customer?.email || null,
-        payment.custom_fields ? JSON.stringify(payment.custom_fields) : null,
+        (payment.custom_field_responses || payment.custom_fields)
+          ? JSON.stringify(payment.custom_field_responses || payment.custom_fields)
+          : null,
         now
       ).run();
     }
