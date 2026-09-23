@@ -1,18 +1,18 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "doberman-index-commerce",
+  "name": "doberman-index-commerce-test",
   "main": "src/index.js",
   "compatibility_date": "2026-09-01",
   "vars": {
-    "DODO_PAYMENTS_ENVIRONMENT": "live_mode",
-    "DODO_PRODUCT_INTELLIGENCE_RECORD": "pdt_0NoA1RN8WXSqih1g1kXpT",
-    "DODO_PRODUCT_KENNEL_PROMOTION": "pdt_0NoA7GPj2xZ1kOx8WDeoR"
+    "DODO_PAYMENTS_ENVIRONMENT": "test_mode",
+    "DODO_PRODUCT_INTELLIGENCE_RECORD": "pdt_0NoEX1fxk41VZDYbXuztq",
+    "DODO_PRODUCT_KENNEL_PROMOTION": "pdt_0NoEXWvooGHIL5DHDrPBe"
   },
   "d1_databases": [
     {
       "binding": "COMMERCE_DB",
-      "database_name": "doberman-index-commerce",
-      "database_id": "fecfda6c-9ce9-4e59-bb8c-8b3921f117a0"
+      "database_name": "doberman-index-commerce-test",
+      "database_id": "af3dd2c5-54ae-465c-a004-ee9416b7eabf"
     }
   ]
 }
