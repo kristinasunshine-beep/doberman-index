@@ -116,7 +116,11 @@ async function upsertPayment(env, payment, eventTimestamp) {
   const serviceKey = payment.metadata?.service_key || "";
   const orderReference = payment.metadata?.order_reference || null;
   const customerEmail = payment.customer?.email || null;
-  const customFieldsJson = payment.custom_fields ? JSON.stringify(payment.custom_fields) : null;
+  const customFieldResponses = payment.custom_field_responses || payment.custom_fields || null;
+  const customFieldsJson = customFieldResponses ? JSON.stringify(customFieldResponses) : null;
+  const kennelReference = Array.isArray(customFieldResponses)
+    ? customFieldResponses.find(field => field?.key === "kennel_reference")?.value || null
+    : null;
   const status = String(payment.status || "succeeded").toLowerCase();
   const now = new Date().toISOString();
   const succeededAt = eventTimestamp || now;
@@ -151,7 +155,7 @@ async function upsertPayment(env, payment, eventTimestamp) {
     serviceKey,
     paymentId,
     customerEmail,
-    null,
+    kennelReference,
     now,
     serviceKey === "kennel-promotion-service"
       ? new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()
@@ -254,6 +258,32 @@ function invitationUsable(record) {
   return record.status === "issued" || record.status === "opened";
 }
 
+async function markInvitationOpened(env, invitation) {
+  if (!env.COMMERCE_DB || !invitation?.invitation_id) {
+    throw new Error("Commerce database is unavailable.");
+  }
+
+  const now = new Date().toISOString();
+  await env.COMMERCE_DB.prepare(`
+    UPDATE invitations
+    SET status = 'opened', opened_at = COALESCE(opened_at, ?)
+    WHERE invitation_id = ? AND status IN ('issued', 'opened')
+  `).bind(now, invitation.invitation_id).run();
+
+  const refreshed = await env.COMMERCE_DB.prepare(`
+    SELECT invitation_id, service_key, recipient_name, recipient_email,
+           status, note, created_at, expires_at, opened_at, redeemed_at, revoked_at
+    FROM invitations
+    WHERE invitation_id = ?
+  `).bind(invitation.invitation_id).first();
+
+  if (!refreshed || refreshed.status !== "opened" || !refreshed.opened_at) {
+    throw new Error("Invitation open state could not be persisted.");
+  }
+
+  return refreshed;
+}
+
 async function resolveInvitation(url, env) {
   const token = url.searchParams.get("token") || "";
   const requestedService = url.searchParams.get("service") || "";
@@ -261,20 +291,15 @@ async function resolveInvitation(url, env) {
   if (!invitationUsable(invitation)) return json({ valid: false, error: "Invitation is invalid, expired or already used." }, 404);
   if (requestedService && invitation.service_key !== requestedService) return json({ valid: false, error: "Invitation service mismatch." }, 409);
 
-  const now = new Date().toISOString();
-  if (!invitation.opened_at) {
-    await env.COMMERCE_DB.prepare(
-      "UPDATE invitations SET status = 'opened', opened_at = ? WHERE invitation_id = ? AND status = 'issued'"
-    ).bind(now, invitation.invitation_id).run();
-  }
+  const openedInvitation = await markInvitationOpened(env, invitation);
 
   return json({
     valid: true,
-    invitation_id: invitation.invitation_id,
-    service_key: invitation.service_key,
-    service_name: PRODUCTS[invitation.service_key]?.name || invitation.service_key,
-    recipient_name: invitation.recipient_name,
-    expires_at: invitation.expires_at
+    invitation_id: openedInvitation.invitation_id,
+    service_key: openedInvitation.service_key,
+    service_name: PRODUCTS[openedInvitation.service_key]?.name || openedInvitation.service_key,
+    recipient_name: openedInvitation.recipient_name,
+    expires_at: openedInvitation.expires_at
   });
 }
 
@@ -313,13 +338,16 @@ async function verifyAccess(url, env) {
     if (!invitationUsable(invitation) || invitation.service_key !== serviceKey) {
       return json({ valid: false, error: "Invitation is unavailable." }, 403);
     }
+
+    const openedInvitation = await markInvitationOpened(env, invitation);
+
     return json({
       valid: true,
       source_type: "invitation_waiver",
-      source_reference: invitation.invitation_id,
-      invitation_id: invitation.invitation_id,
+      source_reference: openedInvitation.invitation_id,
+      invitation_id: openedInvitation.invitation_id,
       service_key: serviceKey,
-      recipient_name: invitation.recipient_name
+      recipient_name: openedInvitation.recipient_name
     });
   }
 
@@ -588,7 +616,9 @@ async function webhook(request, env) {
         payment.metadata?.service_key || "",
         payment.metadata?.order_reference || null,
         payment.customer?.email || null,
-        payment.custom_fields ? JSON.stringify(payment.custom_fields) : null,
+        (payment.custom_field_responses || payment.custom_fields)
+          ? JSON.stringify(payment.custom_field_responses || payment.custom_fields)
+          : null,
         now
       ).run();
     }
