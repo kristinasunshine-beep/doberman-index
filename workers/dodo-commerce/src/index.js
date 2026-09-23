@@ -159,7 +159,6 @@ async function upsertPayment(env, payment, eventTimestamp) {
   ).run();
 }
 
-
 function tokenBytes(length = 32) {
   const bytes = new Uint8Array(length);
   crypto.getRandomValues(bytes);
@@ -328,13 +327,18 @@ async function verifyAccess(url, env) {
     const payment = paymentId
       ? await readStoredPayment(env, paymentId)
       : await readPaymentByOrderReference(env, orderReference);
+
     if (payment) {
       const entitlement = env.COMMERCE_DB ? await env.COMMERCE_DB.prepare(`
         SELECT entitlement_id, status FROM entitlements
         WHERE source_type = 'paid_dodo' AND source_reference = ? AND service_key = ?
       `).bind(payment.payment_id, serviceKey).first() : null;
 
-      if (payment.status === "succeeded" && entitlement?.status === "available" && payment.service_key === serviceKey) {
+      if (
+        payment.status === "succeeded" &&
+        entitlement?.status === "available" &&
+        payment.service_key === serviceKey
+      ) {
         return json({
           valid: true,
           source_type: "paid_dodo",
@@ -352,26 +356,40 @@ async function verifyAccess(url, env) {
 
 async function consumePaidEntitlement(request, env) {
   if (!env.COMMERCE_DB) return json({ error: "Commerce database is unavailable." }, 503);
+
   const input = await request.json().catch(() => ({}));
   const paymentId = String(input.payment_id || "");
   const orderReference = String(input.order_reference || input.order || "");
   const serviceKey = String(input.service_key || "");
-  if ((!paymentId && !orderReference) || !PRODUCTS[serviceKey]) return json({ error: "Order and service are required." }, 400);
+
+  if ((!paymentId && !orderReference) || !PRODUCTS[serviceKey]) {
+    return json({ error: "Order and service are required." }, 400);
+  }
 
   const payment = paymentId
     ? await readStoredPayment(env, paymentId)
     : await readPaymentByOrderReference(env, orderReference);
+
   if (!payment || payment.status !== "succeeded" || payment.service_key !== serviceKey) {
     return json({ error: "Confirmed payment not found." }, 403);
   }
 
+  const resolvedPaymentId = payment.payment_id;
   const now = new Date().toISOString();
+
   const result = await env.COMMERCE_DB.prepare(`
     UPDATE entitlements SET status = 'consumed', consumed_at = ?
-    WHERE source_type = 'paid_dodo' AND source_reference = ? AND service_key = ? AND status = 'available'
-  `).bind(now, paymentId, serviceKey).run();
+    WHERE source_type = 'paid_dodo'
+      AND source_reference = ?
+      AND service_key = ?
+      AND status = 'available'
+  `).bind(now, resolvedPaymentId, serviceKey).run();
 
-  return json({ consumed: Boolean(result.meta?.changes), payment_id: paymentId, service_key: serviceKey });
+  return json({
+    consumed: Boolean(result.meta?.changes),
+    payment_id: resolvedPaymentId,
+    service_key: serviceKey
+  });
 }
 
 async function createCheckout(request, env) {
@@ -379,18 +397,27 @@ async function createCheckout(request, env) {
   const serviceKey = String(input.service_key || "");
   const customerEmail = String(input.customer_email || "").trim();
   const product = PRODUCTS[serviceKey];
+
   if (!product) return json({ error: "Unknown service." }, 400);
-  if (!/^\S+@\S+\.\S+$/.test(customerEmail)) return json({ error: "A valid customer email is required." }, 400);
+  if (!/^\S+@\S+\.\S+$/.test(customerEmail)) {
+    return json({ error: "A valid customer email is required." }, 400);
+  }
 
   const productId = env[product.env];
   if (!productId) return json({ error: "This service is not yet activated in Dodo Payments." }, 503);
   if (!env.DODO_PAYMENTS_API_KEY) return json({ error: "Commerce API is not configured." }, 503);
 
   const orderReference = crypto.randomUUID();
+
   const payload = {
     product_cart: [{ product_id: productId, quantity: 1 }],
     customer: { email: customerEmail },
-    return_url: SITE_ORIGIN + "/checkout-success.html?service=" + encodeURIComponent(serviceKey) + "&order_reference=" + encodeURIComponent(orderReference),
+    return_url:
+      SITE_ORIGIN +
+      "/checkout-success.html?service=" +
+      encodeURIComponent(serviceKey) +
+      "&order_reference=" +
+      encodeURIComponent(orderReference),
     metadata: {
       order_reference: orderReference,
       service_key: serviceKey,
@@ -403,6 +430,7 @@ async function createCheckout(request, env) {
       allow_discount_code: false
     }
   };
+
   if (product.customFields) payload.custom_fields = product.customFields;
 
   const response = await fetch(apiBase(env) + "/checkouts", {
@@ -413,9 +441,13 @@ async function createCheckout(request, env) {
     },
     body: JSON.stringify(payload)
   });
+
   const body = await response.json().catch(() => ({}));
+
   if (!response.ok || !body.checkout_url) {
-    return json({ error: body.message || body.error || "Dodo checkout session could not be created." }, 502);
+    return json({
+      error: body.message || body.error || "Dodo checkout session could not be created."
+    }, 502);
   }
 
   return json({
@@ -434,8 +466,12 @@ async function paymentStatus(url, env) {
     const stored = await env.COMMERCE_DB.prepare(
       "SELECT payment_id, service_key, order_reference, customer_email, status FROM payments WHERE order_reference = ?"
     ).bind(orderReference).first();
+
     if (stored) {
-      if (serviceKey && stored.service_key !== serviceKey) return json({ error: "Service mismatch." }, 409);
+      if (serviceKey && stored.service_key !== serviceKey) {
+        return json({ error: "Service mismatch." }, 409);
+      }
+
       return json({
         status: stored.status,
         payment_id: stored.payment_id,
@@ -443,35 +479,66 @@ async function paymentStatus(url, env) {
         service_key: stored.service_key
       });
     }
-    return json({ status: "pending", order_reference: orderReference, service_key: serviceKey }, 202);
+
+    return json({
+      status: "pending",
+      order_reference: orderReference,
+      service_key: serviceKey
+    }, 202);
   }
 
-  if (!paymentId) return json({ error: "payment_id or order_reference is required." }, 400);
+  if (!paymentId) {
+    return json({ error: "payment_id or order_reference is required." }, 400);
+  }
 
   const stored = await readStoredPayment(env, paymentId);
+
   if (stored && (!serviceKey || stored.service_key === serviceKey)) {
-    return json({ status: stored.status, payment_id: paymentId, service_key: stored.service_key });
+    return json({
+      status: stored.status,
+      payment_id: paymentId,
+      service_key: stored.service_key
+    });
   }
 
-  const response = await fetch(apiBase(env) + "/payments/" + encodeURIComponent(paymentId), {
-    headers: { "Authorization": "Bearer " + env.DODO_PAYMENTS_API_KEY }
-  });
+  const response = await fetch(
+    apiBase(env) + "/payments/" + encodeURIComponent(paymentId),
+    {
+      headers: {
+        "Authorization": "Bearer " + env.DODO_PAYMENTS_API_KEY
+      }
+    }
+  );
+
   const payment = await response.json().catch(() => ({}));
-  if (!response.ok) return json({ error: "Payment could not be verified." }, 502);
+
+  if (!response.ok) {
+    return json({ error: "Payment could not be verified." }, 502);
+  }
 
   const actualService = payment.metadata?.service_key || "";
   const status = String(payment.status || "").toLowerCase();
-  if (serviceKey && actualService && actualService !== serviceKey) return json({ error: "Service mismatch." }, 409);
-  return json({ status, payment_id: paymentId, service_key: actualService });
-}
 
+  if (serviceKey && actualService && actualService !== serviceKey) {
+    return json({ error: "Service mismatch." }, 409);
+  }
+
+  return json({
+    status,
+    payment_id: paymentId,
+    service_key: actualService
+  });
+}
 
 async function updatePaymentLifecycle(env, paymentId, status) {
   if (!env.COMMERCE_DB || !paymentId) return;
+
   const now = new Date().toISOString();
+
   await env.COMMERCE_DB.prepare(
     "UPDATE payments SET status = ?, updated_at = ? WHERE payment_id = ?"
   ).bind(status, now, paymentId).run();
+
   if (["refunded", "disputed"].includes(status)) {
     await env.COMMERCE_DB.prepare(
       "UPDATE entitlements SET status = ? WHERE source_type = 'paid_dodo' AND source_reference = ?"
@@ -486,20 +553,28 @@ function eventPaymentId(data) {
 async function webhook(request, env) {
   const rawBody = await request.text();
   const valid = await verifyWebhook(request, rawBody, env);
-  if (!valid) return json({ error: "Invalid webhook signature." }, 401);
+
+  if (!valid) {
+    return json({ error: "Invalid webhook signature." }, 401);
+  }
 
   const webhookId = request.headers.get("webhook-id");
   const event = JSON.parse(rawBody);
   const eventMemory = await rememberWebhook(env, webhookId, event.type);
-  if (eventMemory.duplicate) return json({ received: true, duplicate: true });
+
+  if (eventMemory.duplicate) {
+    return json({ received: true, duplicate: true });
+  }
 
   if (event.type === "payment.succeeded") {
     await upsertPayment(env, event.data || {}, event.timestamp || null);
   } else if (event.type === "payment.failed") {
     const payment = event.data || {};
     const paymentId = payment.payment_id || payment.id || null;
+
     if (paymentId && env.COMMERCE_DB) {
       const now = new Date().toISOString();
+
       await env.COMMERCE_DB.prepare(`
         INSERT INTO payments (
           payment_id, service_key, order_reference, customer_email,
@@ -518,9 +593,17 @@ async function webhook(request, env) {
       ).run();
     }
   } else if (event.type === "refund.succeeded") {
-    await updatePaymentLifecycle(env, eventPaymentId(event.data || {}), "refunded");
+    await updatePaymentLifecycle(
+      env,
+      eventPaymentId(event.data || {}),
+      "refunded"
+    );
   } else if (event.type === "dispute.opened") {
-    await updatePaymentLifecycle(env, eventPaymentId(event.data || {}), "disputed");
+    await updatePaymentLifecycle(
+      env,
+      eventPaymentId(event.data || {}),
+      "disputed"
+    );
   }
 
   return json({ received: true });
@@ -529,16 +612,72 @@ async function webhook(request, env) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders });
-    if (url.pathname === "/v1/commerce/checkout" && request.method === "POST") return createCheckout(request, env);
-    if (url.pathname === "/v1/commerce/status" && request.method === "GET") return paymentStatus(url, env);
-    if (url.pathname === "/v1/commerce/webhook" && request.method === "POST") return webhook(request, env);
-    if (url.pathname === "/v1/commerce/access" && request.method === "GET") return verifyAccess(url, env);
-    if (url.pathname === "/v1/commerce/consume" && request.method === "POST") return consumePaidEntitlement(request, env);
-    if (url.pathname === "/v1/invitations/issue" && request.method === "POST") return issueInvitations(request, env);
-    if (url.pathname === "/v1/invitations/resolve" && request.method === "GET") return resolveInvitation(url, env);
-    if (url.pathname === "/v1/invitations/redeem" && request.method === "POST") return redeemInvitation(request, env);
+
+    if (request.method === "OPTIONS") {
+      return new Response(null, {
+        status: 204,
+        headers: corsHeaders
+      });
+    }
+
+    if (
+      url.pathname === "/v1/commerce/checkout" &&
+      request.method === "POST"
+    ) {
+      return createCheckout(request, env);
+    }
+
+    if (
+      url.pathname === "/v1/commerce/status" &&
+      request.method === "GET"
+    ) {
+      return paymentStatus(url, env);
+    }
+
+    if (
+      url.pathname === "/v1/commerce/webhook" &&
+      request.method === "POST"
+    ) {
+      return webhook(request, env);
+    }
+
+    if (
+      url.pathname === "/v1/commerce/access" &&
+      request.method === "GET"
+    ) {
+      return verifyAccess(url, env);
+    }
+
+    if (
+      url.pathname === "/v1/commerce/consume" &&
+      request.method === "POST"
+    ) {
+      return consumePaidEntitlement(request, env);
+    }
+
+    if (
+      url.pathname === "/v1/invitations/issue" &&
+      request.method === "POST"
+    ) {
+      return issueInvitations(request, env);
+    }
+
+    if (
+      url.pathname === "/v1/invitations/resolve" &&
+      request.method === "GET"
+    ) {
+      return resolveInvitation(url, env);
+    }
+
+    if (
+      url.pathname === "/v1/invitations/redeem" &&
+      request.method === "POST"
+    ) {
+      return redeemInvitation(request, env);
+    }
+
     const path = url.pathname.replace(/\/+$/, "") || "/";
+
     if (path === "/" || path === "/health") {
       return json({
         ok: true,
@@ -547,6 +686,10 @@ export default {
         environment: env.DODO_PAYMENTS_ENVIRONMENT || "live_mode"
       });
     }
-    return json({ error: "Not found.", path: url.pathname }, 404);
+
+    return json({
+      error: "Not found.",
+      path: url.pathname
+    }, 404);
   }
 };
