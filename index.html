@@ -4133,6 +4133,172 @@ textarea {
 }
 </style>
 
+
+<style id="hero-reference-composition-v2">
+/*
+  HERO REFERENCE COMPOSITION
+  Calibrated to the approved 1837×866 first impression.
+  Desktop only. No page zoom, no wrapper, no frozen site.
+*/
+@media (min-width: 1201px) {
+  :root {
+    --pad: 3.75vw;
+  }
+
+  header {
+    top: 1.62vh;
+    min-height: 6.9vh;
+    padding: .58vh .42vw .58vh 1.05vw;
+    gap: .55vw;
+  }
+  .header-logo::after {
+    font-size: .98vw;
+  }
+  nav {
+    margin-left: .9vw;
+    gap: .2vw;
+  }
+  nav a,
+  nav a.nav-cta {
+    padding: 1.05vh .78vw;
+    font-size: .92vw;
+  }
+  nav a.nav-cta {
+    margin-left: .28vw;
+    padding-inline: 1.05vw;
+  }
+  nav a.nav-cta::after {
+    font-size: .78vw;
+  }
+
+  .hero {
+    --hero-card-left: 3.75vw;
+    --hero-card-width: 22.26vw;
+    --hero-card-top: 39.15svh;
+    --hero-card-height: 72svh;
+    min-height: 132svh;
+  }
+
+  .hero-section-index {
+    top: 4.85svh;
+    left: 3.75vw;
+    font-size: .60vw;
+  }
+
+  .hero::before {
+    top: 6.55svh;
+    right: 4.55vw;
+    width: 13.2vw;
+    font-size: .70vw;
+    line-height: 1.35;
+  }
+
+  .hero h1 {
+    top: 19.5svh;
+    right: 4.48vw;
+    width: 50.63vw;
+    padding-right: .55vw;
+    font-size: 8.93vw;
+    line-height: .79;
+    letter-spacing: -.08em;
+  }
+
+  .hero-brief {
+    top: var(--hero-card-top);
+    left: var(--hero-card-left);
+    width: var(--hero-card-width);
+    height: var(--hero-card-height);
+    padding: 3.45vh 2.0vw;
+  }
+  .hero-brief p {
+    font-size: .87vw;
+    line-height: 1.42;
+  }
+  .hero-brief b {
+    max-width: 14vw;
+    margin-top: 2.75vh;
+    font-size: .76vw;
+    line-height: 1.45;
+  }
+
+  .hero::after {
+    content: "DOBER";
+    top: 70svh;
+    bottom: auto;
+    left: calc(var(--hero-card-left) + var(--hero-card-width) - .16vw);
+    font-size: 20.14vw;
+    line-height: .8;
+    letter-spacing: -.09em;
+    transform: translate(-.045em, .015em);
+  }
+
+  .hero #recordSearch,
+  .hero .hero-search {
+    position: absolute !important;
+    top: 68.9svh !important;
+    right: 4.63vw !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: 37.9vw !important;
+    margin: 0 !important;
+    padding-top: 1.5vh;
+  }
+  .hero-search::before {
+    margin-bottom: .92vh;
+    font-size: .55vw;
+  }
+  .hero-search input {
+    padding: .92vh 4vw 1.38vh 0;
+    font-size: 1.85vw;
+  }
+  .hero-search-submit {
+    right: 0;
+    bottom: .46vh;
+    width: 3.43vw;
+    height: 3.43vw;
+    font-size: 1.1vw;
+  }
+
+  .puppy-shortcut {
+    top: calc(100% + 1.6vh);
+    right: 0 !important;
+    left: auto !important;
+    min-width: 11.54vw;
+    min-height: 6.24vh;
+    gap: .72vw;
+    padding: .8vh .38vw .8vh .95vw;
+    font-size: .50vw;
+  }
+  .puppy-shortcut strong {
+    width: 1.85vw;
+    height: 1.85vw;
+    font-size: .66vw;
+  }
+
+  .hero-meta-note {
+    top: 89.5svh;
+    left: calc(var(--hero-card-left) + 2vw);
+    gap: 1.25vh;
+  }
+  .hero-meta-note .hero-details-line > span {
+    font-size: .76vw;
+  }
+  .hero-meta-note strong {
+    font-size: .93vw;
+  }
+  .hero-est-desktop {
+    top: 96.6svh;
+    left: calc(var(--hero-card-left) + 2vw);
+  }
+  .hero-est span {
+    font-size: .44vw;
+  }
+  .hero-est em {
+    font-size: .98vw;
+  }
+}
+</style>
+
 </head>
 <body>
 <div aria-hidden="true" class="scroll-progress" id="scrollProgress"></div>
