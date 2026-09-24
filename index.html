@@ -4302,6 +4302,381 @@ textarea {
   }
 }
 </style>
+<style id="homepage-section-scale-coherence-v1">
+/*
+  HOMEPAGE SCALE COHERENCE
+  Keep post-hero sections on the same desktop zoom-out behaviour as the hero.
+  No global wrapper, JS zoom, transform scale or browser-zoom lock.
+  1837px is the approved desktop reference width.
+*/
+@media (min-width: 981px) {
+  :root {
+    --section-space: max(164px, 8.928vw);
+  }
+
+  /* shared section rhythm */
+  .objects,
+  .structure-impact,
+  .pricing-services,
+  .faq-section,
+  .form-section {
+    padding-left: var(--pad);
+    padding-right: var(--pad);
+  }
+  .section-label {
+    gap: max(12px, .653vw);
+    margin-bottom: max(28px, 1.524vw);
+    font-size: max(9px, .490vw);
+  }
+  .section-label::before { width: max(22px, 1.198vw); }
+  .section-title {
+    max-width: max(1050px, 57.158vw);
+    font-size: max(128px, 6.968vw);
+  }
+
+  /* ticker / bridge out of hero */
+  .ticker-track > .ticker-chip {
+    min-width: max(280px, 15.242vw);
+    height: max(92px, 5.008vw);
+    padding-left: max(24px, 1.306vw);
+    padding-right: max(48px, 2.613vw);
+  }
+  .ticker-track > .ticker-chip small { font-size: max(8px, .435vw); }
+  .ticker-track > .ticker-chip strong { font-size: max(18px, .980vw); }
+  .ticker-track > .ticker-chip em { font-size: max(14px, .762vw); }
+
+  /* Explore the Index */
+  .objects {
+    min-height: max(1100px, 59.880vw);
+    gap: max(118px, 6.424vw);
+  }
+  .objects-intro { top: max(110px, 5.988vw); }
+  .objects-intro h2 { font-size: max(142px, 7.730vw); }
+  .objects-intro p {
+    max-width: max(260px, 14.154vw);
+    margin-top: max(38px, 2.069vw);
+    font-size: max(12px, .653vw);
+  }
+  .objects-list {
+    top: calc(50svh - max(264px, 14.371vw));
+    margin-top: min(-76px, -4.137vw);
+  }
+  .objects-list { --route-rail: max(68px, 3.702vw); }
+  .objects-list::before {
+    width: max(20px, 1.089vw);
+    left: calc((var(--route-rail) / 2) - max(10px, .544vw));
+  }
+  .objects .card {
+    min-height: max(132px, 7.186vw);
+    grid-template-columns:
+      max(68px, 3.702vw)
+      minmax(0, 1fr)
+      minmax(max(150px, 8.165vw), 31%);
+  }
+  .objects .card-title {
+    padding-inline: max(22px, 1.198vw);
+    font-size: max(60px, 3.266vw);
+  }
+  .objects .card-num { font-size: max(9px, .490vw); }
+  .objects .card-meta { font-size: max(8px, .435vw); }
+  .objects .card-arrow {
+    width: max(38px, 2.069vw);
+    height: max(38px, 2.069vw);
+    font-size: max(24px, 1.306vw);
+  }
+  .objects .card-bar { height: max(4px, .218vw); }
+
+  /* The Structure */
+  .structure-impact {
+    min-height: max(980px, 53.348vw);
+    padding-top: max(116px, 6.315vw);
+    padding-bottom: max(78px, 4.246vw);
+  }
+  .structure-ghost {
+    left: max(410px, 22.319vw);
+    font-size: max(390px, 21.230vw);
+  }
+  .structure-head {
+    grid-template-columns: minmax(0, 1fr) minmax(max(360px, 19.597vw), .72fr);
+    gap: max(120px, 6.532vw);
+  }
+  .structure-impact .structure-index { margin-bottom: max(34px, 1.851vw); }
+  .structure-index i { width: max(24px, 1.306vw); }
+  .structure-impact .section-title {
+    max-width: max(680px, 37.017vw);
+    font-size: max(120px, 6.532vw);
+  }
+  .structure-aside {
+    min-height: max(250px, 13.609vw);
+    padding-top: max(8px, .435vw);
+  }
+  .structure-aside p {
+    width: min(100%, max(390px, 21.230vw));
+    font-size: max(12px, .653vw);
+  }
+  .structure-aside strong { font-size: max(12px, .653vw); }
+  .structure-content {
+    margin-top: max(300px, 16.331vw);
+    padding-bottom: max(66px, 3.593vw);
+  }
+  .structure-copy {
+    max-width: max(405px, 22.047vw);
+    font-size: max(14px, .762vw);
+  }
+  .structure-tags {
+    gap: max(10px, .544vw);
+    margin-top: max(28px, 1.524vw);
+  }
+  .structure-tags span {
+    gap: max(8px, .435vw);
+    padding: max(9px, .490vw) max(13px, .708vw);
+    font-size: max(10px, .544vw);
+  }
+  .structure-tags span::before {
+    width: max(5px, .272vw);
+    height: max(5px, .272vw);
+  }
+  .structure-cta {
+    top: min(-204px, -11.105vw);
+    left: max(500px, 27.218vw);
+    width: max(294px, 16.004vw);
+    min-height: max(68px, 3.702vw);
+    gap: max(26px, 1.415vw);
+    padding-inline: max(28px, 1.524vw);
+    font-size: max(19px, 1.034vw);
+  }
+  .structure-cta span { font-size: max(22px, 1.198vw); }
+  .structure-impact .structure-metrics {
+    gap: max(46px, 2.504vw) max(78px, 4.246vw);
+  }
+  .structure-impact .why-item,
+  .structure-impact .why-item + .why-item {
+    min-height: max(142px, 7.730vw);
+    padding: 0 0 max(10px, .544vw) max(20px, 1.089vw);
+  }
+  .structure-impact .why-item::before {
+    top: max(5px, .272vw);
+    width: max(24px, 1.306vw);
+    height: max(3px, .163vw);
+  }
+  .structure-impact .why-num {
+    margin-top: max(28px, 1.524vw);
+    font-size: max(74px, 4.028vw);
+  }
+  .structure-impact .why-item h3 {
+    left: max(34px, 1.851vw);
+    font-size: max(11px, .599vw);
+  }
+  .structure-impact .why-item p {
+    max-width: max(240px, 13.065vw);
+    margin-top: max(13px, .708vw);
+    font-size: max(12px, .653vw);
+  }
+
+  /* Pricing / services */
+  .pricing-services {
+    min-height: max(980px, 53.348vw);
+    grid-template-columns: minmax(max(310px, 16.875vw), 36%) minmax(0, 1fr);
+    gap: max(118px, 6.424vw);
+    padding-top: max(118px, 6.424vw);
+    padding-bottom: max(96px, 5.226vw);
+  }
+  .pricing-ghost { font-size: max(470px, 25.585vw); }
+  .pricing-services .pricing-index { margin-bottom: max(38px, 2.069vw); }
+  .pricing-index i { width: max(24px, 1.306vw); }
+  .pricing-services .section-title {
+    max-width: max(570px, 31.029vw);
+    font-size: max(116px, 6.315vw);
+  }
+  .pricing-note {
+    max-width: max(340px, 18.508vw);
+    margin-top: max(72px, 3.919vw);
+    font-size: max(14px, .762vw);
+  }
+  .pricing-note strong {
+    margin-bottom: max(14px, .762vw);
+    font-size: max(11px, .599vw);
+  }
+  .pricing-services .tier-card,
+  .pricing-services .tier-card:nth-child(2) {
+    min-height: max(205px, 11.159vw);
+    grid-template-columns:
+      max(50px, 2.722vw)
+      minmax(max(160px, 8.710vw), .95fr)
+      minmax(max(190px, 10.343vw), 1.15fr)
+      max(124px, 6.750vw)
+      max(42px, 2.286vw);
+    column-gap: max(28px, 1.524vw);
+    padding: max(24px, 1.306vw) max(16px, .871vw) max(24px, 1.306vw) max(20px, 1.089vw);
+  }
+  .pricing-services .tier-card::before { width: max(5px, .272vw); }
+  .pricing-services .tier-num,
+  .pricing-services .tier-card:nth-child(2) .tier-num { font-size: max(24px, 1.306vw); }
+  .pricing-services .tier-title {
+    max-width: max(360px, 19.597vw);
+    font-size: max(38px, 2.069vw);
+  }
+  .pricing-services .tier-sub,
+  .pricing-services .tier-card:nth-child(2) .tier-sub {
+    margin-top: max(13px, .708vw);
+    font-size: max(11px, .599vw);
+  }
+  .pricing-services .tier-desc,
+  .pricing-services .tier-card:nth-child(2) .tier-desc {
+    max-width: max(370px, 20.142vw);
+    font-size: max(13px, .708vw);
+  }
+  .pricing-services .tier-pricing {
+    gap: max(8px, .435vw);
+    padding-left: max(26px, 1.415vw);
+  }
+  .pricing-services .tier-pricing::before {
+    top: max(3px, .163vw);
+    width: max(16px, .871vw);
+    height: max(2px, .109vw);
+  }
+  .pricing-services .tier-fee-label,
+  .pricing-services .tier-card:nth-child(2) .tier-fee-label { font-size: max(8px, .435vw); }
+  .pricing-services .tier-price,
+  .pricing-services .tier-card:nth-child(2) .tier-price { font-size: max(48px, 2.613vw); }
+  .pricing-services .tier-unit,
+  .pricing-services .tier-card:nth-child(2) .tier-unit {
+    margin-top: max(7px, .381vw);
+    font-size: max(11px, .599vw);
+  }
+  .tier-arrow {
+    width: max(36px, 1.960vw);
+    height: max(36px, 1.960vw);
+    font-size: max(16px, .871vw);
+  }
+  .pricing-monolith {
+    min-height: max(250px, 13.609vw);
+    padding: max(38px, 2.069vw) max(30px, 1.633vw);
+  }
+  .pricing-monolith-core { gap: max(48px, 2.613vw); }
+  .pricing-formula { gap: max(15px, .817vw); }
+  .pricing-formula strong { font-size: max(92px, 5.008vw); }
+  .pricing-formula i { font-size: max(48px, 2.613vw); }
+  .pricing-formula em { font-size: max(12px, .653vw); }
+  .pricing-monolith-note { font-size: max(16px, .871vw); }
+  .pricing-monolith-note small {
+    margin-bottom: max(8px, .435vw);
+    font-size: max(8px, .435vw);
+  }
+
+  /* FAQ */
+  .faq-section {
+    column-gap: max(76px, 4.137vw);
+    min-height: max(900px, 48.993vw);
+  }
+  .faq-section > .section-title {
+    top: max(110px, 5.988vw);
+    max-width: calc(100% - max(24px, 1.306vw));
+    padding-right: max(18px, .980vw);
+    font-size: max(106px, 5.770vw);
+  }
+  .faq {
+    margin-top: max(24px, 1.306vw);
+  }
+  .faq-q {
+    grid-template-columns:
+      max(54px, 2.940vw)
+      minmax(0, 1fr)
+      max(46px, 2.504vw);
+    gap: max(18px, .980vw);
+    min-height: max(92px, 5.008vw);
+    font-size: max(31px, 1.687vw);
+  }
+  .faq-q::before { font-size: max(10px, .544vw); }
+  .faq-icon {
+    width: max(34px, 1.851vw);
+    min-width: max(34px, 1.851vw);
+    height: max(34px, 1.851vw);
+  }
+  .faq-a {
+    max-width: max(720px, 39.194vw);
+    margin-left: max(72px, 3.919vw);
+    font-size: max(14px, .762vw);
+  }
+  .faq-item.open .faq-a {
+    max-height: max(360px, 19.597vw);
+    padding-bottom: max(28px, 1.524vw);
+  }
+
+  /* Contact / closing */
+  .form-section {
+    min-height: max(900px, 48.993vw);
+    padding-top: max(160px, 8.710vw);
+    padding-bottom: max(170px, 9.254vw);
+  }
+  .form-section::after { font-size: max(510px, 27.763vw); }
+  .form-status {
+    top: max(160px, 8.710vw);
+    gap: max(9px, .490vw);
+    font-size: max(10px, .544vw);
+  }
+  .form-status i {
+    width: max(9px, .490vw);
+    height: max(9px, .490vw);
+  }
+  .form-section .section-title {
+    max-width: max(1200px, 65.324vw);
+    font-size: max(108px, 5.879vw);
+  }
+  .form-section .form-wrap {
+    grid-template-columns: minmax(0, max(640px, 34.839vw)) auto;
+    column-gap: max(42px, 2.286vw);
+    row-gap: max(12px, .653vw);
+    width: min(100%, max(930px, 50.626vw));
+    margin-top: max(116px, 6.315vw);
+  }
+  .form-section .form-wrap input[type="email"],
+  .form-section .pkg-select-trigger {
+    min-height: max(58px, 3.157vw);
+    font-size: max(13px, .708vw);
+  }
+  .form-section .pkg-select-trigger::after {
+    width: max(34px, 1.851vw);
+    min-width: max(34px, 1.851vw);
+    height: max(34px, 1.851vw);
+    font-size: max(15px, .817vw);
+  }
+  .form-section .pkg-select-options {
+    top: calc(100% + max(10px, .544vw));
+    padding: max(6px, .327vw);
+    border-radius: max(12px, .653vw);
+  }
+  .form-section .pkg-option {
+    grid-template-columns: max(10px, .544vw) minmax(0, 1fr);
+    gap: max(12px, .653vw);
+    min-height: max(54px, 2.940vw);
+    padding-inline: max(16px, .871vw);
+    font-size: max(13px, .708vw);
+  }
+  .form-section .pkg-option::before {
+    width: max(8px, .435vw);
+    height: max(2px, .109vw);
+  }
+  .form-section .form-submit {
+    min-width: max(250px, 13.609vw);
+    min-height: max(58px, 3.157vw);
+    font-size: max(11px, .599vw);
+  }
+  .form-section > .section-microcopy {
+    width: min(100%, max(930px, 50.626vw));
+    margin-top: max(18px, .980vw);
+    font-size: max(8px, .435vw);
+  }
+
+  footer {
+    padding-top: max(32px, 1.742vw);
+    padding-bottom: max(32px, 1.742vw);
+  }
+  .footer-logo { font-size: max(18px, .980vw); }
+  .footer-logo::after,
+  .footer-copy { font-size: max(8px, .435vw); }
+}
+</style>
 </head>
 <body>
 <div aria-hidden="true" class="scroll-progress" id="scrollProgress"></div>
