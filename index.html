@@ -4133,6 +4133,215 @@ textarea {
 }
 </style>
 
+
+<style id="viewport-scale-stability-fix">
+/*
+  DESKTOP VIEWPORT SCALE STABILITY
+  Keeps the approved hero composition visually coherent when browser zoom,
+  effective CSS viewport size, or wide-screen dimensions change.
+  Mobile layout (<=720px) remains untouched.
+*/
+@media (min-width: 721px) {
+  :root {
+    --pad: clamp(20px, 5vw, max(64px, min(3.484vw, 7.390vmin)));
+    --section-space: clamp(92px, 11vw, max(164px, min(8.928vw, 18.938vmin)));
+  }
+
+  /* Floating navigation: stop fixed-pixel UI from shrinking under zoom-out. */
+  header {
+    top: max(14px, min(.762vw, 1.617vmin));
+    min-height: max(48px, min(2.613vw, 5.543vmin));
+    padding:
+      max(5px, min(.272vw, .577vmin))
+      max(6px, min(.327vw, .693vmin))
+      max(5px, min(.272vw, .577vmin))
+      max(18px, min(.980vw, 2.079vmin));
+    gap: max(10px, min(.544vw, 1.155vmin));
+  }
+  .header-logo::after {
+    font-size: max(14px, min(.762vw, 1.617vmin));
+  }
+  nav {
+    margin-left: max(14px, min(.762vw, 1.617vmin));
+    gap: max(3px, min(.163vw, .346vmin));
+  }
+  nav a,
+  nav a.nav-cta {
+    padding:
+      max(9px, min(.490vw, 1.039vmin))
+      max(11px, min(.599vw, 1.270vmin));
+    font-size: max(13px, min(.708vw, 1.501vmin));
+  }
+  nav a.nav-cta {
+    gap: max(7px, min(.381vw, .808vmin));
+    margin-left: max(4px, min(.218vw, .462vmin));
+    padding-inline: max(16px, min(.871vw, 1.848vmin));
+  }
+  nav a.nav-cta::after {
+    font-size: max(12px, min(.653vw, 1.386vmin));
+  }
+
+  /* Hero uses one coherent fluid coordinate system instead of svh + capped px. */
+  .hero {
+    --hero-card-width:
+      clamp(
+        300px,
+        19.2vw,
+        max(360px, min(19.597vw, 41.570vmin))
+      );
+  }
+  .hero-section-index,
+  .section-label {
+    font-size: max(11px, min(.599vw, 1.270vmin));
+  }
+  .hero::before {
+    width: max(210px, min(11.432vw, 24.249vmin));
+    font-size: max(13px, min(.708vw, 1.501vmin));
+  }
+  .hero h1 {
+    width: min(
+      66vw,
+      max(930px, min(50.626vw, 107.390vmin))
+    );
+    padding-right: max(10px, min(.544vw, 1.155vmin));
+    font-size:
+      clamp(
+        96px,
+        11vw,
+        max(164px, min(8.928vw, 18.938vmin))
+      );
+  }
+  .hero::after {
+    font-size:
+      clamp(
+        140px,
+        24vw,
+        max(370px, min(20.142vw, 42.725vmin))
+      );
+  }
+
+  .hero-brief {
+    padding: max(30px, min(1.633vw, 3.464vmin));
+  }
+  .hero-brief p {
+    font-size: max(16px, min(.871vw, 1.848vmin));
+  }
+  .hero-brief b {
+    max-width: max(255px, min(13.881vw, 29.446vmin));
+    margin-top: max(24px, min(1.306vw, 2.771vmin));
+    font-size: max(14px, min(.762vw, 1.617vmin));
+  }
+
+  /* Search: neutralise the hard-fix px caps that collapse at zoom-out. */
+  .hero #recordSearch {
+    top:
+      calc(
+        clamp(
+          max(420px, min(22.863vw, 48.499vmin)),
+          61svh,
+          max(610px, min(33.206vw, 70.439vmin))
+        )
+        + max(22px, min(1.198vw, 2.540vmin))
+      ) !important;
+    right: var(--pad) !important;
+    width:
+      min(
+        38vw,
+        max(510px, min(27.763vw, 58.891vmin))
+      ) !important;
+  }
+  .hero-search {
+    padding-top: max(13px, min(.708vw, 1.501vmin));
+  }
+  .hero-search::before {
+    margin-bottom: max(8px, min(.435vw, .924vmin));
+    font-size: max(10px, min(.544vw, 1.155vmin));
+  }
+  .hero-search input {
+    padding:
+      max(8px, min(.435vw, .924vmin))
+      max(58px, min(3.157vw, 6.697vmin))
+      max(12px, min(.653vw, 1.386vmin))
+      0;
+    font-size:
+      clamp(
+        22px,
+        2.4vw,
+        max(34px, min(1.851vw, 3.926vmin))
+      );
+  }
+  .hero-search-submit {
+    right: 0;
+    bottom: max(4px, min(.218vw, .462vmin));
+    width: max(46px, min(2.504vw, 5.312vmin));
+    height: max(46px, min(2.504vw, 5.312vmin));
+    font-size: max(20px, min(1.089vw, 2.309vmin));
+  }
+  .puppy-shortcut {
+    top: calc(100% + max(14px, min(.762vw, 1.617vmin)));
+    gap: max(11px, min(.599vw, 1.270vmin));
+    min-height: max(40px, min(2.177vw, 4.619vmin));
+    padding:
+      max(7px, min(.381vw, .808vmin))
+      max(7px, min(.381vw, .808vmin))
+      max(7px, min(.381vw, .808vmin))
+      max(16px, min(.871vw, 1.848vmin));
+    font-size: max(9px, min(.490vw, 1.039vmin));
+  }
+  .puppy-shortcut strong {
+    width: max(25px, min(1.361vw, 2.887vmin));
+    height: max(25px, min(1.361vw, 2.887vmin));
+    font-size: max(12px, min(.653vw, 1.386vmin));
+  }
+
+  /* Keep the card annotations at their intended physical offsets. */
+  .hero-meta-note {
+    top:
+      calc(
+        var(--hero-card-top) + var(--hero-card-height)
+        - max(124px, min(6.750vw, 14.319vmin))
+      );
+    left:
+      calc(
+        var(--hero-card-left)
+        + clamp(
+          30px,
+          2vw,
+          max(38px, min(2.069vw, 4.388vmin))
+        )
+      );
+  }
+  .hero-meta-note .hero-details-line > span {
+    font-size: max(14px, min(.762vw, 1.617vmin));
+  }
+  .hero-meta-note strong {
+    font-size: max(17px, min(.925vw, 1.963vmin));
+  }
+  .hero-est-desktop {
+    top:
+      calc(
+        var(--hero-card-top) + var(--hero-card-height)
+        - max(48px, min(2.613vw, 5.543vmin))
+      );
+    left:
+      calc(
+        var(--hero-card-left)
+        + clamp(
+          30px,
+          2vw,
+          max(38px, min(2.069vw, 4.388vmin))
+        )
+      );
+  }
+  .hero-est span {
+    font-size: max(8px, min(.435vw, .924vmin));
+  }
+  .hero-est em {
+    font-size: max(18px, min(.980vw, 2.079vmin));
+  }
+}
+</style>
+
 </head>
 <body>
 <div aria-hidden="true" class="scroll-progress" id="scrollProgress"></div>
