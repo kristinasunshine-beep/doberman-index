@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
 <meta content="#f1f1f1" name="theme-color"/>
 <title>Doberman Index</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -4819,5 +4819,38 @@ document.querySelectorAll('.objects .card[data-search-anchor]').forEach(card=>{
 });
 </script>
 <script src="assets/js/commerce.js"></script>
+<script id="desktop-zoom-guard">
+(() => {
+  const stop = event => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
+  window.addEventListener("keydown", event => {
+    if (!(event.ctrlKey || event.metaKey)) return;
+    const key = String(event.key || "");
+    const code = String(event.code || "");
+    // Keep Ctrl/Cmd+0 available so the browser can always be returned to 100%.
+    if (
+      key === "+" || key === "-" || key === "=" || key === "_" ||
+      code === "NumpadAdd" || code === "NumpadSubtract"
+    ) stop(event);
+  }, { capture: true });
+
+  window.addEventListener("wheel", event => {
+    if (event.ctrlKey || event.metaKey) stop(event);
+  }, { capture: true, passive: false });
+
+  ["gesturestart","gesturechange","gestureend"].forEach(type => {
+    window.addEventListener(type, stop, { capture: true, passive: false });
+  });
+
+  window.addEventListener("touchmove", event => {
+    if (event.touches && event.touches.length > 1) stop(event);
+  }, { capture: true, passive: false });
+
+  document.documentElement.style.touchAction = "pan-x pan-y";
+})();
+</script>
 </body>
 </html>
