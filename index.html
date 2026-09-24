@@ -4132,6 +4132,176 @@ textarea {
   }
 }
 </style>
+<style id="hero-reference-composition-v3">
+/*
+  HERO REFERENCE COMPOSITION v3
+  Measured against the approved 1837×866 screenshot.
+  Desktop/landscape only. No global zoom, no wrapper, no frozen page.
+*/
+@media (min-width: 981px) {
+  :root { --pad: 3.75vw; }
+
+  header {
+    top: 2.20vh;
+    width: 34.84vw;
+    max-width: none;
+    min-height: 7.25vh;
+    padding: .58vh .48vw .58vh 1.12vw;
+    gap: .55vw;
+  }
+  .header-logo::after { font-size: 1.20vw; }
+  nav { margin-left: .75vw; gap: .18vw; }
+  nav a,
+  nav a.nav-cta {
+    padding: 1.02vh .72vw;
+    font-size: 1.10vw;
+  }
+  nav a.nav-cta {
+    margin-left: .28vw;
+    padding-inline: 1.02vw;
+  }
+  nav a.nav-cta::after { font-size: .92vw; }
+
+  .hero {
+    --hero-card-left: 3.75vw;
+    --hero-card-width: 22.26vw;
+    --hero-card-top: 39.15svh;
+    --hero-card-height: 72svh;
+    min-height: 132svh;
+  }
+
+  .hero-section-index {
+    top: 4.85svh;
+    left: 3.75vw;
+    font-size: .80vw;
+  }
+
+  .hero::before {
+    top: 6.55svh;
+    right: 4.55vw;
+    width: 13.2vw;
+    font-size: .95vw;
+    line-height: 1.35;
+  }
+
+  .hero h1 {
+    top: 19.5svh !important;
+    right: 7.00vw !important;
+    left: auto !important;
+    width: 50.63vw !important;
+    padding-right: 0 !important;
+    font-size: 11.01vw !important;
+    line-height: .79 !important;
+    letter-spacing: -.08em !important;
+    text-align: right !important;
+  }
+
+  .hero-brief {
+    top: var(--hero-card-top) !important;
+    left: var(--hero-card-left) !important;
+    width: var(--hero-card-width) !important;
+    height: var(--hero-card-height) !important;
+    padding: 4.90vh 2.35vw 3.45vh !important;
+  }
+  .hero-brief p {
+    margin-top: 0 !important;
+    font-size: 1.27vw !important;
+    line-height: 1.42 !important;
+  }
+  .hero-brief b {
+    max-width: 16.2vw !important;
+    margin-top: 4.90vh !important;
+    font-size: 1.03vw !important;
+    line-height: 1.45 !important;
+  }
+
+  .hero::after {
+    content: "DOBER" !important;
+    top: 70svh !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: calc(var(--hero-card-left) + var(--hero-card-width) - .16vw) !important;
+    font-size: 20.14vw !important;
+    line-height: .8 !important;
+    letter-spacing: -.09em !important;
+    transform: translate(-.045em, .015em) !important;
+  }
+
+  .hero #recordSearch,
+  .hero .hero-search {
+    position: absolute !important;
+    top: 68.70svh !important;
+    right: 4.63vw !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: 37.9vw !important;
+    height: 15.13svh !important;
+    margin: 0 !important;
+    padding-top: 0 !important;
+    border-top: 2px solid var(--ink) !important;
+    overflow: visible !important;
+  }
+  .hero-search::before {
+    height: 3.55svh;
+    display: flex;
+    align-items: flex-end;
+    margin: 0 !important;
+    padding-bottom: .75svh;
+    box-sizing: border-box;
+    font-size: .60vw !important;
+  }
+  .hero-search-field {
+    height: 11.58svh;
+    transform: translateY(1.15svh);
+  }
+  .hero-search input {
+    height: 100%;
+    box-sizing: border-box;
+    padding: 0 4vw 1.15svh 0 !important;
+    font-size: 2.20vw !important;
+    line-height: 1 !important;
+  }
+  .hero-search-submit {
+    top: 50%;
+    right: 0;
+    bottom: auto !important;
+    width: 3.43vw !important;
+    height: 3.43vw !important;
+    font-size: 1.1vw !important;
+    transform: translateY(-50%);
+  }
+
+  .puppy-shortcut {
+    top: calc(100% + 1.85svh) !important;
+    right: 0 !important;
+    left: auto !important;
+    min-width: 11.54vw !important;
+    min-height: 6.24vh !important;
+    gap: .72vw !important;
+    padding: .8vh .38vw .8vh .95vw !important;
+    font-size: .50vw !important;
+  }
+  .puppy-shortcut strong {
+    width: 1.85vw !important;
+    height: 1.85vw !important;
+    font-size: .66vw !important;
+  }
+
+  .hero-meta-note {
+    top: 92.20svh !important;
+    left: calc(var(--hero-card-left) + 2.35vw) !important;
+    gap: 1.25vh;
+  }
+  .hero-meta-note .hero-details-line > span { font-size: .97vw !important; }
+  .hero-meta-note strong { font-size: 1.10vw !important; }
+
+  /* Est. 2026 belongs below the first-screen crop in the approved reference. */
+  .hero-est-desktop {
+    top: calc(var(--hero-card-top) + var(--hero-card-height) - 48px) !important;
+    left: calc(var(--hero-card-left) + 2.35vw) !important;
+  }
+}
+</style>
 </head>
 <body>
 <div aria-hidden="true" class="scroll-progress" id="scrollProgress"></div>
