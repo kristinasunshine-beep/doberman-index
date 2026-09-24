@@ -455,29 +455,8 @@ async function createCheckout(request, env) {
     cancel_url: SITE_ORIGIN + "/#tiers",
     feature_flags: {
       redirect_immediately: true,
-      allow_currency_selection: false,
       allow_tax_id: true,
       allow_discount_code: false
-    },
-    customization: {
-      force_language: "en",
-      theme: "dark",
-      show_order_details: true,
-      theme_config: {
-        dark: {
-          bg_primary: "#0d0d0d",
-          bg_secondary: "#151515",
-          border_primary: "#3a3a3a",
-          border_secondary: "#2a2a2a",
-          text_primary: "#ffffff",
-          text_secondary: "#a7a7a7",
-          button_primary: "#f3fe19",
-          button_primary_hover: "#e5ef15",
-          button_text_primary: "#111111"
-        },
-        radius: "18px",
-        pay_button_text: "Complete payment"
-      }
     }
   };
 
