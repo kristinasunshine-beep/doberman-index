@@ -4132,65 +4132,69 @@ textarea {
   }
 }
 </style>
-<style id="hero-reference-composition-v4">
+<style id="hero-reference-composition-v5">
 /*
-  HERO REFERENCE COMPOSITION v4
-  Measured against the approved 1837×866 screenshot.
-  Desktop/landscape only. No global zoom, no wrapper, no frozen page.
+  HERO REFERENCE COMPOSITION v5
+  Same approved 1837×866 geometry as v4, but capped so browser zoom behaves
+  normally and the hero scales together with the rest of the homepage.
 */
 @media (min-width: 981px) {
-  :root { --pad: 3.75vw; }
+  :root { --pad: min(3.75vw, 68.89px); }
 
   header {
-    top: 2.20vh;
-    width: 34.84vw;
+    top: min(2.20vh, 19.05px);
+    width: min(34.84vw, 640.01px);
     max-width: none;
-    min-height: 7.25vh;
-    padding: .58vh .48vw .58vh 1.12vw;
-    gap: .55vw;
+    min-height: min(7.25vh, 62.79px);
+    padding:
+      min(.58vh, 5.02px)
+      min(.48vw, 8.82px)
+      min(.58vh, 5.02px)
+      min(1.12vw, 20.57px);
+    gap: min(.55vw, 10.10px);
   }
-  .header-logo::after { font-size: 1.20vw; }
-  nav { margin-left: .75vw; gap: .18vw; }
+  .header-logo::after { font-size: clamp(14px, 1.20vw, 22.04px); }
+  nav { margin-left: min(.75vw, 13.78px); gap: min(.18vw, 3.31px); }
   nav a,
   nav a.nav-cta {
-    padding: 1.02vh .72vw;
-    font-size: 1.10vw;
+    padding: min(1.02vh, 8.83px) min(.72vw, 13.23px);
+    font-size: clamp(13px, 1.10vw, 20.21px);
   }
   nav a.nav-cta {
-    margin-left: .28vw;
-    padding-inline: 1.02vw;
+    margin-left: min(.28vw, 5.14px);
+    padding-inline: min(1.02vw, 18.74px);
   }
-  nav a.nav-cta::after { font-size: .92vw; }
+  nav a.nav-cta::after { font-size: clamp(12px, .92vw, 16.90px); }
 
   .hero {
-    --hero-card-left: 3.75vw;
-    --hero-card-width: 22.26vw;
-    --hero-card-top: 39.15svh;
-    --hero-card-height: 72svh;
-    min-height: 132svh;
+    --hero-card-left: min(3.75vw, 68.89px);
+    --hero-card-width: min(22.26vw, 408.92px);
+    --hero-card-top: min(39.15svh, 339.04px);
+    --hero-card-height: min(72svh, 623.52px);
+    min-height: min(132svh, 1143.12px);
   }
 
   .hero-section-index {
-    top: 4.85svh;
-    left: 3.75vw;
-    font-size: .80vw;
+    top: min(4.85svh, 42.00px);
+    left: min(3.75vw, 68.89px);
+    font-size: clamp(10px, .80vw, 14.70px);
   }
 
   .hero::before {
-    top: 6.55svh;
-    right: 4.55vw;
-    width: 13.2vw;
-    font-size: .95vw;
+    top: min(6.55svh, 56.72px);
+    right: min(4.55vw, 83.58px);
+    width: min(13.2vw, 242.48px);
+    font-size: clamp(12px, .95vw, 17.45px);
     line-height: 1.35;
   }
 
   .hero h1 {
-    top: 19.5svh !important;
-    right: 7.00vw !important;
+    top: min(19.5svh, 168.87px) !important;
+    right: min(7.00vw, 128.59px) !important;
     left: auto !important;
-    width: 50.63vw !important;
+    width: min(50.63vw, 930.07px) !important;
     padding-right: 0 !important;
-    font-size: 11.01vw !important;
+    font-size: clamp(96px, 11.01vw, 202.25px) !important;
     line-height: .79 !important;
     letter-spacing: -.08em !important;
     text-align: right !important;
@@ -4201,27 +4205,30 @@ textarea {
     left: var(--hero-card-left) !important;
     width: var(--hero-card-width) !important;
     height: var(--hero-card-height) !important;
-    padding: 4.90vh 2.35vw 3.45vh !important;
+    padding:
+      min(4.90vh, 42.43px)
+      min(2.35vw, 43.17px)
+      min(3.45vh, 29.88px) !important;
   }
   .hero-brief p {
     margin-top: 0 !important;
-    font-size: 1.15vw !important;
+    font-size: clamp(15px, 1.15vw, 21.13px) !important;
     line-height: 1.42 !important;
   }
   .hero-brief b {
-    max-width: 16.2vw !important;
-    margin-top: 4.90vh !important;
-    font-size: .93vw !important;
+    max-width: min(16.2vw, 297.59px) !important;
+    margin-top: min(4.90vh, 42.43px) !important;
+    font-size: clamp(13px, .93vw, 17.08px) !important;
     line-height: 1.45 !important;
   }
 
   .hero::after {
     content: "DOBERMAN" !important;
-    top: 70svh !important;
+    top: min(70svh, 606.20px) !important;
     right: auto !important;
     bottom: auto !important;
-    left: calc(var(--hero-card-left) + var(--hero-card-width) - .16vw) !important;
-    font-size: 24vw !important;
+    left: calc(var(--hero-card-left) + var(--hero-card-width) - min(.16vw, 2.94px)) !important;
+    font-size: clamp(180px, 24vw, 440.88px) !important;
     line-height: .8 !important;
     letter-spacing: -.09em !important;
     transform: translate(-.045em, .015em) !important;
@@ -4230,451 +4237,87 @@ textarea {
   .hero #recordSearch,
   .hero .hero-search {
     position: absolute !important;
-    top: 68.70svh !important;
-    right: 4.63vw !important;
+    top: min(68.70svh, 594.94px) !important;
+    right: min(4.63vw, 85.05px) !important;
     bottom: auto !important;
     left: auto !important;
-    width: 37.9vw !important;
-    height: 15.13svh !important;
+    width: min(37.9vw, 696.22px) !important;
+    height: min(15.13svh, 131.03px) !important;
     margin: 0 !important;
     padding-top: 0 !important;
     border-top: 2px solid var(--ink) !important;
     overflow: visible !important;
   }
   .hero-search::before {
-    height: 3.55svh;
+    height: min(3.55svh, 30.74px);
     display: flex;
     align-items: flex-end;
     margin: 0 !important;
-    padding-bottom: .75svh;
+    padding-bottom: min(.75svh, 6.50px);
     box-sizing: border-box;
-    font-size: .60vw !important;
+    font-size: clamp(9px, .60vw, 11.02px) !important;
   }
   .hero-search-field {
-    height: 11.58svh;
-    transform: translateY(1.15svh);
+    height: min(11.58svh, 100.28px);
+    transform: translateY(min(1.15svh, 9.96px));
   }
   .hero-search input {
     height: 100%;
     box-sizing: border-box;
-    padding: 0 4vw 1.15svh 0 !important;
-    font-size: 2.40vw !important;
+    padding:
+      0
+      min(4vw, 73.48px)
+      min(1.15svh, 9.96px)
+      0 !important;
+    font-size: clamp(24px, 2.40vw, 44.09px) !important;
     line-height: 1 !important;
   }
   .hero-search-submit {
     top: 50%;
     right: 0;
     bottom: auto !important;
-    width: 3.43vw !important;
-    height: 3.43vw !important;
-    font-size: 1.1vw !important;
+    width: min(3.43vw, 63.01px) !important;
+    height: min(3.43vw, 63.01px) !important;
+    font-size: clamp(16px, 1.1vw, 20.21px) !important;
     transform: translateY(-50%);
   }
 
   .puppy-shortcut {
-    top: calc(100% + 1.85svh) !important;
+    top: calc(100% + min(1.85svh, 16.02px)) !important;
     right: 0 !important;
     left: auto !important;
-    min-width: 11.54vw !important;
-    min-height: 6.24vh !important;
-    gap: .72vw !important;
-    padding: .8vh .38vw .8vh .95vw !important;
-    font-size: .50vw !important;
+    min-width: min(11.54vw, 211.99px) !important;
+    min-height: min(6.24vh, 54.04px) !important;
+    gap: min(.72vw, 13.23px) !important;
+    padding:
+      min(.8vh, 6.93px)
+      min(.38vw, 6.98px)
+      min(.8vh, 6.93px)
+      min(.95vw, 17.45px) !important;
+    font-size: clamp(8px, .50vw, 9.19px) !important;
   }
   .puppy-shortcut strong {
-    width: 1.85vw !important;
-    height: 1.85vw !important;
-    font-size: .66vw !important;
+    width: min(1.85vw, 33.98px) !important;
+    height: min(1.85vw, 33.98px) !important;
+    font-size: clamp(10px, .66vw, 12.12px) !important;
   }
 
   .hero-meta-note {
-    top: 92.20svh !important;
-    left: calc(var(--hero-card-left) + 2.35vw) !important;
-    gap: 1.25vh;
+    top: min(92.20svh, 798.45px) !important;
+    left: calc(var(--hero-card-left) + min(2.35vw, 43.17px)) !important;
+    gap: min(1.25vh, 10.83px);
   }
-  .hero-meta-note .hero-details-line > span { font-size: 1.20vw !important; }
-  .hero-meta-note strong { font-size: 1.10vw !important; }
+  .hero-meta-note .hero-details-line > span {
+    font-size: clamp(14px, 1.20vw, 22.04px) !important;
+  }
+  .hero-meta-note strong {
+    font-size: clamp(14px, 1.10vw, 20.21px) !important;
+  }
 
-  /* Est. 2026 belongs below the first-screen crop in the approved reference. */
   .hero-est-desktop {
     top: calc(var(--hero-card-top) + var(--hero-card-height) - 48px) !important;
-    left: calc(var(--hero-card-left) + 2.35vw) !important;
+    left: calc(var(--hero-card-left) + min(2.35vw, 43.17px)) !important;
   }
-}
-</style>
-<style id="homepage-section-scale-coherence-v1">
-/*
-  HOMEPAGE SCALE COHERENCE
-  Keep post-hero sections on the same desktop zoom-out behaviour as the hero.
-  No global wrapper, JS zoom, transform scale or browser-zoom lock.
-  1837px is the approved desktop reference width.
-*/
-@media (min-width: 981px) {
-  :root {
-    --section-space: max(164px, 8.928vw);
-  }
-
-  /* shared section rhythm */
-  .objects,
-  .structure-impact,
-  .pricing-services,
-  .faq-section,
-  .form-section {
-    padding-left: var(--pad);
-    padding-right: var(--pad);
-  }
-  .section-label {
-    gap: max(12px, .653vw);
-    margin-bottom: max(28px, 1.524vw);
-    font-size: max(9px, .490vw);
-  }
-  .section-label::before { width: max(22px, 1.198vw); }
-  .section-title {
-    max-width: max(1050px, 57.158vw);
-    font-size: max(128px, 6.968vw);
-  }
-
-  /* ticker / bridge out of hero */
-  .ticker-track > .ticker-chip {
-    min-width: max(280px, 15.242vw);
-    height: max(92px, 5.008vw);
-    padding-left: max(24px, 1.306vw);
-    padding-right: max(48px, 2.613vw);
-  }
-  .ticker-track > .ticker-chip small { font-size: max(8px, .435vw); }
-  .ticker-track > .ticker-chip strong { font-size: max(18px, .980vw); }
-  .ticker-track > .ticker-chip em { font-size: max(14px, .762vw); }
-
-  /* Explore the Index */
-  .objects {
-    min-height: max(1100px, 59.880vw);
-    gap: max(118px, 6.424vw);
-  }
-  .objects-intro { top: max(110px, 5.988vw); }
-  .objects-intro h2 { font-size: max(142px, 7.730vw); }
-  .objects-intro p {
-    max-width: max(260px, 14.154vw);
-    margin-top: max(38px, 2.069vw);
-    font-size: max(12px, .653vw);
-  }
-  .objects-list {
-    top: calc(50svh - max(264px, 14.371vw));
-    margin-top: min(-76px, -4.137vw);
-  }
-  .objects-list { --route-rail: max(68px, 3.702vw); }
-  .objects-list::before {
-    width: max(20px, 1.089vw);
-    left: calc((var(--route-rail) / 2) - max(10px, .544vw));
-  }
-  .objects .card {
-    min-height: max(132px, 7.186vw);
-    grid-template-columns:
-      max(68px, 3.702vw)
-      minmax(0, 1fr)
-      minmax(max(150px, 8.165vw), 31%);
-  }
-  .objects .card-title {
-    padding-inline: max(22px, 1.198vw);
-    font-size: max(60px, 3.266vw);
-  }
-  .objects .card-num { font-size: max(9px, .490vw); }
-  .objects .card-meta { font-size: max(8px, .435vw); }
-  .objects .card-arrow {
-    width: max(38px, 2.069vw);
-    height: max(38px, 2.069vw);
-    font-size: max(24px, 1.306vw);
-  }
-  .objects .card-bar { height: max(4px, .218vw); }
-
-  /* The Structure */
-  .structure-impact {
-    min-height: max(980px, 53.348vw);
-    padding-top: max(116px, 6.315vw);
-    padding-bottom: max(78px, 4.246vw);
-  }
-  .structure-ghost {
-    left: max(410px, 22.319vw);
-    font-size: max(390px, 21.230vw);
-  }
-  .structure-head {
-    grid-template-columns: minmax(0, 1fr) minmax(max(360px, 19.597vw), .72fr);
-    gap: max(120px, 6.532vw);
-  }
-  .structure-impact .structure-index { margin-bottom: max(34px, 1.851vw); }
-  .structure-index i { width: max(24px, 1.306vw); }
-  .structure-impact .section-title {
-    max-width: max(680px, 37.017vw);
-    font-size: max(120px, 6.532vw);
-  }
-  .structure-aside {
-    min-height: max(250px, 13.609vw);
-    padding-top: max(8px, .435vw);
-  }
-  .structure-aside p {
-    width: min(100%, max(390px, 21.230vw));
-    font-size: max(12px, .653vw);
-  }
-  .structure-aside strong { font-size: max(12px, .653vw); }
-  .structure-content {
-    margin-top: max(300px, 16.331vw);
-    padding-bottom: max(66px, 3.593vw);
-  }
-  .structure-copy {
-    max-width: max(405px, 22.047vw);
-    font-size: max(14px, .762vw);
-  }
-  .structure-tags {
-    gap: max(10px, .544vw);
-    margin-top: max(28px, 1.524vw);
-  }
-  .structure-tags span {
-    gap: max(8px, .435vw);
-    padding: max(9px, .490vw) max(13px, .708vw);
-    font-size: max(10px, .544vw);
-  }
-  .structure-tags span::before {
-    width: max(5px, .272vw);
-    height: max(5px, .272vw);
-  }
-  .structure-cta {
-    top: min(-204px, -11.105vw);
-    left: max(500px, 27.218vw);
-    width: max(294px, 16.004vw);
-    min-height: max(68px, 3.702vw);
-    gap: max(26px, 1.415vw);
-    padding-inline: max(28px, 1.524vw);
-    font-size: max(19px, 1.034vw);
-  }
-  .structure-cta span { font-size: max(22px, 1.198vw); }
-  .structure-impact .structure-metrics {
-    gap: max(46px, 2.504vw) max(78px, 4.246vw);
-  }
-  .structure-impact .why-item,
-  .structure-impact .why-item + .why-item {
-    min-height: max(142px, 7.730vw);
-    padding: 0 0 max(10px, .544vw) max(20px, 1.089vw);
-  }
-  .structure-impact .why-item::before {
-    top: max(5px, .272vw);
-    width: max(24px, 1.306vw);
-    height: max(3px, .163vw);
-  }
-  .structure-impact .why-num {
-    margin-top: max(28px, 1.524vw);
-    font-size: max(74px, 4.028vw);
-  }
-  .structure-impact .why-item h3 {
-    left: max(34px, 1.851vw);
-    font-size: max(11px, .599vw);
-  }
-  .structure-impact .why-item p {
-    max-width: max(240px, 13.065vw);
-    margin-top: max(13px, .708vw);
-    font-size: max(12px, .653vw);
-  }
-
-  /* Pricing / services */
-  .pricing-services {
-    min-height: max(980px, 53.348vw);
-    grid-template-columns: minmax(max(310px, 16.875vw), 36%) minmax(0, 1fr);
-    gap: max(118px, 6.424vw);
-    padding-top: max(118px, 6.424vw);
-    padding-bottom: max(96px, 5.226vw);
-  }
-  .pricing-ghost { font-size: max(470px, 25.585vw); }
-  .pricing-services .pricing-index { margin-bottom: max(38px, 2.069vw); }
-  .pricing-index i { width: max(24px, 1.306vw); }
-  .pricing-services .section-title {
-    max-width: max(570px, 31.029vw);
-    font-size: max(116px, 6.315vw);
-  }
-  .pricing-note {
-    max-width: max(340px, 18.508vw);
-    margin-top: max(72px, 3.919vw);
-    font-size: max(14px, .762vw);
-  }
-  .pricing-note strong {
-    margin-bottom: max(14px, .762vw);
-    font-size: max(11px, .599vw);
-  }
-  .pricing-services .tier-card,
-  .pricing-services .tier-card:nth-child(2) {
-    min-height: max(205px, 11.159vw);
-    grid-template-columns:
-      max(50px, 2.722vw)
-      minmax(max(160px, 8.710vw), .95fr)
-      minmax(max(190px, 10.343vw), 1.15fr)
-      max(124px, 6.750vw)
-      max(42px, 2.286vw);
-    column-gap: max(28px, 1.524vw);
-    padding: max(24px, 1.306vw) max(16px, .871vw) max(24px, 1.306vw) max(20px, 1.089vw);
-  }
-  .pricing-services .tier-card::before { width: max(5px, .272vw); }
-  .pricing-services .tier-num,
-  .pricing-services .tier-card:nth-child(2) .tier-num { font-size: max(24px, 1.306vw); }
-  .pricing-services .tier-title {
-    max-width: max(360px, 19.597vw);
-    font-size: max(38px, 2.069vw);
-  }
-  .pricing-services .tier-sub,
-  .pricing-services .tier-card:nth-child(2) .tier-sub {
-    margin-top: max(13px, .708vw);
-    font-size: max(11px, .599vw);
-  }
-  .pricing-services .tier-desc,
-  .pricing-services .tier-card:nth-child(2) .tier-desc {
-    max-width: max(370px, 20.142vw);
-    font-size: max(13px, .708vw);
-  }
-  .pricing-services .tier-pricing {
-    gap: max(8px, .435vw);
-    padding-left: max(26px, 1.415vw);
-  }
-  .pricing-services .tier-pricing::before {
-    top: max(3px, .163vw);
-    width: max(16px, .871vw);
-    height: max(2px, .109vw);
-  }
-  .pricing-services .tier-fee-label,
-  .pricing-services .tier-card:nth-child(2) .tier-fee-label { font-size: max(8px, .435vw); }
-  .pricing-services .tier-price,
-  .pricing-services .tier-card:nth-child(2) .tier-price { font-size: max(48px, 2.613vw); }
-  .pricing-services .tier-unit,
-  .pricing-services .tier-card:nth-child(2) .tier-unit {
-    margin-top: max(7px, .381vw);
-    font-size: max(11px, .599vw);
-  }
-  .tier-arrow {
-    width: max(36px, 1.960vw);
-    height: max(36px, 1.960vw);
-    font-size: max(16px, .871vw);
-  }
-  .pricing-monolith {
-    min-height: max(250px, 13.609vw);
-    padding: max(38px, 2.069vw) max(30px, 1.633vw);
-  }
-  .pricing-monolith-core { gap: max(48px, 2.613vw); }
-  .pricing-formula { gap: max(15px, .817vw); }
-  .pricing-formula strong { font-size: max(92px, 5.008vw); }
-  .pricing-formula i { font-size: max(48px, 2.613vw); }
-  .pricing-formula em { font-size: max(12px, .653vw); }
-  .pricing-monolith-note { font-size: max(16px, .871vw); }
-  .pricing-monolith-note small {
-    margin-bottom: max(8px, .435vw);
-    font-size: max(8px, .435vw);
-  }
-
-  /* FAQ */
-  .faq-section {
-    column-gap: max(76px, 4.137vw);
-    min-height: max(900px, 48.993vw);
-  }
-  .faq-section > .section-title {
-    top: max(110px, 5.988vw);
-    max-width: calc(100% - max(24px, 1.306vw));
-    padding-right: max(18px, .980vw);
-    font-size: max(106px, 5.770vw);
-  }
-  .faq {
-    margin-top: max(24px, 1.306vw);
-  }
-  .faq-q {
-    grid-template-columns:
-      max(54px, 2.940vw)
-      minmax(0, 1fr)
-      max(46px, 2.504vw);
-    gap: max(18px, .980vw);
-    min-height: max(92px, 5.008vw);
-    font-size: max(31px, 1.687vw);
-  }
-  .faq-q::before { font-size: max(10px, .544vw); }
-  .faq-icon {
-    width: max(34px, 1.851vw);
-    min-width: max(34px, 1.851vw);
-    height: max(34px, 1.851vw);
-  }
-  .faq-a {
-    max-width: max(720px, 39.194vw);
-    margin-left: max(72px, 3.919vw);
-    font-size: max(14px, .762vw);
-  }
-  .faq-item.open .faq-a {
-    max-height: max(360px, 19.597vw);
-    padding-bottom: max(28px, 1.524vw);
-  }
-
-  /* Contact / closing */
-  .form-section {
-    min-height: max(900px, 48.993vw);
-    padding-top: max(160px, 8.710vw);
-    padding-bottom: max(170px, 9.254vw);
-  }
-  .form-section::after { font-size: max(510px, 27.763vw); }
-  .form-status {
-    top: max(160px, 8.710vw);
-    gap: max(9px, .490vw);
-    font-size: max(10px, .544vw);
-  }
-  .form-status i {
-    width: max(9px, .490vw);
-    height: max(9px, .490vw);
-  }
-  .form-section .section-title {
-    max-width: max(1200px, 65.324vw);
-    font-size: max(108px, 5.879vw);
-  }
-  .form-section .form-wrap {
-    grid-template-columns: minmax(0, max(640px, 34.839vw)) auto;
-    column-gap: max(42px, 2.286vw);
-    row-gap: max(12px, .653vw);
-    width: min(100%, max(930px, 50.626vw));
-    margin-top: max(116px, 6.315vw);
-  }
-  .form-section .form-wrap input[type="email"],
-  .form-section .pkg-select-trigger {
-    min-height: max(58px, 3.157vw);
-    font-size: max(13px, .708vw);
-  }
-  .form-section .pkg-select-trigger::after {
-    width: max(34px, 1.851vw);
-    min-width: max(34px, 1.851vw);
-    height: max(34px, 1.851vw);
-    font-size: max(15px, .817vw);
-  }
-  .form-section .pkg-select-options {
-    top: calc(100% + max(10px, .544vw));
-    padding: max(6px, .327vw);
-    border-radius: max(12px, .653vw);
-  }
-  .form-section .pkg-option {
-    grid-template-columns: max(10px, .544vw) minmax(0, 1fr);
-    gap: max(12px, .653vw);
-    min-height: max(54px, 2.940vw);
-    padding-inline: max(16px, .871vw);
-    font-size: max(13px, .708vw);
-  }
-  .form-section .pkg-option::before {
-    width: max(8px, .435vw);
-    height: max(2px, .109vw);
-  }
-  .form-section .form-submit {
-    min-width: max(250px, 13.609vw);
-    min-height: max(58px, 3.157vw);
-    font-size: max(11px, .599vw);
-  }
-  .form-section > .section-microcopy {
-    width: min(100%, max(930px, 50.626vw));
-    margin-top: max(18px, .980vw);
-    font-size: max(8px, .435vw);
-  }
-
-  footer {
-    padding-top: max(32px, 1.742vw);
-    padding-bottom: max(32px, 1.742vw);
-  }
-  .footer-logo { font-size: max(18px, .980vw); }
-  .footer-logo::after,
-  .footer-copy { font-size: max(8px, .435vw); }
 }
 </style>
 </head>
