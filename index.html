@@ -4132,7 +4132,222 @@ textarea {
   }
 }
 </style>
+<style id="hero-reference-composition-v5">
+/*
+  HERO REFERENCE COMPOSITION v5
+  Same approved 1837×866 geometry as v4, but capped so browser zoom behaves
+  normally and the hero scales together with the rest of the homepage.
+*/
+@media (min-width: 981px) {
+  :root { --pad: calc(var(--canvas-gutter, 0px) + 68.89px); }
 
+  header {
+    top: min(2.20vh, 19.05px);
+    width: min(34.84vw, 640.01px);
+    max-width: none;
+    min-height: min(7.25vh, 62.79px);
+    padding:
+      min(.58vh, 5.02px)
+      min(.48vw, 8.82px)
+      min(.58vh, 5.02px)
+      min(1.12vw, 20.57px);
+    gap: min(.55vw, 10.10px);
+  }
+  .header-logo::after { font-size: clamp(14px, 1.20vw, 22.04px); }
+  nav { margin-left: min(.75vw, 13.78px); gap: min(.18vw, 3.31px); }
+  nav a,
+  nav a.nav-cta {
+    padding: min(1.02vh, 8.83px) min(.72vw, 13.23px);
+    font-size: clamp(13px, 1.10vw, 20.21px);
+  }
+  nav a.nav-cta {
+    margin-left: min(.28vw, 5.14px);
+    padding-inline: min(1.02vw, 18.74px);
+  }
+  nav a.nav-cta::after { font-size: clamp(12px, .92vw, 16.90px); }
+
+  .hero {
+    --hero-card-left: calc(var(--canvas-gutter, 0px) + 68.89px);
+    --hero-card-width: min(22.26vw, 408.92px);
+    --hero-card-top: min(39.15svh, 339.04px);
+    --hero-card-height: min(72svh, 623.52px);
+    min-height: min(132svh, 1143.12px);
+  }
+
+  .hero-section-index {
+    top: min(4.85svh, 42.00px);
+    left: calc(var(--canvas-gutter, 0px) + 68.89px);
+    font-size: clamp(10px, .80vw, 14.70px);
+  }
+
+  .hero::before {
+    top: min(6.55svh, 56.72px);
+    right: calc(var(--canvas-gutter, 0px) + 83.58px);
+    width: min(13.2vw, 242.48px);
+    font-size: clamp(12px, .95vw, 17.45px);
+    line-height: 1.35;
+  }
+
+  .hero h1 {
+    top: min(19.5svh, 168.87px) !important;
+    right: calc(var(--canvas-gutter, 0px) + 128.59px) !important;
+    left: auto !important;
+    width: min(50.63vw, 930.07px) !important;
+    padding-right: 0 !important;
+    font-size: clamp(96px, 11.01vw, 202.25px) !important;
+    line-height: .79 !important;
+    letter-spacing: -.08em !important;
+    text-align: right !important;
+  }
+
+  .hero-brief {
+    top: var(--hero-card-top) !important;
+    left: var(--hero-card-left) !important;
+    width: var(--hero-card-width) !important;
+    height: var(--hero-card-height) !important;
+    padding:
+      min(4.90vh, 42.43px)
+      min(2.35vw, 43.17px)
+      min(3.45vh, 29.88px) !important;
+  }
+  .hero-brief p {
+    margin-top: 0 !important;
+    font-size: clamp(15px, 1.15vw, 21.13px) !important;
+    line-height: 1.42 !important;
+  }
+  .hero-brief b {
+    max-width: min(16.2vw, 297.59px) !important;
+    margin-top: min(4.90vh, 42.43px) !important;
+    font-size: clamp(13px, .93vw, 17.08px) !important;
+    line-height: 1.45 !important;
+  }
+
+  .hero::after {
+    content: "DOBERMAN" !important;
+    top: min(70svh, 606.20px) !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: calc(var(--hero-card-left) + var(--hero-card-width) - min(.16vw, 2.94px)) !important;
+    font-size: clamp(180px, 24vw, 440.88px) !important;
+    line-height: .8 !important;
+    letter-spacing: -.09em !important;
+    transform: translate(-.045em, .015em) !important;
+  }
+
+  .hero #recordSearch,
+  .hero .hero-search {
+    position: absolute !important;
+    top: min(68.70svh, 594.94px) !important;
+    right: calc(var(--canvas-gutter, 0px) + 85.05px) !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: min(37.9vw, 696.22px) !important;
+    height: min(15.13svh, 131.03px) !important;
+    margin: 0 !important;
+    padding-top: 0 !important;
+    border-top: 2px solid var(--ink) !important;
+    overflow: visible !important;
+  }
+  .hero-search::before {
+    height: min(3.55svh, 30.74px);
+    display: flex;
+    align-items: flex-end;
+    margin: 0 !important;
+    padding-bottom: min(.75svh, 6.50px);
+    box-sizing: border-box;
+    font-size: clamp(9px, .60vw, 11.02px) !important;
+  }
+  .hero-search-field {
+    height: min(11.58svh, 100.28px);
+    transform: translateY(min(1.15svh, 9.96px));
+  }
+  .hero-search input {
+    height: 100%;
+    box-sizing: border-box;
+    padding:
+      0
+      min(4vw, 73.48px)
+      min(1.15svh, 9.96px)
+      0 !important;
+    font-size: clamp(24px, 2.40vw, 44.09px) !important;
+    line-height: 1 !important;
+  }
+  .hero-search-submit {
+    top: 50%;
+    right: 0;
+    bottom: auto !important;
+    width: min(3.43vw, 63.01px) !important;
+    height: min(3.43vw, 63.01px) !important;
+    font-size: clamp(16px, 1.1vw, 20.21px) !important;
+    transform: translateY(-50%);
+  }
+
+  .puppy-shortcut {
+    top: calc(100% + min(1.85svh, 16.02px)) !important;
+    right: 0 !important;
+    left: auto !important;
+    min-width: min(11.54vw, 211.99px) !important;
+    min-height: min(6.24vh, 54.04px) !important;
+    gap: min(.72vw, 13.23px) !important;
+    padding:
+      min(.8vh, 6.93px)
+      min(.38vw, 6.98px)
+      min(.8vh, 6.93px)
+      min(.95vw, 17.45px) !important;
+    font-size: clamp(8px, .50vw, 9.19px) !important;
+  }
+  .puppy-shortcut strong {
+    width: min(1.85vw, 33.98px) !important;
+    height: min(1.85vw, 33.98px) !important;
+    font-size: clamp(10px, .66vw, 12.12px) !important;
+  }
+
+  .hero-meta-note {
+    top: min(92.20svh, 798.45px) !important;
+    left: calc(var(--hero-card-left) + min(2.35vw, 43.17px)) !important;
+    gap: min(1.25vh, 10.83px);
+  }
+  .hero-meta-note .hero-details-line > span {
+    font-size: clamp(14px, 1.20vw, 22.04px) !important;
+  }
+  .hero-meta-note strong {
+    font-size: clamp(14px, 1.10vw, 20.21px) !important;
+  }
+
+  .hero-est-desktop {
+    top: calc(var(--hero-card-top) + var(--hero-card-height) - 48px) !important;
+    left: calc(var(--hero-card-left) + min(2.35vw, 43.17px)) !important;
+  }
+}
+</style>
+<style id="homepage-centered-canvas-v1">
+/*
+  HOMEPAGE CENTERED REFERENCE CANVAS
+  Approved desktop composition width: 1837px.
+  On effective viewports wider than that (including browser zoom-out), only
+  the OUTER GUTTER grows. The actual design grid stays 1837px wide.
+  Full-bleed section backgrounds remain full width. No zoom/scale/transform.
+*/
+@media (min-width: 981px) {
+  :root {
+    --canvas-gutter: max(0px, calc((100vw - 1837px) / 2));
+    --pad: calc(var(--canvas-gutter) + 68.89px);
+  }
+
+  section,
+  footer {
+    padding-left: var(--pad);
+    padding-right: var(--pad);
+  }
+
+  /* Keep the floating header centered to the same reference composition. */
+  header {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+}
+</style>
 </head>
 <body>
 <div aria-hidden="true" class="scroll-progress" id="scrollProgress"></div>
