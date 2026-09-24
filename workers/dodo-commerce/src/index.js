@@ -575,6 +575,98 @@ async function updatePaymentLifecycle(env, paymentId, status) {
   }
 }
 
+async function sendBrandedPaymentEmail(env, payment) {
+  if (!env.SENDGRID_API_KEY) return { skipped: true, reason: "sendgrid_not_configured" };
+
+  const customerEmail = payment?.customer?.email || null;
+  const serviceKey = payment?.metadata?.service_key || "";
+  const orderReference = payment?.metadata?.order_reference || "";
+  const serviceName = PRODUCTS[serviceKey]?.name || "DOBERMAN INDEX service";
+
+  if (!customerEmail) return { skipped: true, reason: "customer_email_missing" };
+
+  const fromEmail = env.SENDGRID_FROM_EMAIL || "dobermanindex.records@gmail.com";
+  const fromName = env.SENDGRID_FROM_NAME || "DOBERMAN INDEX";
+  const supportEmail = env.SUPPORT_EMAIL || "dobermanindex.records@gmail.com";
+
+  let ctaUrl = SITE_ORIGIN;
+  let ctaLabel = "Return to DOBERMAN INDEX";
+  let intro = "Your payment has been confirmed and your order is ready for the next step.";
+
+  if (serviceKey === "doberman-intelligence-record") {
+    ctaUrl = SITE_ORIGIN + "/submit.html?order_reference=" + encodeURIComponent(orderReference);
+    ctaLabel = "START INTELLIGENCE RECORD";
+    intro = "Your payment has been confirmed. Your Doberman Intelligence Record is ready for the owner questionnaire and evidence submission.";
+  } else if (serviceKey === "kennel-promotion-service") {
+    ctaUrl = SITE_ORIGIN + "/submit-kennel.html?order_reference=" + encodeURIComponent(orderReference);
+    ctaLabel = "START KENNEL PROMOTION";
+    intro = "Your payment has been confirmed. Your 12-month Kennel Promotion is ready for the kennel information required for activation.";
+  }
+
+  const subject = "PAYMENT CONFIRMED · " + serviceName.toUpperCase();
+
+  const html = `<!doctype html>
+<html>
+<body style="margin:0;background:#0d0d0d;font-family:Arial,Helvetica,sans-serif;color:#ffffff">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#0d0d0d;padding:32px 16px">
+    <tr><td align="center">
+      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:680px;background:#151515;border:1px solid #2d2d2d;border-radius:22px;overflow:hidden">
+        <tr><td style="padding:34px 38px 18px;font-size:12px;letter-spacing:2px;font-weight:700;color:#f3fe19">DOBERMAN INDEX</td></tr>
+        <tr><td style="padding:0 38px 14px;font-size:42px;line-height:1;font-weight:800">PAYMENT CONFIRMED.</td></tr>
+        <tr><td style="padding:8px 38px 10px;font-size:17px;line-height:1.6;color:#c8c8c8">${intro}</td></tr>
+        <tr><td style="padding:18px 38px;color:#ffffff">
+          <div style="padding:18px 0;border-top:1px solid #333;border-bottom:1px solid #333">
+            <div style="font-size:12px;color:#8f8f8f;margin-bottom:8px">SERVICE</div>
+            <div style="font-size:18px;font-weight:700">${serviceName}</div>
+            <div style="font-size:12px;color:#8f8f8f;margin-top:10px">ORDER REFERENCE</div>
+            <div style="font-size:13px;color:#c8c8c8">${orderReference || "—"}</div>
+          </div>
+        </td></tr>
+        <tr><td style="padding:8px 38px 34px">
+          <a href="${ctaUrl}" style="display:inline-block;background:#f3fe19;color:#111111;text-decoration:none;font-weight:800;padding:16px 22px;border-radius:999px">${ctaLabel}</a>
+        </td></tr>
+        <tr><td style="padding:22px 38px 34px;border-top:1px solid #2d2d2d;font-size:12px;line-height:1.6;color:#8f8f8f">
+          Questions about your order: <a href="mailto:${supportEmail}" style="color:#ffffff">${supportEmail}</a>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+
+  const textBody =
+    "DOBERMAN INDEX\n\nPAYMENT CONFIRMED.\n\n" +
+    intro + "\n\nService: " + serviceName +
+    "\nOrder reference: " + (orderReference || "—") +
+    "\n\nNext step: " + ctaUrl +
+    "\n\nQuestions: " + supportEmail;
+
+  const response = await fetch("https://api.sendgrid.com/v3/mail/send", {
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer " + env.SENDGRID_API_KEY,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      personalizations: [{ to: [{ email: customerEmail }], subject }],
+      from: { email: fromEmail, name: fromName },
+      reply_to: { email: supportEmail, name: "DOBERMAN INDEX" },
+      content: [
+        { type: "text/plain", value: textBody },
+        { type: "text/html", value: html }
+      ]
+    })
+  });
+
+  if (!response.ok) {
+    const details = await response.text().catch(() => "");
+    console.error("DOBERMAN INDEX confirmation email failed", response.status, details);
+    return { sent: false, status: response.status };
+  }
+
+  return { sent: true };
+}
+
 function eventPaymentId(data) {
   return data?.payment_id || data?.payment?.payment_id || data?.payment?.id || null;
 }
@@ -597,6 +689,7 @@ async function webhook(request, env) {
 
   if (event.type === "payment.succeeded") {
     await upsertPayment(env, event.data || {}, event.timestamp || null);
+    await sendBrandedPaymentEmail(env, event.data || {});
   } else if (event.type === "payment.failed") {
     const payment = event.data || {};
     const paymentId = payment.payment_id || payment.id || null;
