@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#f1f1f1">
-<title>Payment received · Doberman Index</title>
+<title>Payment confirmed · DOBERMAN INDEX</title>
 <style>
 :root{--paper:#f1f1f1;--ink:#121212;--muted:#6d6d68;--acid:#f3fe19;--blue:#0c01e6;--white:#fff}
 *{box-sizing:border-box}
@@ -85,12 +85,12 @@ a.secondary{
 
 <main id="panel" data-state="checking">
 
-<div class="eyebrow">Dodo Payments / order return</div>
+<div class="eyebrow">DOBERMAN INDEX / secure payment</div>
 
-<h1 id="title">Checking payment.</h1>
+<h1 id="title">CHECKING PAYMENT.</h1>
 
 <p id="message">
-Your checkout has returned to Doberman Index. We are verifying the payment before opening the next step.
+Your payment is being verified before the next step opens.
 </p>
 
 <div class="order">
@@ -100,7 +100,7 @@ Your checkout has returned to Doberman Index. We are verifying the payment befor
 
 <div class="actions">
 <a class="primary-action" id="nextAction" href="index.html">Continue</a>
-<a class="secondary" href="index.html">Back to Doberman Index</a>
+<a class="secondary" href="index.html">Back to DOBERMAN INDEX</a>
 </div>
 
 </main>
@@ -172,7 +172,7 @@ Your checkout has returned to Doberman Index. We are verifying the payment befor
 
     panel.dataset.state="ready";
 
-    title.textContent="Payment confirmed.";
+    title.textContent="PAYMENT CONFIRMED.";
 
     orderMeta.textContent=
       `Order ${orderReference} · verified by Doberman Index commerce`;
@@ -180,7 +180,7 @@ Your checkout has returned to Doberman Index. We are verifying the payment befor
     if(serviceKey==="doberman-intelligence-record"){
 
       message.textContent=
-        "Your Doberman Intelligence Record build is unlocked. Continue to the owner questionnaire and send the evidence package for review.";
+        "Your Doberman Intelligence Record is ready for the next step. Continue to the owner questionnaire and submit the required evidence for review.";
 
       next.href=
         "submit.html?order_reference="+
@@ -192,7 +192,7 @@ Your checkout has returned to Doberman Index. We are verifying the payment befor
     }else if(serviceKey==="kennel-promotion-service"){
 
       message.textContent=
-        "Your 12-month Kennel Promotion order is confirmed. Continue with the kennel information required to activate the promotion.";
+        "Your 12-month Kennel Promotion is confirmed. Continue with the kennel information required for activation.";
 
       next.href=
         "submit-kennel.html?order_reference="+
@@ -204,7 +204,7 @@ Your checkout has returned to Doberman Index. We are verifying the payment befor
     }else{
 
       next.href="index.html";
-      next.textContent="Return to Doberman Index";
+      next.textContent="Return to DOBERMAN INDEX";
 
     }
 
@@ -212,7 +212,7 @@ Your checkout has returned to Doberman Index. We are verifying the payment befor
 
     panel.dataset.state="failed";
 
-    title.textContent="Verification pending.";
+    title.textContent="VERIFICATION PENDING.";
 
     message.textContent=
       error.message+
