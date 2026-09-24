@@ -4137,39 +4137,32 @@ textarea {
 <style id="hero-reference-composition-v2">
 /*
   HERO REFERENCE COMPOSITION
-  Calibrated to the approved 1837×866 first impression.
-  Desktop only. No page zoom, no wrapper, no frozen site.
+  Calibrated directly against the approved 1837×866 screenshot.
+  Desktop/tablet-landscape only. No global zoom and no frozen page.
 */
-@media (min-width: 1201px) {
-  :root {
-    --pad: 3.75vw;
-  }
+@media (min-width: 981px) {
+  :root { --pad: 3.75vw; }
 
   header {
     top: 1.62vh;
-    min-height: 6.9vh;
-    padding: .58vh .42vw .58vh 1.05vw;
+    width: 34.84vw;
+    max-width: none;
+    min-height: 7.25vh;
+    padding: .58vh .48vw .58vh 1.12vw;
     gap: .55vw;
   }
-  .header-logo::after {
-    font-size: .98vw;
-  }
-  nav {
-    margin-left: .9vw;
-    gap: .2vw;
-  }
+  .header-logo::after { font-size: 1.06vw; }
+  nav { margin-left: .75vw; gap: .18vw; }
   nav a,
   nav a.nav-cta {
-    padding: 1.05vh .78vw;
-    font-size: .92vw;
+    padding: 1.02vh .72vw;
+    font-size: .96vw;
   }
   nav a.nav-cta {
     margin-left: .28vw;
-    padding-inline: 1.05vw;
+    padding-inline: 1.02vw;
   }
-  nav a.nav-cta::after {
-    font-size: .78vw;
-  }
+  nav a.nav-cta::after { font-size: .80vw; }
 
   .hero {
     --hero-card-left: 3.75vw;
@@ -4194,108 +4187,120 @@ textarea {
   }
 
   .hero h1 {
-    top: 19.5svh;
-    right: 4.48vw;
-    width: 50.63vw;
-    padding-right: .55vw;
-    font-size: 8.93vw;
-    line-height: .79;
-    letter-spacing: -.08em;
+    top: 19.5svh !important;
+    right: 6.18vw !important;
+    left: auto !important;
+    width: 50.63vw !important;
+    padding-right: 0 !important;
+    font-size: 11.01vw !important;
+    line-height: .79 !important;
+    letter-spacing: -.08em !important;
+    text-align: right !important;
   }
 
   .hero-brief {
-    top: var(--hero-card-top);
-    left: var(--hero-card-left);
-    width: var(--hero-card-width);
-    height: var(--hero-card-height);
-    padding: 3.45vh 2.0vw;
+    top: var(--hero-card-top) !important;
+    left: var(--hero-card-left) !important;
+    width: var(--hero-card-width) !important;
+    height: var(--hero-card-height) !important;
+    padding: 4.9vh 2.35vw 3.45vh !important;
   }
   .hero-brief p {
-    font-size: .87vw;
-    line-height: 1.42;
+    margin-top: 0 !important;
+    font-size: 1.04vw !important;
+    line-height: 1.42 !important;
   }
   .hero-brief b {
-    max-width: 14vw;
-    margin-top: 2.75vh;
-    font-size: .76vw;
-    line-height: 1.45;
+    max-width: 14vw !important;
+    margin-top: 4.9vh !important;
+    font-size: .84vw !important;
+    line-height: 1.45 !important;
   }
 
   .hero::after {
     content: "DOBER";
-    top: 70svh;
-    bottom: auto;
-    left: calc(var(--hero-card-left) + var(--hero-card-width) - .16vw);
-    font-size: 20.14vw;
-    line-height: .8;
-    letter-spacing: -.09em;
-    transform: translate(-.045em, .015em);
+    top: 70svh !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: calc(var(--hero-card-left) + var(--hero-card-width) - .16vw) !important;
+    font-size: 20.14vw !important;
+    line-height: .8 !important;
+    letter-spacing: -.09em !important;
+    transform: translate(-.045em, .015em) !important;
   }
 
   .hero #recordSearch,
   .hero .hero-search {
     position: absolute !important;
-    top: 68.9svh !important;
+    top: 68.94svh !important;
     right: 4.63vw !important;
     bottom: auto !important;
     left: auto !important;
     width: 37.9vw !important;
+    height: 15.13svh !important;
     margin: 0 !important;
-    padding-top: 1.5vh;
+    padding-top: 0 !important;
+    border-top: 2px solid var(--ink) !important;
+    overflow: visible !important;
   }
   .hero-search::before {
-    margin-bottom: .92vh;
-    font-size: .55vw;
+    height: 3.55svh;
+    display: flex;
+    align-items: flex-end;
+    margin: 0 !important;
+    padding-bottom: .75svh;
+    box-sizing: border-box;
+    font-size: .60vw !important;
+  }
+  .hero-search-field {
+    height: 11.58svh;
   }
   .hero-search input {
-    padding: .92vh 4vw 1.38vh 0;
-    font-size: 1.85vw;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 0 4vw 1.15svh 0 !important;
+    font-size: 2.20vw !important;
+    line-height: 1 !important;
   }
   .hero-search-submit {
+    top: 50%;
     right: 0;
-    bottom: .46vh;
-    width: 3.43vw;
-    height: 3.43vw;
-    font-size: 1.1vw;
+    bottom: auto !important;
+    width: 3.43vw !important;
+    height: 3.43vw !important;
+    font-size: 1.1vw !important;
+    transform: translateY(-50%);
   }
 
   .puppy-shortcut {
-    top: calc(100% + 1.6vh);
+    top: calc(100% + 2.30svh) !important;
     right: 0 !important;
     left: auto !important;
-    min-width: 11.54vw;
-    min-height: 6.24vh;
-    gap: .72vw;
-    padding: .8vh .38vw .8vh .95vw;
-    font-size: .50vw;
+    min-width: 11.54vw !important;
+    min-height: 6.24vh !important;
+    gap: .72vw !important;
+    padding: .8vh .38vw .8vh .95vw !important;
+    font-size: .50vw !important;
   }
   .puppy-shortcut strong {
-    width: 1.85vw;
-    height: 1.85vw;
-    font-size: .66vw;
+    width: 1.85vw !important;
+    height: 1.85vw !important;
+    font-size: .66vw !important;
   }
 
   .hero-meta-note {
-    top: 89.5svh;
-    left: calc(var(--hero-card-left) + 2vw);
+    top: 89.5svh !important;
+    left: calc(var(--hero-card-left) + 2.35vw) !important;
     gap: 1.25vh;
   }
-  .hero-meta-note .hero-details-line > span {
-    font-size: .76vw;
-  }
-  .hero-meta-note strong {
-    font-size: .93vw;
-  }
+  .hero-meta-note .hero-details-line > span { font-size: .76vw !important; }
+  .hero-meta-note strong { font-size: .93vw !important; }
   .hero-est-desktop {
-    top: 96.6svh;
-    left: calc(var(--hero-card-left) + 2vw);
+    top: 96.6svh !important;
+    left: calc(var(--hero-card-left) + 2.35vw) !important;
   }
-  .hero-est span {
-    font-size: .44vw;
-  }
-  .hero-est em {
-    font-size: .98vw;
-  }
+  .hero-est span { font-size: .44vw !important; }
+  .hero-est em { font-size: .98vw !important; }
 }
 </style>
 
