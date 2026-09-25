@@ -3164,12 +3164,14 @@
  .media-observation{margin:38px var(--pad) 0}.media-observation-ledger>div{grid-template-columns:1fr;gap:6px}.record-desk-shell{margin:0 var(--pad)}.record-desk-visual{display:block}.record-desk-image{height:280px}.record-desk-workspace{padding:0 18px 22px}.record-desk-tabs{margin:0 -18px;padding:0 18px}.desk-panel-head{grid-template-columns:1fr;gap:12px}.desk-ledger>div{grid-template-columns:1fr;gap:5px;padding:13px 0}.desk-ledger small{grid-column:1;margin-top:0}.desk-performance-strip{grid-template-columns:1fr 1fr}.pedigree-deep-head{grid-template-columns:1fr}.pedigree-analysis-ledger>div{grid-template-columns:1fr;gap:6px}.pedigree-analysis-ledger small{grid-column:1;margin-top:0}.fedor-trigger{grid-template-columns:1fr;gap:8px}.fedor-detail{grid-template-columns:1fr}.fedor-image-slot{min-height:230px;border-right:0;border-bottom:1px solid #3b3b3b}
 }
 </style>
+  <link rel="stylesheet" href="../../assets/css/work-layer.css">
 </head>
 <body class="female-template">
 <div aria-hidden="true" class="scroll-progress" id="scrollProgress" style="transform: scaleX(0.168274);"></div>
 <nav aria-label="Primary" class="float-nav">
 <a class="nav-brand" href="../../index.html">DOBERMAN INDEX®</a>
 <a class="nav-link" href="#gallery">Gallery</a>
+    <a class="nav-link" data-work-nav href="#work" hidden>Work</a>
 <a class="nav-link" href="#bloodline">Bloodline</a>
 <a class="nav-link" href="#pedigree-intelligence">Pedigree intelligence</a>
 <a class="nav-link" href="#health">Health</a>
@@ -3229,7 +3231,22 @@
 </div>
 </div>
 </section>
-<section class="section record-desk" id="record-desk">
+<section class="section is-white di-work-layer" id="work" data-di-work-layer="dog" hidden>
+      <div class="section-mark" aria-hidden="true">WORK</div>
+      <header class="section-head reveal">
+        <div>
+          <div class="section-index"><span>WORK</span><i></i><span>Working record</span></div>
+          <h2 class="section-title">Work &amp;<br>performance.</h2>
+        </div>
+        <p class="section-note"><b>Optional working layer</b>Working qualifications, training media and sport records appear here only when they are part of this Doberman's record.</p>
+      </header>
+      <div class="section-content">
+        <div class="di-work-summary reveal" data-work-summary></div>
+        <div class="di-work-rail reveal" data-work-media></div>
+      </div>
+    </section>
+
+    <section class="section record-desk" id="record-desk">
 <div aria-hidden="true" class="record-desk-ghost">RECORD</div>
 <header class="section-head reveal">
 <div>
@@ -4260,4 +4277,5 @@
   document.addEventListener('DOMContentLoaded',()=>{initDesk();initFedor();});
 })();
 </script>
+<script src="../../assets/js/work-layer.js"></script>
 </body></html>
