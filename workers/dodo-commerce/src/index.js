@@ -576,7 +576,7 @@ async function updatePaymentLifecycle(env, paymentId, status) {
 }
 
 async function sendBrandedPaymentEmail(env, payment) {
-  if (!env.SENDGRID_API_KEY) return { skipped: true, reason: "sendgrid_not_configured" };
+  if (!env.RESEND_API_KEY) return { skipped: true, reason: "resend_not_configured" };
 
   const customerEmail = payment?.customer?.email || null;
   const serviceKey = payment?.metadata?.service_key || "";
@@ -585,8 +585,8 @@ async function sendBrandedPaymentEmail(env, payment) {
 
   if (!customerEmail) return { skipped: true, reason: "customer_email_missing" };
 
-  const fromEmail = env.SENDGRID_FROM_EMAIL || "dobermanindex.records@gmail.com";
-  const fromName = env.SENDGRID_FROM_NAME || "DOBERMAN INDEX";
+  const fromEmail = env.RESEND_FROM_EMAIL || "records@doberman-index.com";
+  const fromName = env.RESEND_FROM_NAME || "DOBERMAN INDEX";
   const supportEmail = env.SUPPORT_EMAIL || "dobermanindex.records@gmail.com";
 
   let ctaUrl = SITE_ORIGIN;
@@ -641,20 +641,19 @@ async function sendBrandedPaymentEmail(env, payment) {
     "\n\nNext step: " + ctaUrl +
     "\n\nQuestions: " + supportEmail;
 
-  const response = await fetch("https://api.sendgrid.com/v3/mail/send", {
+  const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
-      "Authorization": "Bearer " + env.SENDGRID_API_KEY,
+      "Authorization": "Bearer " + env.RESEND_API_KEY,
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      personalizations: [{ to: [{ email: customerEmail }], subject }],
-      from: { email: fromEmail, name: fromName },
-      reply_to: { email: supportEmail, name: "DOBERMAN INDEX" },
-      content: [
-        { type: "text/plain", value: textBody },
-        { type: "text/html", value: html }
-      ]
+      from: fromName + " <" + fromEmail + ">",
+      to: [customerEmail],
+      subject,
+      html,
+      text: textBody,
+      reply_to: supportEmail
     })
   });
 
