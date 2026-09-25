@@ -744,20 +744,6 @@ export default {
     }
 
     if (
-      url.pathname === "/internal/test-payment-email/9f8e7c6b-5d4a-4312-b0a9-7c6e5d4b3a21" &&
-      request.method === "GET"
-    ) {
-      const result = await sendBrandedPaymentEmail(env, {
-        customer: { email: "dobermanindex.records@gmail.com" },
-        metadata: {
-          service_key: "kennel-promotion-service",
-          order_reference: "TEST-" + Date.now()
-        }
-      });
-      return json({ ok: !!result?.sent, result });
-    }
-
-    if (
       url.pathname === "/v1/commerce/checkout" &&
       request.method === "POST"
     ) {
