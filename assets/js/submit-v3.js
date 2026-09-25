@@ -33,6 +33,7 @@
     { name: "profile_photo", role: "profile", base: "side-profile" },
     { name: "stack_photo", role: "stack", base: "standing-pose" },
     { name: "movement_photo", role: "movement", base: "movement-photo" },
+    { name: "gallery_photos", role: "gallery", base: "gallery", multiple: true },
     { name: "movement_video", role: "movement_video", base: "movement-video" },
   ];
 
@@ -80,6 +81,13 @@
 
   function evidenceBlock(source = "owner_declaration") {
     return { source_type: source, issuer: null, date: null, reference: null, file: null };
+  }
+
+  function ownerPhotoCount() {
+    return ["hero_photo","head_photo","profile_photo","stack_photo","movement_photo","gallery_photos"].reduce((count, name) => {
+      const input = form.elements.namedItem(name);
+      return count + Array.from(input?.files || []).length;
+    }, 0);
   }
 
   function totalFileSize() {
@@ -180,6 +188,16 @@
       if (field.type === "file" && !validateFileField(field)) return false;
     }
     if (index === 3) {
+      const photoCount = ownerPhotoCount();
+      if (photoCount > 10) {
+        setError(`You selected ${photoCount} photos. Please keep Gallery & Movement to a maximum of 10 photos total.`, form.elements.namedItem("gallery_photos"));
+        return false;
+      }
+      const galleryInput = form.elements.namedItem("gallery_photos");
+      if (Array.from(galleryInput?.files || []).length > 5) {
+        setError("Additional gallery accepts up to 5 photos.", galleryInput);
+        return false;
+      }
       const totalBytes = totalFileSize();
       const megabytes = totalBytes / (1024 * 1024);
       if (totalBytes > PACKAGE_MAX_BYTES) {
