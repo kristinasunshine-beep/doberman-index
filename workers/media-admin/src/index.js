@@ -1,11 +1,16 @@
 const SITE_ORIGIN = "https://doberman-index.com";
 
-function json(body, status = 200) {
+function corsOrigin(request) {
+  const origin = request.headers.get("Origin");
+  return origin === SITE_ORIGIN || origin === "null" ? origin : SITE_ORIGIN;
+}
+
+function json(body, status = 200, request = null) {
   return new Response(JSON.stringify(body), {
     status,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      "Access-Control-Allow-Origin": SITE_ORIGIN,
+      "Access-Control-Allow-Origin": request ? corsOrigin(request) : SITE_ORIGIN,
       "Access-Control-Allow-Headers": "Authorization, Content-Type, X-DI-Registered-Name, X-DI-Source-Url, X-DI-Role",
       "Access-Control-Allow-Methods": "GET,HEAD,PUT,DELETE,OPTIONS",
       "Vary": "Origin"
@@ -64,7 +69,7 @@ export default {
       return new Response(null, {
         status: 204,
         headers: {
-          "Access-Control-Allow-Origin": SITE_ORIGIN,
+          "Access-Control-Allow-Origin": corsOrigin(request),
           "Access-Control-Allow-Headers": "Authorization, Content-Type, X-DI-Registered-Name, X-DI-Source-Url, X-DI-Role",
           "Access-Control-Allow-Methods": "GET,HEAD,PUT,DELETE,OPTIONS",
           "Vary": "Origin"
@@ -78,18 +83,18 @@ export default {
         service: "doberman-index-media",
         storage: "cloudflare-r2",
         public_base: env.MEDIA_PUBLIC_BASE || "https://media.doberman-index.com"
-      });
+      }, 200, request);
     }
 
-    if (!env.MEDIA_BUCKET) return json({ error: "R2 media bucket is not configured." }, 503);
+    if (!env.MEDIA_BUCKET) return json({ error: "R2 media bucket is not configured." }, 503, request);
 
     const key = adminKey(url.pathname);
     if (key) {
-      if (!authorized(request, env)) return json({ error: "Unauthorized." }, 401);
+      if (!authorized(request, env)) return json({ error: "Unauthorized." }, 401, request);
 
       if (request.method === "HEAD" || request.method === "GET") {
         const object = await env.MEDIA_BUCKET.head(key);
-        if (!object) return json({ exists: false, key }, 404);
+        if (!object) return json({ exists: false, key }, 404, request);
         return json({
           exists: true,
           key,
@@ -98,24 +103,24 @@ export default {
           httpMetadata: object.httpMetadata || {},
           customMetadata: object.customMetadata || {},
           public_url: publicUrl(env, key)
-        });
+        }, 200, request);
       }
 
       if (request.method === "DELETE") {
         await env.MEDIA_BUCKET.delete(key);
-        return json({ deleted: true, key });
+        return json({ deleted: true, key }, 200, request);
       }
 
-      if (request.method !== "PUT") return json({ error: "Method not allowed." }, 405);
+      if (request.method !== "PUT") return json({ error: "Method not allowed." }, 405, request);
 
       const contentType = request.headers.get("Content-Type") || "application/octet-stream";
       const length = Number(request.headers.get("Content-Length") || 0);
       const max = contentLimit(key, contentType);
-      if (length && length > max) return json({ error: "Media object is too large." }, 413);
+      if (length && length > max) return json({ error: "Media object is too large." }, 413, request);
 
       const body = await request.arrayBuffer();
-      if (!body.byteLength) return json({ error: "Empty media object." }, 400);
-      if (body.byteLength > max) return json({ error: "Media object is too large." }, 413);
+      if (!body.byteLength) return json({ error: "Empty media object." }, 400, request);
+      if (body.byteLength > max) return json({ error: "Media object is too large." }, 413, request);
 
       const metadata = {
         registered_name: request.headers.get("X-DI-Registered-Name") || "",
@@ -130,7 +135,7 @@ export default {
           cacheControl: "public, max-age=31536000, immutable"
         },
         customMetadata: metadata
-      });
+      }, 200, request);
 
       return json({
         stored: true,
@@ -138,20 +143,20 @@ export default {
         size: body.byteLength,
         public_url: publicUrl(env, key),
         metadata
-      }, 201);
+      }, 201, request);
     }
 
     // Public read path. The R2 bucket itself remains private; this Worker is the public edge.
     const publicObjectKey = publicKey(url.pathname);
     if (!publicObjectKey || !["GET","HEAD"].includes(request.method)) {
-      return json({ error: "Not found." }, 404);
+      return json({ error: "Not found." }, 404, request);
     }
 
     const object = await env.MEDIA_BUCKET.get(publicObjectKey);
-    if (!object) return json({ error: "Not found." }, 404);
+    if (!object) return json({ error: "Not found." }, 404, request);
     const headers = objectHeaders(object);
 
-    if (request.method === "HEAD") return new Response(null, { status: 200, headers });
+    if (request.method === "HEAD") return new Response(null, { status: 200, headers }, 200, request);
     return new Response(object.body, { status: 200, headers });
   }
 };
