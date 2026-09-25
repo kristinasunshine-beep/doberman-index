@@ -18,13 +18,13 @@ Create a Worker secret:
 MEDIA_ADMIN_KEY
 ```
 
-The Worker itself is published on the custom domain:
+The Worker is currently published on the account workers.dev domain:
 
 ```
-media.doberman-index.com
+doberman-index-media-admin.dobermanindex-records.workers.dev
 ```
 
-The R2 bucket remains private. Public GET/HEAD requests are served through the Worker, while writes stay behind the admin secret.
+The R2 bucket remains private. Public GET/HEAD requests are served through the Worker, while writes stay behind the admin secret. A custom media subdomain can be added later if the DNS zone is moved to or connected through Cloudflare.
 
 The secret must never be committed to GitHub.
 
@@ -63,8 +63,8 @@ Optional provenance headers:
 Public media is read directly from the same Worker domain:
 
 ```
-GET https://media.doberman-index.com/dogs/DI-M-000123/gallery/01.jpg
-GET https://media.doberman-index.com/ancestors/DI-A-000011/main.jpg
+GET https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000123/gallery/01.jpg
+GET https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000011/main.jpg
 ```
 
 No Authorization header is needed for public reads. The underlying R2 bucket is not made public.
