@@ -4,7 +4,10 @@
   "main": "src/index.js",
   "compatibility_date": "2026-09-01",
   "vars": {
-    "DODO_PAYMENTS_ENVIRONMENT": "live_mode",
+    "RESEND_FROM_EMAIL": "records@doberman-index.com",
+"RESEND_FROM_NAME": "DOBERMAN INDEX",
+"SUPPORT_EMAIL": "dobermanindex.records@gmail.com",
+"DODO_PAYMENTS_ENVIRONMENT": "live_mode",
     "DODO_PRODUCT_INTELLIGENCE_RECORD": "pdt_0NoA1RN8WXSqih1g1kXpT",
     "DODO_PRODUCT_KENNEL_PROMOTION": "pdt_0NoA7GPj2xZ1kOx8WDeoR"
   },
