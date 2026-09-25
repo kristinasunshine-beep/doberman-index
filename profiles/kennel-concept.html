@@ -1251,6 +1251,7 @@
 @media(max-width:900px){.kennel-profile-flow .kennel-record-desk .record-desk-shell{grid-template-columns:1fr}.kennel-profile-flow .kennel-record-desk .record-desk-visual{position:relative;top:auto;min-height:0;border-right:0;border-bottom:1px solid #343434;display:grid;grid-template-columns:40% 1fr}.kennel-profile-flow .kennel-record-desk .record-desk-image{height:300px;grid-row:1/3}.kennel-profile-flow .kennel-record-desk .record-desk-anchor{margin-top:0}}@media(max-width:680px){.kennel-profile-flow .kennel-record-desk .record-desk-visual{display:block}.kennel-profile-flow .kennel-record-desk .record-desk-image{height:250px}.kennel-profile-flow .kennel-record-desk .record-desk-workspace{padding:0 18px 22px}.kennel-profile-flow .kennel-record-desk .record-desk-tabs{margin:0 -18px;padding:0 18px}.kennel-profile-flow .kennel-record-desk .desk-panel-head{grid-template-columns:1fr;gap:12px}.kennel-profile-flow .kennel-record-desk .desk-panel-head p{grid-column:1}.kennel-profile-flow .kennel-record-desk .desk-ledger>div{grid-template-columns:1fr;gap:5px}.kennel-profile-flow .kennel-record-desk .desk-ledger small{grid-column:1;margin-top:0}}
 
 </style>
+  <link rel="stylesheet" href="../assets/css/work-layer.css">
 </head>
 <body>
 <svg aria-hidden="true" focusable="false" height="0" style="position:absolute" width="0">
@@ -1318,11 +1319,11 @@
   <div class="record-desk-ghost" aria-hidden="true">RECORD</div>
   <header class="section-head"><div><div class="section-index"><span>01</span><i></i><span>Compact kennel intelligence</span></div><h2 class="section-title">Kennel<br>record desk.</h2></div><p class="section-note"><b>One program. Four views.</b> Identity, breeding focus, documented health coverage and program outcomes are brought into one persistent desk while every underlying Doberman and litter remains independently traceable.</p></header>
   <div class="record-desk-shell"><aside class="record-desk-visual"><div class="record-desk-image"><img id="kennelDeskLogo" alt="Kennel record desk logo"></div><div class="record-desk-identity"><span id="kennelDeskCode">KENNEL RECORD</span><h3 id="kennelDeskName">—</h3><p id="kennelDeskMeta">—</p></div><div class="record-desk-anchor"><span id="kennelDeskRegistration">Registration · —</span><span id="kennelDeskLocation">Location · —</span><span id="kennelDeskFounded">Founded · —</span></div></aside>
-  <div class="record-desk-workspace"><div class="record-desk-tabs" role="tablist" aria-label="Kennel Record Desk views"><button class="is-active" role="tab" aria-selected="true" data-kennel-desk-tab="overview">Overview</button><button role="tab" aria-selected="false" data-kennel-desk-tab="program">Program</button><button role="tab" aria-selected="false" data-kennel-desk-tab="health">Health</button><button role="tab" aria-selected="false" data-kennel-desk-tab="outcomes">Outcomes</button></div>
+  <div class="record-desk-workspace"><div class="record-desk-tabs" role="tablist" aria-label="Kennel Record Desk views"><button class="is-active" role="tab" aria-selected="true" data-kennel-desk-tab="overview">Overview</button><button role="tab" aria-selected="false" data-kennel-desk-tab="program">Program</button><button role="tab" aria-selected="false" data-kennel-desk-tab="health">Health</button><button role="tab" aria-selected="false" data-kennel-desk-tab="outcomes">Outcomes</button><button id="kennelWorkTab" role="tab" aria-selected="false" data-kennel-desk-tab="work" hidden>Work</button></div>
   <div class="record-desk-panel" data-kennel-desk-panel="overview"><div class="desk-panel-head"><span>01 / Overview</span><h3>Program identity at a glance.</h3><p>Stable kennel identity and current system-derived totals stay visible while deeper evidence remains one step away.</p></div><div class="desk-ledger" id="kennelDeskOverview"></div></div>
   <div class="record-desk-panel" data-kennel-desk-panel="program" hidden><div class="desk-panel-head"><span>02 / Program</span><h3>Breeding identity, connected to records.</h3><p>Focus, bloodline view, stable record links and derived totals remain distinct instead of being flattened into promotional copy.</p></div><div class="desk-ledger" id="kennelDeskProgram"></div></div>
   <div class="record-desk-panel" data-kennel-desk-panel="health" hidden><div class="desk-panel-head"><span>03 / Health</span><h3>Coverage without losing provenance.</h3><p>The kennel view summarizes documented testing while each result remains attached to the individual Doberman, date and source.</p></div><div class="desk-ledger" id="kennelDeskHealth"></div></div>
-  <div class="record-desk-panel" data-kennel-desk-panel="outcomes" hidden><div class="desk-panel-head"><span>04 / Outcomes</span><h3>Results stay attributable.</h3><p>Titles, working results and reach are summarized at program level without detaching them from the Dobermans that produced them.</p></div><div class="desk-ledger" id="kennelDeskOutcomes"></div></div></div></div>
+  <div class="record-desk-panel" data-kennel-desk-panel="outcomes" hidden><div class="desk-panel-head"><span>04 / Outcomes</span><h3>Results stay attributable.</h3><p>Titles, working results and reach are summarized at program level without detaching them from the Dobermans that produced them.</p></div><div class="desk-ledger" id="kennelDeskOutcomes"></div></div><div class="record-desk-panel" data-kennel-desk-panel="work" hidden><div class="desk-panel-head"><span>05 / Work</span><h3>Working program at a glance.</h3><p>Working Dobermans and their documented qualifications stay linked to the individual records.</p></div><div class="desk-ledger" id="kennelDeskWork"></div></div></div></div>
 </section>
 <section class="section" id="kennelProgram">
 <div aria-hidden="true" class="section-mark">PROGRAM</div>
@@ -1354,6 +1355,19 @@
 <div aria-live="polite" class="slider" id="kennelDobermanRail">
 <a class="related-card" href="male.html?id=DI-M-000001"><div class="related-card-top"><span>DI-M-000001</span><i></i><span aria-hidden="true" class="related-arrow">↗</span></div><div class="related-card-body"><span class="related-thumb"><img alt="Dion Dante" src="../media/dobermans/DI-M-000001/hero.png"/></span><span class="related-copy"><strong>Dion Dante</strong><span>Male · Active stud</span></span></div></a>
 </div>
+</div>
+</section>
+<section class="section is-white di-work-layer" id="kennelWork" data-di-work-layer="kennel" hidden>
+<header class="section-head">
+<div>
+<div class="section-index"><span>WORK</span><i></i><span>Working program layer</span></div>
+<h2 class="section-title">Working<br/>Dobermans.</h2>
+</div>
+<p class="section-note"><b>Derived from connected records</b>Working qualifications and work media stay attached to the individual Dobermans while the kennel card shows the program-level picture.</p>
+</header>
+<div class="section-content">
+<div class="di-work-summary" data-work-summary></div>
+<div class="di-work-rail" data-kennel-work-dogs></div>
 </div>
 </section>
 <section class="section impact-showcase" id="kennelLitters">
@@ -1762,5 +1776,6 @@ const KENNEL_ID='DI-K-000001';
 installKennelRecordDesk();
 requestAnimationFrame(()=>{hydrateKennelRecordDesk();setTimeout(hydrateKennelRecordDesk,250);setTimeout(hydrateKennelRecordDesk,900);setTimeout(hydrateKennelRecordDesk,2200)});
 </script>
+<script src="../assets/js/work-layer.js"></script>
 </body>
 </html>
