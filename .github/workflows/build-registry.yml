@@ -31,6 +31,8 @@ on:
       - "assets/js/commerce.js"
       - "checkout-success.html"
       - "assets/js/media-presentation.js"
+      - "assets/js/work-layer.js"
+      - "assets/css/work-layer.css"
       - "assets/css/submit-v3.css"
       - "assets/js/submit-v3.js"
       - "assets/js/zip-tools.js"
