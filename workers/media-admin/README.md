@@ -18,11 +18,13 @@ Create a Worker secret:
 MEDIA_ADMIN_KEY
 ```
 
-Recommended public custom domain for the bucket:
+The Worker itself is published on the custom domain:
 
 ```
 media.doberman-index.com
 ```
+
+The R2 bucket remains private. Public GET/HEAD requests are served through the Worker, while writes stay behind the admin secret.
 
 The secret must never be committed to GitHub.
 
@@ -54,3 +56,15 @@ Optional provenance headers:
 - `X-DI-Registered-Name`
 - `X-DI-Source-Url`
 - `X-DI-Role`
+
+
+## Public reads
+
+Public media is read directly from the same Worker domain:
+
+```
+GET https://media.doberman-index.com/dogs/DI-M-000123/gallery/01.jpg
+GET https://media.doberman-index.com/ancestors/DI-A-000011/main.jpg
+```
+
+No Authorization header is needed for public reads. The underlying R2 bucket is not made public.
