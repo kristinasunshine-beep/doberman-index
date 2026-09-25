@@ -49,7 +49,7 @@ function contentLimit(key, contentType) {
 }
 
 function publicUrl(env, key) {
-  const base = (env.MEDIA_PUBLIC_BASE || "https://media.doberman-index.com").replace(/\/+$/, "");
+  const base = (env.MEDIA_PUBLIC_BASE || "https://doberman-index-media-admin.dobermanindex-records.workers.dev").replace(/\/+$/, "");
   return base + "/" + key.split("/").map(encodeURIComponent).join("/");
 }
 
@@ -82,7 +82,7 @@ export default {
         ok: true,
         service: "doberman-index-media",
         storage: "cloudflare-r2",
-        public_base: env.MEDIA_PUBLIC_BASE || "https://media.doberman-index.com"
+        public_base: env.MEDIA_PUBLIC_BASE || "https://doberman-index-media-admin.dobermanindex-records.workers.dev"
       }, 200, request);
     }
 
