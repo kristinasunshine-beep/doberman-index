@@ -1420,7 +1420,7 @@
                   }
                 ]
               },
-              "maxItems": 10
+              "maxItems": 20
             },
             "movement_video": {
               "type": [
@@ -1441,6 +1441,44 @@
                 "natural_sound",
                 "muted"
               ]
+            },
+            "work_gallery": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^media/(dobermans|kennels|litters)/[^\\s]+\\.(jpg|jpeg|png|webp|avif)$"
+                  },
+                  {
+                    "$ref": "#/$defs/galleryItem"
+                  }
+                ]
+              },
+              "maxItems": 20
+            },
+            "work_videos": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "url"
+                ],
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "pattern": "^https?://"
+                  },
+                  "label": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              },
+              "maxItems": 10
             }
           },
           "additionalProperties": false
