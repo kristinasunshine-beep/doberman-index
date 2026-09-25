@@ -6,6 +6,12 @@
   "vars": {
     "MEDIA_PUBLIC_BASE": "https://media.doberman-index.com"
   },
+  "routes": [
+    {
+      "pattern": "media.doberman-index.com",
+      "custom_domain": true
+    }
+  ],
   "r2_buckets": [
     {
       "binding": "MEDIA_BUCKET",
