@@ -140,6 +140,7 @@
       const videoCount=working.reduce((sum,item)=>sum+list(item.doberman?.media?.work_videos).length,0);
       document.querySelectorAll('[data-system-metric="working_dobermans"]').forEach(node=>node.textContent=String(working.length));
       document.querySelectorAll('[data-system-metric="working_results"]').forEach(node=>node.textContent=String(workingResults));
+      document.querySelectorAll("[data-work-hero-fact]").forEach(node=>node.hidden=!working.length);
       if(!working.length) return;
 
       section.hidden=false;
