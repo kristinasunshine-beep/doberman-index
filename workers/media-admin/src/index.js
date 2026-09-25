@@ -135,7 +135,7 @@ export default {
           cacheControl: "public, max-age=31536000, immutable"
         },
         customMetadata: metadata
-      }, 200, request);
+      });
 
       return json({
         stored: true,
@@ -156,7 +156,7 @@ export default {
     if (!object) return json({ error: "Not found." }, 404, request);
     const headers = objectHeaders(object);
 
-    if (request.method === "HEAD") return new Response(null, { status: 200, headers }, 200, request);
+    if (request.method === "HEAD") return new Response(null, { status: 200, headers });
     return new Response(object.body, { status: 200, headers });
   }
 };
