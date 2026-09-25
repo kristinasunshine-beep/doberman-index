@@ -170,7 +170,7 @@
       "properties": {
         "path": {
           "type": "string",
-          "pattern": "^media/(dobermans|kennels|litters)/[^\\s]+\\.(jpg|jpeg|png|webp|avif)$"
+          "pattern": "^(?:media/(dobermans|kennels|litters)/[^\\s]+\\.(jpg|jpeg|png|webp|avif)|https://media\\.doberman-index\\.com/[^\\s]+\\.(jpg|jpeg|png|webp|avif))$"
         },
         "focal_point": {
           "$ref": "#/$defs/focalPoint"
@@ -1413,7 +1413,7 @@
                 "oneOf": [
                   {
                     "type": "string",
-                    "pattern": "^media/(dobermans|kennels|litters)/[^\\s]+\\.(jpg|jpeg|png|webp|avif)$"
+                    "pattern": "^(?:media/(dobermans|kennels|litters)/[^\\s]+\\.(jpg|jpeg|png|webp|avif)|https://media\\.doberman-index\\.com/[^\\s]+\\.(jpg|jpeg|png|webp|avif))$"
                   },
                   {
                     "$ref": "#/$defs/galleryItem"
@@ -1448,7 +1448,7 @@
                 "oneOf": [
                   {
                     "type": "string",
-                    "pattern": "^media/(dobermans|kennels|litters)/[^\\s]+\\.(jpg|jpeg|png|webp|avif)$"
+                    "pattern": "^(?:media/(dobermans|kennels|litters)/[^\\s]+\\.(jpg|jpeg|png|webp|avif)|https://media\\.doberman-index\\.com/[^\\s]+\\.(jpg|jpeg|png|webp|avif))$"
                   },
                   {
                     "$ref": "#/$defs/galleryItem"
@@ -1621,7 +1621,7 @@
                 "oneOf": [
                   {
                     "type": "string",
-                    "pattern": "^media/(dobermans|kennels|litters)/[^\\s]+\\.(jpg|jpeg|png|webp|avif)$"
+                    "pattern": "^(?:media/(dobermans|kennels|litters)/[^\\s]+\\.(jpg|jpeg|png|webp|avif)|https://media\\.doberman-index\\.com/[^\\s]+\\.(jpg|jpeg|png|webp|avif))$"
                   },
                   {
                     "$ref": "#/$defs/galleryItem"
@@ -1756,7 +1756,7 @@
                 "oneOf": [
                   {
                     "type": "string",
-                    "pattern": "^media/(dobermans|kennels|litters)/[^\\s]+\\.(jpg|jpeg|png|webp|avif)$"
+                    "pattern": "^(?:media/(dobermans|kennels|litters)/[^\\s]+\\.(jpg|jpeg|png|webp|avif)|https://media\\.doberman-index\\.com/[^\\s]+\\.(jpg|jpeg|png|webp|avif))$"
                   },
                   {
                     "$ref": "#/$defs/galleryItem"
