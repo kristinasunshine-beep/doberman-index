@@ -27,7 +27,7 @@ function authorized(request, env) {
 function safeKey(rawPath) {
   const raw = decodeURIComponent(rawPath || "").replace(/^\/+/, "");
   if (!raw || raw.includes("..") || raw.includes("\\") || raw.length > 400) return null;
-  if (!(raw.startsWith("ancestors/") || raw.startsWith("dogs/"))) return null;
+  if (!(raw.startsWith("ancestors/") || raw.startsWith("dogs/") || raw.startsWith("kennels/") || raw.startsWith("litters/"))) return null;
   return raw;
 }
 
