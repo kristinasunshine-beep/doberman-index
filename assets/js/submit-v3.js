@@ -189,13 +189,13 @@
     }
     if (index === 3) {
       const photoCount = ownerPhotoCount();
-      if (photoCount > 10) {
-        setError(`You selected ${photoCount} photos. Please keep Gallery & Movement to a maximum of 10 photos total.`, form.elements.namedItem("gallery_photos"));
+      if (photoCount > 20) {
+        setError(`You selected ${photoCount} photos. Please keep Gallery & Movement to a maximum of 20 photos total.`, form.elements.namedItem("gallery_photos"));
         return false;
       }
       const galleryInput = form.elements.namedItem("gallery_photos");
-      if (Array.from(galleryInput?.files || []).length > 5) {
-        setError("Additional gallery accepts up to 5 photos.", galleryInput);
+      if (Array.from(galleryInput?.files || []).length > 15) {
+        setError("Additional gallery accepts up to 15 photos.", galleryInput);
         return false;
       }
       const totalBytes = totalFileSize();
