@@ -34,6 +34,7 @@
     { name: "stack_photo", role: "stack", base: "standing-pose" },
     { name: "movement_photo", role: "movement", base: "movement-photo" },
     { name: "gallery_photos", role: "gallery", base: "gallery", multiple: true },
+    { name: "work_gallery", role: "work_gallery", base: "work-gallery", multiple: true },
     { name: "movement_video", role: "movement_video", base: "movement-video" },
   ];
 
@@ -59,6 +60,10 @@
 
   function listValue(name) {
     return value(name).split(/[\n,]+/).map((item) => item.trim()).filter(Boolean);
+  }
+
+  function workVideoLinks() {
+    return value("work_video_links").split(/\n+/).map((item) => item.trim()).filter(Boolean).slice(0,10);
   }
 
   function safeExtension(file) {
@@ -196,6 +201,15 @@
       const galleryInput = form.elements.namedItem("gallery_photos");
       if (Array.from(galleryInput?.files || []).length > 15) {
         setError("Additional gallery accepts up to 15 photos.", galleryInput);
+        return false;
+      }
+      const workGalleryInput = form.elements.namedItem("work_gallery");
+      if (Array.from(workGalleryInput?.files || []).length > 20) {
+        setError("Work gallery accepts up to 20 photos.", workGalleryInput);
+        return false;
+      }
+      if (workVideoLinks().length > 10) {
+        setError("Please keep work video links to a maximum of 10.", form.elements.namedItem("work_video_links"));
         return false;
       }
       const totalBytes = totalFileSize();
@@ -405,7 +419,7 @@
         },
         media: {
           hero: null, head: null, profile: null, stack: null, movement: null,
-          gallery: [], movement_video: null, movement_video_seconds: Number(form.elements.namedItem("movement_video")?.dataset.durationSeconds) || null, movement_video_audio: "natural_sound",
+          gallery: [], work_gallery: [], work_videos: workVideoLinks().map((url,index)=>({url,label:`Work video ${String(index+1).padStart(2,"0")}`})), movement_video: null, movement_video_seconds: Number(form.elements.namedItem("movement_video")?.dataset.durationSeconds) || null, movement_video_audio: "natural_sound",
         },
         publication: {
           last_updated_label: null,
