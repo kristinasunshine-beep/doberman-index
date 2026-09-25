@@ -28,8 +28,9 @@ def gallery_contract(entity: str) -> tuple[dict[str, Any], dict[str, Any]]:
     modern = next((branch for branch in branches if branch.get("$ref") == "#/$defs/galleryItem"), None)
     if not legacy or not modern:
         raise AssertionError(f"{entity} gallery must accept legacy string and galleryItem")
-    if gallery.get("maxItems") != 10:
-        raise AssertionError(f"{entity} gallery maxItems must be 10")
+    expected = 20 if entity == "doberman" else 10
+    if gallery.get("maxItems") != expected:
+        raise AssertionError(f"{entity} gallery maxItems must be {expected}")
     return gallery, legacy
 
 
@@ -80,16 +81,22 @@ def main() -> int:
 
         legacy = "media/dobermans/DI-M-000001/gallery-01.jpg"
         modern = {"path": legacy, "focal_point": {"x": 50, "y": 50}, "fit_mode": "cover"}
+        work_gallery = SCHEMA["$defs"]["doberman"]["properties"]["media"]["properties"].get("work_gallery", {})
+        if work_gallery.get("maxItems") != 20:
+            errors.append("doberman work_gallery maxItems must be 20")
+        work_videos = SCHEMA["$defs"]["doberman"]["properties"]["media"]["properties"].get("work_videos", {})
+        if work_videos.get("maxItems") != 10:
+            errors.append("doberman work_videos maxItems must be 10")
         cases = {
-            "A legacy string": valid_gallery([legacy], path_pattern, 10),
-            "B new object": valid_gallery([modern], path_pattern, 10),
-            "C focal below range": not valid_gallery([{**modern, "focal_point": {"x": -1, "y": 50}}], path_pattern, 10),
-            "C focal above range": not valid_gallery([{**modern, "focal_point": {"x": 101, "y": 50}}], path_pattern, 10),
-            "D invalid fit_mode": not valid_gallery([{**modern, "fit_mode": "stretch"}], path_pattern, 10),
-            "E zero images": valid_gallery([], path_pattern, 10),
-            "F one image": valid_gallery([modern], path_pattern, 10),
-            "G ten images": valid_gallery([modern] * 10, path_pattern, 10),
-            "H eleven images": not valid_gallery([modern] * 11, path_pattern, 10),
+            "A legacy string": valid_gallery([legacy], path_pattern, 20),
+            "B new object": valid_gallery([modern], path_pattern, 20),
+            "C focal below range": not valid_gallery([{**modern, "focal_point": {"x": -1, "y": 50}}], path_pattern, 20),
+            "C focal above range": not valid_gallery([{**modern, "focal_point": {"x": 101, "y": 50}}], path_pattern, 20),
+            "D invalid fit_mode": not valid_gallery([{**modern, "fit_mode": "stretch"}], path_pattern, 20),
+            "E zero images": valid_gallery([], path_pattern, 20),
+            "F one image": valid_gallery([modern], path_pattern, 20),
+            "G twenty images": valid_gallery([modern] * 20, path_pattern, 20),
+            "H twenty-one images": not valid_gallery([modern] * 21, path_pattern, 20),
         }
         errors.extend(label for label, passed in cases.items() if not passed)
     except (AssertionError, KeyError, TypeError) as exc:
@@ -100,7 +107,7 @@ def main() -> int:
         for error in errors:
             print(f" - {error}", file=sys.stderr)
         return 1
-    print("Gallery schema contract PASS (legacy + object; focal/fit limits; 0/1/10 valid; 11 rejected)")
+    print("Gallery schema contract PASS (Doberman gallery/work up to 20; kennel/litter up to 10; work videos up to 10)")
     return 0
 
 
