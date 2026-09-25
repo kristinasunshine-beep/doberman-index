@@ -113,3 +113,22 @@ https://media.doberman-index.com/dogs/DI-M-000123/gallery/01.jpg
 Do not add new public binary media to the GitHub Pages repository after the R2 migration is enabled.
 
 Existing Dante media can remain temporarily for backwards compatibility and be migrated separately.
+
+
+### D. Working media
+
+Working media is optional and stays separate from the standardized Gallery & Movement set.
+
+Per Doberman:
+
+```
+dogs/{RECORD_ID}/work/gallery/01.jpg
+...
+dogs/{RECORD_ID}/work/gallery/20.jpg
+```
+
+Working videos are stored as public video links in the structured record (maximum 10 links) rather than uploaded as additional large video files. The short 3-15 second movement video remains a separate standardized media item.
+
+Kennel Work sections are derived automatically from connected Doberman records. Kennel owners do not upload a second copy of dog working media.
+
+There is no permanent high-resolution archive for owner or ancestor photos.
