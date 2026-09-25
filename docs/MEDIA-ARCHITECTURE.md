@@ -14,7 +14,7 @@ Owner submissions already arrive through the secure intake service as a ZIP pack
 
 Keep the original submission package private while the record is under review. It may contain:
 - the high-resolution pedigree scan;
-- up to 10 owner-selected photos;
+- up to 20 owner-selected photos;
 - one movement video (3-15 seconds);
 - health/evidence files;
 - private contact data.
@@ -22,9 +22,11 @@ Keep the original submission package private while the record is under review. I
 These files are never committed to the public GitHub repository.
 
 Recommended lifecycle:
-1. keep the complete private package during review;
-2. publish only approved derivatives to the public media bucket;
-3. after publication, retain the private source package only for the chosen recovery/evidence retention period.
+1. keep the complete private package only while the record is under review;
+2. publish approved web derivatives to the public media bucket;
+3. delete the private owner-media originals automatically after a short recovery window (target: 30 days after publication or rejection).
+
+There is no permanent high-resolution archive. The platform keeps only the public optimized derivatives plus the structured provenance/evidence metadata needed by the record.
 
 ### B. Public record media
 
@@ -38,7 +40,7 @@ dogs/{RECORD_ID}/stack.jpg
 dogs/{RECORD_ID}/movement.jpg
 dogs/{RECORD_ID}/gallery/01.jpg
 ...
-dogs/{RECORD_ID}/gallery/10.jpg
+dogs/{RECORD_ID}/gallery/20.jpg
 dogs/{RECORD_ID}/movement/main.mp4
 ```
 
@@ -86,7 +88,7 @@ Owner media and ancestor media are separate.
 The owner may submit:
 - one required main photo;
 - optional head/profile/stack/movement photos;
-- additional gallery photos, with a maximum of 10 owner photos in total;
+- additional gallery photos, with a maximum of 20 owner photos in total;
 - one movement video, 3-15 seconds.
 
 During admin review the owner media can be mapped/reordered into the public Gallery & Movement presentation.
