@@ -17,7 +17,10 @@ from xml.etree import ElementTree as ET
 
 ID_RE = re.compile(r"^DI-(M|F|K|L)-\d{6}$")
 SITE_NAME = "Doberman Index"
-SITE_DESCRIPTION = "A breed intelligence system connecting Doberman evidence, pedigrees, kennels, litters and bloodlines for informed breeding decisions."
+HOME_TITLE = "Doberman Index · Breed Intelligence System"
+SITE_DESCRIPTION = "A breed intelligence system that transforms evidence, pedigree and connected records into structured intelligence for breeding decisions."
+CATALOG_DESCRIPTION = "Canonical public catalog of published Doberman, kennel and litter records."
+STATIC_SEO_LASTMOD = "2026-09-26"
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -532,7 +535,7 @@ def json_ld(origin: str, summary: dict[str, Any], metadata: dict[str, Any], rela
     }
     catalog = {
         "@type": "DataCatalog", "@id": catalog_id, "url": f"{origin}/records/", "name": "Doberman Index Public Registry",
-        "description": "Canonical public catalog of published Doberman, kennel and litter records.",
+        "description": CATALOG_DESCRIPTION,
         "creator": {"@id": organization_id}, "publisher": {"@id": organization_id},
     }
     return {
@@ -625,7 +628,7 @@ def render_record(root: Path, origin: str, summary: dict[str, Any], records: lis
 
 
 def directory_metadata(origin: str) -> dict[str, Any]:
-    return {"title": "Published Records · Doberman Index", "description": "Browse published Doberman, kennel and litter records in the Doberman Index public registry.", "canonical": f"{origin}/records/", "image": "", "image_dimensions": None}
+    return {"title": "Published Records · Doberman Index", "description": "Browse published Doberman, kennel and litter records in the Doberman Index public registry.", "canonical": f"{origin}/records/", "image": f"{origin}/og-image.png", "image_dimensions": (1200, 630)}
 
 
 def render_directory(origin: str, records: list[dict[str, Any]], metadata: dict[str, Any]) -> str:
@@ -633,11 +636,10 @@ def render_directory(origin: str, records: list[dict[str, Any]], metadata: dict[
     organization_id = f"{origin}/#organization"
     website_id = f"{origin}/#website"
     catalog_id = f"{canonical}#catalog"
-    dataset_refs = [{"@id": f"{record_url(origin, item['record_id'])}#dataset"} for item in records]
     structured = {"@context": "https://schema.org", "@graph": [
         {"@type": "WebSite", "@id": website_id, "url": f"{origin}/", "name": SITE_NAME, "description": SITE_DESCRIPTION, "publisher": {"@id": organization_id}, "inLanguage": "en"},
         {"@type": "Organization", "@id": organization_id, "name": SITE_NAME, "url": f"{origin}/", "description": SITE_DESCRIPTION},
-        {"@type": "DataCatalog", "@id": catalog_id, "url": canonical, "name": "Doberman Index Public Registry", "description": metadata["description"], "creator": {"@id": organization_id}, "publisher": {"@id": organization_id}, "dataset": dataset_refs},
+        {"@type": "DataCatalog", "@id": catalog_id, "url": canonical, "name": "Doberman Index Public Registry", "description": CATALOG_DESCRIPTION, "creator": {"@id": organization_id}, "publisher": {"@id": organization_id}},
         {"@type": "CollectionPage", "@id": f"{canonical}#webpage", "url": canonical, "name": metadata["title"], "description": metadata["description"], "isPartOf": {"@id": website_id}, "mainEntity": {"@id": catalog_id}},
         {"@type": "ItemList", "@id": f"{canonical}#list", "numberOfItems": len(records), "itemListElement": [{"@type": "ListItem", "position": index, "name": display_name(item), "url": record_url(origin, item["record_id"])} for index, item in enumerate(records, 1)]},
     ]}
@@ -671,7 +673,7 @@ def build(root: Path) -> tuple[int, int]:
         if child.is_dir() and ID_RE.fullmatch(child.name) and child.name not in expected:
             shutil.rmtree(child)
     manifest_records: dict[str, Any] = {}
-    sitemap_items: list[tuple[str, str | None]] = [(f"{origin}/", None), (f"{origin}/about.html", None), (f"{origin}/records/", None)]
+    sitemap_items: list[tuple[str, str | None]] = [(f"{origin}/", STATIC_SEO_LASTMOD), (f"{origin}/about.html", STATIC_SEO_LASTMOD), (f"{origin}/records/", STATIC_SEO_LASTMOD)]
     for summary in records:
         metadata = metadata_for(root, origin, summary)
         related = relation_ids(summary, records)
@@ -690,7 +692,7 @@ def build(root: Path) -> tuple[int, int]:
         "site_origin": origin,
         "generated_from_registry": registry.get("generated_at"),
         "static_pages": {
-            "/": {"title": "Doberman Index", "description": "A breed intelligence system that transforms evidence, pedigree and connected records into structured intelligence for breeding decisions.", "canonical": f"{origin}/"},
+            "/": {"title": HOME_TITLE, "description": SITE_DESCRIPTION, "canonical": f"{origin}/"},
             "/about.html": {"title": "About · Doberman Index", "description": "Why Doberman Index exists: a breed intelligence system for evidence, lineage, connected records and breeding decisions.", "canonical": f"{origin}/about.html"},
             "/records/": {key: value for key, value in directory_meta.items() if key != "image_dimensions"},
         },
