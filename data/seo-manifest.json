@@ -4,7 +4,7 @@
   "generated_from_registry": "2026-09-11T13:00:49+00:00",
   "static_pages": {
     "/": {
-      "title": "Doberman Index",
+      "title": "Doberman Index · Breed Intelligence System",
       "description": "A breed intelligence system that transforms evidence, pedigree and connected records into structured intelligence for breeding decisions.",
       "canonical": "https://doberman-index.com/"
     },
@@ -17,7 +17,7 @@
       "title": "Published Records · Doberman Index",
       "description": "Browse published Doberman, kennel and litter records in the Doberman Index public registry.",
       "canonical": "https://doberman-index.com/records/",
-      "image": ""
+      "image": "https://doberman-index.com/og-image.png"
     }
   },
   "records": {
@@ -34,7 +34,7 @@
             "@id": "https://doberman-index.com/#website",
             "url": "https://doberman-index.com/",
             "name": "Doberman Index",
-            "description": "A breed intelligence system connecting Doberman evidence, pedigrees, kennels, litters and bloodlines for informed breeding decisions.",
+            "description": "A breed intelligence system that transforms evidence, pedigree and connected records into structured intelligence for breeding decisions.",
             "publisher": {
               "@id": "https://doberman-index.com/#organization"
             },
@@ -45,7 +45,7 @@
             "@id": "https://doberman-index.com/#organization",
             "name": "Doberman Index",
             "url": "https://doberman-index.com/",
-            "description": "A breed intelligence system connecting Doberman evidence, pedigrees, kennels, litters and bloodlines for informed breeding decisions."
+            "description": "A breed intelligence system that transforms evidence, pedigree and connected records into structured intelligence for breeding decisions."
           },
           {
             "@type": "DataCatalog",
