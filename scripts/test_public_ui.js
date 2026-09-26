@@ -26,7 +26,7 @@ assertTokens(index, [
   'data-search-anchor="males"', 'data-search-anchor="females"', 'data-search-anchor="kennels"', 'data-search-anchor="puppies"',
   'id="recordSearchInput"', 'class="hero-search-submit"', 'class="puppy-shortcut"', 'id="recordSearchResults"',
   'Available puppies', 'Search the records', 'search-results-head', 'data/registry.json', 'profile.html?id=',
-  'href="profiles/male/?id=DI-M-000001"', 'Example digital card', 'media/dobermans/DI-M-000001/hero.png'
+  'href="/records/DI-M-000001/"', 'Example digital card', 'media/dobermans/DI-M-000001/hero.png'
 ], "homepage");
 
 assertTokens(router, [
