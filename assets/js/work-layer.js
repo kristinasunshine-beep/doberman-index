@@ -137,6 +137,8 @@
     document.querySelectorAll('[data-di-work-layer="dog"]').forEach(section=>section.remove());
     const id=(new URLSearchParams(location.search).get("id") || document.getElementById("heroProfileId")?.textContent || "").trim().toUpperCase();
     if(!/^DI-[MF]-\d{6}$/.test(id)) return;
+    // DI-M-000001 is the permanent non-working Example card. Never instantiate Work here.
+    if(id==="DI-M-000001") return;
     try{
       const record=await fetchJson(`data/dobermans/${id}.json`);
       if(!isWorkingDog(record)) return;
