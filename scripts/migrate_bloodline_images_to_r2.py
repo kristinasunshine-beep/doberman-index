@@ -149,6 +149,7 @@ def main():
         "failed": [],
         "completed": False,
     }
+    auth_failures = []
 
     for aid in sorted(ancestor_ids):
         roots = selected_for_roots(doc, aid)
@@ -285,14 +286,17 @@ def main():
             print("  -> migrated")
         except Exception as exc:
             # Never destroy a known-good selected state because transport/upload failed.
+            error_text = str(exc)
             report["failed"].append(
                 {
                     "record_id": aid,
                     "from": binding_path or external_url,
-                    "error": str(exc),
+                    "error": error_text,
                     "preserved": True,
                 }
             )
+            if "HTTP Error 401" in error_text or "Unauthorized" in error_text:
+                auth_failures.append({"record_id": aid, "error": error_text})
             print(f"  -> upload/normalize failed; existing manifest preserved: {exc}")
 
     # Migration is complete only when no selected external or repository-local image remains.
@@ -328,6 +332,13 @@ def main():
         "completed": report["completed"],
     }
     print(json.dumps(summary, indent=2))
+
+    if auth_failures:
+        raise SystemExit(
+            "R2 AUTHENTICATION FAILURE: media-admin returned 401 Unauthorized. "
+            "GitHub Actions MEDIA_ADMIN_KEY does not match the Worker production secret "
+            "or the Cloudflare secret change has not been deployed."
+        )
 
 
 if __name__ == "__main__":
