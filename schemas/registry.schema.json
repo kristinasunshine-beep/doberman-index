@@ -1535,6 +1535,27 @@
                 }
               },
               "additionalProperties": false
+            },
+            "frame_overrides": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "head": {
+                  "$ref": "#/$defs/mediaFrameOverride"
+                },
+                "profile": {
+                  "$ref": "#/$defs/mediaFrameOverride"
+                },
+                "stack": {
+                  "$ref": "#/$defs/mediaFrameOverride"
+                },
+                "movement": {
+                  "$ref": "#/$defs/mediaFrameOverride"
+                }
+              },
+              "additionalProperties": false
             }
           },
           "additionalProperties": false
@@ -1920,6 +1941,24 @@
             }
           },
           "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "mediaFrameOverride": {
+      "type": "object",
+      "properties": {
+        "orientation": {
+          "enum": [
+            "portrait",
+            "landscape"
+          ]
+        },
+        "fit_mode": {
+          "enum": [
+            "cover",
+            "contain"
+          ]
         }
       },
       "additionalProperties": false
