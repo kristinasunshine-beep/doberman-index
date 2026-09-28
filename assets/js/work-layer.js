@@ -57,6 +57,30 @@
     return card;
   }
 
+  function createDogWorkSection(){
+    const section=document.createElement("section");
+    section.className="section work-profile-section";
+    section.id="work";
+    section.dataset.diWorkLayer="dog";
+    section.innerHTML=`
+      <div class="section-mark" aria-hidden="true">WORK</div>
+      <header class="section-head reveal">
+        <div>
+          <div class="section-index"><span>WORK</span><i></i><span>Working record</span></div>
+          <h2 class="section-title">Working<br>record.</h2>
+        </div>
+        <p class="section-note"><b>Documented work</b>Working qualifications, disciplines, competition media and external exam footage extend the record only for Dobermans with an active working profile.</p>
+      </header>
+      <div class="section-content">
+        <div class="slider data-rail reveal work-profile-summary" data-work-summary></div>
+        <div class="gallery-rail reveal work-profile-media" data-work-media hidden></div>
+      </div>`;
+    const bloodline=document.getElementById("bloodline");
+    if(bloodline) bloodline.insertAdjacentElement("afterend",section);
+    else document.querySelector("main.profile")?.append(section);
+    return section;
+  }
+
   function renderDogWork(section, record){
     const dog=record?.doberman || {};
     const work=dog.working_profile || {};
@@ -109,14 +133,18 @@
   }
 
   async function initDog(){
-    const section=document.querySelector('[data-di-work-layer="dog"]');
-    if(!section) return;
-    section.hidden=true;
-    section.querySelector("[data-work-media]")?.setAttribute("hidden","");
     document.querySelectorAll("[data-work-nav]").forEach(link=>link.hidden=true);
+    document.querySelectorAll('[data-di-work-layer="dog"]').forEach(section=>section.remove());
     const id=(new URLSearchParams(location.search).get("id") || document.getElementById("heroProfileId")?.textContent || "").trim().toUpperCase();
     if(!/^DI-[MF]-\d{6}$/.test(id)) return;
-    try{ renderDogWork(section, await fetchJson(`data/dobermans/${id}.json`)); }catch(error){ console.warn("Doberman Index work layer unavailable",error); }
+    try{
+      const record=await fetchJson(`data/dobermans/${id}.json`);
+      if(!isWorkingDog(record)) return;
+      const section=createDogWorkSection();
+      renderDogWork(section,record);
+    }catch(error){
+      console.warn("Doberman Index work layer unavailable",error);
+    }
   }
 
   function workDogCard(record){
