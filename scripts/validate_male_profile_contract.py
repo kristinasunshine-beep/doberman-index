@@ -61,6 +61,21 @@ if '<h1 class="hero-title" id="dogName" aria-label="Dion Dante"><span>Dion</span
 if 'accepted review snapshot remains visible' in profile:
     errors.append('male dynamic profile still falls back to another dog after hydration failure')
 
+
+for token in [
+    'function hydrateMovementObservation()',
+    'function hydrateRecordDesk()',
+    'function hydratePedigreeDeepDive()',
+    'hydrateMovementObservation();',
+    'hydrateRecordDesk();',
+    'hydratePedigreeDeepDive();',
+    'movementObservation:{',
+    'recordDesk:{',
+    'pedigreeDeep:{'
+]:
+    if token not in profile:
+        errors.append('male profile-derived intelligence contract missing: '+token)
+
 if errors:
     print('Male profile contract FAIL')
     for e in errors: print('-',e)
