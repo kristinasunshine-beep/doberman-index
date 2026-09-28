@@ -50,7 +50,7 @@ def valid_item(value: Any, path_pattern: str) -> bool:
         return re.fullmatch(path_pattern, value) is not None
     if not isinstance(value, dict):
         return False
-    allowed = {"path", "focal_point", "fit_mode", "caption"}
+    allowed = {"path", "focal_point", "fit_mode", "frame_orientation", "caption"}
     if not {"path", "focal_point", "fit_mode"}.issubset(value) or not set(value).issubset(allowed):
         return False
     if not isinstance(value["path"], str) or re.fullmatch(path_pattern, value["path"]) is None:
@@ -58,6 +58,8 @@ def valid_item(value: Any, path_pattern: str) -> bool:
     if not valid_focal(value["focal_point"]):
         return False
     if value["fit_mode"] not in {"cover", "contain"}:
+        return False
+    if "frame_orientation" in value and value["frame_orientation"] not in {"portrait", "landscape"}:
         return False
     return "caption" not in value or value["caption"] is None or isinstance(value["caption"], str)
 
@@ -75,12 +77,14 @@ def main() -> int:
             errors.append("galleryItem required fields drifted")
         if gallery_item.get("properties", {}).get("fit_mode", {}).get("enum") != ["cover", "contain"]:
             errors.append("galleryItem fit_mode must be cover / contain")
+        if gallery_item.get("properties", {}).get("frame_orientation", {}).get("enum") != ["portrait", "landscape"]:
+            errors.append("galleryItem frame_orientation must be portrait / landscape")
         path_pattern = contracts["doberman"][1]["pattern"]
         if gallery_item.get("properties", {}).get("path", {}).get("pattern") != path_pattern:
             errors.append("legacy and object gallery paths use different validation")
 
         legacy = "media/dobermans/DI-M-000001/gallery-01.jpg"
-        modern = {"path": legacy, "focal_point": {"x": 50, "y": 50}, "fit_mode": "cover"}
+        modern = {"path": legacy, "focal_point": {"x": 50, "y": 50}, "fit_mode": "cover", "frame_orientation": "portrait"}
         work_gallery = SCHEMA["$defs"]["doberman"]["properties"]["media"]["properties"].get("work_gallery", {})
         if work_gallery.get("maxItems") != 20:
             errors.append("doberman work_gallery maxItems must be 20")
@@ -93,6 +97,7 @@ def main() -> int:
             "C focal below range": not valid_gallery([{**modern, "focal_point": {"x": -1, "y": 50}}], path_pattern, 20),
             "C focal above range": not valid_gallery([{**modern, "focal_point": {"x": 101, "y": 50}}], path_pattern, 20),
             "D invalid fit_mode": not valid_gallery([{**modern, "fit_mode": "stretch"}], path_pattern, 20),
+            "D invalid frame_orientation": not valid_gallery([{**modern, "frame_orientation": "square"}], path_pattern, 20),
             "E zero images": valid_gallery([], path_pattern, 20),
             "F one image": valid_gallery([modern], path_pattern, 20),
             "G twenty images": valid_gallery([modern] * 20, path_pattern, 20),
