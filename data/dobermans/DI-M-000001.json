@@ -274,6 +274,9 @@
     "publication": {
       "last_updated_label": null,
       "profile_template": "male"
+    },
+    "working_profile": {
+      "enabled": false
     }
   }
 }
