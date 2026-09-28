@@ -157,8 +157,12 @@
           }
         },
         "DI-A-000022": {
-          "status": "missing",
-          "note": "No verified photograph of Ombra Omega Sawages is currently bound. Family-context substitute removed."
+          "status": "selected",
+          "selected": {
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000022/main.jpg",
+            "source_label": "Pedigree Database · Ombra Omega Sawages",
+            "source_url": "https://www.pedigreedatabase.com/doberman_pinscher/dog.html?id=1960889-ombra-omega-sawages?_v=20150518041159"
+          }
         },
         "DI-A-000023": {
           "status": "selected",
@@ -313,8 +317,12 @@
           }
         },
         "DI-A-000022": {
-          "status": "missing",
-          "note": "No verified photograph of Ombra Omega Sawages is currently bound. Family-context substitute removed."
+          "status": "selected",
+          "selected": {
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000022/main.jpg",
+            "source_label": "Pedigree Database · Ombra Omega Sawages",
+            "source_url": "https://www.pedigreedatabase.com/doberman_pinscher/dog.html?id=1960889-ombra-omega-sawages?_v=20150518041159"
+          }
         },
         "DI-A-000030": {
           "status": "selected",
