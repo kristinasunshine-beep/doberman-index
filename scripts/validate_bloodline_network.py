@@ -43,18 +43,46 @@ for node in nodes.values():
 fedor=[key for key,node in nodes.items() if str(node.get('registered_name','')).casefold()=='fedor del nasi']
 if len(fedor)!=1 or incoming.get(fedor[0],0)<2:errors.append('accepted repeated ancestor Fedor del Nasi is not represented as one canonical repeated node')
 
-record_images=images.get('records',{}).get('DI-M-000001',{}).get('ancestors',{}) if isinstance(images,dict) else {}
-for ancestor_id,item in record_images.items():
-    if ancestor_id not in nodes:errors.append(f'image manifest references unknown ancestor {ancestor_id}')
-    status=item.get('status') if isinstance(item,dict) else None
-    if status not in {'selected','missing'}:errors.append(f'{ancestor_id}: invalid image status {status!r}')
-    if status=='selected':
-        selected=item.get('selected') or {}
-        for field in ('image_url','source_label','source_url'):
-            if not str(selected.get(field,'')).strip():errors.append(f'{ancestor_id}: selected image missing {field}')
-for ancestor_id in nodes:
-    if ancestor_id=='DI-M-000001':continue
-    if ancestor_id not in record_images:errors.append(f'image manifest lacks explicit selected/missing state for {ancestor_id}')
+def reachable_ancestors(root_id, depth=4):
+    reachable=set()
+    frontier=[root_id]
+    for _ in range(depth):
+        next_frontier=[]
+        for node_id in frontier:
+            node=nodes.get(node_id,{})
+            for field in ('sire_id','dam_id'):
+                target=node.get(field)
+                if target and target in nodes:
+                    reachable.add(target)
+                    next_frontier.append(target)
+        frontier=next_frontier
+    return reachable
+
+image_records=images.get('records',{}) if isinstance(images,dict) and isinstance(images.get('records',{}),dict) else {}
+for root_id in roots:
+    if root_id not in nodes:
+        errors.append(f'root record missing from graph nodes: {root_id}')
+        continue
+    record_images=image_records.get(root_id,{}).get('ancestors',{})
+    if not isinstance(record_images,dict):
+        errors.append(f'{root_id}: ancestor image manifest must be an object')
+        record_images={}
+    for ancestor_id,item in record_images.items():
+        if ancestor_id not in nodes:errors.append(f'{root_id}: image manifest references unknown ancestor {ancestor_id}')
+        status=item.get('status') if isinstance(item,dict) else None
+        if status not in {'selected','missing'}:errors.append(f'{root_id}/{ancestor_id}: invalid image status {status!r}')
+        if status=='selected':
+            selected=item.get('selected') or {}
+            image_ref=selected.get('image_url') or selected.get('asset_path')
+            if not str(image_ref or '').strip():errors.append(f'{root_id}/{ancestor_id}: selected image missing image_url/asset_path')
+            for field in ('source_label','source_url'):
+                if not str(selected.get(field,'')).strip():errors.append(f'{root_id}/{ancestor_id}: selected image missing {field}')
+    for ancestor_id in reachable_ancestors(root_id,4):
+        if ancestor_id not in record_images:
+            errors.append(f'{root_id}: image manifest lacks explicit selected/missing state for reachable ancestor {ancestor_id}')
+
+# Keep Dante's accepted review manifest available for snapshot-specific checks below.
+record_images=image_records.get('DI-M-000001',{}).get('ancestors',{})
 
 for sex in ('male','female'):
     base=ROOT/'profiles'/sex
