@@ -3883,6 +3883,35 @@
       const healthView={DM:testView(health.dm,"Genetic result"),vWD:testView(health.vwd,"Genetic result"),HD:testView(health.hd,"Hip dysplasia"),ED:testView(health.ed,"Elbow dysplasia"),"DCM clinical":{value:present(clinical.status,"Not submitted"),sub:clinicalSub},Thyroid:testView(health.thyroid,"Latest submitted result"),Eyes:testView(health.eyes,"Latest submitted result")};
       if(isDeceased&&mortality.cause_disclosure==="public"&&mortality.cause)healthView["Cause of death"]={value:present(mortality.cause),sub:"Owner reported"};
       const registeredDisplayName=displayRegisteredName(identity.registered_name||recordId);
+      const canonicalBloodline=buildCanonicalBloodline(recordId,graph,imageManifest,photoBindings,Number(pedigreeIntelligence.generation_depth)||4);
+      const movementObservation=media.movement_observation||{};
+      const markerEntries=Object.entries(markers).map(([key,value])=>[key,value?.result]).filter(([,value])=>value!==null&&value!==undefined&&String(value).trim()!=="");
+      const markerSummary=markerEntries.length
+        ? markerEntries.map(([key,value])=>`${key.replace("dcm_","DCM")} ${value}`).join(" · ")
+        : "No DCM marker results submitted";
+      const totalPedigreePositions=Math.pow(2,(Number(pedigreeIntelligence.generation_depth)||4)+1)-2;
+      const groupedAncestors=canonicalBloodline.reduce((map,item)=>{
+        const list=map.get(item.canonicalId)||[];
+        list.push(item);
+        map.set(item.canonicalId,list);
+        return map;
+      },new Map());
+      const repeatedDetails=[...groupedAncestors.entries()]
+        .filter(([,items])=>items.length>1)
+        .map(([canonicalId,items])=>{
+          const contribution=items.reduce((sum,item)=>sum+(100/Math.pow(2,item.gen)),0);
+          const branches=[...new Set(items.map(item=>item.path?.charAt(0)==="S"?"Paternal":"Maternal").filter(Boolean))];
+          return {
+            canonicalId,
+            name:items[0]?.name||canonicalId,
+            registration:items[0]?.registration||"",
+            occurrences:items.length,
+            paths:items.map(item=>item.path),
+            generations:items.map(item=>item.gen),
+            branches,
+            expectedContributionPercent:contribution
+          };
+        });
       return {
         name:registeredDisplayName,kennel:present(displayKennelName(identity.kennel_name),identity.kennel_id||"Independent"),country:present(identity.country),
         titles:array(performance.titles),heroImage:mediaUrl(media.hero)||placeholderImage,heroPosition:focalPosition(focalPointFor(media,"hero")),statusBadge,
@@ -3904,7 +3933,98 @@
           boundary:"This single record can support shortlisting. Final pairing analysis requires a specific female because projected COI, shared ancestry, genetic combinations and phenotype complementarity are pair-specific."
         },
         bloodlineSubject:{name:registeredDisplayName,recordId,registration:identity.registration_number||"",country:identity.country||"",image:mediaUrl(media.stack||media.profile||media.hero)||placeholderImage,imagePosition:focalPosition(focalPointFor(media,media.stack?"stack":media.profile?"profile":"hero"))},
-        bloodline:buildCanonicalBloodline(recordId,graph,imageManifest,photoBindings,Number(pedigreeIntelligence.generation_depth)||4),pedigreeDepth:Number(pedigreeIntelligence.generation_depth)||4,repeatedAncestors:repeatedAncestorView(record,graph),gallery:buildGallery(media),related:buildRelated(recordId,parentage,reproduction).filter(item=>!["Sire","Dam"].includes(item.type)),
+        bloodline:canonicalBloodline,
+        pedigreeDepth:Number(pedigreeIntelligence.generation_depth)||4,
+        repeatedAncestors:repeatedAncestorView(record,graph),
+        gallery:buildGallery(media),
+        related:buildRelated(recordId,parentage,reproduction).filter(item=>!["Sire","Dam"].includes(item.type)),
+        movementObservation:{
+          status:movementObservation.assessment_status||"not_evaluated",
+          source:movementObservation.source_metadata||[media.movement_video_seconds?`${Number(media.movement_video_seconds).toFixed(2)} s`:null,media.movement_video_audio==="natural_sound"?"natural sound":media.movement_video_audio==="muted"?"muted":null].filter(Boolean).join(" · ")||"Movement source submitted",
+          stride:movementObservation.stride_consistency||"Not evaluated from this source.",
+          rhythm:movementObservation.rhythm||"Not evaluated from this source.",
+          visibility:movementObservation.visibility_quality||"Source has not yet received a structured movement review."
+        },
+        recordDesk:{
+          overview:{
+            "Registered name":registeredDisplayName,
+            "Registration":[identity.registration_authority,identity.registration_number].filter(Boolean).join(" / ")||"Not submitted",
+            "Date of birth":formatDate(identity.date_of_birth),
+            "Sex":titleCase(identity.sex),
+            "Color":present(identity.color),
+            "Country":present(identity.country),
+            "Kennel":present(displayKennelName(identity.kennel_name),identity.kennel_id||"Independent"),
+            "Breeder":present(identity.breeder),
+            "Owner":present(identity.owner),
+            "Life status":isDeceased?`Deceased · ${lifespan||"date recorded"}`:(lifeStatus||lifeStage)
+          },
+          health:{
+            "DCM clinical":{value:present(clinical.status,"Not submitted"),sub:clinicalSub},
+            "DCM markers":{value:markerSummary},
+            "DM / vWD":{value:`${present(health.dm?.result,"Not submitted")} / ${present(health.vwd?.result,"Not submitted")}`},
+            "Hips / elbows":{value:`${present(health.hd?.result,"Not submitted")} / ${present(health.ed?.result,"Not submitted")}`},
+            "Thyroid / eyes":{value:`${present(health.thyroid?.result,"Not submitted")} / ${present(health.eyes?.result,"Not submitted")}`},
+            "Life status":{value:isDeceased?"Deceased":present(lifecycleState,"Not confirmed"),sub:isDeceased&&mortality.cause_disclosure==="public"&&mortality.cause?`Cause of death: ${mortality.cause} · owner reported`:"Cause of death not publicly recorded"}
+          },
+          structure:{
+            "Type":present(structure.type),
+            "Head":present(structure.head),
+            "Body":present(structure.body),
+            "Angulation":present(structure.angulation),
+            "Movement":present(structure.movement),
+            "Balance":present(structure.balance),
+            "Source":titleCase(structure.evaluator||structure.evidence?.source_type||"not_declared")
+          },
+          temperament:{
+            "Stability":present(temperament.stability),
+            "Drive":present(temperament.drive),
+            "Social behaviour":present(temperament.social_behaviour),
+            "Defense":present(temperament.defense),
+            "Confidence":present(temperament.confidence),
+            "Evaluator":titleCase(temperament.evaluator||"not_declared")
+          },
+          performance:{
+            counts:{
+              Shows:numberOrDash(performance.shows_count),
+              Titles:array(performance.titles).length,
+              "Working exams":array(performance.working_exams).length,
+              Sports:array(performance.sports).length
+            },
+            details:{
+              "Titles":array(performance.titles).join(" · ")||"None submitted",
+              "Working exams":array(performance.working_exams).join(" · ")||"None submitted",
+              "Sports":array(performance.sports).join(" · ")||"None submitted"
+            }
+          },
+          lineage:{
+            "Notable progeny":array(reproduction.notable_offspring).join(" · ")||"—",
+            "Recorded litters":reproduction.litters_count ?? "—",
+            "Recorded offspring":reproduction.offspring_count ?? "—",
+            "Champion offspring":reproduction.champion_offspring_count ?? "—",
+            "Connected descendants":registryRecords.filter(r=>r.entity_type==="doberman"&&(r.sire_id===recordId||r.dam_id===recordId)).length,
+            "Connected litters":array(reproduction.litter_ids).length,
+            "Source":"Submitted record + index connections"
+          },
+          image:mediaUrl(media.hero)||placeholderImage,
+          imagePosition:focalPosition(focalPointFor(media,"hero")),
+          statusLine:`${recordId} · ${isDeceased?"DECEASED":"LIVING"}`,
+          identityLine:[titleCase(identity.sex),present(identity.color),present(identity.country)].filter(Boolean).join(" · "),
+          anchorLines:[
+            [identity.registration_authority,identity.registration_number].filter(Boolean).join(" / "),
+            present(displayKennelName(identity.kennel_name),identity.kennel_id||"Independent"),
+            formatDate(identity.date_of_birth)
+          ]
+        },
+        pedigreeDeep:{
+          known:canonicalBloodline.length,
+          unknown:Math.max(0,totalPedigreePositions-canonicalBloodline.length),
+          total:totalPedigreePositions,
+          unique:new Set(canonicalBloodline.map(item=>item.canonicalId)).size,
+          repeats:repeatedDetails,
+          crossBranchRepeats:repeatedDetails.filter(item=>item.branches.length>1).length,
+          coiPercent:pedigreeIntelligence.coi_percent,
+          avkPercent:pedigreeIntelligence.avk_percent
+        },
         lastUpdated:present(publication.last_updated_label,formatDate(record.updated_at))
       };
     }
@@ -4292,6 +4412,119 @@
       installHorizontalRailScrollbars();
     }
 
+    function deskRows(data){
+      return Object.entries(data||{}).map(([label,raw])=>{
+        const entry=raw&&typeof raw==="object"&&!Array.isArray(raw)?raw:{value:raw};
+        return `<div><span>${escapeHTML(label)}</span><strong>${escapeHTML(present(entry.value))}</strong>${entry.sub?`<small>${escapeHTML(entry.sub)}</small>`:""}</div>`;
+      }).join("");
+    }
+
+    function hydrateMovementObservation(){
+      const observation=profileData.movementObservation||{};
+      const ledger=byId("mediaObservation")?.querySelector(".media-observation-ledger");
+      if(!ledger)return;
+      const statusNote={
+        reviewed:"Reviewed movement source",
+        insufficient_source:"Source reviewed · insufficient for full gait assessment",
+        not_evaluated:"Movement source not yet evaluated"
+      }[observation.status]||"Movement source review";
+      ledger.innerHTML=`
+        <div><span>Movement source</span><b>${escapeHTML(observation.source||"Not submitted")}</b></div>
+        <div><span>Assessment status</span><b>${escapeHTML(statusNote)}</b></div>
+        <div><span>Stride consistency</span><b>${escapeHTML(observation.stride||"Not evaluated")}</b></div>
+        <div><span>Rhythm</span><b>${escapeHTML(observation.rhythm||"Not evaluated")}</b></div>
+        <div><span>Visibility / quality</span><b>${escapeHTML(observation.visibility||"Not evaluated")}</b></div>`;
+    }
+
+    function hydrateRecordDesk(){
+      const desk=profileData.recordDesk||{};
+      const shell=document.querySelector(".record-desk-shell");
+      if(!shell)return;
+      const image=shell.querySelector(".record-desk-image img");
+      if(image){
+        image.src=desk.image||profileData.heroImage;
+        image.alt=`${profileData.name} record desk view`;
+        image.style.objectPosition=desk.imagePosition||profileData.heroPosition||"50% 50%";
+      }
+      const identity=shell.querySelector(".record-desk-identity");
+      if(identity)identity.innerHTML=`<span>${escapeHTML(desk.statusLine||profileData.core.profileId)}</span><h3>${escapeHTML(profileData.name)}.</h3><p>${escapeHTML(desk.identityLine||"")}</p>`;
+      const anchor=shell.querySelector(".record-desk-anchor");
+      if(anchor)anchor.innerHTML=array(desk.anchorLines).filter(Boolean).map(line=>`<span>${escapeHTML(line)}</span>`).join("");
+
+      const overview=shell.querySelector('[data-desk-panel="overview"] .desk-ledger');
+      if(overview)overview.innerHTML=deskRows(desk.overview);
+
+      const health=shell.querySelector('[data-desk-panel="health"] .desk-ledger');
+      if(health)health.innerHTML=deskRows(desk.health);
+
+      const structure=shell.querySelector('[data-desk-panel="structure"] .desk-ledger');
+      if(structure)structure.innerHTML=deskRows(desk.structure);
+
+      const temperament=shell.querySelector('[data-desk-panel="temperament"] .desk-ledger');
+      if(temperament)temperament.innerHTML=deskRows(desk.temperament);
+
+      const performance=shell.querySelector('[data-desk-panel="performance"]');
+      if(performance){
+        const strip=performance.querySelector(".desk-performance-strip");
+        if(strip)strip.innerHTML=Object.entries(desk.performance?.counts||{}).map(([label,value])=>`<div><strong>${escapeHTML(value)}</strong><span>${escapeHTML(label)}</span></div>`).join("");
+        const ledger=performance.querySelector(".desk-ledger");
+        if(ledger)ledger.innerHTML=deskRows(desk.performance?.details);
+      }
+
+      const lineage=shell.querySelector('[data-desk-panel="lineage"] .desk-ledger');
+      if(lineage)lineage.innerHTML=deskRows(desk.lineage);
+    }
+
+    function hydratePedigreeDeepDive(){
+      const deep=profileData.pedigreeDeep||{};
+      const root=byId("pedigreeDeepDive");
+      if(!root)return;
+      const repeats=array(deep.repeats);
+      const repeatNames=repeats.length?repeats.map(item=>`${item.name} · ${item.occurrences}×`).join(" · "):"None within mapped depth";
+      const generationSummary=repeats.length
+        ? repeats.map(item=>`${item.name}: ${item.generations.map(gen=>`G${gen}`).join(" + ")}`).join(" · ")
+        : "No repeated ancestor positions";
+      const contributionSummary=repeats.length
+        ? repeats.map(item=>`${item.name}: ${Number(item.expectedContributionPercent).toFixed(2)}%`).join(" · ")
+        : "No repeated contribution within mapped depth";
+      const pathSummary=repeats.length
+        ? repeats.map(item=>`${item.name}: ${item.paths.join(" / ")}`).join(" · ")
+        : "No repeated paths";
+      const branchSummary=repeats.length
+        ? repeats.map(item=>`${item.name}: ${item.branches.join(" + ")}`).join(" · ")
+        : "No cross-branch repetition";
+
+      const ledger=root.querySelector(".pedigree-analysis-ledger");
+      if(ledger)ledger.innerHTML=`
+        <div><span>Known / unknown ancestors</span><strong>${escapeHTML(deep.known)} / ${escapeHTML(deep.unknown)}</strong><small>${escapeHTML(deep.known)} of ${escapeHTML(deep.total)} mapped ancestor positions are populated.</small></div>
+        <div><span>Repeated ancestors</span><strong>${escapeHTML(repeats.length)}</strong><small>${escapeHTML(repeatNames)}</small></div>
+        <div><span>Generation occurrence</span><strong>${escapeHTML(generationSummary)}</strong><small>Generation positions are derived from the canonical pedigree graph.</small></div>
+        <div><span>Expected pedigree contribution</span><strong>${escapeHTML(contributionSummary)}</strong><small>Sum of expected pedigree shares across repeated positions; not genomic contribution and not COI contribution.</small></div>
+        <div><span>Unique ancestors</span><strong>${escapeHTML(deep.unique)} / ${escapeHTML(deep.total)}</strong><small>AVK: ${deep.avkPercent!=null?escapeHTML(Number(deep.avkPercent).toFixed(2)+"%"):"pending"}.</small></div>
+        <div><span>Cross-branch repetition</span><strong>${escapeHTML(deep.crossBranchRepeats)}</strong><small>${escapeHTML(branchSummary)}</small></div>
+        <div><span>Canonical paths</span><strong>${escapeHTML(pathSummary)}</strong><small>S/D path notation shows the exact route from this Doberman to each repeated ancestor.</small></div>
+        <div><span>Pedigree COI</span><strong>${deep.coiPercent!=null?escapeHTML(Number(deep.coiPercent).toFixed(4)+"%"):"Pending mapping"}</strong><small>Aggregate pedigree COI calculated from the canonical graph; individual repeat rows above are not presented as separate COI contributions.</small></div>`;
+
+      const trigger=byId("fedorDetailTrigger");
+      const panel=byId("fedorDetailPanel");
+      if(trigger&&panel){
+        if(!repeats.length){
+          trigger.hidden=true;
+          panel.hidden=true;
+        }else{
+          trigger.hidden=false;
+          trigger.querySelector("span").textContent="REPEATED ANCESTRY";
+          trigger.querySelector("strong").textContent=`${repeats.length} repeated ancestor${repeats.length===1?"":"s"} · mapped detail`;
+          const imageSlot=panel.querySelector(".fedor-image-slot");
+          if(imageSlot)imageSlot.innerHTML=`<span>CANONICAL GRAPH</span><strong>${escapeHTML(profileData.name)}</strong><small>Repeated ancestry below is derived from canonical DI-A nodes and exact S/D paths.</small>`;
+          const title=panel.querySelector(".fedor-title");
+          if(title)title.innerHTML=`<span>REPEATED ANCESTRY · ${escapeHTML(profileData.core.profileId)}</span><h3>Mapped recurrence.</h3>`;
+          const detailLedger=panel.querySelector(".fedor-ledger");
+          if(detailLedger)detailLedger.innerHTML=repeats.map(item=>`<div><span>${escapeHTML(item.canonicalId)}</span><strong>${escapeHTML(item.name)} · ${escapeHTML(item.occurrences)}×<br>${escapeHTML(item.paths.join(" · "))} · expected pedigree share ${escapeHTML(Number(item.expectedContributionPercent).toFixed(2))}%</strong></div>`).join("");
+        }
+      }
+    }
+
     async function initializeProfile(){
       profileData=await loadProfile();
       renderHeroName(profileData.name);
@@ -4307,9 +4540,11 @@
       byId("footerProfileId").textContent=profileData.core.profileId;
       byId("updated").textContent=`Last updated: ${profileData.lastUpdated}`;
       core();gallery();anchorMovement();
+      hydrateMovementObservation();
+      hydrateRecordDesk();
       byId("bloodlineDepthLabel").textContent=`${profileData.pedigreeDepth||4}-generation interactive pedigree`;
       window.DIBloodline.mount({root:byId("bloodlineRail"),subject:profileData.bloodlineSubject,nodes:profileData.bloodline,maxDepth:profileData.pedigreeDepth||4});
-      pedigreeIntelligence();pedigreeRepeats();health();surfaces("structureRail",profileData.structure);surfaces("temperamentRail",profileData.temperament);metrics("performanceRail",profileData.performance,1);metrics("reproductionRail",profileData.reproduction,1);related();breedingLens();
+      pedigreeIntelligence();pedigreeRepeats();hydratePedigreeDeepDive();health();surfaces("structureRail",profileData.structure);surfaces("temperamentRail",profileData.temperament);metrics("performanceRail",profileData.performance,1);metrics("reproductionRail",profileData.reproduction,1);related();breedingLens();
       activateGalleryMovementScrollbar();
     }
 
