@@ -51,18 +51,14 @@
         "DI-A-000007": {
           "status": "selected",
           "selected": {
-            "image_url": "https://grandevinko.com/admin/images/uploads/products/9951_4531.jpg",
-            "source_label": "Grande Vinko · confirmed stance image",
-            "source_url": "https://grandevinko.com/admin/images/uploads/products/9951_4531.jpg"
+            "image_url": "https://www.altobellodobermann.com/images/stories/dogsinkennel/maksim.jpg",
+            "source_label": "Altobello · official dogs in kennel · Maxim di Altobello",
+            "source_url": "https://www.altobellodobermann.com/component/content/article/46-dogs-in-kennel/1502-dogs-in-kennel"
           }
         },
         "DI-A-000008": {
-          "status": "selected",
-          "selected": {
-            "image_url": "https://www.allevamentodobermann.it/ImmaginiFemmine/Dobermann%20allevamento%20Pavia.jpg",
-            "source_label": "Orgoglio Nero · CH. Birbakira Di Villa Conte",
-            "source_url": "https://www.allevamentodobermann.it/SitoUfficiale/femmine.htm"
-          }
+          "status": "missing",
+          "note": "Verified Birbakira record exists, but the currently known breeder-hosted image is not stable for in-app display. Awaiting a local/R2 copy."
         },
         "DI-A-000009": {
           "status": "selected",
@@ -73,12 +69,8 @@
           }
         },
         "DI-A-000010": {
-          "status": "selected",
-          "selected": {
-            "image_url": "https://www.altobellodobermann.com/images/stories/foreign/denmark/first.jpg",
-            "source_label": "Unverified family-context · First di Altobello (daughter of Zulu Lady)",
-            "source_url": "https://www.altobellodobermann.com/multimedia/dogs-in-foreign-countries/1464-altobello-dogs-in-denmark"
-          }
+          "status": "missing",
+          "note": "No verified direct photograph of Zulu Lady di Altobello is currently bound. Family-context image of First di Altobello removed."
         },
         "DI-A-000011": {
           "status": "selected",
@@ -247,18 +239,14 @@
         "DI-A-000007": {
           "status": "selected",
           "selected": {
-            "image_url": "https://grandevinko.com/admin/images/uploads/products/9951_4531.jpg",
-            "source_label": "Grande Vinko · confirmed stance image",
-            "source_url": "https://grandevinko.com/admin/images/uploads/products/9951_4531.jpg"
+            "image_url": "https://www.altobellodobermann.com/images/stories/dogsinkennel/maksim.jpg",
+            "source_label": "Altobello · official dogs in kennel · Maxim di Altobello",
+            "source_url": "https://www.altobellodobermann.com/component/content/article/46-dogs-in-kennel/1502-dogs-in-kennel"
           }
         },
         "DI-A-000008": {
-          "status": "selected",
-          "selected": {
-            "image_url": "https://www.allevamentodobermann.it/ImmaginiFemmine/Dobermann%20allevamento%20Pavia.jpg",
-            "source_label": "Orgoglio Nero · CH. Birbakira Di Villa Conte",
-            "source_url": "https://www.allevamentodobermann.it/SitoUfficiale/femmine.htm"
-          }
+          "status": "missing",
+          "note": "Verified Birbakira record exists, but the currently known breeder-hosted image is not stable for in-app display. Awaiting a local/R2 copy."
         },
         "DI-A-000009": {
           "status": "selected",
@@ -269,12 +257,8 @@
           }
         },
         "DI-A-000010": {
-          "status": "selected",
-          "selected": {
-            "image_url": "https://www.altobellodobermann.com/images/stories/foreign/denmark/first.jpg",
-            "source_label": "Unverified family-context · First di Altobello (daughter of Zulu Lady)",
-            "source_url": "https://www.altobellodobermann.com/multimedia/dogs-in-foreign-countries/1464-altobello-dogs-in-denmark"
-          }
+          "status": "missing",
+          "note": "No verified direct photograph of Zulu Lady di Altobello is currently bound. Family-context image of First di Altobello removed."
         },
         "DI-A-000015": {
           "status": "selected",
