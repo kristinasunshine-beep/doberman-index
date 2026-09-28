@@ -63,6 +63,7 @@ for (const [label, html] of [["male", male], ["female", female]]) {
   assert.ok(!html.includes('id="impact"'), `${label} still exposes retired lineage-forward metrics section`);
   const familyToken='<span>02B</span><i></i><span>Live family network</span>';
   assert.ok(html.includes(familyToken), `${label} missing dedicated live family network section`);
+  assert.ok(!html.includes('#health,#structure,#temperament,#performance,#impact,#related{display:none!important}'), `${label} still hides Related Dobermans`);
 }
 
 assert.ok(male.indexOf('id="related"') < male.indexOf('id="bloodline"'), "male Related Dobermans must appear immediately after Record Desk and before Bloodline");
@@ -73,6 +74,7 @@ for (const [label, html] of [["male", male], ["female", female]]) {
   assert.ok(html.includes('</div>\n      <div class="rail-scrollbar" role="group" aria-controls="relatedRail"'), `${label} Related Dobermans rail is structurally malformed`);
 }
 assert.ok(male.includes('Cowboy Lucky Luck di Altobello'), "Dante first paint missing Cowboy sire connection");
+assert.ok(male.includes('applyOfflineBloodlinePhotos();\n    mountOfflineBloodline();'), "Dante Bloodline no longer mounts submitted stance photos before first display");
 assert.ok(male.includes('requestedRecordId && requestedRecordId!=="DI-M-000001"'), "Dante still enters full hydration");
 assert.ok(male.includes('html.dante-prepaint body{visibility:hidden!important}'), "Dante first-paint guard missing");
 assert.ok(male.includes('id="dante-prepaint-release"'), "Dante first-paint guard never releases");
