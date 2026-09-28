@@ -4412,7 +4412,7 @@ textarea {
 <div class="objects-list">
 <div class="card" data-search-anchor="males" role="button" tabindex="0"><div class="card-bar"></div><div class="card-num">01</div><div class="card-title">Males</div><div class="card-right"><div class="card-meta">Male records</div><div class="card-arrow">→</div></div></div>
 <div class="featured-showcase portal-example-showcase" aria-label="Example indexed male">
-<a class="featured-record" data-entity-type="doberman" href="/profiles/male/?build=20260928-11" aria-label="Open Dion Dante example digital card">
+<a class="featured-record" data-entity-type="doberman" href="/profiles/male/?build=20260928-14" aria-label="Open Dion Dante example digital card">
 <span class="featured-record-media"><img src="media/dobermans/DI-M-000001/hero.png" alt="Dion Dante — example digital card" loading="lazy"/></span>
 <span class="featured-record-copy"><small>Indexed male</small><strong class="registered-name">Dion Dante</strong><span>Siempre Peligroso · Serbia</span><span class="featured-record-example">Example digital card</span></span>
 </a>
@@ -4610,8 +4610,8 @@ const recordIsAvailablePuppy=record=>recordIsPuppy(record)&&
   String(record.life_status||'living').toLocaleLowerCase()!=='deceased';
 
 const recordSearchHref=record=>record.record_id==='DI-M-000001'
-  ? '/profiles/male/?build=20260928-11'
-  : `profile.html?id=${encodeURIComponent(record.record_id)}&build=20260928-11`;
+  ? '/profiles/male/?build=20260928-14'
+  : `profile.html?id=${encodeURIComponent(record.record_id)}&build=20260928-14`;
 
 const buildSearchResult=(record,index)=>{
   const link=document.createElement('a');
@@ -4701,11 +4701,18 @@ const renderSearchTray=(records,mode='search')=>{
 const searchPublishedRecords=query=>{
   const needle=normalizeSearchText(query);
   if(!needle)return[];
+  const singleLetter=/^\p{L}$/u.test(needle);
   return portalRegistryRecords
-    .filter(record=>[
-      record.record_id,record.registered_name,record.name,record.kennel_name,
-      record.location,record.country,record.registration_number
-    ].some(value=>normalizeSearchText(value).includes(needle)))
+    .filter(record=>{
+      const displayName=normalizeSearchText(recordDisplayName(record));
+      if(singleLetter){
+        return record.entity_type==='doberman'&&displayName.startsWith(needle);
+      }
+      return [
+        record.registered_name,record.name,record.kennel_name,
+        record.location,record.country,record.registration_number,record.record_id
+      ].some(value=>normalizeSearchText(value).includes(needle));
+    })
     .sort((a,b)=>{
       const an=normalizeSearchText(recordDisplayName(a));
       const bn=normalizeSearchText(recordDisplayName(b));

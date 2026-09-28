@@ -27,14 +27,17 @@ assertTokens(index, [
   'data-search-anchor="males"', 'data-search-anchor="females"', 'data-search-anchor="kennels"', 'data-search-anchor="puppies"',
   'id="recordSearchInput"', 'class="hero-search-submit"', 'class="puppy-shortcut"', 'id="recordSearchResults"',
   'Available puppies', 'Search the records', 'search-results-head', 'data/registry.json', 'profile.html?id=',
-  'href="/profiles/male/?build=20260928-11"', 'Example digital card', 'media/dobermans/DI-M-000001/hero.png'
+  'href="/profiles/male/?build=20260928-14"', 'Example digital card', 'media/dobermans/DI-M-000001/hero.png'
 ], "homepage");
 
-assert.ok(index.includes('&build=20260928-11'), "homepage/search profile routes are not current-build versioned");
+assert.ok(index.includes('&build=20260928-14'), "homepage/search profile routes are not current-build versioned");
 assert.ok(index.includes("record.record_id==='DI-M-000001'"), "Dante search result is not directly routed");
-assert.ok(index.includes("'/profiles/male/?build=20260928-11'"), "Dante search result still uses the router flash path");
-assert.ok(router.includes('&build=20260928-11'), "profile router is not current-build versioned");
-assert.ok(danteLegacy.includes('./?build=20260928-11'), "legacy Dante document does not redirect to fast Dante card");
+assert.ok(index.includes("const singleLetter=/^\\p{L}$/u.test(needle);"), "single-letter search rule missing");
+assert.ok(index.includes("record.entity_type==='doberman'&&displayName.startsWith(needle)"), "single-letter search does not use registered-name prefix semantics");
+assert.ok(!index.includes("record.record_id,record.registered_name,record.name,record.kennel_name"), "search still lets DI IDs dominate one-letter queries");
+assert.ok(index.includes("'/profiles/male/?build=20260928-14'"), "Dante search result still uses the router flash path");
+assert.ok(router.includes('&build=20260928-14'), "profile router is not current-build versioned");
+assert.ok(danteLegacy.includes('./?build=20260928-14'), "legacy Dante document does not redirect to fast Dante card");
 assert.ok(!danteLegacy.includes('data-desk-tab="lineage"'), "legacy Dante document still contains a duplicate card implementation");
 
 assertTokens(router, [
@@ -71,8 +74,10 @@ for (const [label, html] of [["male", male], ["female", female]]) {
 }
 assert.ok(male.includes('Cowboy Lucky Luck di Altobello'), "Dante first paint missing Cowboy sire connection");
 assert.ok(male.includes('requestedRecordId && requestedRecordId!=="DI-M-000001"'), "Dante still enters full hydration");
+assert.ok(male.includes('html.dante-prepaint body{visibility:hidden!important}'), "Dante first-paint guard missing");
+assert.ok(male.includes('id="dante-prepaint-release"'), "Dante first-paint guard never releases");
 assert.ok(male.includes("document.querySelectorAll('[data-work-nav],[data-di-work-layer=\"dog\"]')"), "Dante Work hard guard missing");
-assert.ok(router.includes('if(id==="DI-M-000001"){location.replace("./profiles/male/?build=20260928-11")'), "router does not fast-route Dante");
+assert.ok(router.includes('if(id==="DI-M-000001"){location.replace("./profiles/male/?build=20260928-14")'), "router does not fast-route Dante");
 
 // Centralized registered-name presentation remains available to every renderer.
 assert.equal(DIName.displayRegisteredName("  COWBOY   LUCKY LUCK DI ALTOBELLO "), "Cowboy Lucky Luck di Altobello");
