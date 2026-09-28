@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "site_origin": "https://doberman-index.com",
-  "generated_from_registry": "2026-09-28T21:07:35+00:00",
+  "generated_from_registry": "2026-09-28T21:25:29+00:00",
   "static_pages": {
     "/": {
       "title": "Doberman Index · Breed Intelligence System",
@@ -86,7 +86,7 @@
               "@type": "ImageObject",
               "url": "https://doberman-index.com/media/dobermans/DI-M-000001/hero.png"
             },
-            "dateModified": "2026-09-28T20:41:00Z"
+            "dateModified": "2026-09-28T21:30:00Z"
           },
           {
             "@type": "Dataset",
@@ -149,7 +149,7 @@
               "DION DANTE"
             ],
             "dateCreated": "2026-08-28T16:09:54.880Z",
-            "dateModified": "2026-09-28T20:41:00Z",
+            "dateModified": "2026-09-28T21:30:00Z",
             "spatialCoverage": {
               "@type": "Place",
               "name": "Belgrade"
@@ -290,7 +290,7 @@
               "@type": "ImageObject",
               "url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/hero.jpg"
             },
-            "dateModified": "2026-09-28T15:25:00Z"
+            "dateModified": "2026-09-28T21:30:00Z"
           },
           {
             "@type": "Dataset",
@@ -353,7 +353,7 @@
               "Cowboy Lucky Luck di Altobello"
             ],
             "dateCreated": "2026-09-27T08:43:21.560Z",
-            "dateModified": "2026-09-28T15:25:00Z",
+            "dateModified": "2026-09-28T21:30:00Z",
             "spatialCoverage": {
               "@type": "Place",
               "name": "Sremski Karlovci, Serbia"
