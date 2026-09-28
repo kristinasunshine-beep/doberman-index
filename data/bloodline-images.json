@@ -6,9 +6,10 @@
         "DI-A-000001": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.altobellodobermann.com/images/stories/news2019/lucky02.jpg",
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000001/main.jpg",
             "source_label": "Altobello · Photo of Cowboy Lucky Luck di Altobello · lucky02",
-            "source_url": "https://www.altobellodobermann.com/news/2180-photo-of-cowboy-lucky-luck-di-altobello"
+            "source_url": "https://www.altobellodobermann.com/news/2180-photo-of-cowboy-lucky-luck-di-altobello",
+            "migrated_from": "https://www.altobellodobermann.com/images/stories/news2019/lucky02.jpg"
           }
         },
         "DI-A-000002": {
@@ -18,9 +19,10 @@
         "DI-A-000003": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.allevamentodobermann.it/ImmaginiMaschi/beowulf%281%29.jpg",
-            "source_label": "Orgoglio Nero · Beowulf official profile",
-            "source_url": "https://www.allevamentodobermann.it/SitoUfficiale/beowulf.htm"
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000003/main.jpg",
+            "source_label": "Bloodline stance photo · Beowulf",
+            "source_url": "https://www.allevamentodobermann.it/SitoUfficiale/beowulf.htm",
+            "migrated_from_asset": "profiles/male/assets/bloodline-submitted/beowulf.webp"
           }
         },
         "DI-A-000004": {
@@ -30,26 +32,28 @@
         "DI-A-000005": {
           "status": "selected",
           "selected": {
-            "asset_path": "profiles/male/assets/tahi-reme-max-stance.jpg",
-            "source_label": "Submitted stance image · Tahi-Reme Max · Photo by Giota",
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000005/main.jpg",
+            "source_label": "Bloodline stance photo · Tahi-Reme Max · Photo by Giota",
             "source_url": "https://www.ariadobermans.com/DogSets/Details/229",
-            "image_url": "profiles/male/assets/tahi-reme-max-stance.jpg"
+            "migrated_from_asset": "profiles/male/assets/bloodline-submitted/tahi-reme-max.webp"
           }
         },
         "DI-A-000006": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.the-dobermann.com/images/stories/A_S_H_O_W/HDK/veronika.jpg",
-            "source_label": "The-Dobermann · HDK Yearwinner 2010 · Veronika del Mediano",
-            "source_url": "https://www.the-dobermann.com/index.php?Itemid=109&id=2330&option=com_content&view=article"
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000006/main.jpg",
+            "source_label": "Bloodline stance photo · Veronika del Mediano",
+            "source_url": "https://www.the-dobermann.com/index.php?Itemid=109&id=2330&option=com_content&view=article",
+            "migrated_from_asset": "profiles/male/assets/bloodline-submitted/veronika-del-mediano.webp"
           }
         },
         "DI-A-000007": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.altobellodobermann.com/images/stories/dogsinkennel/maksim.jpg",
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000007/main.jpg",
             "source_label": "Altobello · official dogs in kennel · Maxim di Altobello",
-            "source_url": "https://www.altobellodobermann.com/component/content/article/46-dogs-in-kennel/1502-dogs-in-kennel"
+            "source_url": "https://www.altobellodobermann.com/component/content/article/46-dogs-in-kennel/1502-dogs-in-kennel",
+            "migrated_from": "https://www.altobellodobermann.com/images/stories/dogsinkennel/maksim.jpg"
           }
         },
         "DI-A-000008": {
@@ -59,9 +63,10 @@
         "DI-A-000009": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.the-dobermann.com/images/stories/NIS/Philip/Macho-di-Altobello_8745.jpg",
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000009/main.jpg",
             "source_label": "Candidate · Macho di Altobello",
-            "source_url": "https://www.the-dobermann.com/shows/gallery/1795-doberman-cup-qcar-konstantinq-by-philip"
+            "source_url": "https://www.the-dobermann.com/shows/gallery/1795-doberman-cup-qcar-konstantinq-by-philip",
+            "migrated_from": "https://www.the-dobermann.com/images/stories/NIS/Philip/Macho-di-Altobello_8745.jpg"
           }
         },
         "DI-A-000010": {
@@ -71,122 +76,136 @@
         "DI-A-000011": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.dobermann-review.com/females/Sharon_iz_Zoosfery/progeny2/ferro.jpg",
-            "source_label": "Dobermann Review · Pride of Russia Ferro",
-            "source_url": "https://www.the-dobermann.com/females/41-a29/2975-sharon-iz-zoosfery?showall=1"
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000011/main.jpg",
+            "source_label": "Bloodline stance photo · Pride of Russia Ferro",
+            "source_url": "https://www.the-dobermann.com/females/41-a29/2975-sharon-iz-zoosfery?showall=1",
+            "migrated_from_asset": "profiles/male/assets/bloodline-submitted/pride-of-russia-ferro.webp"
           }
         },
         "DI-A-000012": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.the-dobermann.com/images/stories/2012_WYSTAWY/HDK/giniti.jpg",
-            "source_label": "Candidate · Tahi-Reme Giniti",
-            "source_url": "https://www.the-dobermann.com/index.php?id=3556&option=com_content&view=article"
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000012/main.jpg",
+            "source_label": "Bloodline stance photo · Tahi-Reme Giniti",
+            "source_url": "https://www.the-dobermann.com/index.php?id=3556&option=com_content&view=article",
+            "migrated_from_asset": "profiles/male/assets/bloodline-submitted/tahi-reme-giniti.webp"
           }
         },
         "DI-A-000013": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.the-dobermann.com/images/stories/A_PREZENTACJE/PAKO_progeny/pako_midgard1.jpg",
-            "source_label": "The-Dobermann · Teraline Midgard",
-            "source_url": "https://www.the-dobermann.com/males/40-a30/24-pako-daker?showall=1"
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000013/main.jpg",
+            "source_label": "Bloodline stance photo · Teraline Midgard",
+            "source_url": "https://www.the-dobermann.com/males/40-a30/24-pako-daker?showall=1",
+            "migrated_from_asset": "profiles/male/assets/bloodline-submitted/teraline-midgard.webp"
           }
         },
         "DI-A-000014": {
           "status": "selected",
           "selected": {
-            "image_url": "https://tera-line.narod.ru/images/matings/pandora.jpg",
-            "source_label": "Candidate · Pandora del Mediano",
-            "source_url": "https://tera-line.narod.ru/rus/matings.htm"
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000014/main.jpg",
+            "source_label": "Bloodline stance photo · Pandora del Mediano",
+            "source_url": "https://tera-line.narod.ru/rus/matings.htm",
+            "migrated_from_asset": "profiles/male/assets/bloodline-submitted/pandora-del-mediano.webp"
           }
         },
         "DI-A-000015": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.altobellodobermann.com/images/stories/gallery/males/icarus/icarus-athens08.jpg",
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000015/main.jpg",
             "source_label": "Altobello · official males gallery · Icarus",
-            "source_url": "https://www.altobellodobermann.com/multimedia/altobello-males/1459-int-ch-icarus-di-altobello"
+            "source_url": "https://www.altobellodobermann.com/multimedia/altobello-males/1459-int-ch-icarus-di-altobello",
+            "migrated_from": "https://www.altobellodobermann.com/images/stories/gallery/males/icarus/icarus-athens08.jpg"
           }
         },
         "DI-A-000016": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.altobellodobermann.com/images/stories/dogsinkennel/daria.jpg",
-            "source_label": "Altobello · Daria Deniz di Altobello",
-            "source_url": "https://www.altobellodobermann.com/component/content/article/46-dogs-in-kennel/1502-dogs-in-kennel"
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000016/main.jpg",
+            "source_label": "Bloodline stance photo · Daria Deniz di Altobello",
+            "source_url": "https://www.altobellodobermann.com/component/content/article/46-dogs-in-kennel/1502-dogs-in-kennel",
+            "migrated_from_asset": "profiles/male/assets/bloodline-submitted/daria-deniz-di-altobello.webp"
           }
         },
         "DI-A-000017": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.the-dobermann.com/images/males/f/prog/25_ramos.jpg",
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000017/main.jpg",
             "source_label": "Candidate · Ramos Best of Island",
-            "source_url": "https://www.the-dobermann.com/males/40-a30/20-fedor-del-nasi?showall=1"
+            "source_url": "https://www.the-dobermann.com/males/40-a30/20-fedor-del-nasi?showall=1",
+            "migrated_from": "https://www.the-dobermann.com/images/males/f/prog/25_ramos.jpg"
           }
         },
         "DI-A-000018": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.villaconte.it/img/Femmine/Fey/fey.JPG",
-            "source_label": "Villa Conte · CH. Fey di Villa Conte",
-            "source_url": "https://www.villaconte.it/fey.htm"
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000018/main.jpg",
+            "source_label": "Bloodline stance photo · Fey di Villa Conte",
+            "source_url": "https://www.villaconte.it/fey.htm",
+            "migrated_from_asset": "profiles/male/assets/bloodline-submitted/fey-di-villa-conte.webp"
           }
         },
         "DI-A-000019": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.the-dobermann.com/images/Agiota/1/fedor7.JPG",
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000019/main.jpg",
             "source_label": "The-Dobermann · Giota gallery · fedor7",
-            "source_url": "https://www.the-dobermann.com/shows/gallery/653-idc-by-giota-fedor-del-nasi"
+            "source_url": "https://www.the-dobermann.com/shows/gallery/653-idc-by-giota-fedor-del-nasi",
+            "migrated_from": "https://www.the-dobermann.com/images/Agiota/1/fedor7.JPG"
           }
         },
         "DI-A-000020": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.altobellodobermann.com/images/stories/dogsinkennel/ester-stand.jpg",
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000020/main.jpg",
             "source_label": "Candidate · Ester di Altobello",
-            "source_url": "https://www.altobellodobermann.com/component/content/article/46-dogs-in-kennel/1502-dogs-in-kennel"
+            "source_url": "https://www.altobellodobermann.com/component/content/article/46-dogs-in-kennel/1502-dogs-in-kennel",
+            "migrated_from": "https://www.altobellodobermann.com/images/stories/dogsinkennel/ester-stand.jpg"
           }
         },
         "DI-A-000021": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.altobellodobermann.com/images/stories/gallery/males/donjuan/don-18m-stand.jpg",
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000021/main.jpg",
             "source_label": "Altobello · Y. CH Don Juan di Altobello · don-18m-stand",
-            "source_url": "https://www.altobellodobermann.com/multimedia/altobello-males/1431-y-ch-don-juan-di-altobello"
+            "source_url": "https://www.altobellodobermann.com/multimedia/altobello-males/1431-y-ch-don-juan-di-altobello",
+            "migrated_from": "https://www.altobellodobermann.com/images/stories/gallery/males/donjuan/don-18m-stand.jpg"
           }
         },
         "DI-A-000022": {
           "status": "selected",
           "selected": {
-            "asset_path": "profiles/male/assets/bloodline-submitted/ombra-omega-sawages.jpg",
-            "image_url": "profiles/male/assets/bloodline-submitted/ombra-omega-sawages.jpg",
-            "source_label": "Pedigree Database · Ombra Omega Sawages",
-            "source_url": "https://www.pedigreedatabase.com/doberman_pinscher/dog.html?id=1960889-ombra-omega-sawages?_v=20150518041159"
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000022/main.jpg",
+            "source_label": "Bloodline stance photo · Ombra Omega Sawages",
+            "source_url": "https://www.pedigreedatabase.com/doberman_pinscher/dog.html?id=1960889-ombra-omega-sawages?_v=20150518041159",
+            "migrated_from_asset": "profiles/male/assets/bloodline-submitted/ombra-omega-sawages.jpg"
           }
         },
         "DI-A-000023": {
           "status": "selected",
           "selected": {
-            "image_url": "https://pedigrees.dobermanns.cz/pics/thumbs/1/th_5cca0d1b91962.jpg",
-            "source_label": "Dobermann Pedigrees · Urbano del Diamante Nero",
-            "source_url": "https://pedigrees.dobermanns.cz/details.php?id=7888"
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000023/main.jpg",
+            "source_label": "Bloodline stance photo · Urbano del Diamante Nero",
+            "source_url": "https://pedigrees.dobermanns.cz/details.php?id=7888",
+            "migrated_from_asset": "profiles/male/assets/bloodline-submitted/urbano-del-diamante-nero.webp"
           }
         },
         "DI-A-000024": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.dobermann-review.com/females/Sharon_iz_Zoosfery/new/2.jpg",
-            "source_label": "Dobermann Review · Sharon iz Zoosfery",
-            "source_url": "https://www.the-dobermann.com/females/41-a29/2975-sharon-iz-zoosfery?showall=1"
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000024/main.jpg",
+            "source_label": "Bloodline stance photo · Sharon iz Zoosfery",
+            "source_url": "https://www.the-dobermann.com/females/41-a29/2975-sharon-iz-zoosfery?showall=1",
+            "migrated_from_asset": "profiles/male/assets/bloodline-submitted/sharon-iz-zoosfery.webp"
           }
         },
         "DI-A-000025": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.the-dobermann.com/images/columns/beyond/GinoGomez_01%281%29.jpg",
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000025/main.jpg",
             "source_label": "Candidate · Gino Gomez del Citone",
-            "source_url": "https://www.the-dobermann.com/columns/123-columns/463-beyond-the-atlantic-by-dk"
+            "source_url": "https://www.the-dobermann.com/columns/123-columns/463-beyond-the-atlantic-by-dk",
+            "migrated_from": "https://www.the-dobermann.com/images/columns/beyond/GinoGomez_01%281%29.jpg"
           }
         },
         "DI-A-000026": {
@@ -200,17 +219,19 @@
         "DI-A-000027": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.the-dobermann.com/images/stories/A_PRESENTATIONS_2/17.07.11/pak1.jpg",
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000027/main.jpg",
             "source_label": "The-Dobermann · Pako Daker",
-            "source_url": "https://www.the-dobermann.com/males/40-a30/24-pako-daker?showall=1"
+            "source_url": "https://www.the-dobermann.com/males/40-a30/24-pako-daker?showall=1",
+            "migrated_from": "https://www.the-dobermann.com/images/stories/A_PRESENTATIONS_2/17.07.11/pak1.jpg"
           }
         },
         "DI-A-000028": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.the-dobermann.com/images/%21Kavaleva/%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21Connor/%21%21%21Cards/TeralineAurora_AIAD_Winner____2005_inter.jpg",
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000028/main.jpg",
             "source_label": "Candidate · Teraline Aurora",
-            "source_url": "https://www.the-dobermann.com/columns/123-columns/971-interview-with-natalia-fokht-italian"
+            "source_url": "https://www.the-dobermann.com/columns/123-columns/971-interview-with-natalia-fokht-italian",
+            "migrated_from": "https://www.the-dobermann.com/images/%21Kavaleva/%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21Connor/%21%21%21Cards/TeralineAurora_AIAD_Winner____2005_inter.jpg"
           }
         },
         "DI-A-000029": {
@@ -228,9 +249,10 @@
         "DI-A-000003": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.allevamentodobermann.it/ImmaginiMaschi/beowulf%281%29.jpg",
-            "source_label": "Orgoglio Nero · Beowulf official profile",
-            "source_url": "https://www.allevamentodobermann.it/SitoUfficiale/beowulf.htm"
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000003/main.jpg",
+            "source_label": "Bloodline stance photo · Beowulf",
+            "source_url": "https://www.allevamentodobermann.it/SitoUfficiale/beowulf.htm",
+            "migrated_from_asset": "profiles/male/assets/bloodline-submitted/beowulf.webp"
           }
         },
         "DI-A-000004": {
@@ -240,9 +262,10 @@
         "DI-A-000007": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.altobellodobermann.com/images/stories/dogsinkennel/maksim.jpg",
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000007/main.jpg",
             "source_label": "Altobello · official dogs in kennel · Maxim di Altobello",
-            "source_url": "https://www.altobellodobermann.com/component/content/article/46-dogs-in-kennel/1502-dogs-in-kennel"
+            "source_url": "https://www.altobellodobermann.com/component/content/article/46-dogs-in-kennel/1502-dogs-in-kennel",
+            "migrated_from": "https://www.altobellodobermann.com/images/stories/dogsinkennel/maksim.jpg"
           }
         },
         "DI-A-000008": {
@@ -252,9 +275,10 @@
         "DI-A-000009": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.the-dobermann.com/images/stories/NIS/Philip/Macho-di-Altobello_8745.jpg",
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000009/main.jpg",
             "source_label": "Candidate · Macho di Altobello",
-            "source_url": "https://www.the-dobermann.com/shows/gallery/1795-doberman-cup-qcar-konstantinq-by-philip"
+            "source_url": "https://www.the-dobermann.com/shows/gallery/1795-doberman-cup-qcar-konstantinq-by-philip",
+            "migrated_from": "https://www.the-dobermann.com/images/stories/NIS/Philip/Macho-di-Altobello_8745.jpg"
           }
         },
         "DI-A-000010": {
@@ -264,66 +288,73 @@
         "DI-A-000015": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.altobellodobermann.com/images/stories/gallery/males/icarus/icarus-athens08.jpg",
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000015/main.jpg",
             "source_label": "Altobello · official males gallery · Icarus",
-            "source_url": "https://www.altobellodobermann.com/multimedia/altobello-males/1459-int-ch-icarus-di-altobello"
+            "source_url": "https://www.altobellodobermann.com/multimedia/altobello-males/1459-int-ch-icarus-di-altobello",
+            "migrated_from": "https://www.altobellodobermann.com/images/stories/gallery/males/icarus/icarus-athens08.jpg"
           }
         },
         "DI-A-000016": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.altobellodobermann.com/images/stories/dogsinkennel/daria.jpg",
-            "source_label": "Altobello · Daria Deniz di Altobello",
-            "source_url": "https://www.altobellodobermann.com/component/content/article/46-dogs-in-kennel/1502-dogs-in-kennel"
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000016/main.jpg",
+            "source_label": "Bloodline stance photo · Daria Deniz di Altobello",
+            "source_url": "https://www.altobellodobermann.com/component/content/article/46-dogs-in-kennel/1502-dogs-in-kennel",
+            "migrated_from_asset": "profiles/male/assets/bloodline-submitted/daria-deniz-di-altobello.webp"
           }
         },
         "DI-A-000017": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.the-dobermann.com/images/males/f/prog/25_ramos.jpg",
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000017/main.jpg",
             "source_label": "Candidate · Ramos Best of Island",
-            "source_url": "https://www.the-dobermann.com/males/40-a30/20-fedor-del-nasi?showall=1"
+            "source_url": "https://www.the-dobermann.com/males/40-a30/20-fedor-del-nasi?showall=1",
+            "migrated_from": "https://www.the-dobermann.com/images/males/f/prog/25_ramos.jpg"
           }
         },
         "DI-A-000018": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.villaconte.it/img/Femmine/Fey/fey.JPG",
-            "source_label": "Villa Conte · CH. Fey di Villa Conte",
-            "source_url": "https://www.villaconte.it/fey.htm"
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000018/main.jpg",
+            "source_label": "Bloodline stance photo · Fey di Villa Conte",
+            "source_url": "https://www.villaconte.it/fey.htm",
+            "migrated_from_asset": "profiles/male/assets/bloodline-submitted/fey-di-villa-conte.webp"
           }
         },
         "DI-A-000019": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.the-dobermann.com/images/Agiota/1/fedor7.JPG",
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000019/main.jpg",
             "source_label": "The-Dobermann · Giota gallery · fedor7",
-            "source_url": "https://www.the-dobermann.com/shows/gallery/653-idc-by-giota-fedor-del-nasi"
+            "source_url": "https://www.the-dobermann.com/shows/gallery/653-idc-by-giota-fedor-del-nasi",
+            "migrated_from": "https://www.the-dobermann.com/images/Agiota/1/fedor7.JPG"
           }
         },
         "DI-A-000020": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.altobellodobermann.com/images/stories/dogsinkennel/ester-stand.jpg",
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000020/main.jpg",
             "source_label": "Candidate · Ester di Altobello",
-            "source_url": "https://www.altobellodobermann.com/component/content/article/46-dogs-in-kennel/1502-dogs-in-kennel"
+            "source_url": "https://www.altobellodobermann.com/component/content/article/46-dogs-in-kennel/1502-dogs-in-kennel",
+            "migrated_from": "https://www.altobellodobermann.com/images/stories/dogsinkennel/ester-stand.jpg"
           }
         },
         "DI-A-000021": {
           "status": "selected",
           "selected": {
-            "image_url": "https://www.altobellodobermann.com/images/stories/gallery/males/donjuan/don-18m-stand.jpg",
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000021/main.jpg",
             "source_label": "Altobello · Y. CH Don Juan di Altobello · don-18m-stand",
-            "source_url": "https://www.altobellodobermann.com/multimedia/altobello-males/1431-y-ch-don-juan-di-altobello"
+            "source_url": "https://www.altobellodobermann.com/multimedia/altobello-males/1431-y-ch-don-juan-di-altobello",
+            "migrated_from": "https://www.altobellodobermann.com/images/stories/gallery/males/donjuan/don-18m-stand.jpg"
           }
         },
         "DI-A-000022": {
           "status": "selected",
           "selected": {
-            "asset_path": "profiles/male/assets/bloodline-submitted/ombra-omega-sawages.jpg",
-            "image_url": "profiles/male/assets/bloodline-submitted/ombra-omega-sawages.jpg",
-            "source_label": "Pedigree Database · Ombra Omega Sawages",
-            "source_url": "https://www.pedigreedatabase.com/doberman_pinscher/dog.html?id=1960889-ombra-omega-sawages?_v=20150518041159"
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000022/main.jpg",
+            "source_label": "Bloodline stance photo · Ombra Omega Sawages",
+            "source_url": "https://www.pedigreedatabase.com/doberman_pinscher/dog.html?id=1960889-ombra-omega-sawages?_v=20150518041159",
+            "migrated_from_asset": "profiles/male/assets/bloodline-submitted/ombra-omega-sawages.jpg"
           }
         },
         "DI-A-000030": {

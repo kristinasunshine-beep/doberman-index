@@ -1,0 +1,291 @@
+{
+  "attempted": 23,
+  "migrated": [
+    {
+      "record_id": "DI-A-000001",
+      "name": "Cowboy Lucky Luck di Altobello",
+      "source_kind": "external_fetch",
+      "from": "https://www.altobellodobermann.com/images/stories/news2019/lucky02.jpg",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000001/main.jpg",
+      "bytes": 461535
+    },
+    {
+      "record_id": "DI-A-000003",
+      "name": "Beowulf",
+      "source_kind": "local_binding",
+      "from": "profiles/male/assets/bloodline-submitted/beowulf.webp",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000003/main.jpg",
+      "bytes": 48226
+    },
+    {
+      "record_id": "DI-A-000005",
+      "name": "Tahi-Reme Max",
+      "source_kind": "local_binding",
+      "from": "profiles/male/assets/bloodline-submitted/tahi-reme-max.webp",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000005/main.jpg",
+      "bytes": 76062
+    },
+    {
+      "record_id": "DI-A-000006",
+      "name": "Veronika del Mediano",
+      "source_kind": "local_binding",
+      "from": "profiles/male/assets/bloodline-submitted/veronika-del-mediano.webp",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000006/main.jpg",
+      "bytes": 69975
+    },
+    {
+      "record_id": "DI-A-000007",
+      "name": "Maxim di Altobello",
+      "source_kind": "external_fetch",
+      "from": "https://www.altobellodobermann.com/images/stories/dogsinkennel/maksim.jpg",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000007/main.jpg",
+      "bytes": 54453
+    },
+    {
+      "record_id": "DI-A-000009",
+      "name": "Macho di Altobello",
+      "source_kind": "external_fetch",
+      "from": "https://www.the-dobermann.com/images/stories/NIS/Philip/Macho-di-Altobello_8745.jpg",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000009/main.jpg",
+      "bytes": 107255
+    },
+    {
+      "record_id": "DI-A-000011",
+      "name": "Pride of Russia Ferro",
+      "source_kind": "local_binding",
+      "from": "profiles/male/assets/bloodline-submitted/pride-of-russia-ferro.webp",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000011/main.jpg",
+      "bytes": 68898
+    },
+    {
+      "record_id": "DI-A-000012",
+      "name": "Tahi-Reme Giniti",
+      "source_kind": "local_binding",
+      "from": "profiles/male/assets/bloodline-submitted/tahi-reme-giniti.webp",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000012/main.jpg",
+      "bytes": 76300
+    },
+    {
+      "record_id": "DI-A-000013",
+      "name": "Teraline Midgard",
+      "source_kind": "local_binding",
+      "from": "profiles/male/assets/bloodline-submitted/teraline-midgard.webp",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000013/main.jpg",
+      "bytes": 99829
+    },
+    {
+      "record_id": "DI-A-000014",
+      "name": "Pandora del Mediano",
+      "source_kind": "local_binding",
+      "from": "profiles/male/assets/bloodline-submitted/pandora-del-mediano.webp",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000014/main.jpg",
+      "bytes": 21818
+    },
+    {
+      "record_id": "DI-A-000015",
+      "name": "Icarus di Altobello",
+      "source_kind": "external_fetch",
+      "from": "https://www.altobellodobermann.com/images/stories/gallery/males/icarus/icarus-athens08.jpg",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000015/main.jpg",
+      "bytes": 116341
+    },
+    {
+      "record_id": "DI-A-000016",
+      "name": "Daria Deniz di Altobello",
+      "source_kind": "local_binding",
+      "from": "profiles/male/assets/bloodline-submitted/daria-deniz-di-altobello.webp",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000016/main.jpg",
+      "bytes": 96456
+    },
+    {
+      "record_id": "DI-A-000017",
+      "name": "Ramos Best of Island",
+      "source_kind": "external_fetch",
+      "from": "https://www.the-dobermann.com/images/males/f/prog/25_ramos.jpg",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000017/main.jpg",
+      "bytes": 66978
+    },
+    {
+      "record_id": "DI-A-000018",
+      "name": "Fey di Villa Conte",
+      "source_kind": "local_binding",
+      "from": "profiles/male/assets/bloodline-submitted/fey-di-villa-conte.webp",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000018/main.jpg",
+      "bytes": 47994
+    },
+    {
+      "record_id": "DI-A-000019",
+      "name": "Fedor del Nasi",
+      "source_kind": "external_fetch",
+      "from": "https://www.the-dobermann.com/images/Agiota/1/fedor7.JPG",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000019/main.jpg",
+      "bytes": 61596
+    },
+    {
+      "record_id": "DI-A-000020",
+      "name": "Ester di Altobello",
+      "source_kind": "external_fetch",
+      "from": "https://www.altobellodobermann.com/images/stories/dogsinkennel/ester-stand.jpg",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000020/main.jpg",
+      "bytes": 35287
+    },
+    {
+      "record_id": "DI-A-000021",
+      "name": "Don Juan di Altobello",
+      "source_kind": "external_fetch",
+      "from": "https://www.altobellodobermann.com/images/stories/gallery/males/donjuan/don-18m-stand.jpg",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000021/main.jpg",
+      "bytes": 65613
+    },
+    {
+      "record_id": "DI-A-000022",
+      "name": "Ombra Omega Sawages",
+      "source_kind": "local_binding",
+      "from": "profiles/male/assets/bloodline-submitted/ombra-omega-sawages.jpg",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000022/main.jpg",
+      "bytes": 7923
+    },
+    {
+      "record_id": "DI-A-000023",
+      "name": "Urbano del Diamante Nero",
+      "source_kind": "local_binding",
+      "from": "profiles/male/assets/bloodline-submitted/urbano-del-diamante-nero.webp",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000023/main.jpg",
+      "bytes": 34516
+    },
+    {
+      "record_id": "DI-A-000024",
+      "name": "Sharon iz Zoosfery",
+      "source_kind": "local_binding",
+      "from": "profiles/male/assets/bloodline-submitted/sharon-iz-zoosfery.webp",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000024/main.jpg",
+      "bytes": 81171
+    },
+    {
+      "record_id": "DI-A-000025",
+      "name": "Gino Gomez del Citone",
+      "source_kind": "external_fetch",
+      "from": "https://www.the-dobermann.com/images/columns/beyond/GinoGomez_01%281%29.jpg",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000025/main.jpg",
+      "bytes": 29469
+    },
+    {
+      "record_id": "DI-A-000027",
+      "name": "Pako Daker",
+      "source_kind": "external_fetch",
+      "from": "https://www.the-dobermann.com/images/stories/A_PRESENTATIONS_2/17.07.11/pak1.jpg",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000027/main.jpg",
+      "bytes": 56080
+    },
+    {
+      "record_id": "DI-A-000028",
+      "name": "Teraline Aurora",
+      "source_kind": "external_fetch",
+      "from": "https://www.the-dobermann.com/images/%21Kavaleva/%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21Connor/%21%21%21Cards/TeralineAurora_AIAD_Winner____2005_inter.jpg",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000028/main.jpg",
+      "bytes": 100998
+    }
+  ],
+  "already_internal": [
+    {
+      "record_id": "DI-A-000030",
+      "urls": [
+        "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000030/main.jpg"
+      ]
+    },
+    {
+      "record_id": "DI-A-000031",
+      "urls": [
+        "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000031/main.jpg"
+      ]
+    },
+    {
+      "record_id": "DI-A-000032",
+      "urls": [
+        "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000032/main.jpg"
+      ]
+    },
+    {
+      "record_id": "DI-A-000033",
+      "urls": [
+        "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000033/main.jpg"
+      ]
+    },
+    {
+      "record_id": "DI-A-000034",
+      "urls": [
+        "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000034/main.jpg"
+      ]
+    },
+    {
+      "record_id": "DI-A-000035",
+      "urls": [
+        "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000035/main.jpg"
+      ]
+    },
+    {
+      "record_id": "DI-A-000037",
+      "urls": [
+        "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000037/main.jpg"
+      ]
+    },
+    {
+      "record_id": "DI-A-000038",
+      "urls": [
+        "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000038/main.jpg"
+      ]
+    },
+    {
+      "record_id": "DI-A-000039",
+      "urls": [
+        "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000039/main.jpg"
+      ]
+    },
+    {
+      "record_id": "DI-A-000040",
+      "urls": [
+        "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000040/main.jpg"
+      ]
+    },
+    {
+      "record_id": "DI-A-000041",
+      "urls": [
+        "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000041/main.jpg"
+      ]
+    }
+  ],
+  "pending": [
+    {
+      "record_id": "DI-A-000004",
+      "reason": "local binding exists but source provenance URL is missing",
+      "asset_path": "profiles/male/assets/bloodline-submitted/freya-fleming-di-altobello.webp"
+    }
+  ],
+  "failed": [
+    {
+      "record_id": "DI-A-000026",
+      "from": "https://grandevinko.com/admin/images/uploads/products/9385_1097.jpg",
+      "error": "<urlopen error timed out>",
+      "preserved": true
+    },
+    {
+      "record_id": "DI-A-000029",
+      "from": "https://pedigrees.dobermanns.cz/pics/medium/1/med_61ecd6b8731a2.jpg",
+      "error": "<urlopen error [Errno -2] Name or service not known>",
+      "preserved": true
+    }
+  ],
+  "completed": false,
+  "leftovers": [
+    {
+      "root": "DI-M-000001",
+      "record_id": "DI-A-000026",
+      "image_ref": "https://grandevinko.com/admin/images/uploads/products/9385_1097.jpg"
+    },
+    {
+      "root": "DI-M-000001",
+      "record_id": "DI-A-000029",
+      "image_ref": "https://pedigrees.dobermanns.cz/pics/medium/1/med_61ecd6b8731a2.jpg"
+    }
+  ]
+}
