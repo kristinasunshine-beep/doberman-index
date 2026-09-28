@@ -29,7 +29,7 @@
 @media(max-width:680px){.di-work-layer .di-work-summary{grid-template-columns:1fr}.di-work-layer .di-work-stat,.di-work-layer .di-work-stat + .di-work-stat,.di-work-layer .di-work-stat:nth-child(3){min-height:92px;padding:14px 0;border-left:0}.di-work-layer .di-work-stat span{margin-bottom:15px}.di-work-layer .di-work-media-card{flex-basis:78vw;min-height:330px}.di-work-layer .di-work-media-card img{min-height:330px}.di-work-layer .di-work-video-card,.di-work-dog-card{flex-basis:82vw}}
 
 /* Dog Work section: structural extension of the established digital card.
-   The section stays absent from layout until working_profile.enabled === true. */
+   It stays absent from layout until working_profile.enabled === true. */
 .work-profile-section[hidden]{display:none!important}
 .work-profile-section .work-profile-summary{margin-bottom:clamp(34px,5vw,64px)}
 .work-profile-section .work-profile-media[hidden]{display:none!important}
