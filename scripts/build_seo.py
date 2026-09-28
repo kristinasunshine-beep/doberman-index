@@ -374,12 +374,25 @@ def image_dimensions(path: Path) -> tuple[int, int] | None:
 
 def safe_image(root: Path, origin: str, value: Any) -> tuple[str, tuple[int, int] | None]:
     path = clean_text(value)
-    if not re.fullmatch(r"media/(?:dobermans|kennels|litters)/[^\s]+\.(?:jpe?g|png|webp|avif)", path, re.I):
-        return "", None
-    local = root / Path(path)
-    if not local.is_file():
-        return "", None
-    return absolute(origin, path), image_dimensions(local)
+
+    # Repository-hosted media keeps exact local dimensions.
+    if re.fullmatch(r"media/(?:dobermans|kennels|litters)/[^\s]+\.(?:jpe?g|png|webp|avif)", path, re.I):
+        local = root / Path(path)
+        if not local.is_file():
+            return "", None
+        return absolute(origin, path), image_dimensions(local)
+
+    # Canonical R2/Worker media is also a first-party public image source.
+    # Remote dimensions are intentionally left unknown; render_record() supplies
+    # a stable width/height fallback while preserving preload + fetchpriority.
+    if re.fullmatch(
+        r"https://(?:media\.doberman-index\.com|doberman-index-media-admin\.dobermanindex-records\.workers\.dev)/[^\s]+\.(?:jpe?g|png|webp|avif)",
+        path,
+        re.I,
+    ):
+        return path, None
+
+    return "", None
 
 
 def display_name(summary: dict[str, Any]) -> str:
