@@ -58,11 +58,17 @@ for (const [label, html] of [["male", male], ["female", female]]) {
   assert.ok(!html.includes('data-desk-panel="lineage"'), `${label} still exposes retired Record Desk lineage panel`);
   assert.ok(!html.includes('id="reproductionRail"'), `${label} still exposes retired reproduction counters`);
   assert.ok(!html.includes('id="impact"'), `${label} still exposes retired lineage-forward metrics section`);
-  const familyToken=label==="male"?'<span>02B</span><i></i><span>Live family network</span>':'<span>08</span><i></i><span>Live family network</span>';
+  const familyToken='<span>02B</span><i></i><span>Live family network</span>';
   assert.ok(html.includes(familyToken), `${label} missing dedicated live family network section`);
 }
 
 assert.ok(male.indexOf('id="related"') < male.indexOf('id="bloodline"'), "male Related Dobermans must appear immediately after Record Desk and before Bloodline");
+assert.ok(female.indexOf('id="related"') < female.indexOf('id="bloodline"'), "female Related Dobermans must appear immediately after Record Desk and before Bloodline");
+for (const [label, html] of [["male", male], ["female", female]]) {
+  assert.ok(html.includes('class="section-head reveal is-visible"'), `${label} Related Dobermans header is not forced visible`);
+  assert.ok(html.includes('class="section-content slider reveal is-visible" id="relatedRail"'), `${label} Related Dobermans rail is not forced visible`);
+  assert.ok(html.includes('</div>\n      <div class="rail-scrollbar" role="group" aria-controls="relatedRail"'), `${label} Related Dobermans rail is structurally malformed`);
+}
 assert.ok(male.includes('Cowboy Lucky Luck di Altobello'), "Dante first paint missing Cowboy sire connection");
 assert.ok(male.includes('requestedRecordId && requestedRecordId!=="DI-M-000001"'), "Dante still enters full hydration");
 assert.ok(male.includes("document.querySelectorAll('[data-work-nav],[data-di-work-layer=\"dog\"]')"), "Dante Work hard guard missing");
