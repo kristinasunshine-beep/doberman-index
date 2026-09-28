@@ -3185,6 +3185,7 @@
 <style id="gallery-view-ghost-fix">
 #gallery > .section-mark{display:none!important}
 </style>
+  <link rel="stylesheet" href="../../assets/css/work-layer.css">
 </head>
 <body>
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true" style="transform: scaleX(0.168274);"></div>
@@ -3196,6 +3197,7 @@
     <a class="nav-link" href="#pedigree-intelligence">Pedigree intelligence</a>
     <a class="nav-link" href="#health">Health</a>
     <a class="nav-link" href="#performance">Results</a>
+    <a class="nav-link" data-work-nav href="#work" hidden>Work</a>
     <a class="nav-link" href="#services">Services</a>
     <a class="nav-cta" href="#pairing">Pair</a>
   </nav>
@@ -3564,7 +3566,23 @@
 
 
 
-    <section class="section performance-showcase" id="breeding-lens">
+    
+    <section class="section work-profile-section" id="work" data-di-work-layer="dog" hidden>
+      <div class="section-mark" aria-hidden="true">WORK</div>
+      <header class="section-head reveal">
+        <div>
+          <div class="section-index"><span>WORK</span><i></i><span>Working record</span></div>
+          <h2 class="section-title">Working<br>record.</h2>
+        </div>
+        <p class="section-note"><b>Documented work</b>Working qualifications, disciplines, competition media and external exam footage extend the record only for Dobermans with an active working profile.</p>
+      </header>
+      <div class="section-content">
+        <div class="slider data-rail reveal work-profile-summary" data-work-summary></div>
+        <div class="gallery-rail reveal work-profile-media" data-work-media hidden></div>
+      </div>
+    </section>
+
+<section class="section performance-showcase" id="breeding-lens">
       <header class="section-head reveal">
         <div>
           <div class="section-index"><span>04B</span><i></i><span>Breeding lens</span></div>
@@ -4411,4 +4429,5 @@
   document.addEventListener('DOMContentLoaded',()=>{initDesk();initFedor();});
 })();
 </script>
+<script src="../../assets/js/work-layer.js"></script>
 </body></html>
