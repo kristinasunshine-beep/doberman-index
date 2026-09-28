@@ -23,9 +23,7 @@
   const videoLabel = (item, index) => text(typeof item === "object" ? item?.label : "") || `Work video ${String(index+1).padStart(2,"0")}`;
   const isWorkingDog = record => {
     const dog = record?.doberman || {};
-    const perf = dog.performance || {};
-    const media = dog.media || {};
-    return list(perf.working_exams).length || list(perf.sports).length || list(media.work_gallery).length || list(media.work_videos).length;
+    return dog.working_profile?.enabled === true;
   };
 
   function stat(label,value){
@@ -35,47 +33,64 @@
     card.append(key,strong); return card;
   }
 
+  function surfaceStat(label,value,sub){
+    const card=document.createElement("div"); card.className="surface-card";
+    const key=document.createElement("span"); key.className="key"; key.textContent=label;
+    const strong=document.createElement("span"); strong.className="value"; strong.textContent=value || "—";
+    card.append(key,strong);
+    if(sub){
+      const small=document.createElement("span"); small.className="sub"; small.textContent=sub;
+      card.append(small);
+    }
+    return card;
+  }
+
   function renderDogWork(section, record){
     const dog=record?.doberman || {};
+    const work=dog.working_profile || {};
+    if(work.enabled !== true) return;
+
     const perf=dog.performance || {};
     const media=dog.media || {};
     const exams=list(perf.working_exams);
     const sports=list(perf.sports);
     const photos=list(media.work_gallery).slice(0,20);
     const videos=list(media.work_videos).slice(0,10);
-    if(!exams.length && !sports.length && !photos.length && !videos.length) return;
 
     const summary=section.querySelector("[data-work-summary]");
     summary.replaceChildren(
-      stat("Working exams", exams.length ? exams.join(" · ") : "Not submitted"),
-      stat("Sports", sports.length ? sports.join(" · ") : "Not submitted"),
-      stat("Work gallery", photos.length ? `${photos.length} photos` : "No media"),
-      stat("Work videos", videos.length ? `${videos.length} links` : "No media")
+      surfaceStat("Working exams", exams.length ? exams.join(" · ") : "—", exams.length ? `${exams.length} submitted qualification${exams.length===1?"":"s"}` : ""),
+      surfaceStat("Sports", sports.length ? sports.join(" · ") : "—", sports.length ? `${sports.length} recorded discipline${sports.length===1?"":"s"}` : ""),
+      surfaceStat("Work gallery", photos.length ? String(photos.length).padStart(2,"0") : "—", photos.length ? "Training / trial media" : ""),
+      surfaceStat("Work videos", videos.length ? String(videos.length).padStart(2,"0") : "—", videos.length ? "External work footage" : "")
     );
 
     const rail=section.querySelector("[data-work-media]");
     rail.replaceChildren();
+
     photos.forEach((item,index)=>{
       const src=siteUrl(mediaPath(item)); if(!src) return;
-      const figure=document.createElement("figure"); figure.className="di-work-media-card";
-      const img=document.createElement("img"); img.src=src; img.loading=index ? "lazy" : "eager"; img.alt=`${text(dog.identity?.registered_name)||"Doberman"} — work photo ${index+1}`;
-      const caption=document.createElement("figcaption"); caption.textContent=mediaCaption(item,`Work ${String(index+1).padStart(2,"0")}`);
-      const count=document.createElement("small"); count.textContent=`${String(index+1).padStart(2,"0")} / ${String(photos.length).padStart(2,"0")}`;
-      figure.append(img,caption,count); rail.append(figure);
+      const figure=document.createElement("figure"); figure.className="visual-card work-profile-photo";
+      const img=document.createElement("img"); img.src=src; img.loading=index ? "lazy" : "eager";
+      img.alt=`${text(dog.identity?.registered_name)||"Doberman"} — work photo ${index+1}`;
+      const label=document.createElement("span"); label.className="visual-label";
+      label.textContent=mediaCaption(item,`Work ${String(index+1).padStart(2,"0")}`);
+      const count=document.createElement("span"); count.className="visual-count";
+      count.textContent=`${String(index+1).padStart(2,"0")} / ${String(photos.length).padStart(2,"0")}`;
+      figure.append(img,label,count); rail.append(figure);
     });
+
     videos.forEach((item,index)=>{
       const url=videoUrl(item); if(!/^https?:\/\//i.test(url)) return;
-      const link=document.createElement("a"); link.className="di-work-video-card"; link.href=url; link.target="_blank"; link.rel="noopener noreferrer";
-      const small=document.createElement("small"); small.textContent=`WORK VIDEO · ${String(index+1).padStart(2,"0")}`;
-      const strong=document.createElement("strong"); strong.textContent=videoLabel(item,index);
-      const span=document.createElement("span"); span.textContent="Open video ↗";
-      link.append(small,strong,span); rail.append(link);
+      const link=document.createElement("a"); link.className="surface-card work-profile-video";
+      link.href=url; link.target="_blank"; link.rel="noopener noreferrer";
+      const key=document.createElement("span"); key.className="key"; key.textContent=`Work video · ${String(index+1).padStart(2,"0")}`;
+      const value=document.createElement("span"); value.className="value"; value.textContent=videoLabel(item,index);
+      const sub=document.createElement("span"); sub.className="sub"; sub.textContent="Open footage ↗";
+      link.append(key,value,sub); rail.append(link);
     });
-    if(!rail.children.length){
-      const empty=document.createElement("p"); empty.className="di-work-empty-media"; empty.textContent="Working qualifications are recorded. Work media has not been added to this profile.";
-      rail.append(empty);
-    }
 
+    rail.hidden=!rail.children.length;
     section.hidden=false;
     section.querySelectorAll(".reveal").forEach(node=>node.classList.add("is-visible"));
     document.querySelectorAll("[data-work-nav]").forEach(link=>link.hidden=false);
