@@ -7,7 +7,7 @@ const read = relative => fs.readFileSync(path.join(root, relative), "utf8");
 const male = read("profiles/male/index.html");
 const female = read("profiles/female/index.html");
 const index = read("index.html");
-const router = read("profile.html");
+const router = read("profile.html");\nconst danteLegacy = read("profiles/male/dante-example.html");
 const DIName = require("../assets/js/display-name.js");
 
 const bloodlineRuntimeMatch = male.match(/<script[^>]+src=["'](assets\/bloodline-network_v\d+\.js(?:\?[^"']*)?)["']/i);
@@ -26,8 +26,13 @@ assertTokens(index, [
   'data-search-anchor="males"', 'data-search-anchor="females"', 'data-search-anchor="kennels"', 'data-search-anchor="puppies"',
   'id="recordSearchInput"', 'class="hero-search-submit"', 'class="puppy-shortcut"', 'id="recordSearchResults"',
   'Available puppies', 'Search the records', 'search-results-head', 'data/registry.json', 'profile.html?id=',
-  'href="/profile.html?id=DI-M-000001"', 'Example digital card', 'media/dobermans/DI-M-000001/hero.png'
+  'href="/profile.html?id=DI-M-000001&build=20260928-8"', 'Example digital card', 'media/dobermans/DI-M-000001/hero.png'
 ], "homepage");
+
+assert.ok(index.includes('&build=20260928-8'), "homepage/search profile routes are not current-build versioned");
+assert.ok(router.includes('&build=20260928-8'), "profile router is not current-build versioned");
+assert.ok(danteLegacy.includes('./?id=DI-M-000001&build=20260928-8'), "legacy Dante document does not redirect to canonical card");
+assert.ok(!danteLegacy.includes('data-desk-tab="lineage"'), "legacy Dante document still contains a duplicate card implementation");
 
 assertTokens(router, [
   'male:"./profiles/male/"', 'female:"./profiles/female/"',
