@@ -159,7 +159,8 @@
         "DI-A-000022": {
           "status": "selected",
           "selected": {
-            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000022/main.jpg",
+            "asset_path": "profiles/male/assets/bloodline-submitted/ombra-omega-sawages.jpg",
+            "image_url": "profiles/male/assets/bloodline-submitted/ombra-omega-sawages.jpg",
             "source_label": "Pedigree Database · Ombra Omega Sawages",
             "source_url": "https://www.pedigreedatabase.com/doberman_pinscher/dog.html?id=1960889-ombra-omega-sawages?_v=20150518041159"
           }
@@ -319,7 +320,8 @@
         "DI-A-000022": {
           "status": "selected",
           "selected": {
-            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000022/main.jpg",
+            "asset_path": "profiles/male/assets/bloodline-submitted/ombra-omega-sawages.jpg",
+            "image_url": "profiles/male/assets/bloodline-submitted/ombra-omega-sawages.jpg",
             "source_label": "Pedigree Database · Ombra Omega Sawages",
             "source_url": "https://www.pedigreedatabase.com/doberman_pinscher/dog.html?id=1960889-ombra-omega-sawages?_v=20150518041159"
           }
