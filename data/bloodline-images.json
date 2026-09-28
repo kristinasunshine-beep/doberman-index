@@ -169,12 +169,8 @@
           }
         },
         "DI-A-000022": {
-          "status": "selected",
-          "selected": {
-            "image_url": "https://www.altobellodobermann.com/images/stories/gallery/females/zita/zita-4.jpg",
-            "source_label": "Unverified family-context · Zita di Altobello (daughter of Ombra Sawages)",
-            "source_url": "https://www.altobellodobermann.com/multimedia/altobello-females/1339-y-ch-zita-di-altobello"
-          }
+          "status": "missing",
+          "note": "No verified photograph of Ombra Omega Sawages is currently bound. Family-context substitute removed."
         },
         "DI-A-000023": {
           "status": "selected",
@@ -337,12 +333,8 @@
           }
         },
         "DI-A-000022": {
-          "status": "selected",
-          "selected": {
-            "image_url": "https://www.altobellodobermann.com/images/stories/gallery/females/zita/zita-4.jpg",
-            "source_label": "Unverified family-context · Zita di Altobello (daughter of Ombra Sawages)",
-            "source_url": "https://www.altobellodobermann.com/multimedia/altobello-females/1339-y-ch-zita-di-altobello"
-          }
+          "status": "missing",
+          "note": "No verified photograph of Ombra Omega Sawages is currently bound. Family-context substitute removed."
         },
         "DI-A-000030": {
           "status": "selected",
