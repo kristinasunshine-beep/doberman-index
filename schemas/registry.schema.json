@@ -1492,6 +1492,49 @@
                 "additionalProperties": false
               },
               "maxItems": 10
+            },
+            "movement_observation": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "required": [
+                "assessment_status"
+              ],
+              "properties": {
+                "assessment_status": {
+                  "enum": [
+                    "reviewed",
+                    "not_evaluated",
+                    "insufficient_source"
+                  ]
+                },
+                "source_metadata": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "stride_consistency": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "rhythm": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "visibility_quality": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "additionalProperties": false
             }
           },
           "additionalProperties": false
