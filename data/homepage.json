@@ -1,9 +1,10 @@
 {
   "schema_version": "1.0.0",
-  "updated_at": "2026-08-30",
+  "updated_at": "2026-09-28",
   "showcases": {
     "males": [
-      "DI-M-000001"
+      "DI-M-000001",
+      "DI-M-000002"
     ],
     "females": [],
     "kennels": [],

@@ -1,0 +1,674 @@
+{
+  "schema_version": "1.1.0",
+  "entity_type": "doberman",
+  "record_id": "DI-M-000002",
+  "status": "published",
+  "created_at": "2026-09-27T08:43:21.560Z",
+  "updated_at": "2026-09-28T13:30:00Z",
+  "submission": {
+    "submitter_name": "REDACTED",
+    "submitter_email": "redacted@example.invalid",
+    "relationship": "owner",
+    "consent_publication": true,
+    "notes": null
+  },
+  "doberman": {
+    "identity": {
+      "registered_name": "Cowboy Lucky Luck di Altobello",
+      "sex": "male",
+      "life_stage": "veteran",
+      "life_status": "deceased",
+      "date_of_birth": "2014-03-22",
+      "date_of_death": "2019-12-12",
+      "year_of_death": 2019,
+      "color": "Black & rust",
+      "country": "Serbia",
+      "location": "Sremski Karlovci, Serbia",
+      "registration_authority": "FCI",
+      "registration_number": "JR 708334 Dob",
+      "kennel_id": null,
+      "kennel_name": "Altobello",
+      "breeder": "Dejan Malbasa",
+      "owner": "Stojan Ruzic"
+    },
+    "parentage": {
+      "sire_id": null,
+      "sire_name": "Beowulf",
+      "sire_registration": "ROI 11/82055",
+      "dam_id": null,
+      "dam_name": "Freya Fleming di Altobello",
+      "dam_registration": "JR 83377 Dob",
+      "litter_id": null,
+      "pedigree_source": "owner_upload",
+      "pedigree_file": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/pedigree/pedigree.jpg",
+      "pedigree_verified": true,
+      "pedigree_nodes": [
+        {
+          "gen": 1,
+          "role": "Sire",
+          "name": "Beowulf",
+          "registration": "ROI 11/82055",
+          "record_id": "DI-A-000003",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 1,
+          "role": "Dam",
+          "name": "Freya Fleming di Altobello",
+          "registration": "JR 83377 Dob",
+          "record_id": "DI-A-000004",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 2,
+          "role": "Paternal grandsire",
+          "name": "Maxim di Altobello",
+          "registration": "JR 82778 Dob",
+          "record_id": "DI-A-000007",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 2,
+          "role": "Paternal granddam",
+          "name": "Birbakira di Villa Conte",
+          "registration": "ROI 07/57679",
+          "record_id": "DI-A-000008",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 2,
+          "role": "Maternal grandsire",
+          "name": "Macho di Altobello",
+          "registration": "JR 82665 Dob",
+          "record_id": "DI-A-000009",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 2,
+          "role": "Maternal granddam",
+          "name": "Zulu Lady di Altobello",
+          "registration": "JR 701225 Dob",
+          "record_id": "DI-A-000010",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 3,
+          "role": "Paternal line",
+          "name": "Icarus di Altobello",
+          "registration": "JR 79838 Dob",
+          "record_id": "DI-A-000015",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 3,
+          "role": "Paternal line",
+          "name": "Daria Deniz di Altobello",
+          "registration": "JR 700539 Dob",
+          "record_id": "DI-A-000016",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 3,
+          "role": "Paternal line",
+          "name": "Ramos Best of Island",
+          "registration": "HR 12417",
+          "record_id": "DI-A-000017",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 3,
+          "role": "Paternal line",
+          "name": "Fey di Villa Conte",
+          "registration": "ROI 00/61112",
+          "record_id": "DI-A-000018",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 3,
+          "role": "Maternal line",
+          "name": "Fedor del Nasi",
+          "registration": "JR 7005-9 Dob",
+          "record_id": "DI-A-000019",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 3,
+          "role": "Maternal line",
+          "name": "Ester di Altobello",
+          "registration": "JR 700503 Dob",
+          "record_id": "DI-A-000020",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 3,
+          "role": "Maternal line",
+          "name": "Don Juan di Altobello",
+          "registration": "JR 700510 Dob",
+          "record_id": "DI-A-000021",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 3,
+          "role": "Maternal line",
+          "name": "Ombra Omega Sawages",
+          "registration": "JR 79158 Dob",
+          "record_id": "DI-A-000022",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 4,
+          "role": "Paternal line",
+          "name": "Ferrofarah Gomez di Campovalano",
+          "registration": "ROI 02/78726",
+          "record_id": "DI-A-000030",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 4,
+          "role": "Paternal line",
+          "name": "Nikita For Eternity",
+          "registration": "JR 77810 Dob",
+          "record_id": "DI-A-000031",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 4,
+          "role": "Paternal line",
+          "name": "Garangolden di Campovalano",
+          "registration": "JR 700154 Dob",
+          "record_id": "DI-A-000032",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 4,
+          "role": "Paternal line",
+          "name": "Nadja-Nikita Altobello",
+          "registration": "JR 77212 Dob",
+          "record_id": "DI-A-000033",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 4,
+          "role": "Paternal line",
+          "name": "Fedor del Nasi",
+          "registration": "JR 7005-9 Dob",
+          "record_id": "DI-A-000019",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 4,
+          "role": "Paternal line",
+          "name": "Kastra Best of Island",
+          "registration": "HR 12266",
+          "record_id": "DI-A-000034",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 4,
+          "role": "Paternal line",
+          "name": "Nitro del Rio Bianco",
+          "registration": "ROI 99/14550",
+          "record_id": "DI-A-000035",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 4,
+          "role": "Paternal line",
+          "name": "Regal di Villa Conte",
+          "registration": "DS 156252",
+          "record_id": "DI-A-000036",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 4,
+          "role": "Maternal line",
+          "name": "Baron Nike Renewal",
+          "registration": "JR 75450 Dob",
+          "record_id": "DI-A-000037",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 4,
+          "role": "Maternal line",
+          "name": "Akuna-Matata de Grande Vinko",
+          "registration": "SLRDo 002731",
+          "record_id": "DI-A-000038",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 4,
+          "role": "Maternal line",
+          "name": "Garangolden di Campovalano",
+          "registration": "JR 700154 Dob",
+          "record_id": "DI-A-000032",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 4,
+          "role": "Maternal line",
+          "name": "Nadja-Nikita Altobello",
+          "registration": "JR 77212 Dob",
+          "record_id": "DI-A-000033",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 4,
+          "role": "Maternal line",
+          "name": "Icarus di Altobello",
+          "registration": "JR 79838 Dob",
+          "record_id": "DI-A-000015",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 4,
+          "role": "Maternal line",
+          "name": "Beatrice di Altobello",
+          "registration": "JR 82152 Dob",
+          "record_id": "DI-A-000039",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 4,
+          "role": "Maternal line",
+          "name": "Come As You Are Cyanide",
+          "registration": "JR 78250 Dob",
+          "record_id": "DI-A-000040",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        },
+        {
+          "gen": 4,
+          "role": "Maternal line",
+          "name": "Melvas Puma Sawages",
+          "registration": "JR 78683 Dob",
+          "record_id": "DI-A-000041",
+          "titles": null,
+          "country": null,
+          "source": "verified owner pedigree"
+        }
+      ],
+      "pedigree_extraction": {
+        "status": "verified",
+        "reviewed_by": "Doberman Index Admin",
+        "reviewed_at": "2026-09-28T13:30:00Z"
+      }
+    },
+    "health": {
+      "dm": {
+        "result": "Clear",
+        "lab": null,
+        "date": null,
+        "report_number": null,
+        "evidence_file": null
+      },
+      "vwd": {
+        "result": "Carrier",
+        "lab": null,
+        "date": null,
+        "report_number": null,
+        "evidence_file": null
+      },
+      "hd": {
+        "result": "HD-0",
+        "lab": null,
+        "date": null,
+        "report_number": null,
+        "evidence_file": null
+      },
+      "ed": {
+        "result": "ED-0",
+        "lab": null,
+        "date": null,
+        "report_number": null,
+        "evidence_file": null
+      },
+      "thyroid": {
+        "result": "Normal",
+        "lab": null,
+        "date": null,
+        "report_number": null,
+        "evidence_file": null
+      },
+      "eyes": {
+        "result": "Clear",
+        "lab": null,
+        "date": null,
+        "report_number": null,
+        "evidence_file": null
+      },
+      "dcm_clinical": {
+        "status": "No sign of DCM",
+        "evaluation_method": null,
+        "evaluation_date": null,
+        "veterinarian_or_clinic": null,
+        "evidence_file": null
+      },
+      "dcm_markers": {
+        "dcm_1": {
+          "result": null,
+          "lab": null,
+          "date": null,
+          "report_number": null,
+          "evidence_file": null
+        },
+        "dcm_2": {
+          "result": null,
+          "lab": null,
+          "date": null,
+          "report_number": null,
+          "evidence_file": null
+        },
+        "dcm_3": {
+          "result": null,
+          "lab": null,
+          "date": null,
+          "report_number": null,
+          "evidence_file": null
+        },
+        "dcm_4": {
+          "result": null,
+          "lab": null,
+          "date": null,
+          "report_number": null,
+          "evidence_file": null
+        },
+        "dcm_5": {
+          "result": null,
+          "lab": null,
+          "date": null,
+          "report_number": null,
+          "evidence_file": null
+        }
+      },
+      "mortality": {
+        "cause": "Addison's disease",
+        "cause_disclosure": "public",
+        "evidence_source": null,
+        "evidence_file": null
+      }
+    },
+    "structure": {
+      "type": [
+        "Balanced",
+        "Elegant"
+      ],
+      "head": [
+        "Dry",
+        "Strong"
+      ],
+      "body": [
+        "Compact"
+      ],
+      "angulation": [
+        "Moderate"
+      ],
+      "movement": [
+        "Free"
+      ],
+      "balance": [
+        "Harmonious"
+      ],
+      "evaluator": "owner",
+      "evidence": {
+        "source_type": "owner_declaration",
+        "issuer": null,
+        "date": null,
+        "reference": null,
+        "file": null
+      }
+    },
+    "temperament": {
+      "stability": "Highly stable",
+      "drive": "Moderate",
+      "social_behaviour": "Highly social",
+      "defense": "Moderate",
+      "confidence": "Moderate",
+      "evaluator": "not_declared",
+      "evidence": {
+        "source_type": "owner_declaration",
+        "issuer": null,
+        "date": null,
+        "reference": null,
+        "file": null
+      }
+    },
+    "performance": {
+      "shows_count": null,
+      "titles": [],
+      "working_exams": [],
+      "sports": [],
+      "evidence_files": []
+    },
+    "reproduction": {
+      "litters_count": 32,
+      "offspring_count": 280,
+      "champion_offspring_count": 2,
+      "export_countries": [],
+      "litter_ids": [],
+      "availability": "not_applicable",
+      "notable_offspring": [
+        "Dion Dante"
+      ]
+    },
+    "puppy_lifecycle": {
+      "birth_weight_g": null,
+      "current_status": "not_applicable",
+      "evaluation": null,
+      "training": null,
+      "current_owner": null,
+      "achievements": []
+    },
+    "media": {
+      "hero": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/hero.jpg",
+      "head": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/head.jpg",
+      "profile": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/profile.jpg",
+      "stack": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/stack.jpg",
+      "movement": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/movement.jpg",
+      "focal_points": {
+        "hero": {
+          "x": 50,
+          "y": 50
+        },
+        "head": {
+          "x": 50,
+          "y": 50
+        },
+        "profile": {
+          "x": 50,
+          "y": 50
+        },
+        "stack": {
+          "x": 50,
+          "y": 50
+        },
+        "movement": {
+          "x": 50,
+          "y": 50
+        }
+      },
+      "gallery": [
+        {
+          "path": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/gallery/01.jpg",
+          "focal_point": {
+            "x": 50,
+            "y": 50
+          },
+          "fit_mode": "cover",
+          "caption": "Gallery 01"
+        },
+        {
+          "path": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/gallery/02.jpg",
+          "focal_point": {
+            "x": 50,
+            "y": 50
+          },
+          "fit_mode": "cover",
+          "caption": "Gallery 02"
+        },
+        {
+          "path": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/gallery/03.jpg",
+          "focal_point": {
+            "x": 30.44443766276042,
+            "y": 14.088887532552086
+          },
+          "fit_mode": "cover",
+          "caption": "Gallery 03"
+        },
+        {
+          "path": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/gallery/04.jpg",
+          "focal_point": {
+            "x": 50,
+            "y": 50
+          },
+          "fit_mode": "cover",
+          "caption": "Gallery 04"
+        },
+        {
+          "path": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/gallery/05.jpg",
+          "focal_point": {
+            "x": 50,
+            "y": 50
+          },
+          "fit_mode": "cover",
+          "caption": "Gallery 05"
+        },
+        {
+          "path": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/gallery/06.jpg",
+          "focal_point": {
+            "x": 50,
+            "y": 50
+          },
+          "fit_mode": "cover",
+          "caption": "Gallery 06"
+        },
+        {
+          "path": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/gallery/07.jpg",
+          "focal_point": {
+            "x": 37.333340115017364,
+            "y": 32.22221544053819
+          },
+          "fit_mode": "cover",
+          "caption": "Gallery 07"
+        },
+        {
+          "path": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/gallery/08.jpg",
+          "focal_point": {
+            "x": 55.77777438693576,
+            "y": 64.40000406901042
+          },
+          "fit_mode": "cover",
+          "caption": "Gallery 08"
+        },
+        {
+          "path": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/gallery/09.jpg",
+          "focal_point": {
+            "x": 57.55555894639757,
+            "y": 47.68889024522569
+          },
+          "fit_mode": "cover",
+          "caption": "Gallery 09"
+        }
+      ],
+      "movement_video": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/movement/main.mp4",
+      "movement_video_seconds": 11.749,
+      "movement_video_audio": "natural_sound",
+      "work_gallery": [],
+      "work_videos": []
+    },
+    "publication": {
+      "last_updated_label": null,
+      "profile_template": "male",
+      "lifecycle_mode": "automatic"
+    },
+    "pedigree_intelligence": {
+      "coi_percent": 4.6875,
+      "avk_percent": 86.6667,
+      "completeness_percent": 100,
+      "repeated_ancestors_count": 4,
+      "unique_ancestors_count": 26,
+      "generation_depth": 4,
+      "repeated_ancestors": [
+        {
+          "record_id": "DI-A-000015",
+          "name": "Icarus di Altobello",
+          "occurrences": 2
+        },
+        {
+          "record_id": "DI-A-000019",
+          "name": "Fedor del Nasi",
+          "occurrences": 2
+        },
+        {
+          "record_id": "DI-A-000032",
+          "name": "Garangolden di Campovalano",
+          "occurrences": 2
+        },
+        {
+          "record_id": "DI-A-000033",
+          "name": "Nadja-Nikita Altobello",
+          "occurrences": 2
+        }
+      ]
+    },
+    "working_profile": {
+      "enabled": false
+    }
+  }
+}
