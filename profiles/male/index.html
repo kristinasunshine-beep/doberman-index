@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script>
-    (()=>{const raw=(new URLSearchParams(location.search).get("id")||"").trim().toUpperCase();const id=/^DI-M-\d{6}$/.test(raw)?raw:"DI-M-000001";if(id==="DI-M-000001")document.documentElement.classList.add("profile-no-work");if(id!=="DI-M-000001"){document.documentElement.classList.add("profile-hydration-pending");document.title=`Doberman Index · ${id}`;}})();
+    (()=>{const raw=(new URLSearchParams(location.search).get("id")||"").trim().toUpperCase();const id=/^DI-M-\d{6}$/.test(raw)?raw:"DI-M-000001";if(id==="DI-M-000001")document.documentElement.classList.add("profile-no-work");if(/^DI-M-\d{6}$/.test(raw)){document.documentElement.classList.add("profile-hydration-pending");document.title=`Doberman Index · ${id}`;}})();
   </script>
   <meta name="theme-color" content="#f1f1f1">
   <meta name="description" content="DION DANTE (DI-M-000001) is a published male Doberman record from Belgrade. Explore its pedigree, health, performance and connected records.">
@@ -3568,7 +3568,7 @@
           <div class="section-index"><span>09</span><i></i><span>Profile connections</span></div>
           <h2 class="section-title">Related<br>Dobermans.</h2>
         </div>
-        <p class="section-note"><b>Beyond ancestry</b>Littermates, half-siblings, offspring and linked litters extend the record sideways and forward. Ancestors remain inside Bloodline Network.</p>
+        <p class="section-note"><b>Live family network</b>Parents, littermates, half-siblings, offspring and linked litters connect directly to their published profiles. The same ancestry also remains visible inside Bloodline Network.</p>
       </header>
       <div class="section-content slider reveal" id="relatedRail" data-scrollbar-ready="true"><div class="related-card"><div class="related-card-body"><div class="related-copy"><strong>No related profiles yet</strong><span>Connections appear after linked records are published.</span></div></div></div></div><div class="rail-scrollbar" role="group" aria-controls="relatedRail" aria-label="Profile connections horizontal navigation" hidden=""><button class="rail-scrollbar-arrow prev" type="button" aria-label="Scroll Profile connections left"></button><div class="rail-scrollbar-track"><div class="rail-scrollbar-indicator" role="scrollbar" tabindex="0" aria-controls="relatedRail" aria-label="Move through Profile connections" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div><button class="rail-scrollbar-arrow next" type="button" aria-label="Scroll Profile connections right"></button></div>
     </section>
@@ -3777,6 +3777,7 @@
 
     function buildRelated(recordId,parentage,reproduction={}){
       const byRecordId=new Map(registryRecords.map(record=>[record.record_id,record]));
+      const currentRecord=byRecordId.get(recordId)||{};
       const related=[];
       const seen=new Set();
       const add=(id,type,fallbackName)=>{
@@ -3793,9 +3794,9 @@
           position:focalPosition(record?.hero_focal_point)
         });
       };
-      add(parentage.sire_id,"Sire",parentage.sire_name);
-      add(parentage.dam_id,"Dam",parentage.dam_name);
-      add(parentage.litter_id,"Litter record",parentage.litter_id);
+      add(parentage.sire_id||currentRecord.sire_id,"Sire",parentage.sire_name);
+      add(parentage.dam_id||currentRecord.dam_id,"Dam",parentage.dam_name);
+      add(parentage.litter_id||currentRecord.litter_id,"Litter record",parentage.litter_id||currentRecord.litter_id);
       array(reproduction.litter_ids).forEach(id=>add(id,"Litter record",id));
       registryRecords.filter(record=>record.entity_type==="litter"&&(record.sire_id===recordId||record.dam_id===recordId)).forEach(record=>add(record.record_id,"Litter record",record.name||record.record_id));
       registryRecords.filter(record=>record.entity_type==="doberman"&&(record.sire_id===recordId||record.dam_id===recordId)).slice(0,4).forEach(record=>add(record.record_id,"Indexed offspring"));
@@ -3929,7 +3930,7 @@
         pedigreeDepth:Number(pedigreeIntelligence.generation_depth)||4,
         repeatedAncestors:repeatedAncestorView(record,graph),
         gallery:buildGallery(media),
-        related:buildRelated(recordId,parentage,reproduction).filter(item=>!["Sire","Dam"].includes(item.type)),
+        related:buildRelated(recordId,parentage,reproduction),
         movementObservation:{
           status:movementObservation.assessment_status||"not_evaluated",
           source:movementObservation.source_metadata||[media.movement_video_seconds?`${Number(media.movement_video_seconds).toFixed(2)} s`:null,media.movement_video_audio==="natural_sound"?"natural sound":media.movement_video_audio==="muted"?"muted":null].filter(Boolean).join(" · ")||"Movement source submitted",
@@ -4248,6 +4249,7 @@
       rail.addEventListener("click",event=>{
         const card=event.target.closest(selector);
         if(!card||!rail.contains(card))return;
+        if(card.matches("a[href]"))return;
         event.preventDefault();
         selectCard(card);
       });
@@ -4255,6 +4257,7 @@
         if(event.key!=="Enter"&&event.key!==" ")return;
         const card=event.target.closest(selector);
         if(!card||!rail.contains(card))return;
+        if(card.matches("a[href]"))return;
         event.preventDefault();
         selectCard(card);
       });
@@ -4634,7 +4637,7 @@
     }
 
     const requestedRecordId=(new URLSearchParams(location.search).get("id")||"").trim().toUpperCase();
-    if(requestedRecordId && requestedRecordId!=="DI-M-000001" && /^DI-M-\d{6}$/.test(requestedRecordId)){
+    if(requestedRecordId && /^DI-M-\d{6}$/.test(requestedRecordId)){
       initializeProfile().then(revealHydratedProfile).catch(error=>failHydratedProfile(requestedRecordId,error));
     }else{
       renderHeroName("Dion Dante");

@@ -53,7 +53,7 @@ def build(root: Path = ROOT) -> dict[str, Any]:
                 })
 
         for role in ("sire", "dam"):
-            related_id = clean(parentage.get(f"{role}_id")).upper()
+            related_id = clean(parentage.get(f"{role}_id") or summary.get(f"{role}_id")).upper()
             related_name = clean(parentage.get(f"{role}_name"))
             registration = clean(parentage.get(f"{role}_registration"))
             if not related_id and related_name:

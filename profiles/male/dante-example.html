@@ -3557,7 +3557,7 @@
           <div class="section-index"><span>09</span><i></i><span>Profile connections</span></div>
           <h2 class="section-title">Related<br>Dobermans.</h2>
         </div>
-        <p class="section-note"><b>Beyond ancestry</b>Littermates, half-siblings, offspring and linked litters extend the record sideways and forward. Ancestors remain inside Bloodline Network.</p>
+        <p class="section-note"><b>Live family network</b>Parents, littermates, half-siblings, offspring and linked litters connect directly to their published profiles. The same ancestry also remains visible inside Bloodline Network.</p>
       </header>
       <div class="section-content slider reveal" id="relatedRail" data-scrollbar-ready="true"><div class="related-card"><div class="related-card-body"><div class="related-copy"><strong>No related profiles yet</strong><span>Connections appear after linked records are published.</span></div></div></div></div><div class="rail-scrollbar" role="group" aria-controls="relatedRail" aria-label="Profile connections horizontal navigation" hidden=""><button class="rail-scrollbar-arrow prev" type="button" aria-label="Scroll Profile connections left"></button><div class="rail-scrollbar-track"><div class="rail-scrollbar-indicator" role="scrollbar" tabindex="0" aria-controls="relatedRail" aria-label="Move through Profile connections" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div><button class="rail-scrollbar-arrow next" type="button" aria-label="Scroll Profile connections right"></button></div>
     </section>
@@ -3759,6 +3759,7 @@
 
     function buildRelated(recordId,parentage,reproduction={}){
       const byRecordId=new Map(registryRecords.map(record=>[record.record_id,record]));
+      const currentRecord=byRecordId.get(recordId)||{};
       const related=[];
       const seen=new Set();
       const add=(id,type,fallbackName)=>{
@@ -3775,9 +3776,9 @@
           position:focalPosition(record?.hero_focal_point)
         });
       };
-      add(parentage.sire_id,"Sire",parentage.sire_name);
-      add(parentage.dam_id,"Dam",parentage.dam_name);
-      add(parentage.litter_id,"Litter record",parentage.litter_id);
+      add(parentage.sire_id||currentRecord.sire_id,"Sire",parentage.sire_name);
+      add(parentage.dam_id||currentRecord.dam_id,"Dam",parentage.dam_name);
+      add(parentage.litter_id||currentRecord.litter_id,"Litter record",parentage.litter_id||currentRecord.litter_id);
       array(reproduction.litter_ids).forEach(id=>add(id,"Litter record",id));
       registryRecords.filter(record=>record.entity_type==="litter"&&(record.sire_id===recordId||record.dam_id===recordId)).forEach(record=>add(record.record_id,"Litter record",record.name||record.record_id));
       registryRecords.filter(record=>record.entity_type==="doberman"&&(record.sire_id===recordId||record.dam_id===recordId)).slice(0,4).forEach(record=>add(record.record_id,"Indexed offspring"));
@@ -3878,13 +3879,13 @@
           boundary:"This single record can support shortlisting. Final pairing analysis requires a specific female because projected COI, shared ancestry, genetic combinations and phenotype complementarity are pair-specific."
         },
         bloodlineSubject:{name:registeredDisplayName,recordId,registration:identity.registration_number||"",country:identity.country||"",image:mediaUrl(media.stack||media.profile||media.hero)||placeholderImage,imagePosition:focalPosition(focalPointFor(media,media.stack?"stack":media.profile?"profile":"hero"))},
-        bloodline:buildCanonicalBloodline(recordId,graph,imageManifest,photoBindings,Number(pedigreeIntelligence.generation_depth)||4),pedigreeDepth:Number(pedigreeIntelligence.generation_depth)||4,repeatedAncestors:repeatedAncestorView(record,graph),gallery:buildGallery(media),related:buildRelated(recordId,parentage,reproduction).filter(item=>!["Sire","Dam"].includes(item.type)),
+        bloodline:buildCanonicalBloodline(recordId,graph,imageManifest,photoBindings,Number(pedigreeIntelligence.generation_depth)||4),pedigreeDepth:Number(pedigreeIntelligence.generation_depth)||4,repeatedAncestors:repeatedAncestorView(record,graph),gallery:buildGallery(media),related:buildRelated(recordId,parentage,reproduction),
         lastUpdated:present(publication.last_updated_label,formatDate(record.updated_at))
       };
     }
 
     async function loadProfile(){
-      const recordId=(new URLSearchParams(location.search).get("id")||"").trim().toUpperCase();
+      const recordId=(new URLSearchParams(location.search).get("id")||"DI-M-000001").trim().toUpperCase();
       if(!/^DI-M-\d{6}$/.test(recordId))throw new Error("A valid male profile number is required");
       const registry=await fetch(new URL("data/registry.json",repoRoot),{cache:"no-store"}).then(response=>{if(!response.ok)throw new Error("Registry unavailable");return response.json()});
       registryRecords=array(registry.records);
@@ -4012,6 +4013,7 @@
       rail.addEventListener("click",event=>{
         const card=event.target.closest(selector);
         if(!card||!rail.contains(card))return;
+        if(card.matches("a[href]"))return;
         event.preventDefault();
         selectCard(card);
       });
@@ -4019,6 +4021,7 @@
         if(event.key!=="Enter"&&event.key!==" ")return;
         const card=event.target.closest(selector);
         if(!card||!rail.contains(card))return;
+        if(card.matches("a[href]"))return;
         event.preventDefault();
         selectCard(card);
       });
@@ -4285,8 +4288,8 @@
       }
     }
 
-    const requestedRecordId=(new URLSearchParams(location.search).get("id")||"").trim().toUpperCase();
-    if(requestedRecordId && requestedRecordId!=="DI-M-000001" && requestedRecordId.startsWith("DI-M-")){
+    const requestedRecordId=(new URLSearchParams(location.search).get("id")||"DI-M-000001").trim().toUpperCase();
+    if(/^DI-M-\d{6}$/.test(requestedRecordId)){
       initializeProfile().catch(error=>console.warn("Dynamic profile hydration failed; accepted review snapshot remains visible",error));
     }else{
       primeRegistry();

@@ -66,6 +66,16 @@ def main()->int:
     presentation=(ROOT/'assets/js/media-presentation.js').read_text(encoding='utf-8')
     if 'gallery: Object.freeze({ aspectRatio: "4 / 5", orientation: "portrait", fit: "cover" })' not in presentation:errors.append('public gallery frame is not locked to 4:5 portrait')
     if 'hero_focal_point' not in builder or 'focal_point(media, "hero")' not in builder:errors.append('registry builder does not carry hero focal point')
+    dante_parentage=dante.get('doberman',{}).get('parentage',{})
+    if dante_parentage.get('sire_id')!='DI-M-000002':errors.append('Dante canonical sire link must resolve to DI-M-000002')
+    registry_by_id={item.get('record_id'):item for item in registry.get('records',[]) if isinstance(item,dict)}
+    if registry_by_id.get('DI-M-000001',{}).get('sire_id')!='DI-M-000002':errors.append('registry must expose Dante -> Cowboy sire link')
+    if 'DI-M-000002' not in registry_by_id:errors.append('Cowboy public record missing from live network')
+    if '.filter(item=>!["Sire","Dam"].includes(item.type))' in male:errors.append('male Related Dobermans still suppresses parent profiles')
+    if 'if(card.matches("a[href]"))return;' not in male:errors.append('male Related Dobermans links are still intercepted by selectable-rail handler')
+    if 'requestedRecordId!=="DI-M-000001"' in male:errors.append('Dante is still excluded from live profile hydration')
+    if '.filter(item=>!["Sire","Dam"].includes(item.type))' in female:errors.append('female Related Dobermans still suppresses parent profiles')
+    if 'if(card.matches("a[href]"))return;' not in female:errors.append('female Related Dobermans links are still intercepted by selectable-rail handler')
     gallery=dante.get('doberman',{}).get('media',{}).get('gallery',[])
     expected=['media/dobermans/DI-M-000001/hero.png','media/dobermans/DI-M-000001/gallery-01.png']
     if [item.get('path') for item in gallery if isinstance(item,dict)]!=expected:errors.append('Dante gallery order changed')

@@ -149,6 +149,58 @@ def litter_entry(path: Path, data: dict[str, Any], root: Path) -> dict[str, Any]
     }
 
 
+
+def _identity_key(value: Any) -> str:
+    return re.sub(r"[^a-z0-9]+", "", str(value or "").casefold())
+
+
+def _registration_key(value: Any) -> str:
+    key = re.sub(r"[^A-Z0-9]+", "", str(value or "").upper())
+    return key[:-3] if key.endswith("DOB") else key
+
+
+def resolve_parent_links(records: list[dict[str, Any]], root: Path) -> None:
+    """Resolve missing sire/dam IDs against published Doberman records.
+
+    Explicit canonical IDs always win. When an ID is absent, resolve only a
+    unique same-sex match by registration number first, then registered name.
+    This keeps the registry network live when an already named pedigree parent
+    later receives its own published DI record.
+    """
+    dobermans = [item for item in records if item.get("entity_type") == "doberman"]
+    by_registration: dict[tuple[str, str], list[str]] = {}
+    by_name: dict[tuple[str, str], list[str]] = {}
+
+    def index(target: dict[tuple[str, str], list[str]], sex: str, key: str, record_id: str) -> None:
+        if key:
+            target.setdefault((sex, key), []).append(record_id)
+
+    for summary in dobermans:
+        sex = str(summary.get("sex") or "").lower()
+        record_id = str(summary.get("record_id") or "").upper()
+        index(by_registration, sex, _registration_key(summary.get("registration_number")), record_id)
+        index(by_name, sex, _identity_key(summary.get("registered_name")), record_id)
+
+    for summary in dobermans:
+        source = load_json(root / summary["path"])
+        parentage = ((source.get("doberman") or {}).get("parentage") or {})
+        for role, expected_sex in (("sire", "male"), ("dam", "female")):
+            if summary.get(f"{role}_id"):
+                continue
+            registration_key = _registration_key(parentage.get(f"{role}_registration"))
+            name_key = _identity_key(parentage.get(f"{role}_name"))
+            candidates = [
+                candidate for candidate in by_registration.get((expected_sex, registration_key), [])
+                if candidate != summary["record_id"]
+            ] if registration_key else []
+            if len(candidates) != 1:
+                candidates = [
+                    candidate for candidate in by_name.get((expected_sex, name_key), [])
+                    if candidate != summary["record_id"]
+                ] if name_key else []
+            if len(candidates) == 1:
+                summary[f"{role}_id"] = candidates[0]
+
 def build(root: Path) -> dict[str, Any]:
     records: list[dict[str, Any]] = []
     seen: dict[str, Path] = {}
@@ -166,6 +218,7 @@ def build(root: Path) -> dict[str, Any]:
             if data.get("status") != "published":
                 continue
             records.append(builders[entity_type](path, data, root))
+    resolve_parent_links(records, root)
     records.sort(key=lambda item: item["record_id"])
     return {"schema_version": "1.1.0", "records": records}
 
