@@ -12,12 +12,8 @@
           }
         },
         "DI-A-000002": {
-          "status": "selected",
-          "selected": {
-            "image_url": "https://www.the-dobermann.com/images/stories/A_PRESENTATIONS_2/01.01.14/ask.jpg",
-            "source_label": "Unverified family-context · Dama Dorina von Ashanti (same parents as Felicita)",
-            "source_url": "https://www.the-dobermann.com/females/41-a29/5329-dama-dorina-von-ashanti"
-          }
+          "status": "missing",
+          "note": "No verified direct photograph of Felicita Flair von Ashanti Legende is currently bound. Sister/family-context substitute removed."
         },
         "DI-A-000003": {
           "status": "selected",
