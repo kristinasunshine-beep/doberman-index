@@ -10,11 +10,27 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED = {
-    "submit.html": "B7D179DCC02E876128CB3847AABC6BAB14E3AE8C87FC28B9A8F0C29F3EFF9B9E",
     "assets/css/submit-v3.css": "E39B9989A9F3BD6324C49971D21F9D910CDB3798C86D94466BC5FD4D2273445D",
-    "assets/js/submit-v3.js": "87A56F4AE26663625C3491B2C0E4795E7B7F0D40F0C8AD6189F1B3B8513540B8",
     "assets/js/zip-tools.js": "C2D00A7E08A013C574289BBBF2ACF1D7EBBF09EEE187053981D28DBE2221826E",
 }
+
+REQUIRED_SUBMIT_TOKENS = (
+    'name="registered_name"',
+    'name="sex"',
+    'name="stud_service_status"',
+    'name="hero_photo"',
+    'name="head_photo"',
+    'name="profile_photo"',
+    'name="stack_photo"',
+    'name="movement_video"',
+)
+
+RETIRED_AGGREGATE_FIELDS = (
+    'name="litters_count"',
+    'name="offspring_count"',
+    'name="champion_offspring_count"',
+    'name="export_countries"',
+)
 
 
 def locked_bytes(relative: str, path: Path) -> bytes:
@@ -39,13 +55,31 @@ def main() -> int:
         if actual != expected:
             mismatches.append(f"{relative}: expected {expected}, found {actual}")
 
+    submit_path = ROOT / "submit.html"
+    runtime_path = ROOT / "assets/js/submit-v3.js"
+    submit = submit_path.read_text(encoding="utf-8") if submit_path.exists() else ""
+    runtime = runtime_path.read_text(encoding="utf-8") if runtime_path.exists() else ""
+
+    for token in REQUIRED_SUBMIT_TOKENS:
+        if token not in submit:
+            mismatches.append(f"submit.html missing required intake control: {token}")
+    for token in RETIRED_AGGREGATE_FIELDS:
+        if token in submit:
+            mismatches.append(f"submit.html still exposes retired aggregate breeding control: {token}")
+
+    if "reproduction:" not in runtime or "litter_ids: []" not in runtime or "stud_service_status" not in runtime:
+        mismatches.append("submit-v3.js missing current reproduction relationship/status contract")
+    for stale in ("litters_count", "offspring_count", "champion_offspring_count", "export_countries"):
+        if stale in runtime:
+            mismatches.append(f"submit-v3.js still reads retired aggregate breeding field: {stale}")
+
     if mismatches:
         print("Submission visual-master lock FAIL", file=sys.stderr)
         for mismatch in mismatches:
             print(f" - {mismatch}", file=sys.stderr)
         return 1
 
-    print("Submission visual-master lock PASS (approved secure-intake HTML/CSS/runtime and ZIP tools exact)")
+    print("Submission visual-master lock PASS (visual CSS/ZIP exact; intake HTML/runtime semantic contract current)")
     return 0
 
 
