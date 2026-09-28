@@ -27,12 +27,12 @@ assertTokens(index, [
   'data-search-anchor="males"', 'data-search-anchor="females"', 'data-search-anchor="kennels"', 'data-search-anchor="puppies"',
   'id="recordSearchInput"', 'class="hero-search-submit"', 'class="puppy-shortcut"', 'id="recordSearchResults"',
   'Available puppies', 'Search the records', 'search-results-head', 'data/registry.json', 'profile.html?id=',
-  'href="/profile.html?id=DI-M-000001&build=20260928-8"', 'Example digital card', 'media/dobermans/DI-M-000001/hero.png'
+  'href="/profiles/male/?build=20260928-10"', 'Example digital card', 'media/dobermans/DI-M-000001/hero.png'
 ], "homepage");
 
-assert.ok(index.includes('&build=20260928-8'), "homepage/search profile routes are not current-build versioned");
-assert.ok(router.includes('&build=20260928-8'), "profile router is not current-build versioned");
-assert.ok(danteLegacy.includes('./?id=DI-M-000001&build=20260928-8'), "legacy Dante document does not redirect to canonical card");
+assert.ok(index.includes('&build=20260928-10'), "homepage/search profile routes are not current-build versioned");
+assert.ok(router.includes('&build=20260928-10'), "profile router is not current-build versioned");
+assert.ok(danteLegacy.includes('./?build=20260928-10'), "legacy Dante document does not redirect to fast Dante card");
 assert.ok(!danteLegacy.includes('data-desk-tab="lineage"'), "legacy Dante document still contains a duplicate card implementation");
 
 assertTokens(router, [
@@ -56,8 +56,15 @@ for (const [label, html] of [["male", male], ["female", female]]) {
   assert.ok(!html.includes('data-desk-panel="lineage"'), `${label} still exposes retired Record Desk lineage panel`);
   assert.ok(!html.includes('id="reproductionRail"'), `${label} still exposes retired reproduction counters`);
   assert.ok(!html.includes('id="impact"'), `${label} still exposes retired lineage-forward metrics section`);
-  assert.ok(html.includes('<span>08</span><i></i><span>Live family network</span>'), `${label} missing dedicated live family network section`);
+  const familyToken=label==="male"?'<span>02B</span><i></i><span>Live family network</span>':'<span>08</span><i></i><span>Live family network</span>';
+  assert.ok(html.includes(familyToken), `${label} missing dedicated live family network section`);
 }
+
+assert.ok(male.indexOf('id="related"') < male.indexOf('id="bloodline"'), "male Related Dobermans must appear immediately after Record Desk and before Bloodline");
+assert.ok(male.includes('Cowboy Lucky Luck di Altobello'), "Dante first paint missing Cowboy sire connection");
+assert.ok(male.includes('requestedRecordId && requestedRecordId!=="DI-M-000001"'), "Dante still enters full hydration");
+assert.ok(male.includes("document.querySelectorAll('[data-work-nav],[data-di-work-layer=\"dog\"]')"), "Dante Work hard guard missing");
+assert.ok(router.includes('if(id==="DI-M-000001"){location.replace("./profiles/male/?build=20260928-10")'), "router does not fast-route Dante");
 
 // Centralized registered-name presentation remains available to every renderer.
 assert.equal(DIName.displayRegisteredName("  COWBOY   LUCKY LUCK DI ALTOBELLO "), "Cowboy Lucky Luck di Altobello");

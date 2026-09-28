@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script>
-    (()=>{const raw=(new URLSearchParams(location.search).get("id")||"").trim().toUpperCase();const id=/^DI-M-\d{6}$/.test(raw)?raw:"DI-M-000001";if(id==="DI-M-000001")document.documentElement.classList.add("profile-no-work");if(/^DI-M-\d{6}$/.test(raw)){document.documentElement.classList.add("profile-hydration-pending");document.title=`Doberman Index · ${id}`;}})();
+    (()=>{const raw=(new URLSearchParams(location.search).get("id")||"").trim().toUpperCase();const id=/^DI-M-\d{6}$/.test(raw)?raw:"DI-M-000001";if(id==="DI-M-000001")document.documentElement.classList.add("profile-no-work");if(/^DI-M-\d{6}$/.test(raw)&&id!=="DI-M-000001"){document.documentElement.classList.add("profile-hydration-pending");document.title=`Doberman Index · ${id}`;}})();
   </script>
   <meta name="theme-color" content="#f1f1f1">
   <meta name="description" content="DION DANTE (DI-M-000001) is a published male Doberman record from Belgrade. Explore its pedigree, health, performance and connected records.">
@@ -3368,6 +3368,18 @@
       </div>
     </section>
 
+<section class="section" id="related">
+      <div class="section-mark" aria-hidden="true">LINK</div>
+      <header class="section-head reveal">
+        <div>
+          <div class="section-index"><span>02B</span><i></i><span>Live family network</span></div>
+          <h2 class="section-title">Related<br>Dobermans.</h2>
+        </div>
+        <p class="section-note"><b>Connected profiles</b>Published parents, siblings, offspring and litter records appear here as direct links. The network expands as related DI records are published.</p>
+      </header>
+      <div class="section-content slider reveal" id="relatedRail" data-scrollbar-ready="true"><a href="../../profile.html?id=DI-M-000002" class="related-card" aria-pressed="false"><div class="related-card-top"><span>Relation 01</span><i aria-hidden="true"></i><span class="related-arrow" aria-hidden="true">↗</span></div><div class="related-card-body"><div class="related-thumb" aria-hidden="true"><img src="https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/hero.jpg" alt="" loading="lazy" decoding="async" style="object-position:50% 50%"></div><div class="related-copy"><strong>Cowboy Lucky Luck di Altobello</strong><span>Sire</span></div></div></a><div class="rail-scrollbar" role="group" aria-controls="relatedRail" aria-label="Profile connections horizontal navigation" hidden=""><button class="rail-scrollbar-arrow prev" type="button" aria-label="Scroll Profile connections left"></button><div class="rail-scrollbar-track"><div class="rail-scrollbar-indicator" role="scrollbar" tabindex="0" aria-controls="relatedRail" aria-label="Move through Profile connections" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div><button class="rail-scrollbar-arrow next" type="button" aria-label="Scroll Profile connections right"></button></div>
+    </section>
+
 <section class="section" id="bloodline">
       <div class="section-mark" aria-hidden="true">DNA</div>
       <header class="section-head reveal is-visible">
@@ -3527,17 +3539,7 @@
 
     
 
-    <section class="section" id="related">
-      <div class="section-mark" aria-hidden="true">LINK</div>
-      <header class="section-head reveal">
-        <div>
-          <div class="section-index"><span>08</span><i></i><span>Live family network</span></div>
-          <h2 class="section-title">Related<br>Dobermans.</h2>
-        </div>
-        <p class="section-note"><b>Connected profiles, not counters.</b>Published parents, siblings, offspring and litter records appear here as direct links. Each card opens the connected record.</p>
-      </header>
-      <div class="section-content slider reveal" id="relatedRail" data-scrollbar-ready="true"><div class="related-card"><div class="related-card-body"><div class="related-copy"><strong>No related profiles yet</strong><span>Connections appear after linked records are published.</span></div></div></div></div><div class="rail-scrollbar" role="group" aria-controls="relatedRail" aria-label="Profile connections horizontal navigation" hidden=""><button class="rail-scrollbar-arrow prev" type="button" aria-label="Scroll Profile connections left"></button><div class="rail-scrollbar-track"><div class="rail-scrollbar-indicator" role="scrollbar" tabindex="0" aria-controls="relatedRail" aria-label="Move through Profile connections" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div><button class="rail-scrollbar-arrow next" type="button" aria-label="Scroll Profile connections right"></button></div>
-    </section>
+    
 
 
 
@@ -4560,9 +4562,6 @@
     const mountOfflineBloodline=()=>{
       window.DIBloodline.mount({root:byId("bloodlineRail"),subject:offlineBloodlineSubject,nodes:offlineBloodlineNodes,maxDepth:4});
     };
-    applyOfflineBloodlinePhotos();
-    mountOfflineBloodline();
-
     async function syncOfflineBloodlinePhotos(){
       const bindings=await fetch(new URL("data/bloodline-photo-bindings.json",repoRoot),{cache:"no-store"})
         .then(response=>{if(!response.ok)throw new Error("Bloodline photo bindings unavailable");return response.json()});
@@ -4580,23 +4579,34 @@
       installHorizontalRailScrollbars();
     }
 
+    function refreshDanteRelatedFromRegistry(){
+      const focal=registryRecords.find(record=>record.record_id==="DI-M-000001"&&record.entity_type==="doberman");
+      if(!focal)return;
+      const liveRelated=buildRelated("DI-M-000001",{sire_id:focal.sire_id,dam_id:focal.dam_id,litter_id:focal.litter_id},{litter_ids:[]});
+      if(!liveRelated.length)return;
+      profileData.related=liveRelated;
+      related();
+    }
+
     async function primeRegistry(){
       try{
         const registry=await fetch(new URL("data/registry.json",repoRoot),{cache:"no-store"}).then(response=>{if(!response.ok)throw new Error("Registry unavailable");return response.json()});
         registryRecords=array(registry.records);
+        refreshDanteRelatedFromRegistry();
       }catch(error){
         console.warn("Doberman Index registry preview unavailable",error);
       }
     }
 
     const requestedRecordId=(new URLSearchParams(location.search).get("id")||"").trim().toUpperCase();
-    if(requestedRecordId && /^DI-M-\d{6}$/.test(requestedRecordId)){
+    if(requestedRecordId && requestedRecordId!=="DI-M-000001" && /^DI-M-\d{6}$/.test(requestedRecordId)){
       initializeProfile().then(revealHydratedProfile).catch(error=>failHydratedProfile(requestedRecordId,error));
     }else{
       renderHeroName("Dion Dante");
       primeRegistry();
-      syncOfflineBloodlinePhotos().catch(error=>console.warn("Bloodline photo bindings unavailable; local snapshot remains visible",error));
-      activateGalleryMovementScrollbar();
+      const refreshBloodline=()=>syncOfflineBloodlinePhotos().catch(error=>console.warn("Bloodline photo bindings unavailable; local snapshot remains visible",error));
+      if("requestIdleCallback" in window)requestIdleCallback(refreshBloodline,{timeout:1800});else setTimeout(refreshBloodline,900);
+      requestAnimationFrame(activateGalleryMovementScrollbar);
     }
 
     const dcmTrigger=byId("dcmTrigger");
@@ -4720,7 +4730,10 @@
 (()=>{
   const raw=(new URLSearchParams(location.search).get("id")||"").trim().toUpperCase();
   const id=/^DI-M-\d{6}$/.test(raw)?raw:"DI-M-000001";
-  if(id==="DI-M-000001") return;
+  if(id==="DI-M-000001"){
+    document.querySelectorAll('[data-work-nav],[data-di-work-layer="dog"]').forEach(node=>node.remove());
+    return;
+  }
   const css=document.createElement("link");
   css.rel="stylesheet";
   css.href="../../assets/css/work-layer.css?v=20260928-5";

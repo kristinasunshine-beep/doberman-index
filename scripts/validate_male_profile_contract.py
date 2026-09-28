@@ -25,7 +25,7 @@ for token in ['Shows:numberOrDash(performance.shows_count)','Titles:array(perfor
 for token in ['lifeStage,lifeStatus,lifeSpan:lifespan||"—"','studServiceStatus,profileId:recordId','lifeStage:"Life stage",lifeStatus:"Life status",lifeSpan:"Life span"','studServiceStatus:"Stud service status"','id="lifeStatusBadge"','const isDeceased=lifecycleState==="deceased"','lifecycleState==="living"?""']:
     if token not in profile: errors.append('male profile missing Details contract token: '+token)
 # Live family network uses actual linked records, never owner-entered aggregate counters.
-for token in ['function buildRelated(recordId,parentage,reproduction={})','add(parentage.sire_id||currentRecord.sire_id,"Sire",parentage.sire_name);','id="relatedRail"','<span>08</span><i></i><span>Live family network</span>']:
+for token in ['function buildRelated(recordId,parentage,reproduction={})','add(parentage.sire_id||currentRecord.sire_id,"Sire",parentage.sire_name);','id="relatedRail"','<span>02B</span><i></i><span>Live family network</span>']:
     if token not in profile: errors.append('male live-family-network contract missing: '+token)
 for stale in ['data-desk-tab="lineage"','data-desk-panel="lineage"','id="reproductionRail"','id="impact"','"Recorded litters"','"Recorded offspring"','"Champion offspring"','profileData.reproduction']:
     if stale in profile: errors.append('male profile still exposes retired breeding-counter UI: '+stale)
@@ -47,6 +47,10 @@ if not re.search(r'assets/bloodline-network_v\d+\.css(?:\?[^"\']*)?',profile):
 if not re.search(r'assets/bloodline-network_v\d+\.js(?:\?[^"\']*)?',profile):
     errors.append('male bloodline contract missing: active Bloodline runtime')
 
+if 'requestedRecordId && requestedRecordId!=="DI-M-000001"' not in profile: errors.append('Dante must bypass full dynamic hydration')
+if 'refreshDanteRelatedFromRegistry()' not in profile: errors.append('Dante fast path missing lightweight live-family refresh')
+if profile.find('id="related"') > profile.find('id="bloodline"'): errors.append('male Related Dobermans must appear before Bloodline Network')
+if "document.querySelectorAll('[data-work-nav],[data-di-work-layer=\"dog\"]')" not in profile: errors.append('Dante hard Work guard missing')
 # Dynamic profile first-paint and long-name contract.
 for token in [
     'profile-hydration-pending',
