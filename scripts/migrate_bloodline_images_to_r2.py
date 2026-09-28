@@ -132,6 +132,7 @@ def main():
     if leftovers:
         raise SystemExit("External Bloodline images remain: "+json.dumps(leftovers))
 
+    report["completed"]=True
     MANIFEST.write_text(json.dumps(doc,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print(json.dumps({k:len(v) if isinstance(v,list) else v for k,v in report.items()},indent=2))
