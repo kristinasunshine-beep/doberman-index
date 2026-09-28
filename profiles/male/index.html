@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script>
-    (()=>{const raw=(new URLSearchParams(location.search).get("id")||"").trim().toUpperCase();const id=/^DI-M-\d{6}$/.test(raw)?raw:"DI-M-000001";if(id==="DI-M-000001")document.documentElement.classList.add("profile-no-work");if(id!=="DI-M-000001"){document.documentElement.classList.add("profile-hydration-pending");document.title=`Doberman Index · ${id}`;}})();
+    (()=>{const raw=(new URLSearchParams(location.search).get("id")||"").trim().toUpperCase();const id=/^DI-M-\d{6}$/.test(raw)?raw:"DI-M-000001";if(id!=="DI-M-000001"){document.documentElement.classList.add("profile-hydration-pending");document.title=`Doberman Index · ${id}`;}})();
   </script>
   <meta name="theme-color" content="#f1f1f1">
   <meta name="description" content="DION DANTE (DI-M-000001) is a published male Doberman record from Belgrade. Explore its pedigree, health, performance and connected records.">
@@ -35,8 +35,6 @@
     html{scroll-behavior:smooth;background:var(--paper)}
     html.profile-hydration-pending body{visibility:hidden}
     html.profile-hydration-error body{visibility:visible}
-    html.profile-no-work [data-di-work-layer="dog"],
-    html.profile-no-work [data-work-nav]{display:none!important}
     body{
       min-width:320px;
       overflow-x:hidden;
@@ -3195,7 +3193,6 @@
 <style id="gallery-view-ghost-fix">
 #gallery > .section-mark{display:none!important}
 </style>
-  <link rel="stylesheet" href="../../assets/css/work-layer.css?v=20260928-4">
 </head>
 <body>
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true" style="transform: scaleX(0.168274);"></div>
@@ -4761,5 +4758,18 @@
   document.addEventListener('DOMContentLoaded',()=>{initDesk();initFedor();});
 })();
 </script>
-<script src="../../assets/js/work-layer.js?v=20260928-4"></script>
+<script>
+(()=>{
+  const raw=(new URLSearchParams(location.search).get("id")||"").trim().toUpperCase();
+  const id=/^DI-M-\d{6}$/.test(raw)?raw:"DI-M-000001";
+  if(id==="DI-M-000001") return;
+  const css=document.createElement("link");
+  css.rel="stylesheet";
+  css.href="../../assets/css/work-layer.css?v=20260928-5";
+  document.head.appendChild(css);
+  const script=document.createElement("script");
+  script.src="../../assets/js/work-layer.js?v=20260928-5";
+  document.body.appendChild(script);
+})();
+</script>
 </body></html>
