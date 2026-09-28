@@ -259,7 +259,7 @@
     const initial = escapeHTML((node.name || "?").trim().charAt(0).toUpperCase() || "?");
     const photoClass = node.image ? "bln-photo has-image" : "bln-photo is-textual";
     const imageMarkup = node.image
-      ? `<img src="${escapeHTML(node.image)}" alt="" loading="${eager ? "eager" : "lazy"}" decoding="async">`
+      ? `<img src="${escapeHTML(node.image)}" alt="" loading="${eager ? "eager" : "lazy"}" decoding="async" referrerpolicy="no-referrer">`
       : "";
     return `<div class="${photoClass}" data-initial="${initial}" aria-hidden="true">${imageMarkup}<span class="bln-fallback">${initial}</span><span class="bln-generation"><b>G${generation}</b>${roleMarkup}</span></div>`;
   }
@@ -306,7 +306,7 @@
       : "";
     const subjectInitial = escapeHTML((subject.name || "D").trim().charAt(0).toUpperCase() || "D");
     const subjectPhoto = subject.image
-      ? `<div class="bln-photo has-image" data-initial="${subjectInitial}" aria-hidden="true"><img src="${escapeHTML(subject.image)}" alt="" loading="eager" decoding="async"><span class="bln-fallback">${subjectInitial}</span><span class="bln-generation"><b>DI</b><i>${role}</i></span></div>`
+      ? `<div class="bln-photo has-image" data-initial="${subjectInitial}" aria-hidden="true"><img src="${escapeHTML(subject.image)}" alt="" loading="eager" decoding="async" referrerpolicy="no-referrer"><span class="bln-fallback">${subjectInitial}</span><span class="bln-generation"><b>DI</b><i>${role}</i></span></div>`
       : `<div class="bln-photo is-textual" data-initial="${subjectInitial}" aria-hidden="true"><span class="bln-fallback">${subjectInitial}</span><span class="bln-generation"><b>DI</b><i>${role}</i></span></div>`;
     return `<article class="bln-node bln-subject${compact ? " is-compact" : ""}${subject.image ? " has-image-preview" : ""}" data-path="" aria-label="${label}, focal Doberman and tree root">${subjectPhoto}<div class="bln-copy">${nameMarkup}<span class="bln-identity">${escapeHTML([subject.registration, subject.country].filter(Boolean).join(" · ") || subject.recordId || "Doberman Index")}</span></div>${previewAction}</article>`;
   }
@@ -1008,11 +1008,22 @@
       viewerPhotoFrame.scrollTop = 0;
       viewerPhotoFrame.scrollLeft = 0;
       viewerPhotoCanvas.classList.toggle("is-empty-slot", !imageSrc);
+      viewerImage.onload = null;
+      viewerImage.onerror = null;
       viewerImage.hidden = !imageSrc;
+      viewerImage.referrerPolicy = "no-referrer";
       if (imageSrc) {
-        viewerImage.src = imageSrc;
+        viewerImage.onload = () => {
+          viewerPhotoCanvas.classList.remove("is-image-error");
+          viewerImage.hidden = false;
+        };
+        viewerImage.onerror = () => {
+          viewerPhotoCanvas.classList.add("is-image-error");
+          viewerImage.hidden = true;
+        };
         viewerImage.alt = `${name} in stance`;
         viewerImage.style.opacity = "1";
+        viewerImage.src = imageSrc;
       } else {
         viewerImage.removeAttribute("src");
         viewerImage.alt = "";
@@ -1027,16 +1038,6 @@
         syncViewerStageClearance();
       }
       imageViewer.classList.add("is-open");
-      if (imageSrc) {
-        viewerImage.onerror = () => {
-          viewerPhotoCanvas.classList.add("is-image-error");
-          viewerImage.hidden = true;
-        };
-        viewerImage.onload = () => {
-          viewerPhotoCanvas.classList.remove("is-image-error");
-          viewerImage.hidden = false;
-        };
-      }
       viewerClose.focus({ preventScroll:true });
     }
 
