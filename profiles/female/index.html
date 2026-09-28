@@ -418,12 +418,12 @@
     .impact-tags span{display:inline-flex;align-items:center;gap:8px;padding:9px 13px;border:1px solid #3a3a3a;border-radius:999px;color:var(--white);font-size:9px;font-weight:600;white-space:nowrap}
     .impact-tags span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--acid)}
     .impact-cta{justify-self:start;display:flex;align-items:center;justify-content:space-between;gap:26px;min-width:225px;padding:10px 18px;border-radius:999px;background:var(--acid);color:var(--ink);font-size:14px;font-weight:700;transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
-    .impact-cta:hover,.impact-cta.touch-hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(243,254,25,.16)}
+    .impact-cta:hover.touch-hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(243,254,25,.16)}
     .impact-cta span{font-size:18px}
     @media(min-width:981px){
       .impact-cta{position:absolute;left:clamp(240px,27vw,500px);top:clamp(-220px,-12vw,-150px);z-index:3;width:clamp(250px,16vw,292px);min-width:0;min-height:clamp(60px,4vw,68px);padding:0 28px;font-size:clamp(16px,1.05vw,19px);letter-spacing:-.025em}
       .impact-cta span{font-size:22px;transition:transform .35s var(--ease)}
-      .impact-cta:hover span,.impact-cta.touch-hover span{transform:translateX(5px)}
+      .impact-cta:hover span.touch-hover span{transform:translateX(5px)}
     }
     #reproductionRail{grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 58px;border:0}
     #reproductionRail .metric{min-height:118px;padding:0 0 10px 20px;border:0;background:transparent;color:var(--white);overflow:visible}
@@ -3250,7 +3250,7 @@
 <div class="section-index"><span>02</span><i></i><span>Compact record intelligence</span></div>
 <h2 class="section-title">Record<br/>desk.</h2>
 </div>
-<p class="section-note"><b>One record. Six views.</b>Health, structure, temperament, performance and lineage forward now live inside one persistent desk instead of five separate long sections.</p>
+<p class="section-note"><b>One record. Five views.</b>Identity, health, structure, temperament and performance stay inside one persistent desk. Family relationships live in their own connected network.</p>
 </header>
 <div class="record-desk-shell reveal">
 <aside class="record-desk-visual">
@@ -3271,7 +3271,6 @@
 <button aria-selected="false" data-desk-tab="structure" role="tab">Structure</button>
 <button aria-selected="false" data-desk-tab="temperament" role="tab">Temperament</button>
 <button aria-selected="false" data-desk-tab="performance" role="tab">Performance</button>
-<button aria-selected="false" data-desk-tab="lineage" role="tab">Lineage</button>
 </div>
 <div class="record-desk-panel is-active" data-desk-panel="overview" role="tabpanel">
 <div class="desk-panel-head"><span>01 / Overview</span><h3>Complete record at a glance.</h3><p>Identity and provenance stay visible while deeper data opens only when needed.</p></div>
@@ -3332,19 +3331,7 @@
 <div><span>Sports</span><strong>Not submitted</strong></div>
 </div>
 </div>
-<div class="record-desk-panel" data-desk-panel="lineage" hidden="" role="tabpanel">
-<div class="desk-panel-head"><span>06 / Lineage forward</span><h3>What comes after the pedigree.</h3><p>Progeny, litters, siblings and connected records extend this profile forward and sideways.</p></div>
-<div class="desk-ledger">
-<div><span>Notable progeny</span><strong>Not submitted</strong></div>
-<div><span>Connected descendants</span><strong>Not submitted</strong></div>
-<div><span>Connected litters</span><strong>Not submitted</strong></div>
-<div><span>Related profiles</span><strong>Not submitted</strong></div>
-<div><span>Planned litters</span><strong>Not submitted</strong></div>
-<div><span>Mating outcomes</span><strong>Not submitted</strong><small>Outcome records connect here after a pairing/litter is indexed.</small></div>
-<div><span>Source</span><strong>Not submitted</strong></div>
-<div><span>Connection model</span><strong>Not submitted</strong><small>Connections activate as indexed records are published.</small></div>
-</div>
-</div>
+
 </div>
 </div>
 </section>
@@ -3495,36 +3482,15 @@
 <div aria-live="polite" class="performance-detail reveal" hidden="" id="performanceDetails"></div>
 </section>
 
-<section class="section impact-showcase" id="impact">
-<div aria-hidden="true" class="section-mark">NEXT</div>
-<header class="section-head reveal">
-<div>
-<div class="section-index"><span>08</span><i></i><span>Connected descendants</span></div>
-<h2 class="section-title">Lineage<br/>forward.</h2>
-</div>
-<div class="impact-aside">
-<p class="section-note"><b>Lineage in motion</b>Named progeny, connected litters and indexed descendants extend one Doberman record into a growing lineage history.</p>
-</div>
-</header>
-<div class="section-content impact-content reveal">
-<div class="impact-action-row">
-<div>
-<p class="impact-intro-copy">Each connected descendant adds another verified relationship to the living lineage map and reveals how this bloodline continues through indexed generations.</p>
-<div class="impact-tags"><span>Named progeny</span><span>Connected descendants</span><span>Derived counts only</span></div>
-</div>
-<a class="impact-cta" href="#related">Explore connections <span>→</span></a>
-</div>
-<div class="metric-grid" id="reproductionRail"><div class="metric" data-caption="named lineage highlights" data-initial="N" data-metric-key="Notable progeny"><span class="metric-badge">Record</span><strong>—</strong><em>Notable progeny</em></div><div class="metric highlight" data-caption="index-derived" data-initial="C" data-metric-key="Connected descendants"><span class="metric-badge">Record</span><strong>0</strong><em>Connected descendants</em></div><div class="metric" data-caption="index-derived" data-initial="C" data-metric-key="Connected litters"><span class="metric-badge">Record</span><strong>0</strong><em>Connected litters</em></div><div class="metric" data-caption="source model" data-initial="R" data-metric-key="Source"><span class="metric-badge">Record</span><strong>Owner entry</strong><em>Source</em></div></div>
-</div>
-</section>
+
 <section class="section" id="related">
 <div aria-hidden="true" class="section-mark">LINK</div>
 <header class="section-head reveal">
 <div>
-<div class="section-index"><span>09</span><i></i><span>Profile connections</span></div>
+<div class="section-index"><span>08</span><i></i><span>Live family network</span></div>
 <h2 class="section-title">Related<br/>Dobermans.</h2>
 </div>
-<p class="section-note"><b>Live family network</b>Parents, littermates, half-siblings, offspring and linked litters connect directly to their published profiles. The same ancestry also remains visible inside Bloodline Network.</p>
+<p class="section-note"><b>Connected profiles, not counters.</b>Published parents, siblings, offspring and litter records appear here as direct links. Each card opens the connected record.</p>
 </header>
 <div class="section-content slider reveal" data-scrollbar-ready="true" id="relatedRail"><div class="related-card"><div class="related-card-body"><div class="related-copy"><strong>No related profiles yet</strong><span>Connections appear after linked records are published.</span></div></div></div></div><div aria-controls="relatedRail" aria-label="Profile connections horizontal navigation" class="rail-scrollbar" hidden="" role="group"><button aria-label="Scroll Profile connections left" class="rail-scrollbar-arrow prev" type="button"></button><div class="rail-scrollbar-track"><div aria-controls="relatedRail" aria-label="Move through Profile connections" aria-orientation="horizontal" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="rail-scrollbar-indicator" role="scrollbar" tabindex="0"></div></div><button aria-label="Scroll Profile connections right" class="rail-scrollbar-arrow next" type="button"></button></div>
 </section>
@@ -3832,7 +3798,6 @@
         performance:{Shows:numberOrDash(performance.shows_count),Titles:array(performance.titles).length,"Working exams":array(performance.working_exams).length,Sports:array(performance.sports).length},
         performanceDetails:{Shows:array(performance.show_results),Titles:array(performance.titles),"Working exams":array(performance.working_exams),Sports:array(performance.sports)},
         pedigreeIntelligence:{"Coefficient of inbreeding (COI)": pedigreeIntelligence.coi_percent != null ? `${Number(pedigreeIntelligence.coi_percent).toFixed(2)}%` : "Pending mapping","Ancestor loss (AVK)": pedigreeIntelligence.avk_percent != null ? `${Number(pedigreeIntelligence.avk_percent).toFixed(2)}%` : "Pending mapping","Pedigree completeness": pedigreeIntelligence.completeness_percent != null ? `${Number(pedigreeIntelligence.completeness_percent).toFixed(0)}%` : "Pending mapping","Repeated ancestors": pedigreeIntelligence.repeated_ancestors_count ?? "—","Unique ancestors": pedigreeIntelligence.unique_ancestors_count ?? "—","Analysed depth": pedigreeIntelligence.generation_depth ? `${pedigreeIntelligence.generation_depth} generations` : "—"},
-        reproduction: (()=>{ const named=array(reproduction.notable_offspring).slice(0,2); const connected=registryRecords.filter(r=>r.entity_type==="doberman"&&(r.sire_id===recordId||r.dam_id===recordId)); return {"Notable progeny": named.length?named.join(" · "):"—","Connected descendants":connected.length,"Connected litters":array(reproduction.litter_ids).length,"Source":connected.length?"Connected":"Owner entry"}; })(),
         breedingLens:{
           priority:"Prefer a low-related male with current cardiac screening, a cardiac-genetic profile that does not stack the known DCM1 signal, high confidence, stable social behaviour and movement/topline compatible with the current record.",
           cardiac:`${present(markers.dcm_1?.result,"DCM1 not submitted")} for DCM1; ${present(markers.dcm_2?.result,"DCM2 not submitted")} for DCM2. Clinical status: ${present(clinical.status,"not submitted")}. Treat marker status as one risk signal alongside current cardiac screening and available family context.`,
@@ -3976,7 +3941,7 @@
     }
 
     function metrics(id,data,highlight=1){
-      const captions={Shows:"show entries with event-level details",Titles:"championship and official titles","Working exams":"exam, level and result",Sports:"sporting disciplines and competition results","Notable progeny":"named lineage highlights","Connected descendants":"index-derived","Connected litters":"index-derived","Source":"owner or graph provenance","Coefficient of inbreeding (COI)":"pedigree-based inbreeding coefficient","Ancestor loss (AVK)":"unique ancestors / maximum ancestor positions","Pedigree completeness":"known pedigree positions","Repeated ancestors":"within analysed depth","Unique ancestors":"within analysed depth","Analysed depth":"canonical pedigree depth",Preserve:"record synthesis",Complement:"mate-selection context",Watch:"health and lineage considerations",Unknown:"what would deepen the analysis"};
+      const captions={Shows:"show entries with event-level details",Titles:"championship and official titles","Working exams":"exam, level and result",Sports:"sporting disciplines and competition results","Coefficient of inbreeding (COI)":"pedigree-based inbreeding coefficient","Ancestor loss (AVK)":"unique ancestors / maximum ancestor positions","Pedigree completeness":"known pedigree positions","Repeated ancestors":"within analysed depth","Unique ancestors":"within analysed depth","Analysed depth":"canonical pedigree depth",Preserve:"record synthesis",Complement:"mate-selection context",Watch:"health and lineage considerations",Unknown:"what would deepen the analysis"};
       const badges={Shows:"Show",Titles:"Title","Working exams":"Exam",Sports:"Sport"};
       byId(id).innerHTML=Object.entries(data).map(([k,v],i)=>{
         const expandable=id==="performanceRail";
@@ -4235,7 +4200,7 @@
       core();gallery();anchorMovement();
       byId("bloodlineDepthLabel").textContent=`${profileData.pedigreeDepth||4}-generation interactive pedigree`;
       window.DIBloodline.mount({root:byId("bloodlineRail"),subject:profileData.bloodlineSubject,nodes:profileData.bloodline,maxDepth:profileData.pedigreeDepth||4});
-      pedigreeIntelligence();pedigreeRepeats();health();surfaces("structureRail",profileData.structure);surfaces("temperamentRail",profileData.temperament);metrics("performanceRail",profileData.performance,1);metrics("reproductionRail",profileData.reproduction,1);related();breedingLens();
+      pedigreeIntelligence();pedigreeRepeats();health();surfaces("structureRail",profileData.structure);surfaces("temperamentRail",profileData.temperament);metrics("performanceRail",profileData.performance,1);related();breedingLens();
       installHorizontalRailScrollbars();
     }
 
@@ -4295,7 +4260,7 @@
     });
     byId("pairingInput").addEventListener("keydown",event=>{if(event.key==="Enter")byId("pairingBtn").click()});
 
-    const touchHoverSelector=".nav-link,.hero-jump,.core-chip,.core-ticker,.visual-card,.ancestor,.surface-card,.performance-view,#performanceRail .metric,.impact-cta,.related-card,.pairing-search button,.service-card";
+    const touchHoverSelector=".nav-link,.hero-jump,.core-chip,.core-ticker,.visual-card,.ancestor,.surface-card,.performance-view,#performanceRail .metric,.related-card,.pairing-search button,.service-card";
     if(window.matchMedia("(hover:none), (pointer:coarse)").matches){
       const touchHoverTimers=new WeakMap();
       const clearTouchHovers=(except=null)=>{

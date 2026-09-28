@@ -4,7 +4,7 @@
   "record_id": "DI-M-000001",
   "status": "published",
   "created_at": "2026-08-28T16:09:54.880Z",
-  "updated_at": "2026-09-28T20:41:00Z",
+  "updated_at": "2026-09-28T21:30:00Z",
   "submission": {
     "submitter_name": "REDACTED",
     "submitter_email": "redacted@example.invalid",
@@ -203,15 +203,6 @@
       "evidence_files": []
     },
     "reproduction": {
-      "litters_count": 5,
-      "offspring_count": 12,
-      "champion_offspring_count": 3,
-      "export_countries": [
-        "Netherlands",
-        "USA",
-        "Germany",
-        "Poland"
-      ],
       "litter_ids": [],
       "availability": "available"
     },

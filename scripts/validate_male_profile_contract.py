@@ -24,9 +24,13 @@ for token in ['Shows:numberOrDash(performance.shows_count)','Titles:array(perfor
     if token not in profile: errors.append('male profile missing performance contract token: '+token)
 for token in ['lifeStage,lifeStatus,lifeSpan:lifespan||"—"','studServiceStatus,profileId:recordId','lifeStage:"Life stage",lifeStatus:"Life status",lifeSpan:"Life span"','studServiceStatus:"Stud service status"','id="lifeStatusBadge"','const isDeceased=lifecycleState==="deceased"','lifecycleState==="living"?""']:
     if token not in profile: errors.append('male profile missing Details contract token: '+token)
-# V27 replaced owner-entered aggregate breeding counters with graph-derived connections.
-for token in ['"Notable progeny": named.length?named.join(" · "):"—"','"Connected descendants":connected.length','"Connected litters":array(reproduction.litter_ids).length','"Source":connected.length?"Connected":"Owner entry"']:
-    if token not in profile: errors.append('male profile missing connected-descendants contract token: '+token)
+# Live family network uses actual linked records, never owner-entered aggregate counters.
+for token in ['function buildRelated(recordId,parentage,reproduction={})','add(parentage.sire_id||currentRecord.sire_id,"Sire",parentage.sire_name);','id="relatedRail"','<span>08</span><i></i><span>Live family network</span>']:
+    if token not in profile: errors.append('male live-family-network contract missing: '+token)
+for stale in ['data-desk-tab="lineage"','data-desk-panel="lineage"','id="reproductionRail"','id="impact"','"Recorded litters"','"Recorded offspring"','"Champion offspring"','profileData.reproduction']:
+    if stale in profile: errors.append('male profile still exposes retired breeding-counter UI: '+stale)
+for retired_field in ['name="litters_count"','name="offspring_count"','name="champion_offspring_count"','name="export_countries"']:
+    if retired_field in submit: errors.append('owner form still exposes retired aggregate field: '+retired_field)
 if 'name="stud_service_status"' not in submit: errors.append('owner form is missing Stud service status in About')
 if 'name="breeding_availability"' in submit: errors.append('owner form still exposes legacy breeding_availability control')
 if schema.get('properties',{}).get('schema_version',{}).get('const') != '1.1.0': errors.append('canonical schema is not v1.1.0')

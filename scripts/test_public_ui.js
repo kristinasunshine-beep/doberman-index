@@ -46,6 +46,11 @@ for (const [label, html] of [["male", male], ["female", female]]) {
   assert.match(html, /<link[^>]+href=["']assets\/bloodline-network_v\d+\.css(?:\?[^"']*)?["']/i, `${label} V27 missing active Bloodline stylesheet`);
   assert.match(html, /<script[^>]+src=["']assets\/bloodline-network_v\d+\.js(?:\?[^"']*)?["']/i, `${label} V27 missing active Bloodline runtime`);
   assert.match(html, /<meta[^>]+name=["']robots["'][^>]+content=["']noindex,follow["']/i);
+  assert.ok(!html.includes('data-desk-tab="lineage"'), `${label} still exposes retired Record Desk lineage tab`);
+  assert.ok(!html.includes('data-desk-panel="lineage"'), `${label} still exposes retired Record Desk lineage panel`);
+  assert.ok(!html.includes('id="reproductionRail"'), `${label} still exposes retired reproduction counters`);
+  assert.ok(!html.includes('id="impact"'), `${label} still exposes retired lineage-forward metrics section`);
+  assert.ok(html.includes('<span>08</span><i></i><span>Live family network</span>'), `${label} missing dedicated live family network section`);
 }
 
 // Centralized registered-name presentation remains available to every renderer.

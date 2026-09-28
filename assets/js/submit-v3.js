@@ -402,10 +402,6 @@
           evidence_files: [],
         },
         reproduction: {
-          litters_count: isPuppy ? null : numberValue("litters_count"),
-          offspring_count: isPuppy ? null : numberValue("offspring_count"),
-          champion_offspring_count: isPuppy ? null : numberValue("champion_offspring_count"),
-          export_countries: isPuppy ? [] : listValue("export_countries"),
           litter_ids: [],
           availability: isAdultMale ? (value("stud_service_status") || "unknown") : "not_applicable",
         },

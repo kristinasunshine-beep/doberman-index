@@ -1259,33 +1259,6 @@
         "reproduction": {
           "type": "object",
           "properties": {
-            "litters_count": {
-              "type": [
-                "integer",
-                "null"
-              ],
-              "minimum": 0
-            },
-            "offspring_count": {
-              "type": [
-                "integer",
-                "null"
-              ],
-              "minimum": 0
-            },
-            "champion_offspring_count": {
-              "type": [
-                "integer",
-                "null"
-              ],
-              "minimum": 0
-            },
-            "export_countries": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
             "litter_ids": {
               "type": "array",
               "items": {
@@ -1301,13 +1274,6 @@
                 "retired",
                 "unknown"
               ]
-            },
-            "notable_offspring": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "maxItems": 20
             }
           },
           "additionalProperties": false
