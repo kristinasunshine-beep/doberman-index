@@ -193,8 +193,8 @@
       "country": "Serbia",
       "sex": "male",
       "source_record_id": null,
-      "sire_id": null,
-      "dam_id": null
+      "sire_id": "DI-A-000030",
+      "dam_id": "DI-A-000031"
     },
     "DI-A-000016": {
       "record_id": "DI-A-000016",
@@ -205,8 +205,8 @@
       "country": "",
       "sex": "female",
       "source_record_id": null,
-      "sire_id": null,
-      "dam_id": null
+      "sire_id": "DI-A-000032",
+      "dam_id": "DI-A-000033"
     },
     "DI-A-000017": {
       "record_id": "DI-A-000017",
@@ -217,8 +217,8 @@
       "country": "",
       "sex": "male",
       "source_record_id": null,
-      "sire_id": null,
-      "dam_id": null
+      "sire_id": "DI-A-000019",
+      "dam_id": "DI-A-000034"
     },
     "DI-A-000018": {
       "record_id": "DI-A-000018",
@@ -229,8 +229,8 @@
       "country": "",
       "sex": "female",
       "source_record_id": null,
-      "sire_id": null,
-      "dam_id": null
+      "sire_id": "DI-A-000035",
+      "dam_id": "DI-A-000036"
     },
     "DI-A-000019": {
       "record_id": "DI-A-000019",
@@ -241,8 +241,8 @@
       "country": "",
       "sex": "male",
       "source_record_id": null,
-      "sire_id": null,
-      "dam_id": null
+      "sire_id": "DI-A-000037",
+      "dam_id": "DI-A-000038"
     },
     "DI-A-000020": {
       "record_id": "DI-A-000020",
@@ -253,8 +253,8 @@
       "country": "",
       "sex": "female",
       "source_record_id": null,
-      "sire_id": null,
-      "dam_id": null
+      "sire_id": "DI-A-000032",
+      "dam_id": "DI-A-000033"
     },
     "DI-A-000021": {
       "record_id": "DI-A-000021",
@@ -265,8 +265,8 @@
       "country": "",
       "sex": "male",
       "source_record_id": null,
-      "sire_id": null,
-      "dam_id": null
+      "sire_id": "DI-A-000015",
+      "dam_id": "DI-A-000039"
     },
     "DI-A-000022": {
       "record_id": "DI-A-000022",
@@ -277,8 +277,8 @@
       "country": "",
       "sex": "female",
       "source_record_id": null,
-      "sire_id": null,
-      "dam_id": null
+      "sire_id": "DI-A-000040",
+      "dam_id": "DI-A-000041"
     },
     "DI-A-000023": {
       "record_id": "DI-A-000023",
@@ -357,6 +357,150 @@
       "registered_name": "Come As You Are della Baronessa",
       "registration_numbers": [
         "MET 2815/00"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000030": {
+      "record_id": "DI-A-000030",
+      "registered_name": "Ferrofarah Gomez di Campovalano",
+      "registration_numbers": [
+        "ROI 02/78726"
+      ],
+      "country": "",
+      "sex": "male",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000031": {
+      "record_id": "DI-A-000031",
+      "registered_name": "Nikita For Eternity",
+      "registration_numbers": [
+        "JR 77810 Dob"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000032": {
+      "record_id": "DI-A-000032",
+      "registered_name": "Garangolden di Campovalano",
+      "registration_numbers": [
+        "JR 700154 Dob"
+      ],
+      "country": "",
+      "sex": "male",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000033": {
+      "record_id": "DI-A-000033",
+      "registered_name": "Nadja-Nikita Altobello",
+      "registration_numbers": [
+        "JR 77212 Dob"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000034": {
+      "record_id": "DI-A-000034",
+      "registered_name": "Kastra Best of Island",
+      "registration_numbers": [
+        "HR 12266"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000035": {
+      "record_id": "DI-A-000035",
+      "registered_name": "Nitro del Rio Bianco",
+      "registration_numbers": [
+        "ROI 99/14550"
+      ],
+      "country": "",
+      "sex": "male",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000036": {
+      "record_id": "DI-A-000036",
+      "registered_name": "Regal di Villa Conte",
+      "registration_numbers": [
+        "DS 156252"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000037": {
+      "record_id": "DI-A-000037",
+      "registered_name": "Baron Nike Renewal",
+      "registration_numbers": [
+        "JR 75450 Dob"
+      ],
+      "country": "",
+      "sex": "male",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000038": {
+      "record_id": "DI-A-000038",
+      "registered_name": "Akuna-Matata de Grande Vinko",
+      "registration_numbers": [
+        "SLRDo 002731"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000039": {
+      "record_id": "DI-A-000039",
+      "registered_name": "Beatrice di Altobello",
+      "registration_numbers": [
+        "JR 82152 Dob"
+      ],
+      "country": "",
+      "sex": "female",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000040": {
+      "record_id": "DI-A-000040",
+      "registered_name": "Come As You Are Cyanide",
+      "registration_numbers": [
+        "JR 78250 Dob"
+      ],
+      "country": "",
+      "sex": "male",
+      "source_record_id": null,
+      "sire_id": null,
+      "dam_id": null
+    },
+    "DI-A-000041": {
+      "record_id": "DI-A-000041",
+      "registered_name": "Melvas Puma Sawages",
+      "registration_numbers": [
+        "JR 78683 Dob"
       ],
       "country": "",
       "sex": "female",
