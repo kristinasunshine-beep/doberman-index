@@ -53,6 +53,8 @@
       focal_point: normalizeFocalPoint(source.focal_point),
       fit_mode: normalizeFitMode(source.fit_mode),
     };
+    const frameOrientation = String(source.frame_orientation || "").toLowerCase();
+    if (frameOrientation === "portrait" || frameOrientation === "landscape") item.frame_orientation = frameOrientation;
     const caption = String(source.caption || "").trim();
     if (caption) item.caption = caption;
     return item;
