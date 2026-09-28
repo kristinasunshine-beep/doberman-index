@@ -274,6 +274,21 @@
     "publication": {
       "last_updated_label": null,
       "profile_template": "male"
+    },
+    "pedigree_intelligence": {
+      "coi_percent": 0.78,
+      "avk_percent": 96.67,
+      "completeness_percent": 100,
+      "repeated_ancestors_count": 1,
+      "unique_ancestors_count": 29,
+      "generation_depth": 4,
+      "repeated_ancestors": [
+        {
+          "record_id": "DI-A-000019",
+          "name": "Fedor del Nasi",
+          "occurrences": 2
+        }
+      ]
     }
   }
 }
