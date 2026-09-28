@@ -3776,7 +3776,7 @@
       [["Head","head",media.head],["Profile","profile",media.profile],["Stack","stack",media.stack],["Movement","movement",media.movement]].forEach(([label,role,path])=>{if(path)items.push([label,mediaUrl(path),"image",focalPosition(focalPointFor(media,role)),role])});
       array(media.gallery).forEach((entry,index)=>{
         const item=normalizeGalleryItem(entry);
-        if(item)items.push([item.caption||`Gallery ${String(index+1).padStart(2,"0")}`,mediaUrl(item.path),"image",focalPosition(item.focal_point),"gallery",item.fit_mode]);
+        if(item)items.push([item.caption||`Gallery ${String(index+1).padStart(2,"0")}`,mediaUrl(item.path),"image",focalPosition(item.focal_point),"gallery",item.fit_mode,item.frame_orientation]);
       });
       if(media.movement_video)items.push(["Movement video",mediaUrl(media.movement_video),"video","50% 50%","movement_video"]);
       if(!items.length)items.push([media.hero?"Hero":"Media pending",mediaUrl(media.hero)||placeholderImage,"image",focalPosition(focalPointFor(media,"hero")),"hero"]);
@@ -4105,11 +4105,14 @@
     }
 
     function gallery(){
-      byId("visualSlider").innerHTML=profileData.gallery.map(([label,src,type,position,role,fitMode],index)=>{
+      byId("visualSlider").innerHTML=profileData.gallery.map(([label,src,type,position,role,fitMode,frameOrientation],index)=>{
         const frame=frameSpecFor(role);
         const frameFit=role==="gallery"?normalizeFitMode(fitMode):frame.fit;
-        const frameStyle=frame.aspectRatio?` style="--media-frame-ratio:${escapeHTML(frame.aspectRatio)}"`:"";
-        return `<figure class="visual-card" data-media-role="${escapeHTML(role||"gallery")}" data-frame-orientation="${escapeHTML(frame.orientation)}" data-frame-fit="${escapeHTML(frameFit)}"${frameStyle}>${type==="video"?`<video src="${escapeHTML(src)}" controls preload="metadata" aria-label="${escapeHTML(profileData.name)} — ${escapeHTML(label)}"></video>`:`<img src="${escapeHTML(src)}" alt="${escapeHTML(profileData.name)} — ${escapeHTML(label)}" loading="${index?"lazy":"eager"}" style="object-position:${escapeHTML(position||"50% 50%")} ">`}<figcaption class="visual-label">${escapeHTML(label)}</figcaption><span class="visual-count">${String(index+1).padStart(2,"0")} / ${String(profileData.gallery.length).padStart(2,"0")}</span></figure>`;
+        const galleryOrientation=role==="gallery"&&["portrait","landscape"].includes(frameOrientation)?frameOrientation:null;
+        const frameOrientationResolved=galleryOrientation||frame.orientation;
+        const frameAspectRatio=galleryOrientation==="landscape"?"3 / 2":galleryOrientation==="portrait"?"4 / 5":frame.aspectRatio;
+        const frameStyle=frameAspectRatio?` style="--media-frame-ratio:${escapeHTML(frameAspectRatio)}"`:"";
+        return `<figure class="visual-card" data-media-role="${escapeHTML(role||"gallery")}" data-frame-orientation="${escapeHTML(frameOrientationResolved)}" data-frame-fit="${escapeHTML(frameFit)}"${frameStyle}>${type==="video"?`<video src="${escapeHTML(src)}" controls preload="metadata" aria-label="${escapeHTML(profileData.name)} — ${escapeHTML(label)}"></video>`:`<img src="${escapeHTML(src)}" alt="${escapeHTML(profileData.name)} — ${escapeHTML(label)}" loading="${index?"lazy":"eager"}" style="object-position:${escapeHTML(position||"50% 50%")} ">`}<figcaption class="visual-label">${escapeHTML(label)}</figcaption><span class="visual-count">${String(index+1).padStart(2,"0")} / ${String(profileData.gallery.length).padStart(2,"0")}</span></figure>`;
       }).join("");
     }
 
