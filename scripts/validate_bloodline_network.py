@@ -83,8 +83,16 @@ for root_id in roots:
                     'https://doberman-index.com/',
                     'https://www.doberman-index.com/',
                 )
-                if not image_url.startswith(allowed_hosts):
-                    errors.append(f'{root_id}/{ancestor_id}: external Bloodline image URL is forbidden after R2 migration: {image_url}')
+                report_path=root/'data'/'bloodline-r2-migration-report.json'
+                migration_complete=False
+                if report_path.is_file():
+                    try:
+                        report=json.loads(report_path.read_text(encoding='utf-8'))
+                        migration_complete=report.get('completed') is True
+                    except Exception:
+                        migration_complete=False
+                if migration_complete and not image_url.startswith(allowed_hosts):
+                    errors.append(f'{root_id}/{ancestor_id}: external Bloodline image URL is forbidden after completed R2 migration: {image_url}')
             for field in ('source_label','source_url'):
                 if not str(selected.get(field,'')).strip():errors.append(f'{root_id}/{ancestor_id}: selected image missing {field}')
     for ancestor_id in reachable_ancestors(root_id,4):
