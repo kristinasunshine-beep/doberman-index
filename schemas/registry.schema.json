@@ -186,6 +186,12 @@
             "string",
             "null"
           ]
+        },
+        "frame_orientation": {
+          "enum": [
+            "portrait",
+            "landscape"
+          ]
         }
       },
       "additionalProperties": false
