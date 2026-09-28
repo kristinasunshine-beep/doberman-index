@@ -111,6 +111,9 @@
   async function initDog(){
     const section=document.querySelector('[data-di-work-layer="dog"]');
     if(!section) return;
+    section.hidden=true;
+    section.querySelector("[data-work-media]")?.setAttribute("hidden","");
+    document.querySelectorAll("[data-work-nav]").forEach(link=>link.hidden=true);
     const id=(new URLSearchParams(location.search).get("id") || document.getElementById("heroProfileId")?.textContent || "").trim().toUpperCase();
     if(!/^DI-[MF]-\d{6}$/.test(id)) return;
     try{ renderDogWork(section, await fetchJson(`data/dobermans/${id}.json`)); }catch(error){ console.warn("Doberman Index work layer unavailable",error); }
