@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "site_origin": "https://doberman-index.com",
-  "generated_from_registry": "2026-09-28T19:00:19+00:00",
+  "generated_from_registry": "2026-09-28T21:07:35+00:00",
   "static_pages": {
     "/": {
       "title": "Doberman Index · Breed Intelligence System",
@@ -79,11 +79,14 @@
             "breadcrumb": {
               "@id": "https://doberman-index.com/records/DI-M-000001/#breadcrumb"
             },
+            "relatedLink": [
+              "https://doberman-index.com/records/DI-M-000002/"
+            ],
             "primaryImageOfPage": {
               "@type": "ImageObject",
               "url": "https://doberman-index.com/media/dobermans/DI-M-000001/hero.png"
             },
-            "dateModified": "2026-09-07T07:40:52Z"
+            "dateModified": "2026-09-28T20:41:00Z"
           },
           {
             "@type": "Dataset",
@@ -146,7 +149,7 @@
               "DION DANTE"
             ],
             "dateCreated": "2026-08-28T16:09:54.880Z",
-            "dateModified": "2026-09-07T07:40:52Z",
+            "dateModified": "2026-09-28T20:41:00Z",
             "spatialCoverage": {
               "@type": "Place",
               "name": "Belgrade"
@@ -280,6 +283,9 @@
             "breadcrumb": {
               "@id": "https://doberman-index.com/records/DI-M-000002/#breadcrumb"
             },
+            "relatedLink": [
+              "https://doberman-index.com/records/DI-M-000001/"
+            ],
             "primaryImageOfPage": {
               "@type": "ImageObject",
               "url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/hero.jpg"
