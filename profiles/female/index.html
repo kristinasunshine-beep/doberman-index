@@ -134,15 +134,15 @@
       width:min(58vw,850px);
       font-size:clamp(80px,12.2vw,178px);
       font-weight:700;
-      line-height:.86;
+      line-height:.9;
       letter-spacing:-.07em;
       text-align:right;
     }
     .hero-title[data-lines="1"]{width:min(62vw,980px)}
-    .hero-title[data-lines="2"]{width:min(62vw,1000px)}
-    .hero-title[data-lines="3"]{width:min(66vw,1080px);line-height:.88}
+    .hero-title[data-lines="2"]{width:min(66vw,1080px);line-height:.94}
+    .hero-title[data-lines="3"]{width:min(68vw,1120px);line-height:.95}
     .hero-title span{display:block;white-space:nowrap;transform:translateY(105%);opacity:0;animation:titleIn 1s var(--ease) forwards}
-    .hero-title span + span{margin-top:-.075em}
+    .hero-title span + span{margin-top:.015em}
     .hero-title span:nth-child(2){animation-delay:.12s}
     .hero-title span:nth-child(3){animation-delay:.24s}
     .hero-title span:nth-child(4){animation-delay:.36s}
@@ -3881,25 +3881,50 @@
     function balancedHeroLines(name){
       const words=String(name||"").trim().split(/\s+/).filter(Boolean);
       if(!words.length)return [];
+
+      const kennelConnectors=new Set([
+        "di","del","della","dei","degli","de","du","da","do","dos","das",
+        "von","vom","van","v.d.","v.d","der","den","iz","z","od"
+      ]);
+      const affixIndex=words.findIndex((word,index)=>index>0&&kennelConnectors.has(word.toLocaleLowerCase()));
+
+      const balanceInto=(parts,lineCount)=>{
+        if(parts.length<=lineCount)return parts;
+        const total=parts.join(" ").length;
+        const target=total/lineCount;
+        let best=null;
+        const consider=lines=>{
+          const lengths=lines.map(line=>line.length);
+          const max=Math.max(...lengths),min=Math.min(...lengths);
+          const cost=lengths.reduce((sum,len)=>sum+Math.pow(len-target,2),0)+Math.pow(max-min,2)*.5;
+          if(!best||cost<best.cost)best={cost,lines};
+        };
+        if(lineCount===2){
+          for(let a=1;a<parts.length;a++)consider([parts.slice(0,a).join(" "),parts.slice(a).join(" ")]);
+        }else{
+          for(let a=1;a<parts.length-1;a++)for(let b=a+1;b<parts.length;b++)consider([parts.slice(0,a).join(" "),parts.slice(a,b).join(" "),parts.slice(b).join(" ")]);
+        }
+        return best?.lines||[parts.join(" ")];
+      };
+
+      // Registered call-name stays on line 1. Kennel/prefix starts on line 2
+      // and may use line 3 only when that affix is unusually long.
+      if(affixIndex>0){
+        const primary=words.slice(0,affixIndex).join(" ");
+        const affixWords=words.slice(affixIndex);
+        const affix=affixWords.join(" ");
+        const affixLines=(affix.length<=30||affixWords.length<=3)
+          ? [affix]
+          : balanceInto(affixWords,2);
+        return [primary,...affixLines].slice(0,3);
+      }
+
       if(words.length===1)return [words[0]];
-      if(words.length===2)return words;
+      if(words.length===2)return [words.join(" ")];
+
       const total=words.join(" ").length;
       const lineCount=(words.length<=5&&total<=34)?2:3;
-      if(words.length<=lineCount)return words;
-      const target=total/lineCount;
-      let best=null;
-      const consider=lines=>{
-        const lengths=lines.map(line=>line.length);
-        const max=Math.max(...lengths),min=Math.min(...lengths);
-        const cost=lengths.reduce((sum,len)=>sum+Math.pow(len-target,2),0)+Math.pow(max-min,2)*.45+Math.pow(max,2)*.04;
-        if(!best||cost<best.cost)best={cost,lines};
-      };
-      if(lineCount===2){
-        for(let a=1;a<words.length;a++)consider([words.slice(0,a).join(" "),words.slice(a).join(" ")]);
-      }else{
-        for(let a=1;a<words.length-1;a++)for(let b=a+1;b<words.length;b++)consider([words.slice(0,a).join(" "),words.slice(a,b).join(" "),words.slice(b).join(" ")]);
-      }
-      return best?.lines||[words.join(" ")];
+      return balanceInto(words,lineCount);
     }
 
     function fitHeroName(){
