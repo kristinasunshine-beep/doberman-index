@@ -7,7 +7,8 @@ const read = relative => fs.readFileSync(path.join(root, relative), "utf8");
 const male = read("profiles/male/index.html");
 const female = read("profiles/female/index.html");
 const index = read("index.html");
-const router = read("profile.html");\nconst danteLegacy = read("profiles/male/dante-example.html");
+const router = read("profile.html");
+const danteLegacy = read("profiles/male/dante-example.html");
 const DIName = require("../assets/js/display-name.js");
 
 const bloodlineRuntimeMatch = male.match(/<script[^>]+src=["'](assets\/bloodline-network_v\d+\.js(?:\?[^"']*)?)["']/i);
