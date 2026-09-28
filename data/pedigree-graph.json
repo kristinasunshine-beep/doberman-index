@@ -1,7 +1,8 @@
 {
   "schema_version": "1.0.0",
   "root_records": [
-    "DI-M-000001"
+    "DI-M-000001",
+    "DI-M-000002"
   ],
   "nodes": {
     "DI-M-000001": {
@@ -24,7 +25,7 @@
       ],
       "country": "Serbia",
       "sex": "male",
-      "source_record_id": null,
+      "source_record_id": "DI-M-000002",
       "sire_id": "DI-A-000003",
       "dam_id": "DI-A-000004"
     },
@@ -507,6 +508,18 @@
       "source_record_id": null,
       "sire_id": null,
       "dam_id": null
+    },
+    "DI-M-000002": {
+      "record_id": "DI-M-000002",
+      "registered_name": "Cowboy Lucky Luck di Altobello",
+      "registration_numbers": [
+        "JR 708334 Dob"
+      ],
+      "country": "Serbia",
+      "sex": "male",
+      "source_record_id": "DI-M-000002",
+      "sire_id": "DI-A-000003",
+      "dam_id": "DI-A-000004"
     }
   }
 }
