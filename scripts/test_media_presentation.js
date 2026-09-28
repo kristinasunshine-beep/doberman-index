@@ -20,7 +20,7 @@ assert.equal(objectPosition({x:35, y:22}), "35% 22%");
 assert.equal(normalizeFitMode("contain"), "contain");
 assert.equal(normalizeFitMode("unsupported"), "cover");
 assert.deepEqual(normalizeGalleryItem("media/dog.jpg"), {path:"media/dog.jpg", focal_point:{x:50,y:50}, fit_mode:"cover"});
-assert.deepEqual(normalizeGalleryItem({path:"media/dog-02.jpg", focal_point:{x:38,y:21}, fit_mode:"contain", caption:"Front"}), {path:"media/dog-02.jpg", focal_point:{x:38,y:21}, fit_mode:"contain", caption:"Front"});
+assert.deepEqual(normalizeGalleryItem({path:"media/dog-02.jpg", focal_point:{x:38,y:21}, fit_mode:"contain", frame_orientation:"landscape", caption:"Front"}), {path:"media/dog-02.jpg", focal_point:{x:38,y:21}, fit_mode:"contain", frame_orientation:"landscape", caption:"Front"});
 const element = {style:{}};
 applyFocalPoint(element, {x:61, y:39});
 assert.equal(element.style.objectPosition, "61% 39%");
