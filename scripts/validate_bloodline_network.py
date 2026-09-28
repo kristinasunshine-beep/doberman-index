@@ -75,6 +75,16 @@ for root_id in roots:
             selected=item.get('selected') or {}
             image_ref=selected.get('image_url') or selected.get('asset_path')
             if not str(image_ref or '').strip():errors.append(f'{root_id}/{ancestor_id}: selected image missing image_url/asset_path')
+            image_url=str(selected.get('image_url') or '').strip()
+            if image_url.startswith(('http://','https://')):
+                allowed_hosts=(
+                    'https://doberman-index-media-admin.dobermanindex-records.workers.dev/',
+                    'https://media.doberman-index.com/',
+                    'https://doberman-index.com/',
+                    'https://www.doberman-index.com/',
+                )
+                if not image_url.startswith(allowed_hosts):
+                    errors.append(f'{root_id}/{ancestor_id}: external Bloodline image URL is forbidden after R2 migration: {image_url}')
             for field in ('source_label','source_url'):
                 if not str(selected.get(field,'')).strip():errors.append(f'{root_id}/{ancestor_id}: selected image missing {field}')
     for ancestor_id in reachable_ancestors(root_id,4):
