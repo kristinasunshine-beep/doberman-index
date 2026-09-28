@@ -83,7 +83,7 @@ for root_id in roots:
                     'https://doberman-index.com/',
                     'https://www.doberman-index.com/',
                 )
-                report_path=root/'data'/'bloodline-r2-migration-report.json'
+                report_path=ROOT/'data'/'bloodline-r2-migration-report.json'
                 migration_complete=False
                 if report_path.is_file():
                     try:
