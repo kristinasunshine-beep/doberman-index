@@ -1295,6 +1295,13 @@
                 "retired",
                 "unknown"
               ]
+            },
+            "notable_offspring": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 20
             }
           },
           "additionalProperties": false
