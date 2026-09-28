@@ -639,6 +639,12 @@
         "stride_consistency": "Not reliably assessable from this clip. The source does not contain a sufficiently clear, continuous lateral gait pass.",
         "rhythm": "Not reliably assessable from this clip. The visible sequence is dominated by show-ring positioning rather than an uninterrupted gait cycle.",
         "visibility_quality": "Useful as show-ring and stance context. Handlers, foreground occlusion and mostly static positioning make the clip insufficient for formal movement observation."
+      },
+      "frame_overrides": {
+        "stack": {
+          "orientation": "landscape",
+          "fit_mode": "contain"
+        }
       }
     },
     "publication": {
