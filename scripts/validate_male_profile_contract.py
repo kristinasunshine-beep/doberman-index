@@ -42,6 +42,25 @@ if not re.search(r'assets/bloodline-network_v\d+\.css(?:\?[^"\']*)?',profile):
     errors.append('male bloodline contract missing: active Bloodline stylesheet')
 if not re.search(r'assets/bloodline-network_v\d+\.js(?:\?[^"\']*)?',profile):
     errors.append('male bloodline contract missing: active Bloodline runtime')
+
+# Dynamic profile first-paint and long-name contract.
+for token in [
+    'profile-hydration-pending',
+    'function balancedHeroLines(name)',
+    'function fitHeroName()',
+    'function renderHeroName(name)',
+    'renderHeroName(profileData.name);',
+    '.hero-title[data-lines="3"]',
+    'white-space:nowrap',
+    'initializeProfile().then(revealHydratedProfile).catch(error=>failHydratedProfile(requestedRecordId,error))'
+]:
+    if token not in profile:
+        errors.append('male dynamic hero contract missing: '+token)
+if '<h1 class="hero-title" id="dogName" aria-label="Dion Dante"><span>Dion</span><span>Dante.</span></h1>' in profile:
+    errors.append('male dynamic hero still exposes Dante as static first-paint fallback')
+if 'accepted review snapshot remains visible' in profile:
+    errors.append('male dynamic profile still falls back to another dog after hydration failure')
+
 if errors:
     print('Male profile contract FAIL')
     for e in errors: print('-',e)
