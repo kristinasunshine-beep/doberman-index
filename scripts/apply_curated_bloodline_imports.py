@@ -164,7 +164,9 @@ def choose_image(item: dict) -> tuple[bytes, str, dict]:
                 expected_ratio = exp_w / exp_h
                 ratio_penalty = abs((image.width / image.height) - expected_ratio) * 8
             score = dist + ratio_penalty
-            scored.append((score, dist, -image.width*image.height, idx, url, data, image.size))\n            if dist <= 2:\n                break
+            scored.append((score, dist, -image.width*image.height, idx, url, data, image.size))
+            if dist <= 2:
+                break
         except Exception as exc:
             errors.append((url, str(exc)))
     if not scored:
