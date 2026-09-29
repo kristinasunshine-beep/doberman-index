@@ -82,10 +82,10 @@
       "direct_candidates": [
         "https://www.the-dobermann.com/images/males/c/Fedor_main.jpg"
       ],
-      "expected_dhash": "866c7cf1db9aba98",
-      "expected_width": 390,
-      "expected_height": 294,
-      "r2_key": "ancestors/DI-A-000019/fedor-main-20260929-v2.jpg",
+      "expected_dhash": "4f9e9cf1e19a9bd9",
+      "expected_width": 500,
+      "expected_height": 381,
+      "r2_key": "ancestors/DI-A-000019/fedor-main-20260929-final.jpg",
       "source_label": "User-curated stance photo · Fedor del Nasi",
       "status": "pending",
       "filename_hints": [
@@ -97,7 +97,7 @@
         "DI-M-000001",
         "DI-M-000002"
       ],
-      "match_threshold": 8
+      "match_threshold": 2
     },
     {
       "ancestor_id": "DI-A-000026",
