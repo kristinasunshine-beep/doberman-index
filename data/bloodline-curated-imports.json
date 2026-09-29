@@ -79,36 +79,23 @@
       "registered_name": "Fedor del Nasi",
       "action": "upload_replace",
       "source_url": "https://www.the-dobermann.com/males/40-a30/20-fedor-del-nasi?showall=1",
-      "direct_candidates": [
-        "https://www.the-dobermann.com/images/males/c/Fedor_main.jpg"
-      ],
+      "direct_candidates": [],
       "expected_dhash": "866c7cf1db9aba98",
       "expected_width": 390,
       "expected_height": 294,
-      "r2_key": "ancestors/DI-A-000019/main.jpg",
+      "r2_key": "ancestors/DI-A-000019/fedor-main-20260929-v2.jpg",
       "source_label": "User-curated stance photo · Fedor del Nasi",
       "status": "pending",
       "filename_hints": [
         "fedor",
         "main"
       ],
-      "public_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000019/main.jpg",
-      "matched_image_url": "https://www.the-dobermann.com/images/males/c/Fedor5.jpg",
-      "optimized_bytes": 126921,
-      "optimized_dimensions": [
-        533,
-        400
+      "force_direct_candidate": false,
+      "target_roots": [
+        "DI-M-000001",
+        "DI-M-000002"
       ],
-      "jpeg_quality": 95,
-      "match": {
-        "dhash_distance": 12,
-        "candidate_size": [
-          533,
-          400
-        ],
-        "candidate_count": 28
-      },
-      "force_direct_candidate": true
+      "match_threshold": 8
     },
     {
       "ancestor_id": "DI-A-000026",
@@ -149,6 +136,50 @@
       "action": "remove_from_roots",
       "note": "Remove low-resolution image from Dante Bloodline. Keep the global R2 object because another profile may still reference it.",
       "status": "done"
+    },
+    {
+      "ancestor_id": "DI-A-000004",
+      "registered_name": "Freya Fleming di Altobello",
+      "action": "upload_replace",
+      "source_url": "https://altobellodobermann.com/component/content/article/27-old-litters/659-beowulf-x-freya-flemming-di-altobello-c-litter?Itemid=101",
+      "expected_dhash": "47d64f617964a66e",
+      "expected_width": 390,
+      "expected_height": 294,
+      "r2_key": "ancestors/DI-A-000004/freya-fleming-20260929.jpg",
+      "source_label": "User-curated stance photo · Freya Fleming di Altobello",
+      "target_roots": [
+        "DI-M-000001"
+      ],
+      "status": "pending",
+      "filename_hints": [
+        "freya",
+        "fleming",
+        "flemming",
+        "659",
+        "beowulf"
+      ],
+      "match_threshold": 8
+    },
+    {
+      "ancestor_id": "DI-A-000028",
+      "registered_name": "Teraline Aurora",
+      "action": "upload_replace",
+      "source_url": "https://www.the-dobermann.com/females/60-t10/83-teraline-aurora?start=1",
+      "expected_dhash": "163b1b72e3d09012",
+      "expected_width": 512,
+      "expected_height": 341,
+      "r2_key": "ancestors/DI-A-000028/teraline-aurora-20260929.jpg",
+      "source_label": "User-curated stance photo · Teraline Aurora",
+      "target_roots": [
+        "DI-M-000001"
+      ],
+      "status": "pending",
+      "filename_hints": [
+        "teraline",
+        "aurora",
+        "83"
+      ],
+      "match_threshold": 8
     }
   ]
 }
