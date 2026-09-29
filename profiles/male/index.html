@@ -590,6 +590,7 @@
       .hero-title[data-lines="3"]{top:clamp(92px,12svh,112px);line-height:.94}
       .hero-title span{max-width:100%;white-space:nowrap}
       .hero-title span + span{margin-top:.09em}
+      body.cowboy-profile .hero-title span + span{margin-top:.20em}
       #heroMeta .hero-identity{font-size:15px;font-weight:400;line-height:1.32}
       .hero-dossier{
         left:16px;
@@ -4414,6 +4415,7 @@
 
     function heroMetadata(){
       document.body.classList.toggle("dante-profile",profileData.core?.profileId==="DI-M-000001");
+      document.body.classList.toggle("cowboy-profile",profileData.core?.profileId==="DI-M-000002");
       const identity=[profileData.kennel,profileData.country].filter(Boolean).join(" · ");
       byId("heroMeta").innerHTML=`<span class="hero-identity">${escapeHTML(identity)}</span>`;
     }
