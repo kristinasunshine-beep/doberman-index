@@ -4004,7 +4004,7 @@
       const lifeStage={puppy:"Puppy",junior:"Junior",adult:"Adult",veteran:"Veteran",unknown:"Not confirmed"}[legacyDeceased?"unknown":identity.life_stage]||"Not confirmed";
       const lifecycleState=legacyDeceased?"deceased":identity.life_status;
       const isDeceased=lifecycleState==="deceased";
-      const lifeStatus=isDeceased?"DECEASED":lifecycleState==="living"?"":lifecycleState==="unknown"?"Not confirmed":"Not confirmed";
+      const lifeStatus=isDeceased?"Deceased":lifecycleState==="living"?"":lifecycleState==="unknown"?"Not confirmed":"Not confirmed";
       const deathYear=yearOf(identity.date_of_death)||String(identity.year_of_death||"").trim()||null;
       const birthYear=yearOf(identity.date_of_birth);
       const lifespan=isDeceased&&deathYear?[birthYear,deathYear].filter(Boolean).join("–"):null;
