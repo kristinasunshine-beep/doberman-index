@@ -437,16 +437,17 @@
     .related-card-top{display:flex;align-items:center;gap:12px;color:var(--muted);font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
     .related-card-top i{height:1px;flex:1;background:#c8c8c4;transition:background .3s var(--ease)}
     .related-arrow{display:grid;place-items:center;width:28px;height:28px;border:1px solid #aaa;border-radius:50%;color:var(--ink);font-family:Inter,system-ui,sans-serif;font-size:13px;transition:transform .3s var(--ease),background .3s,color .3s,border-color .3s}
-    .related-card-body{display:grid;grid-template-columns:50px minmax(0,1fr);gap:16px;align-items:end;margin-top:auto}
-    .related-thumb{display:grid;place-items:center;width:50px;height:50px;border-radius:50%;background:var(--ink);color:var(--acid);font-size:21px;font-weight:700;transition:background .3s var(--ease),color .3s var(--ease),transform .3s var(--ease)}
-    .related-thumb img{width:100%;height:100%;display:block;border-radius:inherit;object-fit:cover}
+    .related-card-body{display:grid;grid-template-columns:58px minmax(0,1fr);gap:17px;align-items:end;margin-top:auto}
+    .related-thumb{position:relative;display:grid;place-items:center;width:58px;height:72px;border:1px solid #b9b9b4;border-radius:0;overflow:hidden;background:#e7e7e2;color:var(--ink);font-size:19px;font-weight:750;transition:border-color .3s var(--ease),background .3s var(--ease),transform .3s var(--ease)}
+    .related-thumb::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:4px;background:var(--acid);pointer-events:none}
+    .related-thumb img{width:100%;height:100%;display:block;border-radius:0;object-fit:contain;object-position:center;background:#e7e7e2}
     .related-copy{min-width:0}
     .related-copy strong{display:block;font-size:23px;font-weight:650;line-height:.95;letter-spacing:-.055em;white-space:normal;text-transform:none;text-wrap:balance;overflow-wrap:break-word}
     .related-copy span{display:block;margin-top:8px;color:var(--muted);font-size:9px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
     .related-card:hover,.related-card.touch-hover{z-index:2;background:var(--white);transform:translateY(-5px);box-shadow:0 16px 34px rgba(18,18,18,.08)}
     .related-card:hover .related-card-top i,.related-card.touch-hover .related-card-top i{background:var(--acid)}
     .related-card:hover .related-arrow,.related-card.touch-hover .related-arrow{border-color:var(--ink);background:var(--ink);color:var(--white);transform:translate(2px,-2px)}
-    .related-card:hover .related-thumb,.related-card.touch-hover .related-thumb,.related-card.selected .related-thumb{background:var(--acid);color:var(--ink);transform:rotate(-5deg)}
+    .related-card:hover .related-thumb,.related-card.touch-hover .related-thumb,.related-card.selected .related-thumb{border-color:var(--ink);background:#fff;color:var(--ink);transform:translateY(-2px)}
     .related-card.selected{background:var(--white)}
 
     .pairing-section{min-height:620px;padding-top:clamp(72px,6vw,96px);padding-bottom:clamp(72px,6vw,96px);background:var(--black);color:var(--white)}
@@ -3385,8 +3386,7 @@
         </div>
         <p class="section-note"><b>Connected profiles</b>Published parents, siblings, offspring and litter records appear here as direct links. The network expands as related DI records are published.</p>
       </header>
-      <div class="section-content slider reveal is-visible" id="relatedRail" data-scrollbar-ready="true"><a href="../../profile.html?id=DI-M-000002" class="related-card" aria-pressed="false"><div class="related-card-top"><span>Relation 01</span><i aria-hidden="true"></i><span class="related-arrow" aria-hidden="true">↗</span></div><div class="related-card-body"><div class="related-thumb" aria-hidden="true"><img src="https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/hero.jpg" alt="" loading="lazy" decoding="async" style="object-position:50% 50%"></div><div class="related-copy"><strong>Cowboy Lucky Luck di Altobello</strong><span>Sire</span></div></div></a></div>
-      <div class="rail-scrollbar" role="group" aria-controls="relatedRail" aria-label="Profile connections horizontal navigation" hidden><button class="rail-scrollbar-arrow prev" type="button" aria-label="Scroll Profile connections left"></button><div class="rail-scrollbar-track"><div class="rail-scrollbar-indicator" role="scrollbar" tabindex="0" aria-controls="relatedRail" aria-label="Move through Profile connections" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div><button class="rail-scrollbar-arrow next" type="button" aria-label="Scroll Profile connections right"></button></div>
+      <div class="section-content slider reveal is-visible" id="relatedRail"><a href="../../profile.html?id=DI-M-000002" class="related-card" aria-pressed="false"><div class="related-card-top"><span>Relation 01</span><i aria-hidden="true"></i><span class="related-arrow" aria-hidden="true">↗</span></div><div class="related-card-body"><div class="related-thumb" aria-hidden="true"><img src="https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/hero.jpg" alt="" loading="lazy" decoding="async" style="object-position:50% 50%"></div><div class="related-copy"><strong>Cowboy Lucky Luck di Altobello</strong><span>Sire</span></div></div></a><a href="#profile" class="related-card" aria-pressed="false"><div class="related-card-top"><span>Relation 02</span><i aria-hidden="true"></i><span class="related-arrow" aria-hidden="true">↗</span></div><div class="related-card-body"><div class="related-thumb" aria-hidden="true">F</div><div class="related-copy"><strong>Felicita Flair von Ashanti Legende</strong><span>Dam</span></div></div></a></div>
     </section>
 
 <section class="section" id="bloodline">
@@ -3765,6 +3765,7 @@
         const record=byRecordId.get(id);
         const linkedDoberman=record?.entity_type==="doberman";
         related.push({
+          id:id||"",
           name:linkedDoberman?displayRegisteredName(record.registered_name||record.record_id):(!record&&(type==="Sire"||type==="Dam")?displayRegisteredName(fallbackName||id):(record?.name||fallbackName||id)),
           type,url:record?profileUrl(record.record_id):"#profile",
           image:linkedDoberman?mediaUrl(record.hero):"",
@@ -3776,9 +3777,28 @@
       add(parentage.litter_id||currentRecord.litter_id,"Litter record",parentage.litter_id||currentRecord.litter_id);
       array(reproduction.litter_ids).forEach(id=>add(id,"Litter record",id));
       registryRecords.filter(record=>record.entity_type==="litter"&&(record.sire_id===recordId||record.dam_id===recordId)).forEach(record=>add(record.record_id,"Litter record",record.name||record.record_id));
-      registryRecords.filter(record=>record.entity_type==="doberman"&&(record.sire_id===recordId||record.dam_id===recordId)).slice(0,4).forEach(record=>add(record.record_id,"Indexed offspring"));
-      if(parentage.litter_id)registryRecords.filter(record=>record.entity_type==="doberman"&&record.record_id!==recordId&&record.litter_id===parentage.litter_id).slice(0,3).forEach(record=>add(record.record_id,"Littermate"));
+      registryRecords.filter(record=>record.entity_type==="doberman"&&(record.sire_id===recordId||record.dam_id===recordId)).forEach(record=>add(record.record_id,"Indexed offspring"));
+      if(parentage.litter_id)registryRecords.filter(record=>record.entity_type==="doberman"&&record.record_id!==recordId&&record.litter_id===parentage.litter_id).forEach(record=>add(record.record_id,"Littermate"));
       return related;
+    }
+
+    async function hydrateRelatedMedia(items){
+      await Promise.all(array(items).map(async item=>{
+        if(!/^DI-[MF]-\d{6}$/.test(item.id||""))return;
+        const registry=registryRecords.find(record=>record.record_id===item.id&&record.entity_type==="doberman"&&record.status==="published");
+        if(!registry?.path)return;
+        try{
+          const response=await fetch(new URL(registry.path,repoRoot),{cache:"no-store"});
+          if(!response.ok)return;
+          const record=await response.json();
+          const media=record?.doberman?.media||{};
+          const role=media.head?"head":media.profile?"profile":"hero";
+          const preferred=media[role]||registry.hero;
+          if(preferred)item.image=mediaUrl(preferred);
+          item.position=focalPosition(focalPointFor(media,role)||registry.hero_focal_point);
+        }catch(_){}
+      }));
+      return items;
     }
 
 
@@ -4487,6 +4507,7 @@
 
     async function initializeProfile(){
       profileData=await loadProfile();
+      await hydrateRelatedMedia(profileData.related);
       renderHeroName(profileData.name);
       heroMetadata();
       byId("heroImage").src=profileData.heroImage;
