@@ -143,6 +143,12 @@ def collect_candidates(item: dict) -> list[str]:
     return (direct + rest)[:28]
 
 def choose_image(item: dict) -> tuple[bytes, str, dict]:
+    if item.get("force_direct_candidate") and item.get("direct_candidates"):
+        url = item["direct_candidates"][0]
+        data, ctype = request_bytes(url, referer=item["source_url"], timeout=20)
+        image = decode_image(data)
+        return data, url, {"forced_direct": True, "candidate_size": image.size, "candidate_count": 1}
+
     target = int(item["expected_dhash"], 16)
     exp_w = int(item.get("expected_width") or 0)
     exp_h = int(item.get("expected_height") or 0)
