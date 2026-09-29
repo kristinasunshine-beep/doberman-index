@@ -3763,14 +3763,24 @@ textarea {
   .featured-record-media{aspect-ratio:auto;height:164px}
   .featured-record-copy{
     min-height:164px;
-    padding:18px 16px;
+    display:flex;
+    flex-direction:column;
+    padding:18px 16px 14px;
     border-top:0;
     border-left:4px solid var(--acid);
   }
-  .featured-record-copy small{font-size:8px;margin-bottom:8px}
-  .featured-record-copy strong{font-size:clamp(25px,7.2vw,31px);line-height:.9}
-  .featured-record-copy span{margin-top:8px;font-size:10px;line-height:1.35}
-  .featured-record-copy .featured-record-example{margin-top:12px;font-size:7px}
+  .featured-record-copy small{font-size:9px;margin-bottom:9px}
+  .featured-record-copy strong{font-size:clamp(27px,7.8vw,33px);line-height:.9}
+  .featured-record-copy span{margin-top:9px;font-size:11px;line-height:1.35}
+  .featured-record-copy .featured-record-example{
+    margin-top:auto;
+    padding-top:12px;
+    color:var(--ink);
+    font-size:10px;
+    font-weight:850;
+    line-height:1;
+    letter-spacing:.055em;
+  }
 }
 
 
