@@ -3775,7 +3775,7 @@
       const currentRecord=byRecordId.get(recordId)||{};
       const related=[];
       const seen=new Set();
-      const add=(id,type)=>{
+      const add=(id,type,fallbackName)=>{
         if(!id||id===recordId||seen.has(id))return;
         const record=byRecordId.get(id);
         if(!record)return;
@@ -3789,8 +3789,8 @@
           position:focalPosition(record.hero_focal_point)
         });
       };
-      add(parentage.sire_id||currentRecord.sire_id,"Sire");
-      add(parentage.dam_id||currentRecord.dam_id,"Dam");
+      add(parentage.sire_id||currentRecord.sire_id,"Sire",parentage.sire_name);
+      add(parentage.dam_id||currentRecord.dam_id,"Dam",parentage.dam_name);
       registryRecords
         .filter(record=>record.entity_type==="doberman"&&record.status==="published"&&(record.sire_id===recordId||record.dam_id===recordId))
         .forEach(record=>add(record.record_id,"Indexed offspring"));
