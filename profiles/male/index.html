@@ -3576,14 +3576,14 @@
           <h2 class="section-title">Breeding<br>lens.</h2>
         </div>
         <div class="performance-side">
-          <p class="section-note"><b>Breeding Lens analysis</b>The submitted record is converted into a profile signature, documented assets, control points, evidence gaps and a pair-ready baseline — all traceable to the material supplied for this Doberman.</p>
+          <p class="section-note"><b>Breeding Lens analysis</b>The submitted record is converted into a profile signature, documented assets, control points, longitudinal context and a pair-ready baseline — all derived from the submitted profile.</p>
         </div>
       </header>
       <div class="section-content reveal breeding-lens-v4" id="breedingLensRail">
 <article class="lens-priority"><span class="num">01 · PROFILE SIGNATURE</span><h3>Evidence-backed profile</h3><div class="lens-copy"><p>Dion Dante’s submitted record resolves into a dual-purpose profile: show and working achievement, a low-concentration four-generation pedigree, and a current cardiac phenotype kept separate from a DCM1 carrier result. Health, pedigree, structure, temperament, performance and media remain visible as distinct evidence layers rather than being collapsed into one score.</p><div class="lens-tags"><span>Profile synthesis</span><span>6 evidence layers</span></div></div></article>
 <article class="lens-row"><span class="num">02 · PRESERVE</span><h4><span>Documented</span><span>assets</span></h4><div class="lens-copy"><p>Recorded assets include balanced / elegant type, a compact body with strong topline, free elastic movement and Stable / High drive temperament. The performance layer adds Champion of Serbia in Beauty, BH-VT and IGP 1. The health record also carries DM Clear, vWD Clear, HD-B, ED-0, thyroid Normal and eyes Normal.</p><div class="lens-tags"><span>Structure</span><span>Temperament</span><span>Performance</span><span>Health</span></div></div></article>
 <article class="lens-row"><span class="num">03 · BALANCE</span><h4><span>Control</span><span>points</span></h4><div class="lens-copy"><p>DCM1 Carrier is the clearest control point in the submitted genetic layer, while Holter + Echo on 03 Mar 2026 recorded no signs of DCM. Those facts stay separate. Moderate confidence and Neutral social behaviour also remain explicit comparison variables instead of disappearing inside an overall rating.</p><div class="lens-tags"><span>Genetic</span><span>Clinical</span><span>Temperament</span></div></div></article>
-<article class="lens-row"><span class="num">04 · VERIFY</span><h4><span>Evidence</span><span>gaps</span></h4><div class="lens-copy"><p>Most submitted genetic, orthopedic, thyroid and eye results currently have no lab, date or report number attached in the record. Structure and temperament are owner-declared, performance evidence files are not attached, and close-family longevity is not yet mapped. Those limits stay visible by design.</p><div class="lens-tags"><span>Provenance</span><span>Owner input</span><span>Missing metadata</span></div></div></article>
+<article class="lens-row"><span class="num">04 · LONGITUDINAL CONTEXT</span><h4><span>What time</span><span>adds</span></h4><div class="lens-copy"><p>Dante is already a veteran, so the timing of the record matters. His current Holter + Echo status adds an age-specific cardiac snapshot, while future screenings, indexed offspring, reproductive outcomes and close-family longevity can progressively deepen the breeding picture without changing the original submitted profile.</p><div class="lens-tags"><span>Veteran context</span><span>Cardiac timeline</span><span>Offspring</span><span>Family longevity</span></div></div></article>
 <article class="lens-row"><span class="num">05 · EVIDENCE DEPTH</span><h4><span>Record</span><span>resolution</span></h4><div class="lens-copy"><p>Mapped pedigree: COI 0.78%, AVK 96.67%, 100% completeness, 29 unique ancestors and one repeated ancestor across four generations. The media layer contains standardized head, profile and stack views plus a 3.84 s movement clip; the dated cardiac phenotype source is Holter + Echo at Vet Centar.</p><div class="lens-tags"><span>Pedigree</span><span>Media</span><span>Clinical</span></div></div></article>
 <div class="lens-boundary"><b>Pair-specific intelligence starts here</b><p>This record build produces a reusable single-dog breeding baseline. Projected COI, shared ancestry, inherited combinations and phenotype complementarity begin only after a specific indexed female is selected.</p></div></div>
     </section>
@@ -3901,17 +3901,23 @@
       const unknownDcm=Object.entries(markers)
         .filter(([,entry])=>!clean(entry?.result))
         .map(([key])=>key.replace("dcm_","DCM"));
-      const submittedHealth=[health.dm,health.vwd,health.hd,health.ed,health.thyroid,health.eyes]
-        .filter(test=>clean(test?.result));
-      const metadataGapCount=submittedHealth.filter(test=>!clean(test.lab)&&!clean(test.date)&&!clean(test.report_number)&&!clean(test.evidence_file)).length;
-      const provenanceGaps=[];
-      if(metadataGapCount)provenanceGaps.push(`${metadataGapCount} submitted health result${metadataGapCount===1?"":"s"} without lab/date/report metadata`);
-      if(structure.evidence?.source_type==="owner_declaration"||structure.evaluator==="owner")provenanceGaps.push("structure recorded from owner declaration");
-      if(temperament.evidence?.source_type==="owner_declaration"||temperament.evaluator==="owner"||temperament.evaluator==="not_declared")provenanceGaps.push("temperament based on owner-supplied data");
-      if(achievements.length&&!array(performance.evidence_files).length)provenanceGaps.push("performance evidence files not attached");
-      if(clean(clinical.status)&&(!clean(clinical.evaluation_method)||!clean(clinical.evaluation_date)||!clean(clinical.veterinarian_or_clinic)))provenanceGaps.push("clinical DCM entry lacks full method/date/clinic metadata");
-      if(clean(mortality.cause)&&!clean(mortality.evidence_source)&&!clean(mortality.evidence_file))provenanceGaps.push("mortality cause has no attached evidence source");
-      if(unknownDcm.length)provenanceGaps.push(`${unknownDcm.join(", ")} not submitted`);
+      const longitudinalParts=[];
+      const stageLabel=clean(identity.life_stage);
+      const lifeStatusLabel=clean(identity.life_status);
+      const birthYear=yearOf(identity.date_of_birth);
+      const deathYear=yearOf(identity.date_of_death)||String(identity.year_of_death||"").trim();
+      if(stageLabel&&stageLabel!=="unknown")longitudinalParts.push(`Life-stage context: ${titleCase(stageLabel)}.`);
+      if(clean(clinical.status)){
+        const when=clean(clinical.evaluation_date)?` on ${formatDate(clinical.evaluation_date)}`:"";
+        longitudinalParts.push(`The cardiac phenotype is a time-specific snapshot: ${clean(clinical.status)}${when}.`);
+      }
+      if(lifeStatusLabel==="deceased"){
+        const span=[birthYear,deathYear].filter(Boolean).join("–");
+        longitudinalParts.push(`This is now a historical record${span?` (${span})`:""}; indexed offspring, reproductive outcomes and close-family longevity can continue to add breeding context.`);
+      }else{
+        longitudinalParts.push("Future screenings, indexed offspring and reproductive outcomes can deepen the breeding picture over time without rewriting the original submitted record.");
+      }
+      longitudinalParts.push("As related DI records accumulate, family longevity and offspring outcomes become increasingly useful context for interpreting this profile.");
 
       const pedigreeBits=[
         pedigreeIntelligence.coi_percent!=null?`COI ${Number(pedigreeIntelligence.coi_percent).toFixed(2)}%`:null,
@@ -3971,9 +3977,9 @@
           tags:[carrierSignals.length?"Genetic":"Pedigree",clean(clinical.status)?"Clinical":"Temperament","Comparison variables"].filter(Boolean)
         },
         verify:{
-          title:"Evidence gaps",
-          body:provenanceGaps.length?`Still visible in this record: ${provenanceGaps.join("; ")}. These limits are retained rather than silently upgraded into stronger evidence.`:"No material provenance gaps are currently flagged in the submitted fields represented by this profile.",
-          tags:["Provenance","Source quality","Unknowns visible"]
+          title:"What time adds",
+          body:longitudinalParts.join(" "),
+          tags:[stageLabel&&stageLabel!=="unknown"?titleCase(stageLabel)+" context":"Life-stage context",clean(clinical.status)?"Cardiac timeline":"Record timeline","Offspring","Family longevity"]
         },
         evidence:{
           title:"Record resolution",
@@ -4324,7 +4330,7 @@
         signature:{title:"Evidence-backed profile",body:"This record organizes submitted health, pedigree, structure, temperament, performance and media into a traceable single-dog intelligence baseline.",tags:["Profile synthesis"]},
         preserve:{title:"Documented assets",body:"Recorded assets remain visible as structured evidence for later comparison.",tags:["Record"]},
         balance:{title:"Control points",body:"Known health, pedigree and temperament variables remain explicit rather than being collapsed into a hidden score.",tags:["Comparison variables"]},
-        verify:{title:"Evidence gaps",body:"Unknowns and missing provenance remain visible until stronger evidence is submitted.",tags:["Provenance"]},
+        verify:{title:"What time adds",body:"Life stage, later screenings, offspring, reproductive outcomes and family longevity can deepen the breeding context as the record matures.",tags:["Life-stage context","Offspring","Family longevity"]},
         evidence:{title:"Record resolution",body:"The record can deepen as additional evidence, media and lineage connections are added.",tags:["Living record"]},
         boundary:{title:"Pair-specific intelligence starts here",body:"Projected COI, shared ancestry, inherited combinations and phenotype complementarity require a selected indexed female."}
       };
@@ -4332,7 +4338,7 @@
       const tags=item=>array(item.tags).length?`<div class="lens-tags">${array(item.tags).map(tag=>`<span>${escapeHTML(tag)}</span>`).join("")}</div>`:"";
       const signature=get("signature"),preserve=get("preserve"),balance=get("balance"),verify=get("verify"),evidence=get("evidence"),boundary=get("boundary");
       byId("breedingLensRail").className="section-content reveal breeding-lens-v4";
-      byId("breedingLensRail").innerHTML=`<article class="lens-priority"><span class="num">01 · PROFILE SIGNATURE</span><h3>${escapeHTML(signature.title)}</h3><div class="lens-copy"><p>${escapeHTML(signature.body)}</p>${tags(signature)}</div></article><article class="lens-row"><span class="num">02 · PRESERVE</span><h4><span>Documented</span><span>assets</span></h4><div class="lens-copy"><p>${escapeHTML(preserve.body)}</p>${tags(preserve)}</div></article><article class="lens-row"><span class="num">03 · BALANCE</span><h4><span>Control</span><span>points</span></h4><div class="lens-copy"><p>${escapeHTML(balance.body)}</p>${tags(balance)}</div></article><article class="lens-row"><span class="num">04 · VERIFY</span><h4><span>Evidence</span><span>gaps</span></h4><div class="lens-copy"><p>${escapeHTML(verify.body)}</p>${tags(verify)}</div></article><article class="lens-row"><span class="num">05 · EVIDENCE DEPTH</span><h4><span>Record</span><span>resolution</span></h4><div class="lens-copy"><p>${escapeHTML(evidence.body)}</p>${tags(evidence)}</div></article><div class="lens-boundary"><b>${escapeHTML(boundary.title)}</b><p>${escapeHTML(boundary.body)}</p></div>`;
+      byId("breedingLensRail").innerHTML=`<article class="lens-priority"><span class="num">01 · PROFILE SIGNATURE</span><h3>${escapeHTML(signature.title)}</h3><div class="lens-copy"><p>${escapeHTML(signature.body)}</p>${tags(signature)}</div></article><article class="lens-row"><span class="num">02 · PRESERVE</span><h4><span>Documented</span><span>assets</span></h4><div class="lens-copy"><p>${escapeHTML(preserve.body)}</p>${tags(preserve)}</div></article><article class="lens-row"><span class="num">03 · BALANCE</span><h4><span>Control</span><span>points</span></h4><div class="lens-copy"><p>${escapeHTML(balance.body)}</p>${tags(balance)}</div></article><article class="lens-row"><span class="num">04 · LONGITUDINAL CONTEXT</span><h4><span>What time</span><span>adds</span></h4><div class="lens-copy"><p>${escapeHTML(verify.body)}</p>${tags(verify)}</div></article><article class="lens-row"><span class="num">05 · EVIDENCE DEPTH</span><h4><span>Record</span><span>resolution</span></h4><div class="lens-copy"><p>${escapeHTML(evidence.body)}</p>${tags(evidence)}</div></article><div class="lens-boundary"><b>${escapeHTML(boundary.title)}</b><p>${escapeHTML(boundary.body)}</p></div>`;
     }
 
     function pedigreeRepeats(){
