@@ -15,7 +15,12 @@
       "expected_height": 340,
       "r2_key": "ancestors/DI-A-000010/main.jpg",
       "source_label": "User-curated stance photo · Zulu Lady di Altobello",
-      "status": "pending"
+      "status": "pending",
+      "filename_hints": [
+        "zulu",
+        "lady",
+        "2010989"
+      ]
     },
     {
       "ancestor_id": "DI-A-000007",
@@ -27,7 +32,11 @@
       "expected_height": 381,
       "r2_key": "ancestors/DI-A-000007/main.jpg",
       "source_label": "User-curated stance photo · Maxim di Altobello",
-      "status": "pending"
+      "status": "pending",
+      "filename_hints": [
+        "maxim",
+        "litter"
+      ]
     },
     {
       "ancestor_id": "DI-A-000019",
@@ -42,7 +51,11 @@
       "expected_height": 294,
       "r2_key": "ancestors/DI-A-000019/main.jpg",
       "source_label": "User-curated stance photo · Fedor del Nasi",
-      "status": "pending"
+      "status": "pending",
+      "filename_hints": [
+        "fedor",
+        "main"
+      ]
     },
     {
       "ancestor_id": "DI-A-000026",
@@ -54,7 +67,12 @@
       "expected_height": 429,
       "r2_key": "ancestors/DI-A-000026/main.jpg",
       "source_label": "User-curated stance photo · Tahi-Reme Triniti",
-      "status": "pending"
+      "status": "pending",
+      "filename_hints": [
+        "triniti",
+        "tahi",
+        "804008"
+      ]
     },
     {
       "ancestor_id": "DI-A-000022",
