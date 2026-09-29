@@ -585,7 +585,9 @@
       .hero{min-height:760px;padding-top:18px}
       .hero-corner.left{display:none}
       .hero-corner.right{display:none}
-      .hero-title,.hero-title[data-lines="1"],.hero-title[data-lines="2"],.hero-title[data-lines="3"]{top:11%;right:24px;width:calc(100% - 40px);font-size:clamp(66px,21vw,98px)}
+      .hero-title,.hero-title[data-lines="1"],.hero-title[data-lines="2"],.hero-title[data-lines="3"]{top:11%;right:24px;width:calc(100% - 40px);max-width:calc(100vw - 40px);font-size:clamp(66px,21vw,98px);line-height:.88;overflow:visible}
+      .hero-title[data-lines="3"]{top:9.5%;line-height:.86}
+      .hero-title span{max-width:100%;white-space:nowrap}
       .hero-dossier{
         left:16px;
         top:297px;
@@ -4212,12 +4214,24 @@
         return best?.lines||[parts.join(" ")];
       };
 
-      // Registered call-name stays on line 1. Kennel/prefix starts on line 2
-      // and may use line 3 only when that affix is unusually long.
+      const mobile=matchMedia("(max-width:680px)").matches;
+
+      // On mobile the registered/call-name gets one or two lines.
+      // A kennel connector (di, von, van, del, etc.) always starts the next line
+      // together with the kennel/name suffix, so long names never fracture randomly.
       if(affixIndex>0){
-        const primary=words.slice(0,affixIndex).join(" ");
+        const primaryWords=words.slice(0,affixIndex);
+        const primary=primaryWords.join(" ");
         const affixWords=words.slice(affixIndex);
         const affix=affixWords.join(" ");
+
+        if(mobile){
+          const primaryLines=(primary.length<=18||primaryWords.length<=2)
+            ? [primary]
+            : balanceInto(primaryWords,2);
+          return [...primaryLines,affix].slice(0,3);
+        }
+
         const affixLines=(affix.length<=30||affixWords.length<=3)
           ? [affix]
           : balanceInto(affixWords,2);
@@ -4228,6 +4242,7 @@
       if(words.length===2)return [words.join(" ")];
 
       const total=words.join(" ").length;
+      if(mobile)return balanceInto(words,total<=18?1:2).slice(0,2);
       const lineCount=(words.length<=5&&total<=34)?2:3;
       return balanceInto(words,lineCount);
     }
@@ -4239,8 +4254,10 @@
       if(!spans.length)return;
       const mobile=matchMedia("(max-width:680px)").matches;
       const lineCount=spans.length;
-      const baseline=mobile?98:(lineCount===3?142:178);
-      const minimum=mobile?48:64;
+      const baseline=mobile
+        ? (lineCount>=3?72:lineCount===2?86:98)
+        : (lineCount===3?142:178);
+      const minimum=mobile?40:64;
       title.style.fontSize=baseline+"px";
       const available=Math.max(1,title.clientWidth);
       const widest=Math.max(...spans.map(span=>span.scrollWidth),1);
