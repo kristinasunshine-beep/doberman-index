@@ -87,7 +87,7 @@
       "expected_height": 381,
       "r2_key": "ancestors/DI-A-000019/fedor-main-20260929-final.jpg",
       "source_label": "User-curated stance photo · Fedor del Nasi",
-      "status": "pending",
+      "status": "done",
       "filename_hints": [
         "fedor",
         "main"
@@ -97,7 +97,24 @@
         "DI-M-000001",
         "DI-M-000002"
       ],
-      "match_threshold": 2
+      "match_threshold": 2,
+      "public_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000019/fedor-main-20260929-final.jpg",
+      "matched_image_url": "https://www.the-dobermann.com/images/males/c/Fedor_main.jpg",
+      "optimized_bytes": 153678,
+      "optimized_dimensions": [
+        500,
+        381
+      ],
+      "jpeg_quality": 95,
+      "match": {
+        "forced_direct": true,
+        "dhash_distance": 0,
+        "candidate_size": [
+          500,
+          381
+        ],
+        "candidate_count": 1
+      }
     },
     {
       "ancestor_id": "DI-A-000026",
@@ -152,7 +169,7 @@
       "target_roots": [
         "DI-M-000001"
       ],
-      "status": "pending",
+      "status": "done",
       "filename_hints": [
         "freya",
         "fleming",
@@ -160,7 +177,23 @@
         "659",
         "beowulf"
       ],
-      "match_threshold": 8
+      "match_threshold": 8,
+      "public_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000004/freya-fleming-20260929.jpg",
+      "matched_image_url": "https://altobellodobermann.com/images/stories/Litters-images-pedigree/freya-stand.jpg",
+      "optimized_bytes": 57455,
+      "optimized_dimensions": [
+        390,
+        294
+      ],
+      "jpeg_quality": 95,
+      "match": {
+        "dhash_distance": 0,
+        "candidate_size": [
+          390,
+          294
+        ],
+        "candidate_count": 27
+      }
     },
     {
       "ancestor_id": "DI-A-000028",
@@ -175,13 +208,29 @@
       "target_roots": [
         "DI-M-000001"
       ],
-      "status": "pending",
+      "status": "done",
       "filename_hints": [
         "teraline",
         "aurora",
         "83"
       ],
-      "match_threshold": 8
+      "match_threshold": 8,
+      "public_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000028/teraline-aurora-20260929.jpg",
+      "matched_image_url": "http://www.the-dobermann.com/images/females/a/aurora/a1.jpg",
+      "optimized_bytes": 83532,
+      "optimized_dimensions": [
+        512,
+        341
+      ],
+      "jpeg_quality": 95,
+      "match": {
+        "dhash_distance": 0,
+        "candidate_size": [
+          512,
+          341
+        ],
+        "candidate_count": 5
+      }
     }
   ]
 }

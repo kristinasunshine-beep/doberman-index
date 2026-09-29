@@ -1,88 +1,65 @@
 {
   "processed": [
     {
-      "record_id": "DI-A-000010",
-      "name": "Zulu Lady di Altobello",
+      "record_id": "DI-A-000019",
+      "name": "Fedor del Nasi",
       "action": "upload_replace",
-      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000010/main.jpg",
-      "bytes": 62860,
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000019/fedor-main-20260929-final.jpg",
+      "bytes": 153678,
       "dimensions": [
-        450,
-        340
+        500,
+        381
       ],
       "quality": 95,
       "match": {
+        "forced_direct": true,
         "dhash_distance": 0,
         "candidate_size": [
-          450,
-          340
+          500,
+          381
         ],
         "candidate_count": 1
       }
     },
     {
-      "record_id": "DI-A-000007",
-      "name": "Maxim di Altobello",
+      "record_id": "DI-A-000004",
+      "name": "Freya Fleming di Altobello",
       "action": "upload_replace",
-      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000007/main.jpg",
-      "bytes": 56864,
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000004/freya-fleming-20260929.jpg",
+      "bytes": 57455,
       "dimensions": [
         390,
         294
       ],
       "quality": 95,
       "match": {
-        "dhash_distance": 20,
+        "dhash_distance": 0,
         "candidate_size": [
           390,
           294
         ],
-        "candidate_count": 15
+        "candidate_count": 27
       }
     },
     {
-      "record_id": "DI-A-000019",
-      "name": "Fedor del Nasi",
+      "record_id": "DI-A-000028",
+      "name": "Teraline Aurora",
       "action": "upload_replace",
-      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000019/main.jpg",
-      "bytes": 126921,
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000028/teraline-aurora-20260929.jpg",
+      "bytes": 83532,
       "dimensions": [
-        533,
-        400
-      ],
-      "quality": 95,
-      "match": {
-        "dhash_distance": 12,
-        "candidate_size": [
-          533,
-          400
-        ],
-        "candidate_count": 28
-      }
-    },
-    {
-      "record_id": "DI-A-000026",
-      "name": "Tahi-Reme Triniti",
-      "action": "upload_replace",
-      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000026/main.jpg",
-      "bytes": 141287,
-      "dimensions": [
-        500,
-        429
+        512,
+        341
       ],
       "quality": 95,
       "match": {
         "dhash_distance": 0,
         "candidate_size": [
-          500,
-          429
+          512,
+          341
         ],
-        "candidate_count": 1
+        "candidate_count": 5
       }
-    },
-    {
-      "record_id": "DI-A-000022",
-      "action": "remove_from_roots"
     }
   ],
   "failed": [],

@@ -26,8 +26,13 @@
           }
         },
         "DI-A-000004": {
-          "status": "missing",
-          "note": "Public stance image intentionally removed."
+          "status": "selected",
+          "selected": {
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000004/freya-fleming-20260929.jpg",
+            "source_label": "User-curated stance photo · Freya Fleming di Altobello",
+            "source_url": "https://altobellodobermann.com/component/content/article/27-old-litters/659-beowulf-x-freya-flemming-di-altobello-c-litter?Itemid=101",
+            "curated_match_url": "https://altobellodobermann.com/images/stories/Litters-images-pedigree/freya-stand.jpg"
+          }
         },
         "DI-A-000005": {
           "status": "selected",
@@ -153,10 +158,10 @@
         "DI-A-000019": {
           "status": "selected",
           "selected": {
-            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000019/main.jpg",
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000019/fedor-main-20260929-final.jpg",
             "source_label": "User-curated stance photo · Fedor del Nasi",
             "source_url": "https://www.the-dobermann.com/males/40-a30/20-fedor-del-nasi?showall=1",
-            "curated_match_url": "https://www.the-dobermann.com/images/males/c/Fedor5.jpg"
+            "curated_match_url": "https://www.the-dobermann.com/images/males/c/Fedor_main.jpg"
           }
         },
         "DI-A-000020": {
@@ -229,10 +234,10 @@
         "DI-A-000028": {
           "status": "selected",
           "selected": {
-            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000028/main.jpg",
-            "source_label": "Candidate · Teraline Aurora",
-            "source_url": "https://www.the-dobermann.com/columns/123-columns/971-interview-with-natalia-fokht-italian",
-            "migrated_from": "https://www.the-dobermann.com/images/%21Kavaleva/%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21%21Connor/%21%21%21Cards/TeralineAurora_AIAD_Winner____2005_inter.jpg"
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000028/teraline-aurora-20260929.jpg",
+            "source_label": "User-curated stance photo · Teraline Aurora",
+            "source_url": "https://www.the-dobermann.com/females/60-t10/83-teraline-aurora?start=1",
+            "curated_match_url": "http://www.the-dobermann.com/images/females/a/aurora/a1.jpg"
           }
         },
         "DI-A-000029": {
@@ -320,10 +325,10 @@
         "DI-A-000019": {
           "status": "selected",
           "selected": {
-            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000019/main.jpg",
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000019/fedor-main-20260929-final.jpg",
             "source_label": "User-curated stance photo · Fedor del Nasi",
             "source_url": "https://www.the-dobermann.com/males/40-a30/20-fedor-del-nasi?showall=1",
-            "curated_match_url": "https://www.the-dobermann.com/images/males/c/Fedor5.jpg"
+            "curated_match_url": "https://www.the-dobermann.com/images/males/c/Fedor_main.jpg"
           }
         },
         "DI-A-000020": {
