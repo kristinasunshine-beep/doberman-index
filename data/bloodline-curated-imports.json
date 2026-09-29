@@ -87,7 +87,7 @@
       "expected_height": 294,
       "r2_key": "ancestors/DI-A-000019/main.jpg",
       "source_label": "User-curated stance photo · Fedor del Nasi",
-      "status": "done",
+      "status": "pending",
       "filename_hints": [
         "fedor",
         "main"
@@ -107,7 +107,8 @@
           400
         ],
         "candidate_count": 28
-      }
+      },
+      "force_direct_candidate": true
     },
     {
       "ancestor_id": "DI-A-000026",
