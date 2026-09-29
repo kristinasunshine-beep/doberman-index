@@ -36,7 +36,11 @@
       "filename_hints": [
         "maxim",
         "litter"
-      ]
+      ],
+      "direct_candidates": [
+        "https://www.altobellodobermann.com/images/stories/Litters-images-pedigree/maxim-stand-litter.jpg"
+      ],
+      "match_threshold": 22
     },
     {
       "ancestor_id": "DI-A-000019",
