@@ -1,0 +1,62 @@
+name: Apply Curated Bloodline Images
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/apply-curated-bloodline.yml"
+      - "data/bloodline-curated-imports.json"
+      - "scripts/apply_curated_bloodline_imports.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: curated-bloodline-r2
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Pillow
+        run: python -m pip install --disable-pip-version-check pillow
+
+      - name: Require media admin key
+        env:
+          MEDIA_ADMIN_KEY: ${{ secrets.MEDIA_ADMIN_KEY }}
+        run: |
+          if [ -z "$MEDIA_ADMIN_KEY" ]; then
+            echo "::error::MEDIA_ADMIN_KEY is not configured."
+            exit 1
+          fi
+
+      - name: Upload curated images to R2 and bind Dante Bloodline
+        env:
+          MEDIA_ADMIN_KEY: ${{ secrets.MEDIA_ADMIN_KEY }}
+          DI_MEDIA_ADMIN_BASE: https://doberman-index-media-admin.dobermanindex-records.workers.dev
+        run: python scripts/apply_curated_bloodline_imports.py
+
+      - name: Validate Bloodline network
+        run: python scripts/validate_bloodline_network.py
+
+      - name: Commit structured bindings and import report
+        run: |
+          git add data/bloodline-curated-imports.json data/bloodline-images.json data/bloodline-photo-bindings.json data/bloodline-curated-import-report.json
+          if git diff --cached --quiet; then
+            echo "No structured Bloodline changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: apply curated Dante Bloodline images"
+          git push
