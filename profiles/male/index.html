@@ -4224,6 +4224,7 @@
 
     function related(){
       byId("relatedRail").innerHTML=profileData.related.length?profileData.related.map(({name,type,url,image,position},index)=>`<a href="${escapeHTML(url||"#profile")}" class="related-card" aria-pressed="false"><div class="related-card-top"><span>Relation ${String(index+1).padStart(2,"0")}</span><i aria-hidden="true"></i><span class="related-arrow" aria-hidden="true">↗</span></div><div class="related-card-body"><div class="related-thumb" aria-hidden="true">${image?`<img src="${escapeHTML(image)}" alt="" loading="lazy" style="object-position:${escapeHTML(position||"50% 50%")} ">`:escapeHTML(name.charAt(0))}</div><div class="related-copy"><strong>${escapeHTML(name)}</strong><span>${escapeHTML(type)}</span></div></div></a>`).join(""):'<div class="related-card"><div class="related-card-body"><div class="related-copy"><strong>No related profiles yet</strong><span>Connections appear after linked records are published.</span></div></div></div>';
+      requestAnimationFrame(activateRelatedScrollbar);
     }
 
     function selectCard(card){
@@ -4392,6 +4393,15 @@
       rail.removeAttribute("data-scrollbar-ready");
       const stale=rail.nextElementSibling;
       if(stale?.classList.contains("rail-scrollbar")&&stale.getAttribute("aria-controls")==="visualSlider")stale.remove();
+      installHorizontalRailScrollbars();
+    }
+
+    function activateRelatedScrollbar(){
+      const rail=byId("relatedRail");
+      if(!rail)return;
+      rail.removeAttribute("data-scrollbar-ready");
+      const stale=rail.nextElementSibling;
+      if(stale?.classList.contains("rail-scrollbar")&&stale.getAttribute("aria-controls")==="relatedRail")stale.remove();
       installHorizontalRailScrollbars();
     }
 
@@ -4612,11 +4622,22 @@
       installHorizontalRailScrollbars();
     }
 
-    function refreshDanteRelatedFromRegistry(){
+    async function refreshDanteRelatedFromRegistry(){
       const focal=registryRecords.find(record=>record.record_id==="DI-M-000001"&&record.entity_type==="doberman");
       if(!focal)return;
-      const liveRelated=buildRelated("DI-M-000001",{sire_id:focal.sire_id,dam_id:focal.dam_id,litter_id:focal.litter_id},{litter_ids:[]});
+      let parentage={sire_id:focal.sire_id,dam_id:focal.dam_id,litter_id:focal.litter_id};
+      let reproduction={litter_ids:[]};
+      try{
+        const response=await fetch(new URL(focal.path||"data/dobermans/DI-M-000001.json",repoRoot),{cache:"no-store"});
+        if(response.ok){
+          const record=await response.json();
+          parentage=record?.doberman?.parentage||parentage;
+          reproduction=record?.doberman?.reproduction||reproduction;
+        }
+      }catch(_){}
+      const liveRelated=buildRelated("DI-M-000001",parentage,reproduction);
       if(!liveRelated.length)return;
+      await hydrateRelatedMedia(liveRelated);
       profileData.related=liveRelated;
       related();
     }
@@ -4625,7 +4646,7 @@
       try{
         const registry=await fetch(new URL("data/registry.json",repoRoot),{cache:"no-store"}).then(response=>{if(!response.ok)throw new Error("Registry unavailable");return response.json()});
         registryRecords=array(registry.records);
-        refreshDanteRelatedFromRegistry();
+        await refreshDanteRelatedFromRegistry();
       }catch(error){
         console.warn("Doberman Index registry preview unavailable",error);
       }
