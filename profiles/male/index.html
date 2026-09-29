@@ -3794,6 +3794,13 @@
       registryRecords
         .filter(record=>record.entity_type==="doberman"&&record.status==="published"&&(record.sire_id===recordId||record.dam_id===recordId))
         .forEach(record=>add(record.record_id,"Indexed offspring"));
+
+      // Public litter integration: published litter records can contribute indexed offspring.
+      array(reproduction.litter_ids).forEach(litterRecordId=>{
+        const litterRecord=registryRecords.find(record=>record.entity_type==="litter"&&record.status==="published"&&record.record_id===litterRecordId);
+        array(litterRecord?.puppy_ids).forEach(puppyId=>add(puppyId,"Indexed offspring"));
+      });
+
       const litterId=parentage.litter_id||currentRecord.litter_id;
       if(litterId){
         registryRecords
