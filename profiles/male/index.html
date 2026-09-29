@@ -3193,7 +3193,7 @@
 .pedigree-analysis-ledger{display:grid;grid-template-columns:1fr 1fr;border-top:2px solid #dedede}
 .pedigree-analysis-ledger>div{display:grid;grid-template-columns:minmax(135px,.75fr) minmax(0,1.25fr);gap:16px;padding:15px 18px 15px 0;border-bottom:1px solid #343434}.pedigree-analysis-ledger>div:nth-child(odd){border-right:1px solid #343434}.pedigree-analysis-ledger>div:nth-child(even){padding-left:18px}.pedigree-analysis-ledger span{color:#777;font-size:9px;text-transform:uppercase;letter-spacing:.04em}.pedigree-analysis-ledger strong{color:#eee;font-size:16px;font-weight:650;line-height:1.18}.pedigree-analysis-ledger small{grid-column:2;color:#777;font-size:9px;line-height:1.4;margin-top:-8px}
 .fedor-trigger{width:100%;margin-top:26px;padding:17px 0;border:0;border-top:1px solid #484848;border-bottom:1px solid #484848;background:transparent;color:#fff;display:grid;grid-template-columns:180px minmax(0,1fr) auto;gap:22px;align-items:center;text-align:left;cursor:pointer}.fedor-trigger span{color:#777;font:800 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.08em}.fedor-trigger strong{font-size:16px}.fedor-trigger i{font-style:normal;color:var(--acid);font-size:10px;font-weight:750}
-.fedor-detail{display:grid;grid-template-columns:minmax(240px,.7fr) minmax(0,1.3fr);gap:0;margin-top:0;border:1px solid #414141;border-top:0;background:#151515}.fedor-detail[hidden]{display:none!important}.fedor-image-slot{min-height:360px;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;background:#202020;border-right:1px solid #3b3b3b}.fedor-image-slot span{color:#717171;font:800 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.08em}.fedor-image-slot strong{margin:12px 0 7px;color:#ccc;font-size:25px;letter-spacing:-.04em}.fedor-image-slot small{max-width:28ch;color:#777;font-size:9px;line-height:1.4}.fedor-detail-copy{padding:24px 28px}.fedor-title span{color:#777;font:800 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.08em}.fedor-title h3{margin:12px 0 24px;color:var(--acid);font-size:clamp(32px,3vw,46px);line-height:.9;letter-spacing:-.055em}.fedor-ledger{border-top:1px solid #555}.fedor-ledger>div{display:grid;grid-template-columns:145px minmax(0,1fr);gap:18px;padding:10px 0;border-bottom:1px solid #333}.fedor-ledger span{color:#777;font-size:9px;text-transform:uppercase}.fedor-ledger strong{color:#ddd;font-size:11px;line-height:1.35}.fedor-bloodline-link{margin-top:20px;padding:0;border:0;background:none;color:var(--acid);font-size:10px;font-weight:760;cursor:pointer}
+.fedor-detail{display:grid;grid-template-columns:minmax(240px,.7fr) minmax(0,1.3fr);gap:0;margin-top:0;border:1px solid #414141;border-top:0;background:#151515}.fedor-detail[hidden]{display:none!important}.fedor-image-slot{position:relative;min-height:360px;padding:0;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#202020;border-right:1px solid #3b3b3b}.fedor-image-slot img{display:block;width:100%;height:100%;min-height:360px;object-fit:contain;object-position:center;background:#202020}.fedor-image-slot span{position:absolute;left:20px;bottom:18px;padding:5px 7px;background:rgba(21,21,21,.78);color:#b8b8b8;font:800 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.08em}.fedor-image-slot strong{margin:12px 0 7px;color:#ccc;font-size:25px;letter-spacing:-.04em}.fedor-image-slot small{max-width:28ch;color:#777;font-size:9px;line-height:1.4}.fedor-detail-copy{padding:24px 28px}.fedor-title span{color:#777;font:800 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.08em}.fedor-title h3{margin:12px 0 24px;color:var(--acid);font-size:clamp(32px,3vw,46px);line-height:.9;letter-spacing:-.055em}.fedor-ledger{border-top:1px solid #555}.fedor-ledger>div{display:grid;grid-template-columns:145px minmax(0,1fr);gap:18px;padding:10px 0;border-bottom:1px solid #333}.fedor-ledger span{color:#777;font-size:9px;text-transform:uppercase}.fedor-ledger strong{color:#ddd;font-size:11px;line-height:1.35}.fedor-bloodline-link{margin-top:20px;padding:0;border:0;background:none;color:var(--acid);font-size:10px;font-weight:760;cursor:pointer}
 #pedigreeRepeatedRail{display:none!important}
 
 /* Make Breeding Lens clearly an internal module, not another unrelated chapter. */
@@ -3477,7 +3477,7 @@
           <span>REPEATED ANCESTOR</span><strong>Fedor del Nasi · 2×</strong><i>Open detail →</i>
         </button>
         <div class="fedor-detail" id="fedorDetailPanel" hidden>
-          <div class="fedor-image-slot"><span>STANCE IMAGE</span><strong>Not yet verified</strong><small>No unverified ancestor image is inserted into the record.</small></div>
+          <div class="fedor-image-slot"><img src="https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000019/fedor-main-20260929-final.jpg" alt="Fedor del Nasi stance image" loading="lazy"><span>STANCE IMAGE</span></div>
           <div class="fedor-detail-copy">
             <div class="fedor-title"><span>DI-A-000019 · G4</span><h3>Fedor del Nasi.</h3></div>
             <div class="fedor-ledger">
@@ -4670,7 +4670,15 @@
           trigger.querySelector("span").textContent="REPEATED ANCESTRY";
           trigger.querySelector("strong").textContent=`${repeats.length} repeated ancestor${repeats.length===1?"":"s"} · mapped detail`;
           const imageSlot=panel.querySelector(".fedor-image-slot");
-          if(imageSlot)imageSlot.innerHTML=`<span>CANONICAL GRAPH</span><strong>${escapeHTML(profileData.name)}</strong><small>Repeated ancestry below is derived from canonical DI-A nodes and exact S/D paths.</small>`;
+          if(imageSlot){
+            const primaryRepeat=repeats[0];
+            const repeatedNode=array(profileData.bloodline).find(node=>node.canonicalId===primaryRepeat?.canonicalId&&node.image);
+            if(repeatedNode?.image){
+              imageSlot.innerHTML=`<img src="${escapeHTML(repeatedNode.image)}" alt="${escapeHTML(primaryRepeat.name)} stance image" loading="lazy"><span>STANCE IMAGE</span>`;
+            }else{
+              imageSlot.innerHTML=`<span>CANONICAL GRAPH</span><strong>${escapeHTML(profileData.name)}</strong><small>Repeated ancestry below is derived from canonical DI-A nodes and exact S/D paths.</small>`;
+            }
+          }
           const title=panel.querySelector(".fedor-title");
           if(title)title.innerHTML=`<span>REPEATED ANCESTRY · ${escapeHTML(profileData.core.profileId)}</span><h3>Mapped recurrence.</h3>`;
           const detailLedger=panel.querySelector(".fedor-ledger");
