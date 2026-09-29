@@ -4351,6 +4351,42 @@ textarea {
   }
 }
 </style>
+
+<style id="available-puppies-clearance-fix">
+/* Keep the Available Puppies pill visibly separated from the search field at every scale. */
+#recordSearch .puppy-shortcut{
+  top:calc(100% + clamp(30px,3.2vh,44px))!important;
+  right:0!important;
+  left:auto!important;
+  z-index:25!important;
+  margin:0!important;
+  transform:none;
+}
+#recordSearch .puppy-shortcut:hover,
+#recordSearch .puppy-shortcut:focus-visible{
+  transform:translateY(-2px)!important;
+}
+
+/* At narrower desktop/tablet widths give it still more breathing room
+   instead of allowing the pill/arrow to ride into the search bar. */
+@media (min-width:681px) and (max-width:1100px){
+  #recordSearch .puppy-shortcut{
+    top:calc(100% + 34px)!important;
+  }
+}
+
+/* Mobile: keep it below the field, never over the input or submit button. */
+@media (max-width:680px){
+  #recordSearch .puppy-shortcut{
+    top:calc(100% + 24px)!important;
+    right:auto!important;
+    left:0!important;
+  }
+  #recordSearch.is-puppy-results .hero-search-results{
+    top:calc(100% + 82px)!important;
+  }
+}
+</style>
 </head>
 <body>
 <div aria-hidden="true" class="scroll-progress" id="scrollProgress"></div>
