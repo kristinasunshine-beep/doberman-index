@@ -143,13 +143,21 @@ def collect_candidates(item: dict) -> list[str]:
     return (direct + rest)[:28]
 
 def choose_image(item: dict) -> tuple[bytes, str, dict]:
+    target = int(item["expected_dhash"], 16)
+    threshold = int(item.get("match_threshold") or MATCH_THRESHOLD)
+
     if item.get("force_direct_candidate") and item.get("direct_candidates"):
         url = item["direct_candidates"][0]
-        data, ctype = request_bytes(url, referer=item["source_url"], timeout=20)
-        image = decode_image(data)
-        return data, url, {"forced_direct": True, "candidate_size": image.size, "candidate_count": 1}
+        try:
+            data, ctype = request_bytes(url, referer=item["source_url"], timeout=20)
+            image = decode_image(data)
+            dist = hamming(target, dhash_int(image))
+            if dist <= threshold:
+                return data, url, {"forced_direct": True, "dhash_distance": dist, "candidate_size": image.size, "candidate_count": 1}
+        except Exception:
+            pass
 
-    target = int(item["expected_dhash"], 16)
+
     exp_w = int(item.get("expected_width") or 0)
     exp_h = int(item.get("expected_height") or 0)
     source_page = item["source_url"]
@@ -236,11 +244,14 @@ def main():
     report = {"processed": [], "failed": [], "root_updates": roots}
 
     for item in queue.get("imports") or []:
+        if item.get("status") == "done":
+            continue
         aid = item["ancestor_id"]
         action = item["action"]
+        item_roots = item.get("target_roots") or roots
         try:
             if action == "remove_from_roots":
-                for root in roots:
+                for root in item_roots:
                     entry = ensure_root_item(manifest, root, aid)
                     entry.clear()
                     entry.update({
@@ -257,7 +268,7 @@ def main():
             jpg, size, quality = normalize_jpeg(raw)
             public_url = upload_r2(item["r2_key"], jpg, item)
 
-            for root in roots:
+            for root in item_roots:
                 entry = ensure_root_item(manifest, root, aid)
                 entry.clear()
                 entry.update({
