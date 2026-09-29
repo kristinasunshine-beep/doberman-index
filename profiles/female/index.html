@@ -582,7 +582,7 @@
       .hero{min-height:760px;padding-top:18px}
       .hero-corner.left{display:none}
       .hero-corner.right{display:none}
-      .hero-title,.hero-title[data-lines="1"],.hero-title[data-lines="2"],.hero-title[data-lines="3"]{top:11%;right:24px;width:calc(100% - 40px);font-size:clamp(66px,21vw,98px)}
+      .hero-title,.hero-title[data-lines="1"],.hero-title[data-lines="2"],.hero-title[data-lines="3"]{top:11%;left:max(28px,env(safe-area-inset-left));right:max(28px,env(safe-area-inset-right));width:auto;max-width:none;box-sizing:border-box;padding:0 2px;font-size:clamp(66px,21vw,98px);line-height:.88;overflow:visible}
       .hero-dossier{
         left:16px;
         top:297px;
@@ -3162,7 +3162,7 @@
 .pedigree-analysis-ledger{display:grid;grid-template-columns:1fr 1fr;border-top:2px solid #dedede}
 .pedigree-analysis-ledger>div{display:grid;grid-template-columns:minmax(135px,.75fr) minmax(0,1.25fr);gap:16px;padding:15px 18px 15px 0;border-bottom:1px solid #343434}.pedigree-analysis-ledger>div:nth-child(odd){border-right:1px solid #343434}.pedigree-analysis-ledger>div:nth-child(even){padding-left:18px}.pedigree-analysis-ledger span{color:#777;font-size:9px;text-transform:uppercase;letter-spacing:.04em}.pedigree-analysis-ledger strong{color:#eee;font-size:16px;font-weight:650;line-height:1.18}.pedigree-analysis-ledger small{grid-column:2;color:#777;font-size:9px;line-height:1.4;margin-top:-8px}
 .fedor-trigger{width:100%;margin-top:26px;padding:17px 0;border:0;border-top:1px solid #484848;border-bottom:1px solid #484848;background:transparent;color:#fff;display:grid;grid-template-columns:180px minmax(0,1fr) auto;gap:22px;align-items:center;text-align:left;cursor:pointer}.fedor-trigger span{color:#777;font:800 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.08em}.fedor-trigger strong{font-size:16px}.fedor-trigger i{font-style:normal;color:var(--acid);font-size:10px;font-weight:750}
-.fedor-detail{display:grid;grid-template-columns:minmax(240px,.7fr) minmax(0,1.3fr);gap:0;margin-top:0;border:1px solid #414141;border-top:0;background:#151515}.fedor-detail[hidden]{display:none!important}.fedor-image-slot{min-height:360px;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;background:#202020;border-right:1px solid #3b3b3b}.fedor-image-slot span{color:#717171;font:800 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.08em}.fedor-image-slot strong{margin:12px 0 7px;color:#ccc;font-size:25px;letter-spacing:-.04em}.fedor-image-slot small{max-width:28ch;color:#777;font-size:9px;line-height:1.4}.fedor-detail-copy{padding:24px 28px}.fedor-title span{color:#777;font:800 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.08em}.fedor-title h3{margin:12px 0 24px;color:var(--acid);font-size:clamp(32px,3vw,46px);line-height:.9;letter-spacing:-.055em}.fedor-ledger{border-top:1px solid #555}.fedor-ledger>div{display:grid;grid-template-columns:145px minmax(0,1fr);gap:18px;padding:10px 0;border-bottom:1px solid #333}.fedor-ledger span{color:#777;font-size:9px;text-transform:uppercase}.fedor-ledger strong{color:#ddd;font-size:11px;line-height:1.35}.fedor-bloodline-link{margin-top:20px;padding:0;border:0;background:none;color:var(--acid);font-size:10px;font-weight:760;cursor:pointer}
+.fedor-detail{display:block;margin-top:0;border:1px solid #414141;border-top:0;background:#151515}.fedor-detail[hidden]{display:none!important}.fedor-image-slot{min-height:360px;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;background:#202020;border-right:1px solid #3b3b3b}.fedor-image-slot span{color:#717171;font:800 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.08em}.fedor-image-slot strong{margin:12px 0 7px;color:#ccc;font-size:25px;letter-spacing:-.04em}.fedor-image-slot small{max-width:28ch;color:#777;font-size:9px;line-height:1.4}.fedor-detail-copy{padding:24px 28px}.fedor-title span{color:#777;font:800 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.08em}.fedor-title h3{margin:12px 0 24px;color:var(--acid);font-size:clamp(32px,3vw,46px);line-height:.9;letter-spacing:-.055em}.fedor-ledger{border-top:1px solid #555}.fedor-ledger>div{display:grid;grid-template-columns:145px minmax(0,1fr);gap:18px;padding:10px 0;border-bottom:1px solid #333}.fedor-ledger span{color:#777;font-size:9px;text-transform:uppercase}.fedor-ledger strong{color:#ddd;font-size:11px;line-height:1.35}.fedor-bloodline-link{margin-top:20px;padding:0;border:0;background:none;color:var(--acid);font-size:10px;font-weight:760;cursor:pointer}
 #pedigreeRepeatedRail{display:none!important}
 
 /* Make Breeding Lens clearly an internal module, not another unrelated chapter. */
@@ -3400,23 +3400,21 @@
 <div class="pedigree-deep-head">
 <span>Derived from the mapped pedigree</span>
 <h3>Beyond COI.</h3>
-<p>The same canonical tree can expose recurrence, contribution, branch concentration and the exact path behind the COI value.</p>
+<p>The same canonical tree can expose recurrence, branch concentration and cross-branch repetition.</p>
 </div>
 <div class="pedigree-analysis-ledger">
 <div><span>Known / unknown ancestors</span><strong>—</strong><small>All 30 ancestor positions are populated through four generations.</small></div>
 <div><span>Ancestor frequency</span><strong>—</strong><small>Highest recurrence; the other 28 unique ancestors occur once.</small></div>
 <div><span>Generation occurrence</span><strong>—</strong><small>Fedor appears once on each side of the pedigree.</small></div>
-<div><span>Ancestor contribution</span><strong>—</strong><small>Expected pedigree contribution from Fedor across two G4 paths; not genomic contribution.</small></div>
 <div><span>Line concentration</span><strong>—</strong><small>Fedor occupies 6.67% of mapped ancestor positions.</small></div>
-<div><span>Paternal / maternal</span><strong>—</strong><small>One occurrence per branch; expected contribution 6.25% from each path.</small></div>
-<div><span>Linebreeding paths</span><strong>—</strong><small>Sire-to-common-ancestor and dam-to-common-ancestor depth. This path yields 0.78125% pedigree COI.</small></div>
+<div><span>Paternal / maternal</span><strong>—</strong><small>One occurrence per branch.</small></div>
 <div><span>Shared ancestors</span><strong>—</strong><small>Fedor del Nasi is the mapped common ancestor connecting sire and dam lines.</small></div>
 </div>
 <button aria-controls="fedorDetailPanel" aria-expanded="false" class="fedor-trigger" id="fedorDetailTrigger" type="button">
 <span>REPEATED ANCESTOR</span><strong>—</strong><i>Open detail →</i>
 </button>
 <div class="fedor-detail" hidden="" id="fedorDetailPanel">
-<div class="fedor-image-slot"><span>STANCE IMAGE</span><strong>—</strong><small>No unverified ancestor image is inserted into the record.</small></div>
+
 <div class="fedor-detail-copy">
 <div class="fedor-title"><span>DI-A-000019 · G4</span><h3>Fedor del Nasi.</h3></div>
 <div class="fedor-ledger">
@@ -3867,12 +3865,15 @@
         return best?.lines||[parts.join(" ")];
       };
 
-      // Registered call-name stays on line 1. Kennel/prefix starts on line 2
-      // and may use line 3 only when that affix is unusually long.
+      const mobile=matchMedia("(max-width:680px)").matches;
+
+      // Registered/call-name stays together; kennel connector starts the next line.
+      // Mobile uses at most two title lines and the fitter scales long rows inward.
       if(affixIndex>0){
         const primary=words.slice(0,affixIndex).join(" ");
         const affixWords=words.slice(affixIndex);
         const affix=affixWords.join(" ");
+        if(mobile)return [primary,affix].slice(0,2);
         const affixLines=(affix.length<=30||affixWords.length<=3)
           ? [affix]
           : balanceInto(affixWords,2);
@@ -3883,6 +3884,7 @@
       if(words.length===2)return [words.join(" ")];
 
       const total=words.join(" ").length;
+      if(mobile)return balanceInto(words,total<=18?1:2).slice(0,2);
       const lineCount=(words.length<=5&&total<=34)?2:3;
       return balanceInto(words,lineCount);
     }
@@ -3892,12 +3894,15 @@
       const spans=[...title.querySelectorAll("span")]; if(!spans.length)return;
       const mobile=matchMedia("(max-width:680px)").matches;
       const lineCount=spans.length;
-      const baseline=mobile?98:(lineCount===3?142:178);
-      const minimum=mobile?48:64;
+      const baseline=mobile
+        ? (lineCount>=3?72:lineCount===2?86:98)
+        : (lineCount===3?142:178);
+      const minimum=mobile?34:64;
       title.style.fontSize=baseline+"px";
-      const available=Math.max(1,title.clientWidth);
+      const available=Math.max(1,title.clientWidth-(mobile?8:0));
       const widest=Math.max(...spans.map(span=>span.scrollWidth),1);
-      let fitted=Math.floor(Math.min(baseline,baseline*(available/widest)*.965));
+      const safety=mobile?.92:.965;
+      let fitted=Math.floor(Math.min(baseline,baseline*(available/widest)*safety));
       if(lineCount===3&&!mobile)fitted=Math.min(fitted,136);
       title.style.fontSize=Math.max(minimum,fitted)+"px";
     }
