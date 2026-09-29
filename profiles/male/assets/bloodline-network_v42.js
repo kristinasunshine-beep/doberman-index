@@ -1016,6 +1016,13 @@
         viewerImage.onload = () => {
           viewerPhotoCanvas.classList.remove("is-image-error");
           viewerImage.hidden = false;
+          // Recalculate only after intrinsic image dimensions are available.
+          // This preserves the complete stance inside the viewer instead of
+          // inheriting a stale size from the previously opened ancestor.
+          requestAnimationFrame(() => {
+            syncViewerStageClearance();
+            fitViewerImage();
+          });
         };
         viewerImage.onerror = () => {
           viewerPhotoCanvas.classList.add("is-image-error");
