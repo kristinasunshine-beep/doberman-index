@@ -4753,14 +4753,28 @@
       "DI-A-000023":{"src":"profiles/male/assets/bloodline-submitted/urbano-del-diamante-nero.webp","label":"Bloodline stance photo · Urbano del Diamante Nero","source_url":""},
       "DI-A-000024":{"src":"profiles/male/assets/bloodline-submitted/sharon-iz-zoosfery.webp","label":"Bloodline stance photo · Sharon iz Zoosfery","source_url":""}
     };
-    const applyOfflineBloodlinePhotos=(photos=offlineSubmittedBloodlinePhotos)=>{
+    const applyOfflineBloodlinePhotos=(photos=offlineSubmittedBloodlinePhotos,imageManifest=null)=>{
+      const manifestEntries=imageManifest?.records?.["DI-M-000001"]?.ancestors||{};
       offlineBloodlineNodes.forEach(node=>{
+        const manifestEntry=manifestEntries[node.canonicalId];
+        const manifestChoice=manifestEntry?.selected||manifestEntry?.suggested||{};
         const submitted=photos[node.canonicalId];
-        const src=submitted?.asset_path||submitted?.image_url||submitted?.src||"";
+
+        // Explicit root-specific missing state wins over the saved snapshot.
+        if(manifestEntry?.status==="missing"){
+          delete node.image;
+          delete node.imageSource;
+          delete node.imageSourceUrl;
+          return;
+        }
+
+        // Curated/manual override wins over the root manifest; root manifest wins over stale snapshot data.
+        const chosen=submitted&&Object.keys(submitted).length?submitted:manifestChoice;
+        const src=chosen?.asset_path||chosen?.image_url||chosen?.src||"";
         if(!src)return;
         node.image=mediaUrl(src);
-        node.imageSource=submitted.label||submitted.source_label||"Bloodline stance photo";
-        node.imageSourceUrl=submitted.source_url||"";
+        node.imageSource=chosen.label||chosen.source_label||"Bloodline stance photo";
+        node.imageSourceUrl=chosen.source_url||"";
       });
     };
     const mountOfflineBloodline=()=>{
@@ -4770,9 +4784,13 @@
     mountOfflineBloodline();
 
     async function syncOfflineBloodlinePhotos(){
-      const bindings=await fetch(new URL("data/bloodline-photo-bindings.json",repoRoot),{cache:"no-store"})
-        .then(response=>{if(!response.ok)throw new Error("Bloodline photo bindings unavailable");return response.json()});
-      applyOfflineBloodlinePhotos(bindings.photos||{});
+      const [manifest,bindings]=await Promise.all([
+        fetch(new URL("data/bloodline-images.json",repoRoot),{cache:"no-store"})
+          .then(response=>{if(!response.ok)throw new Error("Bloodline image manifest unavailable");return response.json()}),
+        fetch(new URL("data/bloodline-photo-bindings.json",repoRoot),{cache:"no-store"})
+          .then(response=>{if(!response.ok)throw new Error("Bloodline photo bindings unavailable");return response.json()})
+      ]);
+      applyOfflineBloodlinePhotos(bindings.photos||{},manifest);
       mountOfflineBloodline();
     }
 
