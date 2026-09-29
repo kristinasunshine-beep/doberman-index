@@ -51,9 +51,9 @@
           "status": "selected",
           "selected": {
             "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000007/main.jpg",
-            "source_label": "Altobello · official dogs in kennel · Maxim di Altobello",
-            "source_url": "https://www.altobellodobermann.com/component/content/article/46-dogs-in-kennel/1502-dogs-in-kennel",
-            "migrated_from": "https://www.altobellodobermann.com/images/stories/dogsinkennel/maksim.jpg"
+            "source_label": "User-curated stance photo · Maxim di Altobello",
+            "source_url": "https://www.altobellodobermann.com/shows/shows-2015/27-old-litters/870-maxim-di-altobello-x-xantia-di-altobello-q-litter",
+            "curated_match_url": "https://www.altobellodobermann.com/images/stories/Litters-images-pedigree/maxim-stand-litter.jpg"
           }
         },
         "DI-A-000008": {
@@ -70,8 +70,13 @@
           }
         },
         "DI-A-000010": {
-          "status": "missing",
-          "note": "No verified direct photograph of Zulu Lady di Altobello is currently bound. Family-context image of First di Altobello removed."
+          "status": "selected",
+          "selected": {
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000010/main.jpg",
+            "source_label": "User-curated stance photo · Zulu Lady di Altobello",
+            "source_url": "https://www.pedigreedatabase.com/doberman_pinscher/dog.html?id=2010989-zulu-lady-di-altobello?_v=20150518040219",
+            "curated_match_url": "https://www.pedigreedatabase.com/pictures/2010989.jpg"
+          }
         },
         "DI-A-000011": {
           "status": "selected",
@@ -149,9 +154,9 @@
           "status": "selected",
           "selected": {
             "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000019/main.jpg",
-            "source_label": "The-Dobermann · Giota gallery · fedor7",
-            "source_url": "https://www.the-dobermann.com/shows/gallery/653-idc-by-giota-fedor-del-nasi",
-            "migrated_from": "https://www.the-dobermann.com/images/Agiota/1/fedor7.JPG"
+            "source_label": "User-curated stance photo · Fedor del Nasi",
+            "source_url": "https://www.the-dobermann.com/males/40-a30/20-fedor-del-nasi?showall=1",
+            "curated_match_url": "https://www.the-dobermann.com/images/males/c/Fedor5.jpg"
           }
         },
         "DI-A-000020": {
@@ -173,13 +178,8 @@
           }
         },
         "DI-A-000022": {
-          "status": "selected",
-          "selected": {
-            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000022/main.jpg",
-            "source_label": "Bloodline stance photo · Ombra Omega Sawages",
-            "source_url": "https://www.pedigreedatabase.com/doberman_pinscher/dog.html?id=1960889-ombra-omega-sawages?_v=20150518041159",
-            "migrated_from_asset": "profiles/male/assets/bloodline-submitted/ombra-omega-sawages.jpg"
-          }
+          "status": "missing",
+          "note": "Remove low-resolution image from Dante Bloodline. Keep the global R2 object because another profile may still reference it."
         },
         "DI-A-000023": {
           "status": "selected",
@@ -211,9 +211,10 @@
         "DI-A-000026": {
           "status": "selected",
           "selected": {
-            "image_url": "https://grandevinko.com/admin/images/uploads/products/9385_1097.jpg",
-            "source_label": "Candidate · Tahi-Reme Triniti",
-            "source_url": "https://grandevinko.com/view-dog.php?id=26402"
+            "image_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000026/main.jpg",
+            "source_label": "User-curated stance photo · Tahi-Reme Triniti",
+            "source_url": "https://www.pedigreedatabase.com/doberman_pinscher/dog.html?id=804008-tahireme-triniti?_v=20101210145041",
+            "curated_match_url": "https://www.pedigreedatabase.com/pictures/804008.jpg"
           }
         },
         "DI-A-000027": {

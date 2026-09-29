@@ -1,0 +1,93 @@
+{
+  "processed": [
+    {
+      "record_id": "DI-A-000010",
+      "name": "Zulu Lady di Altobello",
+      "action": "upload_replace",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000010/main.jpg",
+      "bytes": 62860,
+      "dimensions": [
+        450,
+        340
+      ],
+      "quality": 95,
+      "match": {
+        "dhash_distance": 0,
+        "candidate_size": [
+          450,
+          340
+        ],
+        "candidate_count": 1
+      }
+    },
+    {
+      "record_id": "DI-A-000007",
+      "name": "Maxim di Altobello",
+      "action": "upload_replace",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000007/main.jpg",
+      "bytes": 56864,
+      "dimensions": [
+        390,
+        294
+      ],
+      "quality": 95,
+      "match": {
+        "dhash_distance": 20,
+        "candidate_size": [
+          390,
+          294
+        ],
+        "candidate_count": 15
+      }
+    },
+    {
+      "record_id": "DI-A-000019",
+      "name": "Fedor del Nasi",
+      "action": "upload_replace",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000019/main.jpg",
+      "bytes": 126921,
+      "dimensions": [
+        533,
+        400
+      ],
+      "quality": 95,
+      "match": {
+        "dhash_distance": 12,
+        "candidate_size": [
+          533,
+          400
+        ],
+        "candidate_count": 28
+      }
+    },
+    {
+      "record_id": "DI-A-000026",
+      "name": "Tahi-Reme Triniti",
+      "action": "upload_replace",
+      "to": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000026/main.jpg",
+      "bytes": 141287,
+      "dimensions": [
+        500,
+        429
+      ],
+      "quality": 95,
+      "match": {
+        "dhash_distance": 0,
+        "candidate_size": [
+          500,
+          429
+        ],
+        "candidate_count": 1
+      }
+    },
+    {
+      "record_id": "DI-A-000022",
+      "action": "remove_from_roots"
+    }
+  ],
+  "failed": [],
+  "root_updates": [
+    "DI-M-000001"
+  ],
+  "ok": true
+}

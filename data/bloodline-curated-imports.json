@@ -15,12 +15,28 @@
       "expected_height": 340,
       "r2_key": "ancestors/DI-A-000010/main.jpg",
       "source_label": "User-curated stance photo · Zulu Lady di Altobello",
-      "status": "pending",
+      "status": "done",
       "filename_hints": [
         "zulu",
         "lady",
         "2010989"
-      ]
+      ],
+      "public_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000010/main.jpg",
+      "matched_image_url": "https://www.pedigreedatabase.com/pictures/2010989.jpg",
+      "optimized_bytes": 62860,
+      "optimized_dimensions": [
+        450,
+        340
+      ],
+      "jpeg_quality": 95,
+      "match": {
+        "dhash_distance": 0,
+        "candidate_size": [
+          450,
+          340
+        ],
+        "candidate_count": 1
+      }
     },
     {
       "ancestor_id": "DI-A-000007",
@@ -32,7 +48,7 @@
       "expected_height": 381,
       "r2_key": "ancestors/DI-A-000007/main.jpg",
       "source_label": "User-curated stance photo · Maxim di Altobello",
-      "status": "pending",
+      "status": "done",
       "filename_hints": [
         "maxim",
         "litter"
@@ -40,7 +56,23 @@
       "direct_candidates": [
         "https://www.altobellodobermann.com/images/stories/Litters-images-pedigree/maxim-stand-litter.jpg"
       ],
-      "match_threshold": 22
+      "match_threshold": 22,
+      "public_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000007/main.jpg",
+      "matched_image_url": "https://www.altobellodobermann.com/images/stories/Litters-images-pedigree/maxim-stand-litter.jpg",
+      "optimized_bytes": 56864,
+      "optimized_dimensions": [
+        390,
+        294
+      ],
+      "jpeg_quality": 95,
+      "match": {
+        "dhash_distance": 20,
+        "candidate_size": [
+          390,
+          294
+        ],
+        "candidate_count": 15
+      }
     },
     {
       "ancestor_id": "DI-A-000019",
@@ -55,11 +87,27 @@
       "expected_height": 294,
       "r2_key": "ancestors/DI-A-000019/main.jpg",
       "source_label": "User-curated stance photo · Fedor del Nasi",
-      "status": "pending",
+      "status": "done",
       "filename_hints": [
         "fedor",
         "main"
-      ]
+      ],
+      "public_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000019/main.jpg",
+      "matched_image_url": "https://www.the-dobermann.com/images/males/c/Fedor5.jpg",
+      "optimized_bytes": 126921,
+      "optimized_dimensions": [
+        533,
+        400
+      ],
+      "jpeg_quality": 95,
+      "match": {
+        "dhash_distance": 12,
+        "candidate_size": [
+          533,
+          400
+        ],
+        "candidate_count": 28
+      }
     },
     {
       "ancestor_id": "DI-A-000026",
@@ -71,19 +119,35 @@
       "expected_height": 429,
       "r2_key": "ancestors/DI-A-000026/main.jpg",
       "source_label": "User-curated stance photo · Tahi-Reme Triniti",
-      "status": "pending",
+      "status": "done",
       "filename_hints": [
         "triniti",
         "tahi",
         "804008"
-      ]
+      ],
+      "public_url": "https://doberman-index-media-admin.dobermanindex-records.workers.dev/ancestors/DI-A-000026/main.jpg",
+      "matched_image_url": "https://www.pedigreedatabase.com/pictures/804008.jpg",
+      "optimized_bytes": 141287,
+      "optimized_dimensions": [
+        500,
+        429
+      ],
+      "jpeg_quality": 95,
+      "match": {
+        "dhash_distance": 0,
+        "candidate_size": [
+          500,
+          429
+        ],
+        "candidate_count": 1
+      }
     },
     {
       "ancestor_id": "DI-A-000022",
       "registered_name": "Ombra Omega Sawages",
       "action": "remove_from_roots",
       "note": "Remove low-resolution image from Dante Bloodline. Keep the global R2 object because another profile may still reference it.",
-      "status": "pending"
+      "status": "done"
     }
   ]
 }
