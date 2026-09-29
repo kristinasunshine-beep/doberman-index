@@ -4705,7 +4705,7 @@ const searchPublishedRecords=query=>{
   const needle=normalizeSearchText(query);
   if(!needle)return[];
   const singleLetter=/^\p{L}$/u.test(needle);
-  return portalRegistryRecords
+  const matches=portalRegistryRecords
     .filter(record=>{
       const displayName=normalizeSearchText(recordDisplayName(record));
       if(singleLetter){
@@ -4720,8 +4720,8 @@ const searchPublishedRecords=query=>{
       const an=normalizeSearchText(recordDisplayName(a));
       const bn=normalizeSearchText(recordDisplayName(b));
       return Number(bn.startsWith(needle))-Number(an.startsWith(needle))||an.localeCompare(bn);
-    })
-    .slice(0,8);
+    });
+  return (singleLetter?matches.slice(0,1):matches.slice(0,8));
 };
 
 const renderTypedSearch=()=>{
