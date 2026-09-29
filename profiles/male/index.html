@@ -132,7 +132,7 @@
       z-index:3;
       width:min(58vw,850px);
       font-size:clamp(80px,12.2vw,178px);
-      font-weight:700;
+      font-weight:800;
       line-height:.9;
       letter-spacing:-.07em;
       text-align:right;
@@ -163,7 +163,7 @@
     .dossier-copy strong{font-size:18px;font-weight:900;letter-spacing:-.045em}
     .dossier-copy p{max-width:245px;font-size:12px;line-height:1.42}
     .dossier-copy #heroMeta{margin-top:30px}
-    #heroMeta .hero-identity{display:block;font-weight:400;text-transform:none}
+    #heroMeta .hero-identity{display:block;font-weight:800;text-transform:none}
     #heroMeta .hero-credentials{display:block;margin-top:9px;font-size:.8em;font-weight:400;letter-spacing:.035em;line-height:1.45;text-transform:uppercase}
     #heroMeta .hero-credentials span{display:block}
     #heroMeta .hero-credentials span + span{margin-top:4px}
@@ -579,6 +579,7 @@
 
     @media(max-width:680px){
       :root{--pad:24px;--section-space:76px}
+      .hero-watermark{display:none!important}
       .float-nav{top:10px;padding-left:13px}
       .nav-link{display:none!important}
       .nav-brand{font-size:11px}
