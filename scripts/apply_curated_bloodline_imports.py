@@ -126,7 +126,21 @@ def collect_candidates(item: dict) -> list[str]:
         u = raw.replace("\\/", "/")
         if u not in urls:
             urls.append(u)
-    return urls[:180]
+    # Rank candidates so the exact user-selected dog image is tested first.
+    tokens = [t.lower() for t in re.findall(r"[a-zA-Z0-9]+", item.get("registered_name","")) if len(t) >= 4]
+    hints = [str(x).lower() for x in (item.get("filename_hints") or [])]
+    def rank(u: str):
+        lu = u.lower()
+        score = 0
+        score += sum(8 for t in tokens if t in lu)
+        score += sum(12 for t in hints if t in lu)
+        if re.search(r"main|stand|stack|profile", lu): score += 3
+        if re.search(r"thumb|icon|logo|banner|avatar", lu): score -= 8
+        return score
+    direct = list(item.get("direct_candidates") or [])
+    rest = [u for u in urls if u not in direct]
+    rest.sort(key=lambda u: (-rank(u), len(u)))
+    return (direct + rest)[:28]
 
 def choose_image(item: dict) -> tuple[bytes, str, dict]:
     target = int(item["expected_dhash"], 16)
@@ -138,7 +152,7 @@ def choose_image(item: dict) -> tuple[bytes, str, dict]:
     errors = []
     for idx, url in enumerate(candidates):
         try:
-            data, ctype = request_bytes(url, referer=source_page, timeout=20)
+            data, ctype = request_bytes(url, referer=source_page, timeout=8)
             if len(data) < 1000 or "html" in ctype:
                 continue
             image = decode_image(data)
@@ -150,7 +164,7 @@ def choose_image(item: dict) -> tuple[bytes, str, dict]:
                 expected_ratio = exp_w / exp_h
                 ratio_penalty = abs((image.width / image.height) - expected_ratio) * 8
             score = dist + ratio_penalty
-            scored.append((score, dist, -image.width*image.height, idx, url, data, image.size))
+            scored.append((score, dist, -image.width*image.height, idx, url, data, image.size))\n            if dist <= 2:\n                break
         except Exception as exc:
             errors.append((url, str(exc)))
     if not scored:
