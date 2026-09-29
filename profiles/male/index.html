@@ -599,25 +599,6 @@
         width:70%;
         height:clamp(346px,98vw,389px);
       }
-      body.dante-profile .hero{
-        min-height:max(900px,112svh);
-      }
-      body.dante-profile .hero-dossier{
-        left:2px;
-        right:2px;
-        width:auto;
-        max-width:none;
-        height:clamp(500px,64svh,590px);
-      }
-      body.dante-profile .dossier-copy{
-        padding:34px 32px 30px;
-      }
-      body.dante-profile .dossier-copy p{
-        max-width:none;
-      }
-      body.dante-profile .hero-jump{
-        top:clamp(825px,calc(297px + 64svh + 22px),930px);
-      }
       .hero-meta{right:24px;bottom:3%;gap:18px}
       .hero-meta > div:first-child{display:none}
       .hero-jump{
@@ -4418,7 +4399,6 @@
     }
 
     function heroMetadata(){
-      document.body.classList.toggle("dante-profile",profileData.core?.profileId==="DI-M-000001");
       document.body.classList.toggle("cowboy-profile",profileData.core?.profileId==="DI-M-000002");
       const identity=[profileData.kennel,profileData.country].filter(Boolean).join(" · ");
       byId("heroMeta").innerHTML=`<span class="hero-identity">${escapeHTML(identity)}</span>`;
