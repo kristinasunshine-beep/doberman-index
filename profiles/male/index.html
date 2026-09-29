@@ -3240,7 +3240,7 @@
           <div>
             <strong>DOBERMAN INDEX®</strong>
             <p id="heroMeta"><span class="hero-identity">Siempre Peligroso · Serbia</span></p>
-            <p class="dossier-statement">A structured profile connecting submitted health data, computed ancestry, performance and breeding intelligence.</p>
+            <p class="dossier-statement">A structured profile connecting submitted health data, computed ancestry, performance and Breeding Lens analysis.</p>
             <p class="dossier-bold"><a href="#recordDetails" aria-label="Open profile details">Details <span aria-hidden="true">→</span></a></p>
           </div>
         </div>
@@ -3399,7 +3399,7 @@
         </div>
         <p class="section-note"><b>Indexed relationships only</b>Only published Doberman Index profiles appear here. Pedigree relatives without their own DI record remain in Bloodline Network until they are indexed.</p>
       </header>
-      <div class="section-content slider reveal is-visible" id="relatedRail"><a href="../../profile.html?id=DI-M-000002" class="related-card" aria-pressed="false"><div class="related-card-top"><span>Relation 01</span><i aria-hidden="true"></i><span class="related-arrow" aria-hidden="true">↗</span></div><div class="related-card-body"><div class="related-thumb" aria-hidden="true"><img src="https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/profile.jpg" alt="" loading="lazy" decoding="async" style="object-position:50% 50%"></div><div class="related-copy"><small>DI-M-000002 · Indexed record</small><strong>Cowboy Lucky Luck di Altobello</strong><span>Sire</span></div></div></a></div>
+      <div class="section-content slider reveal is-visible" id="relatedRail"><a href="../../profile.html?id=DI-M-000002" class="related-card" aria-pressed="false"><div class="related-card-top"><span>Relation 01</span><i aria-hidden="true"></i><span class="related-arrow" aria-hidden="true">↗</span></div><div class="related-card-body"><div class="related-thumb" aria-hidden="true"><img src="https://doberman-index-media-admin.dobermanindex-records.workers.dev/dogs/DI-M-000002/stack.jpg" alt="" loading="lazy" decoding="async" style="object-position:50% 50%"></div><div class="related-copy"><small>DI-M-000002 · Indexed record</small><strong>Cowboy Lucky Luck di Altobello</strong><span>Sire</span></div></div></a></div>
       <div class="rail-scrollbar" role="group" aria-controls="relatedRail" aria-label="Profile connections horizontal navigation"><button class="rail-scrollbar-arrow prev" type="button" aria-label="Scroll Profile connections left"></button><div class="rail-scrollbar-track"><div class="rail-scrollbar-indicator" role="scrollbar" tabindex="0" aria-controls="relatedRail" aria-label="Move through Profile connections" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div><button class="rail-scrollbar-arrow next" type="button" aria-label="Scroll Profile connections right"></button></div>
     </section>
 
@@ -3423,11 +3423,11 @@
       <header class="section-head reveal">
         <div>
           <div class="section-index"><span>04</span><i></i><span>Explainable breeding context</span></div>
-          <h2 class="section-title">Breeding<br>intelligence.</h2>
+          <h2 class="section-title">Breeding<br>lens.</h2>
         </div>
         <p class="section-note"><b>Pedigree → record → pairing.</b>First understand the ancestry, then interpret the current Doberman record, then test one specific pairing.</p>
       </header>
-      <nav class="breeding-master-nav" aria-label="Breeding Intelligence modules">
+      <nav class="breeding-master-nav" aria-label="Breeding Lens modules">
         <a href="#pedigree-intelligence"><span>04A</span><strong>Pedigree intelligence</strong></a>
         <a href="#breeding-lens"><span>04B</span><strong>Breeding lens</strong></a>
         <a href="#pairing"><span>04C</span><strong>Pairing insight</strong></a>
@@ -3576,7 +3576,7 @@
           <h2 class="section-title">Breeding<br>lens.</h2>
         </div>
         <div class="performance-side">
-          <p class="section-note"><b>Single-dog intelligence</b>The submitted record is converted into a profile signature, documented assets, control points, evidence gaps and a pair-ready baseline — all traceable to the material supplied for this Doberman.</p>
+          <p class="section-note"><b>Breeding Lens analysis</b>The submitted record is converted into a profile signature, documented assets, control points, evidence gaps and a pair-ready baseline — all traceable to the material supplied for this Doberman.</p>
         </div>
       </header>
       <div class="section-content reveal breeding-lens-v4" id="breedingLensRail">
@@ -3592,7 +3592,7 @@
       <div class="pairing-module-kicker">04C · PAIRING INTELLIGENCE</div>
       <div class="pairing-grid reveal">
         <div>
-          <div class="pairing-kicker">AI-assisted breeding intelligence</div>
+          <div class="pairing-kicker">Pair-specific comparison</div>
           <h2 class="pairing-title">Pairing<br>insight.</h2>
         </div>
         <div class="pairing-copy">
@@ -3813,7 +3813,7 @@
           if(!response.ok)return;
           const record=await response.json();
           const media=record?.doberman?.media||{};
-          const role=media.profile?"profile":media.stack?"stack":media.hero?"hero":"head";
+          const role=media.stack?"stack":media.profile?"profile":media.hero?"hero":"head";
           const preferred=media[role]||registry.hero;
           if(preferred)item.image=mediaUrl(preferred);
           item.position=focalPosition(focalPointFor(media,role)||registry.hero_focal_point);
@@ -4406,13 +4406,17 @@
         if(!rail.id)rail.id=`contentRail${index+1}`;
 
         const sectionLabel=rail.closest(".section")?.querySelector(".section-index span:last-child")?.textContent.trim()||"Content";
-        const scrollbar=document.createElement("div");
-        scrollbar.className="rail-scrollbar";
-        scrollbar.setAttribute("role","group");
-        scrollbar.setAttribute("aria-controls",rail.id);
-        scrollbar.setAttribute("aria-label",`${sectionLabel} horizontal navigation`);
-        scrollbar.innerHTML=`<button class="rail-scrollbar-arrow prev" type="button" aria-label="Scroll ${escapeHTML(sectionLabel)} left"></button><div class="rail-scrollbar-track"><div class="rail-scrollbar-indicator" role="scrollbar" tabindex="0" aria-controls="${rail.id}" aria-label="Move through ${escapeHTML(sectionLabel)}" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div><button class="rail-scrollbar-arrow next" type="button" aria-label="Scroll ${escapeHTML(sectionLabel)} right"></button>`;
-        rail.insertAdjacentElement("afterend",scrollbar);
+        const adjacent=rail.nextElementSibling;
+        const existing=adjacent?.classList.contains("rail-scrollbar")&&adjacent.getAttribute("aria-controls")===rail.id?adjacent:null;
+        const scrollbar=existing||document.createElement("div");
+        if(!existing){
+          scrollbar.className="rail-scrollbar";
+          scrollbar.setAttribute("role","group");
+          scrollbar.setAttribute("aria-controls",rail.id);
+          scrollbar.setAttribute("aria-label",`${sectionLabel} horizontal navigation`);
+          scrollbar.innerHTML=`<button class="rail-scrollbar-arrow prev" type="button" aria-label="Scroll ${escapeHTML(sectionLabel)} left"></button><div class="rail-scrollbar-track"><div class="rail-scrollbar-indicator" role="scrollbar" tabindex="0" aria-controls="${rail.id}" aria-label="Move through ${escapeHTML(sectionLabel)}" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div><button class="rail-scrollbar-arrow next" type="button" aria-label="Scroll ${escapeHTML(sectionLabel)} right"></button>`;
+          rail.insertAdjacentElement("afterend",scrollbar);
+        }
 
         const track=scrollbar.querySelector(".rail-scrollbar-track");
         const indicator=scrollbar.querySelector(".rail-scrollbar-indicator");
@@ -4552,10 +4556,11 @@
     function activateRelatedScrollbar(){
       const rail=byId("relatedRail");
       if(!rail)return;
-      rail.removeAttribute("data-scrollbar-ready");
-      const stale=rail.nextElementSibling;
-      if(stale?.classList.contains("rail-scrollbar")&&stale.getAttribute("aria-controls")==="relatedRail")stale.remove();
-      installHorizontalRailScrollbars();
+      if(!rail.dataset.scrollbarReady){
+        installHorizontalRailScrollbars();
+        return;
+      }
+      rail.dispatchEvent(new Event("scroll"));
     }
 
     function deskRows(data){
