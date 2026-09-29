@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0.0",
+  "target_roots": [
+    "DI-M-000001"
+  ],
+  "description": "User-curated Bloodline photo imports for Dion Dante. Binary images remain outside GitHub; workflow resolves the exact image from the supplied source page by perceptual fingerprint, optimizes it, uploads to R2, then updates structured bindings.",
+  "imports": [
+    {
+      "ancestor_id": "DI-A-000010",
+      "registered_name": "Zulu Lady di Altobello",
+      "action": "upload_replace",
+      "source_url": "https://www.pedigreedatabase.com/doberman_pinscher/dog.html?id=2010989-zulu-lady-di-altobello?_v=20150518040219",
+      "expected_dhash": "f395c0607426a327",
+      "expected_width": 450,
+      "expected_height": 340,
+      "r2_key": "ancestors/DI-A-000010/main.jpg",
+      "source_label": "User-curated stance photo · Zulu Lady di Altobello",
+      "status": "pending"
+    },
+    {
+      "ancestor_id": "DI-A-000007",
+      "registered_name": "Maxim di Altobello",
+      "action": "upload_replace",
+      "source_url": "https://www.altobellodobermann.com/shows/shows-2015/27-old-litters/870-maxim-di-altobello-x-xantia-di-altobello-q-litter",
+      "expected_dhash": "4f9e9cf1e19a9bd9",
+      "expected_width": 500,
+      "expected_height": 381,
+      "r2_key": "ancestors/DI-A-000007/main.jpg",
+      "source_label": "User-curated stance photo · Maxim di Altobello",
+      "status": "pending"
+    },
+    {
+      "ancestor_id": "DI-A-000019",
+      "registered_name": "Fedor del Nasi",
+      "action": "upload_replace",
+      "source_url": "https://www.the-dobermann.com/males/40-a30/20-fedor-del-nasi?showall=1",
+      "direct_candidates": [
+        "https://www.the-dobermann.com/images/males/c/Fedor_main.jpg"
+      ],
+      "expected_dhash": "866c7cf1db9aba98",
+      "expected_width": 390,
+      "expected_height": 294,
+      "r2_key": "ancestors/DI-A-000019/main.jpg",
+      "source_label": "User-curated stance photo · Fedor del Nasi",
+      "status": "pending"
+    },
+    {
+      "ancestor_id": "DI-A-000026",
+      "registered_name": "Tahi-Reme Triniti",
+      "action": "upload_replace",
+      "source_url": "https://www.pedigreedatabase.com/doberman_pinscher/dog.html?id=804008-tahireme-triniti?_v=20101210145041",
+      "expected_dhash": "9d99c0646466234b",
+      "expected_width": 500,
+      "expected_height": 429,
+      "r2_key": "ancestors/DI-A-000026/main.jpg",
+      "source_label": "User-curated stance photo · Tahi-Reme Triniti",
+      "status": "pending"
+    },
+    {
+      "ancestor_id": "DI-A-000022",
+      "registered_name": "Ombra Omega Sawages",
+      "action": "remove_from_roots",
+      "note": "Remove low-resolution image from Dante Bloodline. Keep the global R2 object because another profile may still reference it.",
+      "status": "pending"
+    }
+  ]
+}
