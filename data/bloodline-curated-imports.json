@@ -79,7 +79,9 @@
       "registered_name": "Fedor del Nasi",
       "action": "upload_replace",
       "source_url": "https://www.the-dobermann.com/males/40-a30/20-fedor-del-nasi?showall=1",
-      "direct_candidates": [],
+      "direct_candidates": [
+        "https://www.the-dobermann.com/images/males/c/Fedor_main.jpg"
+      ],
       "expected_dhash": "866c7cf1db9aba98",
       "expected_width": 390,
       "expected_height": 294,
@@ -90,7 +92,7 @@
         "fedor",
         "main"
       ],
-      "force_direct_candidate": false,
+      "force_direct_candidate": true,
       "target_roots": [
         "DI-M-000001",
         "DI-M-000002"
