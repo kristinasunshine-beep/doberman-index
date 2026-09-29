@@ -4745,7 +4745,9 @@ const searchPublishedRecords=query=>{
     .filter(record=>{
       const displayName=normalizeSearchText(recordDisplayName(record));
       if(singleLetter){
-        return record.entity_type==='doberman'&&displayName.startsWith(needle);
+        if(record.entity_type!=='doberman')return false;
+        const registeredName=normalizeSearchText(record.registered_name||'');
+        return registeredName.startsWith(needle);
       }
       return [
         record.registered_name,record.name,record.kennel_name,
@@ -4753,11 +4755,11 @@ const searchPublishedRecords=query=>{
       ].some(value=>normalizeSearchText(value).includes(needle));
     })
     .sort((a,b)=>{
-      const an=normalizeSearchText(recordDisplayName(a));
-      const bn=normalizeSearchText(recordDisplayName(b));
+      const an=normalizeSearchText(record.registered_name||recordDisplayName(a));
+      const bn=normalizeSearchText(record.registered_name||recordDisplayName(b));
       return Number(bn.startsWith(needle))-Number(an.startsWith(needle))||an.localeCompare(bn);
     });
-  return (singleLetter?matches.slice(0,1):matches.slice(0,8));
+  return (singleLetter?matches.slice(0,5):matches.slice(0,8));
 };
 
 const renderTypedSearch=()=>{
