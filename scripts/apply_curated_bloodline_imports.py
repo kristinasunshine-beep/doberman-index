@@ -173,9 +173,10 @@ def choose_image(item: dict) -> tuple[bytes, str, dict]:
         raise RuntimeError(f"no decodable image candidates found; first errors: {errors[:3]}")
     scored.sort(key=lambda x: (x[0], x[1], x[2], x[3]))
     best = scored[0]
-    if best[1] > MATCH_THRESHOLD:
+    threshold = int(item.get("match_threshold") or MATCH_THRESHOLD)
+    if best[1] > threshold:
         top = [{"url":x[4],"dhash_distance":x[1],"size":x[6]} for x in scored[:5]]
-        raise RuntimeError(f"no safe fingerprint match (best distance {best[1]} > {MATCH_THRESHOLD}); candidates={top}")
+        raise RuntimeError(f"no safe fingerprint match (best distance {best[1]} > {threshold}); candidates={top}")
     return best[5], best[4], {"dhash_distance":best[1], "candidate_size":best[6], "candidate_count":len(scored)}
 
 def normalize_jpeg(data: bytes) -> tuple[bytes, tuple[int,int], int]:
