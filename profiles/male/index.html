@@ -586,15 +586,32 @@
       .hero{min-height:760px;padding-top:18px}
       .hero-corner.left{display:none}
       .hero-corner.right{display:none}
-      .hero-title,.hero-title[data-lines="1"],.hero-title[data-lines="2"],.hero-title[data-lines="3"]{top:clamp(108px,14svh,132px);left:max(28px,env(safe-area-inset-left));right:max(28px,env(safe-area-inset-right));width:auto;max-width:none;box-sizing:border-box;padding:0 2px;font-size:clamp(66px,21vw,98px);line-height:.88;overflow:visible}
-      .hero-title[data-lines="3"]{top:clamp(92px,12svh,112px);line-height:.86}
+      .hero-title,.hero-title[data-lines="1"],.hero-title[data-lines="2"],.hero-title[data-lines="3"]{top:clamp(108px,14svh,132px);left:max(28px,env(safe-area-inset-left));right:max(28px,env(safe-area-inset-right));width:auto;max-width:none;box-sizing:border-box;padding:0 2px;font-size:clamp(66px,21vw,98px);line-height:.96;overflow:visible}
+      .hero-title[data-lines="3"]{top:clamp(92px,12svh,112px);line-height:.94}
       .hero-title span{max-width:100%;white-space:nowrap}
+      .hero-title span + span{margin-top:.09em}
+      #heroMeta .hero-identity{font-size:14px;line-height:1.3}
       .hero-dossier{
         left:16px;
         top:297px;
         bottom:auto;
         width:70%;
         height:clamp(346px,98vw,389px);
+      }
+      body.dante-profile .hero-dossier{
+        left:10px;
+        right:10px;
+        width:auto;
+        height:clamp(440px,58svh,520px);
+      }
+      body.dante-profile .dossier-copy{
+        padding:32px 30px 28px;
+      }
+      body.dante-profile .dossier-copy p{
+        max-width:none;
+      }
+      body.dante-profile .hero-jump{
+        top:clamp(760px,calc(297px + 58svh + 20px),850px);
       }
       .hero-meta{right:24px;bottom:3%;gap:18px}
       .hero-meta > div:first-child{display:none}
@@ -605,8 +622,35 @@
       }
       .hero-watermark{left:calc(16px + 70% - 3px);top:521px;bottom:auto;transform:translateX(-.045em)}
       .core-ticker::after{width:32px}
-      .core-chip{width:185px;min-height:72px;padding:12px 30px 11px 24px}
-      .core-chip::before{right:10px}
+      .core-chip{
+        width:200px;
+        min-width:200px;
+        min-height:76px;
+        padding:12px 52px 11px 24px;
+        box-sizing:border-box;
+      }
+      .core-chip::after{right:18px}
+      .core-chip strong{
+        max-width:100%;
+        white-space:normal;
+        overflow-wrap:break-word;
+        line-height:1.08;
+      }
+      .core-chip[data-core-key="fullName"]{
+        width:min(82vw,320px);
+        min-width:min(82vw,320px);
+      }
+      .core-chip[data-core-key="fullName"] strong{
+        font-size:16px;
+        line-height:1.12;
+        letter-spacing:-.035em;
+      }
+      .core-chip[data-core-key="country"]{
+        width:220px;
+        min-width:220px;
+        padding-right:60px;
+      }
+      .core-chip[data-core-key="country"]::after{right:20px}
       .section{min-height:auto}
       .section-title{font-size:clamp(54px,17vw,80px)}
       .section-head{gap:24px;margin-bottom:54px}
@@ -4294,7 +4338,7 @@
     function core(){
       const labels={fullName:"Registered name",sex:"Sex",dateOfBirth:"Date of birth",lifeStage:"Life stage",lifeStatus:"Life status",lifeSpan:"Life span",color:"Colour",kennel:"Kennel",country:"Country",registration:"Registration authority",registrationNumber:"Registration number",owner:"Owner",breeder:"Breeder",location:"Location",studServiceStatus:"Stud service status",profileId:"DI profile number"};
       const entries=Object.entries(profileData.core).filter(([,value])=>!["","—","Not submitted","Not applicable"].includes(String(value??"").trim()));
-      const render=duplicate=>entries.map(([key,value])=>`<div class="core-chip" role="button" tabindex="${duplicate?"-1":"0"}" aria-pressed="false"${duplicate?' aria-hidden="true"':""}><span>${escapeHTML(labels[key]||labelize(key))}</span><strong>${escapeHTML(value)}</strong></div>`).join("");
+      const render=duplicate=>entries.map(([key,value])=>`<div class="core-chip" data-core-key="${escapeHTML(key)}" role="button" tabindex="${duplicate?"-1":"0"}" aria-pressed="false"${duplicate?' aria-hidden="true"':""}><span>${escapeHTML(labels[key]||labelize(key))}</span><strong>${escapeHTML(value)}</strong></div>`).join("");
       byId("coreRail").innerHTML=render(false)+render(true);
     }
 
@@ -4369,6 +4413,7 @@
     }
 
     function heroMetadata(){
+      document.body.classList.toggle("dante-profile",profileData.core?.profileId==="DI-M-000001");
       const identity=[profileData.kennel,profileData.country].filter(Boolean).join(" · ");
       byId("heroMeta").innerHTML=`<span class="hero-identity">${escapeHTML(identity)}</span>`;
     }
