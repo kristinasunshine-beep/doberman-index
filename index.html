@@ -3899,7 +3899,7 @@ textarea {
 }
 .hero-search-results{
   position:absolute;
-  top:calc(100% + 10px);
+  top:calc(100% + 34px);
   right:0;
   z-index:40;
   width:100%;
@@ -4042,17 +4042,17 @@ textarea {
   font-size:15px;
 }
 .hero-search.is-puppy-results .hero-search-results{
-  top:calc(100% + 66px);
-  border-top-color:var(--acid);
+  border-top-color:var(--ink);
   background:var(--ink);
   color:var(--white,#fff);
 }
 .hero-search.is-puppy-results .search-results-head{
-  background:var(--acid);
-  color:var(--ink);
+  background:#242424;
+  color:var(--white,#fff);
+  border-bottom:1px solid #414141;
 }
-.hero-search.is-puppy-results .search-results-head::before{background:var(--ink)}
-.hero-search.is-puppy-results .search-results-head em{color:rgba(18,18,18,.6)}
+.hero-search.is-puppy-results .search-results-head::before{background:#73736e}
+.hero-search.is-puppy-results .search-results-head em{color:#b0b0aa}
 .hero-search.is-puppy-results .search-result{
   border-bottom-color:rgba(255,255,255,.15);
   background:var(--ink);
@@ -4081,8 +4081,7 @@ textarea {
     font-size:8px;
   }
   .puppy-shortcut strong{width:23px;height:23px;font-size:11px}
-  .hero-search-results{top:calc(100% + 8px);max-height:250px}
-  .hero-search.is-puppy-results .hero-search-results{top:calc(100% + 58px)}
+  .hero-search-results{top:calc(100% + 32px);max-height:250px}
   .search-results-head{min-height:46px;padding:0 12px;font-size:10px}
   .search-results-head em{font-size:9px}
   .search-result{
@@ -4382,12 +4381,25 @@ textarea {
 </style>
 
 <style id="available-puppies-clearance-fix">
-/* Keep the Available Puppies pill visibly separated from the search field at every scale. */
+/* One spacing system: the trays always clear the search arrow and puppy pill. */
+#recordSearch{
+  --di-search-tray-gap:34px;
+  --di-puppy-pill-offset:clamp(30px,3.2vh,44px);
+  --di-puppy-pill-height:44px;
+  --di-puppy-tray-gap:18px;
+}
+#recordSearch .hero-search-results{
+  top:calc(100% + var(--di-search-tray-gap))!important;
+}
 #recordSearch .puppy-shortcut{
-  top:calc(100% + clamp(30px,3.2vh,44px))!important;
+  top:calc(100% + var(--di-puppy-pill-offset))!important;
   right:0!important;
   left:auto!important;
   z-index:25!important;
+  height:var(--di-puppy-pill-height);
+  min-height:var(--di-puppy-pill-height);
+  box-sizing:border-box;
+  white-space:nowrap;
   margin:0!important;
   transform:none;
 }
@@ -4395,24 +4407,24 @@ textarea {
 #recordSearch .puppy-shortcut:focus-visible{
   transform:translateY(-2px)!important;
 }
-
-/* At narrower desktop/tablet widths give it still more breathing room
-   instead of allowing the pill/arrow to ride into the search bar. */
-@media (min-width:681px) and (max-width:1100px){
-  #recordSearch .puppy-shortcut{
-    top:calc(100% + 34px)!important;
-  }
+#recordSearch.is-puppy-results .hero-search-results{
+  top:calc(100% + var(--di-puppy-pill-offset) + var(--di-puppy-pill-height) + var(--di-puppy-tray-gap))!important;
 }
 
-/* Mobile: keep it below the field, never over the input or submit button. */
+/* Match the pill offset to the actual mobile/tablet layout. */
+@media (min-width:681px) and (max-width:1100px){
+  #recordSearch{--di-puppy-pill-offset:34px}
+}
 @media (max-width:680px){
+  #recordSearch{
+    --di-search-tray-gap:32px;
+    --di-puppy-pill-offset:24px;
+    --di-puppy-pill-height:38px;
+    --di-puppy-tray-gap:18px;
+  }
   #recordSearch .puppy-shortcut{
-    top:calc(100% + 24px)!important;
     right:auto!important;
     left:0!important;
-  }
-  #recordSearch.is-puppy-results .hero-search-results{
-    top:calc(100% + 82px)!important;
   }
 }
 </style>
