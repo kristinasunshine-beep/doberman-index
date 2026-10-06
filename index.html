@@ -4786,9 +4786,7 @@ const searchPublishedRecords=query=>{
     .filter(record=>{
       const displayName=normalizeSearchText(recordDisplayName(record));
       if(singleLetter){
-        if(record.entity_type!=='doberman')return false;
-        const registeredName=normalizeSearchText(record.registered_name||'');
-        return registeredName.startsWith(needle);
+        return record.entity_type==='doberman'&&displayName.startsWith(needle);
       }
       return [
         record.registered_name,record.name,record.kennel_name,
