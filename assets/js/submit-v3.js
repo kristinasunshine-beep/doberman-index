@@ -139,23 +139,16 @@
     });
   }
 
-  async function validateMovementVideoDuration(field, { clearOnFailure = false } = {}) {
+  async function validateMovementVideoDuration(field) {
     const file = field?.files?.[0];
     if (!file) { if (field) delete field.dataset.durationSeconds; return true; }
     try {
       const seconds = await videoDurationSeconds(file);
-      if (seconds < MOVEMENT_VIDEO_MIN_SECONDS || seconds > MOVEMENT_VIDEO_MAX_SECONDS) {
-        setError(`${file.name} is ${seconds.toFixed(1)} seconds. Movement video must be 3–15 seconds.`, field);
-        if (clearOnFailure) { field.value = ""; delete field.dataset.durationSeconds; updateFileLabel(field); }
-        return false;
-      }
-      field.dataset.durationSeconds = seconds.toFixed(3);
-      return true;
+      if (Number.isFinite(seconds)) field.dataset.durationSeconds = seconds.toFixed(3);
     } catch (_) {
-      setError(`We could not read the duration of ${file.name}. Please use an MP4 or MOV video that is 3–15 seconds long.`, field);
-      if (clearOnFailure) { field.value = ""; delete field.dataset.durationSeconds; updateFileLabel(field); }
-      return false;
+      delete field.dataset.durationSeconds;
     }
+    return true;
   }
 
   function validateFileField(field) {
