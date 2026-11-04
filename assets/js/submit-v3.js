@@ -167,7 +167,7 @@
         return false;
       }
       if (kind === "video" && file.size > VIDEO_MAX_BYTES) {
-        setError(`${file.name} is too large. Keep the movement video below 180 MB.`, field);
+        setError(`${file.name} is too large. Keep the gait clip below 180 MB.`, field);
         return false;
       }
     }
@@ -188,7 +188,7 @@
     if (index === 3) {
       const photoCount = ownerPhotoCount();
       if (photoCount > 20) {
-        setError(`You selected ${photoCount} photos. Please keep Gallery & Movement to a maximum of 20 photos total.`, form.elements.namedItem("gallery_photos"));
+        setError(`You selected ${photoCount} photos. Please keep Gallery & Gait to a maximum of 20 photos total.`, form.elements.namedItem("gallery_photos"));
         return false;
       }
       const galleryInput = form.elements.namedItem("gallery_photos");
@@ -259,7 +259,7 @@
       { step: 0, kicker: "01 / ABOUT", title: value("registered_name") || "Doberman details", meta: [`${value("life_stage") || "—"} · ${value("life_status") || "—"} · ${value("sex") || "—"}`, value("country") || "Country not added"].join(" · ") },
       { step: 1, kicker: "02 / PEDIGREE & HEALTH", title: hasPedigree ? "Pedigree included" : "Pedigree not added", meta: healthResults ? `${healthResults} health entr${healthResults === 1 ? "y" : "ies"}` : "No health details added" },
       { step: 2, kicker: "03 / PROFILE TRAITS & RESULTS", title: controlledCount ? `${controlledCount} standardized trait${controlledCount === 1 ? "" : "s"} selected` : "No profile traits selected", meta: achievementCount ? `${achievementCount} documented result entr${achievementCount === 1 ? "y" : "ies"}` : "No documented results added" },
-      { step: 3, kicker: "04 / PHOTOS & MOVEMENT", title: `${selectedFiles} file${selectedFiles === 1 ? "" : "s"} selected`, meta: form.elements.namedItem("hero_photo").files.length ? "Main photo ready" : "Main photo required" },
+      { step: 3, kicker: "04 / PHOTOS & GAIT", title: `${selectedFiles} file${selectedFiles === 1 ? "" : "s"} selected`, meta: form.elements.namedItem("hero_photo").files.length ? "Main photo ready" : "Main photo required" },
     ];
     review.innerHTML = groups.map((group) => `
       <article class="review-section-card">
