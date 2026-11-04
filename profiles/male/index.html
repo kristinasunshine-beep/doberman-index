@@ -3308,7 +3308,7 @@
       <div class="media-observation reveal" id="mediaObservation">
         <div class="media-observation-intro">
           <span class="desk-eyebrow">MEDIA-DERIVED PROFILE</span>
-          <h3>Gait.</h3>
+          <h3>Movement.</h3>
           <p>A standardized 3–15 s natural trot supports structured review of rhythm and stride consistency.</p>
           <strong>Structured visual observation — not a veterinary or conformation judgement.</strong>
         </div>
@@ -3316,7 +3316,7 @@
           <div><span>Source</span><b>3.84 s · 1920×1080 · ~30 fps</b></div>
           <div><span>Stride consistency</span><b>Consistent through the visible lateral pass. Stride length and cadence remain broadly stable, with no obvious interruption or marked shortening visible in this clip.</b></div>
           <div><span>Rhythm</span><b>Regular and even through the visible pass, without an obvious break in cadence.</b></div>
-          <div><span>Visibility / quality</span><b>Good for lateral gait review; limited for front/rear tracking.</b></div>
+          <div><span>Visibility / quality</span><b>Good for lateral movement review; limited for front/rear tracking.</b></div>
         </div>
       </div>
 </section>
@@ -3996,7 +3996,7 @@
       if(pedigreeBits.length)evidenceParts.push(`Mapped pedigree — ${pedigreeBits.join(", ")}.`);
       if(mediaCount)evidenceParts.push(`Media layer — ${mediaCount} standardized still-image source${mediaCount===1?"":"s"}${media.movement_video_seconds?` plus a ${Number(media.movement_video_seconds).toFixed(2)} s movement clip`:""}.`);
       if(clinicalSource)evidenceParts.push(`Clinical cardiac source — ${clinicalSource}.`);
-      if(media.movement_observation?.assessment_status==="insufficient_source")evidenceParts.push("Gait source is insufficient for a formal readout.");
+      if(media.movement_observation?.assessment_status==="insufficient_source")evidenceParts.push("Movement source is insufficient for a formal readout.");
 
       return {
         signature:{
@@ -4110,7 +4110,7 @@
         related:buildRelated(recordId,parentage,reproduction),
         movementObservation:{
           status:movementObservation.assessment_status||"not_evaluated",
-          source:movementObservation.source_metadata||[media.movement_video_seconds?`${Number(media.movement_video_seconds).toFixed(2)} s`:null,media.movement_video_audio==="natural_sound"?"natural sound":media.movement_video_audio==="muted"?"muted":null].filter(Boolean).join(" · ")||"Gait source submitted",
+          source:movementObservation.source_metadata||[media.movement_video_seconds?`${Number(media.movement_video_seconds).toFixed(2)} s`:null,media.movement_video_audio==="natural_sound"?"natural sound":media.movement_video_audio==="muted"?"muted":null].filter(Boolean).join(" · ")||"Movement source submitted",
           stride:movementObservation.stride_consistency||"Not evaluated from this source.",
           rhythm:movementObservation.rhythm||"Not evaluated from this source.",
           visibility:movementObservation.visibility_quality||"Source has not yet received a structured movement review."
@@ -4633,10 +4633,10 @@
       const ledger=byId("mediaObservation")?.querySelector(".media-observation-ledger");
       if(!ledger)return;
       const statusNote={
-        reviewed:"Gait reviewed",
-        insufficient_source:"Gait source insufficient",
-        not_evaluated:"Gait not evaluated"
-      }[observation.status]||"Gait";
+        reviewed:"Movement reviewed",
+        insufficient_source:"Movement source insufficient",
+        not_evaluated:"Movement not evaluated"
+      }[observation.status]||"Movement";
       ledger.innerHTML=`
         <div><span>Source</span><b>${escapeHTML(observation.source||"Not submitted")}</b></div>
         ${profileData.core?.profileId==="DI-M-000002"?"":`<div><span>Assessment status</span><b>${escapeHTML(statusNote)}</b></div>`}
