@@ -3308,12 +3308,12 @@
       <div class="media-observation reveal" id="mediaObservation">
         <div class="media-observation-intro">
           <span class="desk-eyebrow">MEDIA-DERIVED PROFILE</span>
-          <h3>What the movement source can add.</h3>
-          <p>Standardized media creates a comparable observation layer. This review build exposes the fields without inventing a score before the movement source is evaluated.</p>
+          <h3>Gait.</h3>
+          <p>A standardized 3–15 s natural trot supports structured review of rhythm and stride consistency.</p>
           <strong>Structured visual observation — not a veterinary or conformation judgement.</strong>
         </div>
         <div class="media-observation-ledger">
-          <div><span>Movement source</span><b>3.84 s · 1920×1080 · ~30 fps</b></div>
+          <div><span>Source</span><b>3.84 s · 1920×1080 · ~30 fps</b></div>
           <div><span>Stride consistency</span><b>Consistent through the visible lateral pass. Stride length and cadence remain broadly stable, with no obvious interruption or marked shortening visible in this clip.</b></div>
           <div><span>Rhythm</span><b>Regular and even through the visible pass, without an obvious break in cadence.</b></div>
           <div><span>Visibility / quality</span><b>Good for lateral movement observation; limited for front/rear tracking.</b></div>
@@ -3996,7 +3996,7 @@
       if(pedigreeBits.length)evidenceParts.push(`Mapped pedigree — ${pedigreeBits.join(", ")}.`);
       if(mediaCount)evidenceParts.push(`Media layer — ${mediaCount} standardized still-image source${mediaCount===1?"":"s"}${media.movement_video_seconds?` plus a ${Number(media.movement_video_seconds).toFixed(2)} s movement clip`:""}.`);
       if(clinicalSource)evidenceParts.push(`Clinical cardiac source — ${clinicalSource}.`);
-      if(media.movement_observation?.assessment_status==="insufficient_source")evidenceParts.push("Movement observation is explicitly marked insufficient for a formal gait readout.");
+      if(media.movement_observation?.assessment_status==="insufficient_source")evidenceParts.push("Gait source is insufficient for a formal readout.");
 
       return {
         signature:{
@@ -4110,7 +4110,7 @@
         related:buildRelated(recordId,parentage,reproduction),
         movementObservation:{
           status:movementObservation.assessment_status||"not_evaluated",
-          source:movementObservation.source_metadata||[media.movement_video_seconds?`${Number(media.movement_video_seconds).toFixed(2)} s`:null,media.movement_video_audio==="natural_sound"?"natural sound":media.movement_video_audio==="muted"?"muted":null].filter(Boolean).join(" · ")||"Movement source submitted",
+          source:movementObservation.source_metadata||[media.movement_video_seconds?`${Number(media.movement_video_seconds).toFixed(2)} s`:null,media.movement_video_audio==="natural_sound"?"natural sound":media.movement_video_audio==="muted"?"muted":null].filter(Boolean).join(" · ")||"Gait source submitted",
           stride:movementObservation.stride_consistency||"Not evaluated from this source.",
           rhythm:movementObservation.rhythm||"Not evaluated from this source.",
           visibility:movementObservation.visibility_quality||"Source has not yet received a structured movement review."
@@ -4633,12 +4633,12 @@
       const ledger=byId("mediaObservation")?.querySelector(".media-observation-ledger");
       if(!ledger)return;
       const statusNote={
-        reviewed:"Reviewed movement source",
-        insufficient_source:"Source reviewed · insufficient for full gait assessment",
-        not_evaluated:"Movement source not yet evaluated"
-      }[observation.status]||"Movement source review";
+        reviewed:"Gait reviewed",
+        insufficient_source:"Gait source insufficient",
+        not_evaluated:"Gait not evaluated"
+      }[observation.status]||"Gait";
       ledger.innerHTML=`
-        <div><span>Movement source</span><b>${escapeHTML(observation.source||"Not submitted")}</b></div>
+        <div><span>Source</span><b>${escapeHTML(observation.source||"Not submitted")}</b></div>
         ${profileData.core?.profileId==="DI-M-000002"?"":`<div><span>Assessment status</span><b>${escapeHTML(statusNote)}</b></div>`}
         <div><span>Stride consistency</span><b>${escapeHTML(observation.stride||"Not evaluated")}</b></div>
         <div><span>Rhythm</span><b>${escapeHTML(observation.rhythm||"Not evaluated")}</b></div>
